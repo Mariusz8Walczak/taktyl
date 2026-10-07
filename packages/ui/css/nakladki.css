@@ -1,0 +1,291 @@
+/* Wspolny modul nakladek: szuflada, okno, menu (A-12) i toast (A-15).
+   Animujemy wylacznie transform i opacity; czasy i krzywe z tokenow; reduced-motion wylacza ruch.
+   Warstwy tylko --z-*; wysokosc 100dvh (docs/11 pkt 27); [hidden] nie przegrywa z display (pkt 29). */
+
+.tk-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-nakladka);
+  display: flex;
+  width: 100%;
+  height: 100dvh;
+}
+.tk-overlay[hidden],
+.tk-menu__panel[hidden] {
+  display: none;
+}
+.tk-overlay__tlo {
+  position: absolute;
+  inset: 0;
+  background-color: var(--nakladka);
+  animation: tk-tlo-we var(--d-m) var(--e-wyjscie) both;
+}
+.tk-overlay__panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  box-shadow: var(--cien-2);
+}
+.tk-overlay__panel:focus {
+  outline: none;
+}
+.tk-overlay__naglowek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) var(--s2) var(--s2) var(--s3);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.tk-overlay__tytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  line-height: 1.25;
+}
+.tk-overlay__tresc {
+  flex: 1;
+  min-height: 0;
+  padding: var(--s3);
+  overflow-y: auto;
+}
+
+.tk-overlay__stopka {
+  padding: var(--s2) var(--s3);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+
+/* Szuflada: translateX */
+.tk-overlay--szuflada .tk-overlay__panel {
+  top: 0;
+  right: 0;
+  width: min(100%, var(--tk-szuflada-szer));
+  height: 100dvh;
+  border-radius: var(--r) 0 0 var(--r);
+  animation: tk-szuflada-prawa-we var(--d-m) var(--e-wyjscie) both;
+}
+.tk-overlay--szuflada.tk-overlay--lewa .tk-overlay__panel {
+  right: auto;
+  left: 0;
+  border-radius: 0 var(--r) var(--r) 0;
+  animation-name: tk-szuflada-lewa-we;
+}
+
+/* Okno: opacity + scale */
+.tk-overlay--okno {
+  align-items: center;
+  justify-content: center;
+  padding: var(--s2);
+  box-sizing: border-box;
+}
+.tk-overlay--okno .tk-overlay__panel {
+  position: relative;
+  width: min(100%, var(--tk-okno-szer));
+  max-height: calc(100dvh - var(--s2) * 2);
+  border-radius: var(--r);
+  animation: tk-okno-we var(--d-m) var(--e-wyjscie) both;
+}
+
+/* Zamykanie: krocej niz wejscie, krzywa wejscia */
+.tk-overlay[data-stan="zamykanie"] .tk-overlay__tlo {
+  animation: tk-tlo-wy var(--d-s) var(--e-wejscie) both;
+}
+.tk-overlay--szuflada[data-stan="zamykanie"] .tk-overlay__panel {
+  animation: tk-szuflada-prawa-wy var(--d-s) var(--e-wejscie) both;
+}
+.tk-overlay--szuflada.tk-overlay--lewa[data-stan="zamykanie"] .tk-overlay__panel {
+  animation-name: tk-szuflada-lewa-wy;
+}
+.tk-overlay--okno[data-stan="zamykanie"] .tk-overlay__panel {
+  animation: tk-okno-wy var(--d-s) var(--e-wejscie) both;
+}
+
+/* will-change tylko na czas animacji (flaga data-anim zdejmowana po animationend) */
+.tk-overlay[data-anim] .tk-overlay__tlo,
+.tk-overlay[data-anim] .tk-overlay__panel,
+.tk-menu__panel[data-anim],
+.tk-toast[data-anim] {
+  will-change: transform, opacity;
+}
+
+/* Menu rozwijane */
+.tk-menu {
+  position: relative;
+  display: inline-block;
+}
+.tk-menu__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-menu);
+  box-sizing: border-box;
+  min-width: var(--tk-menu-min);
+  margin-top: var(--s1);
+  padding: var(--s1);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  box-shadow: var(--cien-2);
+  animation: tk-menu-we var(--d-s) var(--e-wyjscie) both;
+}
+.tk-menu__panel[data-stan="zamykanie"] {
+  animation: tk-menu-wy var(--d-s) var(--e-wejscie) both;
+}
+.tk-menu__pozycja {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border: 0;
+  border-radius: var(--r);
+  background: none;
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: var(--t-s);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--d-s) var(--e-wyjscie);
+}
+.tk-menu__pozycja:hover {
+  background-color: var(--tlo-alt);
+}
+
+/* Toast (A-15) */
+.tk-toasty {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s1);
+  padding: var(--s2);
+  pointer-events: none;
+}
+.tk-toast {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  width: min(100%, var(--tk-toast-szer));
+  min-height: var(--cel-min);
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  box-shadow: var(--cien-2);
+  font-size: var(--t-s);
+  pointer-events: auto;
+  animation: tk-toast-we var(--d-m) var(--e-wyjscie) both;
+}
+.tk-toast[data-stan="zamykanie"] {
+  animation: tk-toast-wy var(--d-s) var(--e-wejscie) both;
+}
+.tk-toast__akcja {
+  min-width: var(--cel-min);
+  min-height: var(--cel-min);
+  padding: 0 var(--s1);
+  border: 0;
+  border-radius: var(--r);
+  background: none;
+  color: var(--akcent);
+  font-family: var(--font);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  cursor: pointer;
+}
+
+@keyframes tk-tlo-we {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes tk-tlo-wy {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes tk-szuflada-prawa-we {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes tk-szuflada-prawa-wy {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes tk-szuflada-lewa-we {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes tk-szuflada-lewa-wy {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes tk-okno-we {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+@keyframes tk-okno-wy {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+@keyframes tk-menu-we {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--s1) / -2));
+  }
+}
+@keyframes tk-menu-wy {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes tk-toast-we {
+  from {
+    opacity: 0;
+    transform: translateY(var(--s2));
+  }
+}
+@keyframes tk-toast-wy {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Blokada przewijania strony pod nakladka; gutter stabilny, wiec bez skoku ukladu */
+html.tk-scroll-lock {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-btn,
+  .tk-btn::after,
+  .tk-ikonka,
+  .tk-kbd,
+  .tk-zeton,
+  .tk-kafel,
+  .tk-kafel__znacznik,
+  .tk-overlay__tlo,
+  .tk-overlay__panel,
+  .tk-menu__panel,
+  .tk-toast {
+    animation: none;
+    transition: none;
+  }
+}

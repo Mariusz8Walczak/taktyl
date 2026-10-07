@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { callAll } from "../lib/compose.js";
 import { cx } from "../lib/cx.js";
 import { useKeyPress } from "../lib/use-key-press.js";
@@ -8,6 +8,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
   /** Stan ladowania: etykieta zostaje dla czytnika (aria-busy), klikniecie jest blokowane. */
   loading?: boolean;
+  /** React 19: ref jako zwykly prop. */
+  ref?: Ref<HTMLButtonElement>;
   children: ReactNode;
 }
 

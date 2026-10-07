@@ -32,6 +32,16 @@ Stany obowiązkowe (`docs/06` §5): spoczynek, najechanie, fokus (`:focus-visibl
 | `Kbd`                             | `<kbd>`; `pressed` dla użytego skrótu                                                                                                                           | A-17       |
 | `VisuallyHidden`                  | tekst tylko dla czytnika                                                                                                                                        |            |
 
+## Moduł nakładek (TAKTYL-25)
+
+Wspólny kod (`src/overlay/`): `useOverlayBehavior` (Esc tylko dla górnej nakladki stosu, fokus na wejściu, powrót fokusu do wywołującego, utrzymanie fokusu w panelu, blokada przewijania przez klasę `tk-scroll-lock` na `<html>`), `trapTab`, `usePresence` (animacja wyjścia; bez animacji w CSS albo przy `prefers-reduced-motion` element znika od razu; `animationend` z potomków jest ignorowany).
+
+| Komponent                                                    | Zachowanie                                                                                                                                                                                                                    | Ruch                                                                                                             |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `Drawer` (`side` prawa/lewa), `Dialog` (oba przez `Overlay`) | portal w `<body>`, `role="dialog"`, `aria-modal`, nazwa z widocznego tytułu, przycisk „Zamknij”, zamykanie na tło (`closeOnBackdrop`), `100dvh`, `keepMounted` zostawia zamkniętą nakładkę z `hidden`, warstwa `--z-nakladka` | A-12: szuflada `translateX`, okno `opacity` + `scale(.98 -> 1)`, tło `opacity`; wejście `--d-m`, wyjście `--d-s` |
+| `Menu`, `MenuLink`, `MenuButton`                             | wzorzec „disclosure”: `aria-expanded`, `aria-controls`, Esc oddaje fokus przyciskowi, klik poza menu i wyjście fokusu zamykają bez kradzieży fokusu, strzałki, Home, End                                                      | A-12: `opacity` + `translateY(-4px -> 0)`, `--d-s`                                                               |
+| `ToastProvider`, `useToast`, `ToastRegion`                   | region `role="status"` istnieje przed treścią, maks. 3 toasty, 4 s, pauza na najechanie i fokus, opcjonalne „Cofnij”, brak `alert`/`confirm`/`prompt`; toast ma `.sekcja--mod`, `--cien-2`, warstwę `--z-toast`               | A-15: wejście `translateY(16px -> 0)` + `opacity` (`--d-m`), wyjście samo `opacity` (`--d-s`)                    |
+
 ## Testy
 
 `pnpm --filter @taktyl/ui test` (Vitest, jsdom, Testing Library, user-event, `vitest-axe`). Całość weryfikujemy w Dockerze (`node:22-alpine`).
