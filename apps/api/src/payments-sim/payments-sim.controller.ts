@@ -1,7 +1,9 @@
 // F-177...F-179 (docs/16 par. 6.3): POST /v1/orders/{number}/payment/simulate (X-Order-Token).
 import { Body, Controller, Headers, HttpCode, Inject, Param, Post } from "@nestjs/common";
 import { orderNumberSchema, paymentSimulateRequestSchema } from "@taktyl/contracts";
+import { Throttle } from "@nestjs/throttler";
 import type { z } from "zod";
+import { LIMITS } from "../common/rate-limits.js";
 import { ZodPipe } from "../common/zod.pipe.js";
 import { PaymentsSimService } from "./payments-sim.service.js";
 
@@ -11,6 +13,7 @@ export class PaymentsSimController {
 
   @Post(":number/payment/simulate")
   @HttpCode(200)
+  @Throttle({ default: LIMITS.payment })
   simulate(
     @Param("number", new ZodPipe(orderNumberSchema)) number: string,
     @Headers("x-order-token") token: string | undefined,

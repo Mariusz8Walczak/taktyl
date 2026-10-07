@@ -1,6 +1,6 @@
 # 16 · API (kontrakt REST)
 
-Kontrakt dla `apps/api` (NestJS). Kształty danych są zdefiniowane schematami Zod w `packages/contracts`; OpenAPI 3.1 jest z nich generowane i serwowane pod `/v1/openapi.json` (tylko poza produkcją lub dla roli `owner`). Ten dokument jest opisem zamiarów; w razie rozbieżności wygrywa `contracts`, a rozbieżność zgłasza się jako błąd dokumentacji.
+Kontrakt dla `apps/api` (NestJS). Kształty danych są zdefiniowane schematami Zod w `packages/contracts`; OpenAPI 3.1 jest z nich generowane (`z.toJSONSchema`) i serwowane pod `/v1/openapi.json` oraz `/openapi.json`, a lista endpointów pod `/docs` (tylko poza produkcją lub z `OPENAPI_ENABLED=true`; dla roli `owner` po wdrożeniu uwierzytelniania, API-007). Ten dokument jest opisem zamiarów; w razie rozbieżności wygrywa `contracts`, a rozbieżność zgłasza się jako błąd dokumentacji.
 
 Implementacja schematów: `packages/contracts/src/{shared,public,admin}` (Zod 4, C-001 w `docs/decyzje.md`). Testy kontraktowe z przykładami §6 w `packages/contracts/test`.
 
@@ -72,7 +72,7 @@ Kolumny: **Role** — `—` brak wymagań; **Tagi** — znaczniki `revalidateTag
 | GET | `/v1/products/{slug}/reviews` | — | opinie demo z etykietą i średnią (`avg`, `count`); bez danych strukturalnych | 404 | F-076 | |
 | POST | `/v1/forms/contact` | — | formularz kontaktu (e-mail, temat, wiadomość); w demo nic nie jest wysyłane, wiadomość zapisana do backpanelu | 422 | F-221, `generate_lead` | |
 | POST | `/v1/forms/newsletter` | — | zapis e-maila (jedno pole); zgoda nie jest zaznaczona z góry po stronie UI | 422 | F-223, `generate_lead` | |
-| GET | `/health`, `/health/ready` | — | liveness i readiness (poza `/v1`) | 503 | I-xxx | |
+| GET | `/health`, `/health/ready` (alias `/ready`) | — | liveness i readiness (poza `/v1`): baza, migracje, kolejka `outbox` poniżej progu 1000 | 503 | B-230 | |
 
 \* `POST /orders` nie zmienia stanów magazynowych (zmniejsza je dopiero płatność `paid`), więc nie rewaliduje tagów; gwiazdka oznacza brak.
 \*\* Zmniejszenie stanu przy `paid` unieważnia karty i listingi dotkniętych produktów.

@@ -1,10 +1,15 @@
 // B-103: korzen aplikacji; moduly domenowe wg docs/16 (katalog, wyszukiwanie, presety, ustawienia, ...).
 import { Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { CartQuoteModule } from "./cart-quote/cart-quote.module.js";
 import { CatalogModule } from "./catalog/catalog.module.js";
 import { CommonModule } from "./common/common.module.js";
-import { ConfigModule } from "./config/config.module.js";
+import { RATE_WINDOW_MS, LIMITS } from "./common/rate-limits.js";
+import { APP_CONFIG, ConfigModule } from "./config/config.module.js";
+import type { AppConfig } from "./config/env.js";
 import { HealthController } from "./health/health.controller.js";
+import { OpenApiModule } from "./openapi/openapi.module.js";
 import { OrdersModule } from "./orders/orders.module.js";
 import { OutboxModule } from "./outbox/outbox.module.js";
 import { PaymentsSimModule } from "./payments-sim/payments-sim.module.js";
@@ -28,7 +33,16 @@ import { SettingsModule } from "./settings/settings.module.js";
     OutboxModule,
     OrdersModule,
     PaymentsSimModule,
+    OpenApiModule,
+    ThrottlerModule.forRootAsync({
+      inject: [APP_CONFIG],
+      useFactory: (config: AppConfig) => ({
+        throttlers: [{ name: "default", ttl: RATE_WINDOW_MS, limit: LIMITS.default.limit }],
+        skipIf: () => !config.RATE_LIMIT_ENABLED,
+      }),
+    }),
   ],
   controllers: [HealthController],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}
