@@ -24,12 +24,13 @@ paths = [
   '''^apps/api/(src|test)/.*\.test\.ts$''',
 ]
 
-# Nazwy kluczy localStorage ("taktyl.consent.v1", "taktyl.tracked.v1") to nazwy, nie sekrety (F-240, TAKTYL-43).
+# Nazwy kluczy localStorage ("taktyl.consent.v1", "taktyl.tracked.v1", "taktyl.orders.v1") to nazwy, nie sekrety (F-240, TAKTYL-43).
 [[allowlists]]
 description = "Nazwy kluczy localStorage warstwy pomiaru"
 targetRules = ["generic-api-key"]
 regexes = [
-  '''taktyl\.(consent|tracked)\.v1''',
+  '''taktyl\.(consent|tracked|orders)\.v1''',
+  '''taktyl\.checkout\.idem\.v1''',
 ]
 
 # I-008 (TAKTYL-63): klucz obrazu "k-kwarc-60_grafit_top" w testach manifestu zdjec to identyfikator, nie sekret.
