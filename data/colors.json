@@ -1,0 +1,26 @@
+{
+  "grafit": {
+    "code": "GRF",
+    "label": "Grafit",
+    "harmony": "grafit",
+    "swatch": "#2B3038"
+  },
+  "mgla": {
+    "code": "MGL",
+    "label": "Mgła",
+    "harmony": "mgla",
+    "swatch": "#D9DDE2"
+  },
+  "kobalt": {
+    "code": "KOB",
+    "label": "Kobalt",
+    "harmony": "kobalt",
+    "swatch": "#2B4FD6"
+  },
+  "naturalny": {
+    "code": "NAT",
+    "label": "Naturalny korek",
+    "harmony": "neutralny",
+    "swatch": "#B8916A"
+  }
+}

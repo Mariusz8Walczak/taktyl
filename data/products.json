@@ -1,0 +1,2395 @@
+[
+  {
+    "id": "k-kwarc-60",
+    "slug": "kwarc-60",
+    "category": "klawiatury",
+    "name": "Kwarc 60",
+    "brand": "Taktyl",
+    "short": "Kompaktowa 60% na przewodzie. Najwięcej miejsca na myszkę przy najniższej cenie w katalogu.",
+    "description": null,
+    "attributes": {
+      "size": "60",
+      "size_label": "60%",
+      "keys": 61,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c"
+      ],
+      "case": "tworzywo",
+      "mount": "tray",
+      "hotswap": true,
+      "keycaps": "ABS double-shot",
+      "backlight": "białe",
+      "battery": null,
+      "knob": false,
+      "weight_g": 590,
+      "dims_mm": {
+        "w": 293,
+        "d": 102,
+        "h": 40
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-KWR60-GRF-SLZ",
+    "variants": [
+      {
+        "sku": "K-KWR60-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KWR60-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KWR60-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KWR60-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KWR60-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KWR60-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KWR60-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KWR60-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 299.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "k-kwarc-60_grafit_01-34",
+          "k-kwarc-60_grafit_02-gora",
+          "k-kwarc-60_grafit_03-bok",
+          "k-kwarc-60_grafit_04-detal"
+        ],
+        "topdown": "k-kwarc-60_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "k-kwarc-60_mgla_01-34",
+          "k-kwarc-60_mgla_02-gora",
+          "k-kwarc-60_mgla_03-bok",
+          "k-kwarc-60_mgla_04-detal"
+        ],
+        "topdown": "k-kwarc-60_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 3,
+      "gry": 3,
+      "programowanie": 1,
+      "biuro": 1,
+      "cisza": 1
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "ściągacz do keycapów i przełączników"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "k-lupek-65",
+    "slug": "lupek-65",
+    "category": "klawiatury",
+    "name": "Łupek 65",
+    "brand": "Taktyl",
+    "short": "65% ze strzałkami i trzema trybami łączności. Mocowanie gasket tłumi stuk, hot-swap pozwala zmienić przełączniki bez lutowania.",
+    "description": null,
+    "attributes": {
+      "size": "65",
+      "size_label": "65%",
+      "keys": 68,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c",
+        "2.4ghz",
+        "bt"
+      ],
+      "case": "tworzywo",
+      "mount": "gasket",
+      "hotswap": true,
+      "keycaps": "PBT double-shot",
+      "backlight": "RGB",
+      "battery": "4000 mAh",
+      "knob": false,
+      "weight_g": 780,
+      "dims_mm": {
+        "w": 318,
+        "d": 108,
+        "h": 40
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-LPK65-GRF-SLZ",
+    "variants": [
+      {
+        "sku": "K-LPK65-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-LPK65-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-LPK65-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-LPK65-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-LPK65-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-LPK65-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-LPK65-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-LPK65-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 19,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-LPK65-KOB-SLZ",
+        "color": "kobalt",
+        "switch": "slizg",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-LPK65-KOB-PRG",
+        "color": "kobalt",
+        "switch": "prog",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-LPK65-KOB-TRZ",
+        "color": "kobalt",
+        "switch": "trzask",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-LPK65-KOB-SZP",
+        "color": "kobalt",
+        "switch": "szept",
+        "price": 429.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "kobalt"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "k-lupek-65_grafit_01-34",
+          "k-lupek-65_grafit_02-gora",
+          "k-lupek-65_grafit_03-bok",
+          "k-lupek-65_grafit_04-detal"
+        ],
+        "topdown": "k-lupek-65_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "k-lupek-65_mgla_01-34",
+          "k-lupek-65_mgla_02-gora",
+          "k-lupek-65_mgla_03-bok",
+          "k-lupek-65_mgla_04-detal"
+        ],
+        "topdown": "k-lupek-65_mgla_top"
+      },
+      "kobalt": {
+        "packshots": [
+          "k-lupek-65_kobalt_01-34",
+          "k-lupek-65_kobalt_02-gora",
+          "k-lupek-65_kobalt_03-bok",
+          "k-lupek-65_kobalt_04-detal"
+        ],
+        "topdown": "k-lupek-65_kobalt_top"
+      }
+    },
+    "badges": [
+      "bestseller"
+    ],
+    "fit": {
+      "fps": 2,
+      "gry": 3,
+      "programowanie": 2,
+      "biuro": 2,
+      "cisza": 2
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "odbiornik 2,4 GHz",
+      "ściągacz do keycapów i przełączników"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "k-bazalt-75",
+    "slug": "bazalt-75",
+    "category": "klawiatury",
+    "name": "Bazalt 75",
+    "brand": "Taktyl",
+    "short": "Aluminiowa 75% z pokrętłem głośności. Zostaje rząd F, znika blok nawigacji: klawiatura jest o 3,3 cm węższa od TKL.",
+    "description": null,
+    "attributes": {
+      "size": "75",
+      "size_label": "75%",
+      "keys": 82,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c",
+        "2.4ghz",
+        "bt"
+      ],
+      "case": "aluminium",
+      "mount": "gasket",
+      "hotswap": true,
+      "keycaps": "PBT double-shot",
+      "backlight": "RGB",
+      "battery": "4000 mAh",
+      "knob": true,
+      "weight_g": 1850,
+      "dims_mm": {
+        "w": 327,
+        "d": 140,
+        "h": 36
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-BZL75-GRF-SLZ",
+    "variants": [
+      {
+        "sku": "K-BZL75-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 5,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-BZL75-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-BZL75-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-BZL75-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-BZL75-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-BZL75-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-BZL75-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-BZL75-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-BZL75-KOB-SLZ",
+        "color": "kobalt",
+        "switch": "slizg",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-BZL75-KOB-PRG",
+        "color": "kobalt",
+        "switch": "prog",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-BZL75-KOB-TRZ",
+        "color": "kobalt",
+        "switch": "trzask",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "kobalt"
+      },
+      {
+        "sku": "K-BZL75-KOB-SZP",
+        "color": "kobalt",
+        "switch": "szept",
+        "price": 749.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 0,
+        "images": "kobalt"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "k-bazalt-75_grafit_01-34",
+          "k-bazalt-75_grafit_02-gora",
+          "k-bazalt-75_grafit_03-bok",
+          "k-bazalt-75_grafit_04-detal"
+        ],
+        "topdown": "k-bazalt-75_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "k-bazalt-75_mgla_01-34",
+          "k-bazalt-75_mgla_02-gora",
+          "k-bazalt-75_mgla_03-bok",
+          "k-bazalt-75_mgla_04-detal"
+        ],
+        "topdown": "k-bazalt-75_mgla_top"
+      },
+      "kobalt": {
+        "packshots": [
+          "k-bazalt-75_kobalt_01-34",
+          "k-bazalt-75_kobalt_02-gora",
+          "k-bazalt-75_kobalt_03-bok",
+          "k-bazalt-75_kobalt_04-detal"
+        ],
+        "topdown": "k-bazalt-75_kobalt_top"
+      }
+    },
+    "badges": [
+      "nowosc"
+    ],
+    "fit": {
+      "fps": 2,
+      "gry": 2,
+      "programowanie": 3,
+      "biuro": 3,
+      "cisza": 2
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "odbiornik 2,4 GHz",
+      "ściągacz do keycapów i przełączników",
+      "klucz imbusowy"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "k-kreda-98",
+    "slug": "kreda-98",
+    "category": "klawiatury",
+    "name": "Kreda 98",
+    "brand": "Taktyl",
+    "short": "Układ 1800: blok numeryczny w 38,5 cm szerokości. Dla tych, którzy wpisują liczby, a nie chcą pełnowymiarowej klawiatury.",
+    "description": null,
+    "attributes": {
+      "size": "98",
+      "size_label": "1800 (98 klawiszy)",
+      "keys": 98,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c",
+        "2.4ghz",
+        "bt"
+      ],
+      "case": "tworzywo",
+      "mount": "gasket",
+      "hotswap": true,
+      "keycaps": "PBT dye-sub",
+      "backlight": "białe",
+      "battery": "3000 mAh",
+      "knob": false,
+      "weight_g": 1150,
+      "dims_mm": {
+        "w": 385,
+        "d": 138,
+        "h": 40
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-KRD98-MGL-SLZ",
+    "variants": [
+      {
+        "sku": "K-KRD98-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 19,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KRD98-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 7,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KRD98-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KRD98-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 19,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-KRD98-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KRD98-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KRD98-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 3,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-KRD98-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 549.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "grafit"
+      }
+    ],
+    "images": {
+      "mgla": {
+        "packshots": [
+          "k-kreda-98_mgla_01-34",
+          "k-kreda-98_mgla_02-gora",
+          "k-kreda-98_mgla_03-bok",
+          "k-kreda-98_mgla_04-detal"
+        ],
+        "topdown": "k-kreda-98_mgla_top"
+      },
+      "grafit": {
+        "packshots": [
+          "k-kreda-98_grafit_01-34",
+          "k-kreda-98_grafit_02-gora",
+          "k-kreda-98_grafit_03-bok",
+          "k-kreda-98_grafit_04-detal"
+        ],
+        "topdown": "k-kreda-98_grafit_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 1,
+      "programowanie": 2,
+      "biuro": 3,
+      "cisza": 3
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "odbiornik 2,4 GHz",
+      "ściągacz do keycapów i przełączników"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "k-granit-tkl",
+    "slug": "granit-tkl",
+    "category": "klawiatury",
+    "name": "Granit TKL",
+    "brand": "Taktyl",
+    "short": "TKL w aluminium z mocowaniem top mount. Pełny blok nawigacji, bez bloku numerycznego.",
+    "description": null,
+    "attributes": {
+      "size": "tkl",
+      "size_label": "TKL (87 klawiszy)",
+      "keys": 87,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c",
+        "2.4ghz"
+      ],
+      "case": "aluminium",
+      "mount": "top mount",
+      "hotswap": true,
+      "keycaps": "PBT double-shot",
+      "backlight": "brak",
+      "battery": "3000 mAh",
+      "knob": false,
+      "weight_g": 2100,
+      "dims_mm": {
+        "w": 360,
+        "d": 140,
+        "h": 38
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-GRNTKL-GRF-SLZ",
+    "variants": [
+      {
+        "sku": "K-GRNTKL-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 13,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-GRNTKL-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 8,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-GRNTKL-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 10,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-GRNTKL-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 6,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-GRNTKL-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 29,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-GRNTKL-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 25,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-GRNTKL-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 28,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-GRNTKL-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 599.0,
+        "regular_price": 699.0,
+        "lowest_30d": 699.0,
+        "stock": 37,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "k-granit-tkl_grafit_01-34",
+          "k-granit-tkl_grafit_02-gora",
+          "k-granit-tkl_grafit_03-bok",
+          "k-granit-tkl_grafit_04-detal"
+        ],
+        "topdown": "k-granit-tkl_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "k-granit-tkl_mgla_01-34",
+          "k-granit-tkl_mgla_02-gora",
+          "k-granit-tkl_mgla_03-bok",
+          "k-granit-tkl_mgla_04-detal"
+        ],
+        "topdown": "k-granit-tkl_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 2,
+      "gry": 3,
+      "programowanie": 3,
+      "biuro": 2,
+      "cisza": 2
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "odbiornik 2,4 GHz",
+      "ściągacz do keycapów i przełączników"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "k-marmur-100",
+    "slug": "marmur-100",
+    "category": "klawiatury",
+    "name": "Marmur 100",
+    "brand": "Taktyl",
+    "short": "Pełnowymiarowa na przewodzie, bez hot-swap. Najprostsza droga do mechanicznej klawiatury z blokiem numerycznym.",
+    "description": null,
+    "attributes": {
+      "size": "100",
+      "size_label": "100% (104 klawisze)",
+      "keys": 104,
+      "layout": "ANSI (polski programisty)",
+      "connectivity": [
+        "usb-c"
+      ],
+      "case": "tworzywo",
+      "mount": "tray",
+      "hotswap": false,
+      "keycaps": "ABS double-shot",
+      "backlight": "białe",
+      "battery": null,
+      "knob": false,
+      "weight_g": 1050,
+      "dims_mm": {
+        "w": 440,
+        "d": 135,
+        "h": 38
+      }
+    },
+    "options": [
+      "color",
+      "switch"
+    ],
+    "default_variant": "K-MRM100-GRF-SLZ",
+    "variants": [
+      {
+        "sku": "K-MRM100-GRF-SLZ",
+        "color": "grafit",
+        "switch": "slizg",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-MRM100-GRF-PRG",
+        "color": "grafit",
+        "switch": "prog",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-MRM100-GRF-TRZ",
+        "color": "grafit",
+        "switch": "trzask",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 4,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-MRM100-GRF-SZP",
+        "color": "grafit",
+        "switch": "szept",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "grafit"
+      },
+      {
+        "sku": "K-MRM100-MGL-SLZ",
+        "color": "mgla",
+        "switch": "slizg",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-MRM100-MGL-PRG",
+        "color": "mgla",
+        "switch": "prog",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-MRM100-MGL-TRZ",
+        "color": "mgla",
+        "switch": "trzask",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "mgla"
+      },
+      {
+        "sku": "K-MRM100-MGL-SZP",
+        "color": "mgla",
+        "switch": "szept",
+        "price": 349.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "k-marmur-100_grafit_01-34",
+          "k-marmur-100_grafit_02-gora",
+          "k-marmur-100_grafit_03-bok",
+          "k-marmur-100_grafit_04-detal"
+        ],
+        "topdown": "k-marmur-100_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "k-marmur-100_mgla_01-34",
+          "k-marmur-100_mgla_02-gora",
+          "k-marmur-100_mgla_03-bok",
+          "k-marmur-100_mgla_04-detal"
+        ],
+        "topdown": "k-marmur-100_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 1,
+      "programowanie": 1,
+      "biuro": 3,
+      "cisza": 1
+    },
+    "in_box": [
+      "kabel USB-C – USB-A 1,8 m",
+      "ściągacz do keycapów"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Nie zawiera elementów przeznaczonych dla dzieci poniżej 3 lat. Ściągacz do przełączników ma ostre końcówki."
+    }
+  },
+  {
+    "id": "m-jerzyk",
+    "slug": "jerzyk",
+    "category": "myszki",
+    "name": "Jerzyk",
+    "brand": "Taktyl",
+    "short": "49 g i 4000 Hz z dołączonym odbiornikiem. Do gier, w których mysz prowadzi się ramieniem.",
+    "description": null,
+    "attributes": {
+      "shape": "symetryczna",
+      "hand": "prawa",
+      "hand_note": "przyciski boczne po lewej stronie",
+      "size": "M",
+      "weight_g": 49,
+      "dims_mm": {
+        "w": 63,
+        "d": 120,
+        "h": 38
+      },
+      "connectivity": [
+        "2.4ghz",
+        "usb-c"
+      ],
+      "dpi_max": 26000,
+      "polling_hz": 4000,
+      "battery": "do 70 h przy 1000 Hz",
+      "hand_cm": [
+        18.0,
+        20.5
+      ],
+      "grips": [
+        "palm",
+        "claw"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-JRZ-GRF",
+    "variants": [
+      {
+        "sku": "M-JRZ-GRF",
+        "color": "grafit",
+        "price": 449.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "grafit"
+      },
+      {
+        "sku": "M-JRZ-MGL",
+        "color": "mgla",
+        "price": 449.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 2,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-jerzyk_grafit_01-34",
+          "m-jerzyk_grafit_02-gora",
+          "m-jerzyk_grafit_03-bok",
+          "m-jerzyk_grafit_04-detal"
+        ],
+        "topdown": "m-jerzyk_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "m-jerzyk_mgla_01-34",
+          "m-jerzyk_mgla_02-gora",
+          "m-jerzyk_mgla_03-bok",
+          "m-jerzyk_mgla_04-detal"
+        ],
+        "topdown": "m-jerzyk_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 3,
+      "gry": 3,
+      "programowanie": 1,
+      "biuro": 0,
+      "cisza": 0
+    },
+    "in_box": [
+      "odbiornik 2,4 GHz z przedłużaczem",
+      "kabel USB-C – USB-A 1,8 m",
+      "zapasowe ślizgacze PTFE"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Zawiera akumulator litowo-jonowy: nie przebijać, nie podgrzewać."
+    }
+  },
+  {
+    "id": "m-mewa",
+    "slug": "mewa",
+    "category": "myszki",
+    "name": "Mewa",
+    "brand": "Taktyl",
+    "short": "Mała i lekka, przyciski boczne po obu stronach. Dla dłoni do 18,5 cm i chwytu claw lub fingertip.",
+    "description": null,
+    "attributes": {
+      "shape": "symetryczna",
+      "hand": "obureczna",
+      "hand_note": "przyciski boczne po obu stronach",
+      "size": "S",
+      "weight_g": 55,
+      "dims_mm": {
+        "w": 60,
+        "d": 116,
+        "h": 37
+      },
+      "connectivity": [
+        "2.4ghz",
+        "usb-c"
+      ],
+      "dpi_max": 26000,
+      "polling_hz": 1000,
+      "battery": "do 90 h",
+      "hand_cm": [
+        16.0,
+        18.5
+      ],
+      "grips": [
+        "claw",
+        "fingertip"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-MEW-GRF",
+    "variants": [
+      {
+        "sku": "M-MEW-GRF",
+        "color": "grafit",
+        "price": 279.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "grafit"
+      },
+      {
+        "sku": "M-MEW-MGL",
+        "color": "mgla",
+        "price": 279.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "mgla"
+      },
+      {
+        "sku": "M-MEW-KOB",
+        "color": "kobalt",
+        "price": 279.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "kobalt"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-mewa_grafit_01-34",
+          "m-mewa_grafit_02-gora",
+          "m-mewa_grafit_03-bok",
+          "m-mewa_grafit_04-detal"
+        ],
+        "topdown": "m-mewa_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "m-mewa_mgla_01-34",
+          "m-mewa_mgla_02-gora",
+          "m-mewa_mgla_03-bok",
+          "m-mewa_mgla_04-detal"
+        ],
+        "topdown": "m-mewa_mgla_top"
+      },
+      "kobalt": {
+        "packshots": [
+          "m-mewa_kobalt_01-34",
+          "m-mewa_kobalt_02-gora",
+          "m-mewa_kobalt_03-bok",
+          "m-mewa_kobalt_04-detal"
+        ],
+        "topdown": "m-mewa_kobalt_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 3,
+      "gry": 2,
+      "programowanie": 1,
+      "biuro": 1,
+      "cisza": 1
+    },
+    "in_box": [
+      "odbiornik 2,4 GHz",
+      "kabel USB-C – USB-A 1,8 m"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Zawiera akumulator litowo-jonowy: nie przebijać, nie podgrzewać."
+    }
+  },
+  {
+    "id": "m-pustulka",
+    "slug": "pustulka",
+    "category": "myszki",
+    "name": "Pustułka",
+    "brand": "Taktyl",
+    "short": "Profilowana pod prawą dłoń, 62 g. Do długich sesji z chwytem palm.",
+    "description": null,
+    "attributes": {
+      "shape": "ergonomiczna",
+      "hand": "prawa",
+      "hand_note": "profil pod prawą dłoń",
+      "size": "L",
+      "weight_g": 62,
+      "dims_mm": {
+        "w": 66,
+        "d": 126,
+        "h": 43
+      },
+      "connectivity": [
+        "2.4ghz",
+        "bt",
+        "usb-c"
+      ],
+      "dpi_max": 26000,
+      "polling_hz": 1000,
+      "battery": "do 100 h",
+      "hand_cm": [
+        19.0,
+        21.5
+      ],
+      "grips": [
+        "palm"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-PST-GRF",
+    "variants": [
+      {
+        "sku": "M-PST-GRF",
+        "color": "grafit",
+        "price": 399.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "grafit"
+      },
+      {
+        "sku": "M-PST-MGL",
+        "color": "mgla",
+        "price": 399.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-pustulka_grafit_01-34",
+          "m-pustulka_grafit_02-gora",
+          "m-pustulka_grafit_03-bok",
+          "m-pustulka_grafit_04-detal"
+        ],
+        "topdown": "m-pustulka_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "m-pustulka_mgla_01-34",
+          "m-pustulka_mgla_02-gora",
+          "m-pustulka_mgla_03-bok",
+          "m-pustulka_mgla_04-detal"
+        ],
+        "topdown": "m-pustulka_mgla_top"
+      }
+    },
+    "badges": [
+      "bestseller"
+    ],
+    "fit": {
+      "fps": 2,
+      "gry": 3,
+      "programowanie": 2,
+      "biuro": 2,
+      "cisza": 1
+    },
+    "in_box": [
+      "odbiornik 2,4 GHz",
+      "kabel USB-C – USB-A 1,8 m"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Zawiera akumulator litowo-jonowy: nie przebijać, nie podgrzewać."
+    }
+  },
+  {
+    "id": "m-wrobel",
+    "slug": "wrobel",
+    "category": "myszki",
+    "name": "Wróbel",
+    "brand": "Taktyl",
+    "short": "Przewodowa, bez baterii do ładowania. Uniwersalny kształt w średnim rozmiarze.",
+    "description": null,
+    "attributes": {
+      "shape": "symetryczna",
+      "hand": "obureczna",
+      "hand_note": "przyciski boczne po lewej stronie",
+      "size": "M",
+      "weight_g": 68,
+      "dims_mm": {
+        "w": 64,
+        "d": 121,
+        "h": 39
+      },
+      "connectivity": [
+        "przewod"
+      ],
+      "dpi_max": 12000,
+      "polling_hz": 1000,
+      "battery": null,
+      "hand_cm": [
+        17.5,
+        19.5
+      ],
+      "grips": [
+        "palm",
+        "claw"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-WRB-GRF",
+    "variants": [
+      {
+        "sku": "M-WRB-GRF",
+        "color": "grafit",
+        "price": 129.0,
+        "regular_price": 149.0,
+        "lowest_30d": 139.0,
+        "stock": 14,
+        "images": "grafit"
+      },
+      {
+        "sku": "M-WRB-MGL",
+        "color": "mgla",
+        "price": 129.0,
+        "regular_price": 149.0,
+        "lowest_30d": 139.0,
+        "stock": 17,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-wrobel_grafit_01-34",
+          "m-wrobel_grafit_02-gora",
+          "m-wrobel_grafit_03-bok",
+          "m-wrobel_grafit_04-detal"
+        ],
+        "topdown": "m-wrobel_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "m-wrobel_mgla_01-34",
+          "m-wrobel_mgla_02-gora",
+          "m-wrobel_mgla_03-bok",
+          "m-wrobel_mgla_04-detal"
+        ],
+        "topdown": "m-wrobel_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 1,
+      "gry": 2,
+      "programowanie": 2,
+      "biuro": 2,
+      "cisza": 1
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  },
+  {
+    "id": "m-kos",
+    "slug": "kos",
+    "category": "myszki",
+    "name": "Kos",
+    "brand": "Taktyl",
+    "short": "Ciche przyciski i kółko z trybem swobodnego obrotu. Przełącza się między trzema komputerami.",
+    "description": null,
+    "attributes": {
+      "shape": "ergonomiczna",
+      "hand": "prawa",
+      "hand_note": "ciche przyciski, kółko z trybem swobodnego obrotu",
+      "size": "L",
+      "weight_g": 98,
+      "dims_mm": {
+        "w": 80,
+        "d": 128,
+        "h": 48
+      },
+      "connectivity": [
+        "2.4ghz",
+        "bt"
+      ],
+      "dpi_max": 8000,
+      "polling_hz": 1000,
+      "battery": "do 70 dni",
+      "hand_cm": [
+        18.5,
+        21.5
+      ],
+      "grips": [
+        "palm"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-KOS-GRF",
+    "variants": [
+      {
+        "sku": "M-KOS-GRF",
+        "color": "grafit",
+        "price": 329.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "grafit"
+      },
+      {
+        "sku": "M-KOS-MGL",
+        "color": "mgla",
+        "price": 329.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-kos_grafit_01-34",
+          "m-kos_grafit_02-gora",
+          "m-kos_grafit_03-bok",
+          "m-kos_grafit_04-detal"
+        ],
+        "topdown": "m-kos_grafit_top"
+      },
+      "mgla": {
+        "packshots": [
+          "m-kos_mgla_01-34",
+          "m-kos_mgla_02-gora",
+          "m-kos_mgla_03-bok",
+          "m-kos_mgla_04-detal"
+        ],
+        "topdown": "m-kos_mgla_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 0,
+      "programowanie": 3,
+      "biuro": 3,
+      "cisza": 3
+    },
+    "in_box": [
+      "odbiornik 2,4 GHz",
+      "kabel USB-C – USB-C 1 m"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Zawiera akumulator litowo-jonowy: nie przebijać, nie podgrzewać."
+    }
+  },
+  {
+    "id": "m-czapla",
+    "slug": "czapla",
+    "category": "myszki",
+    "name": "Czapla",
+    "brand": "Taktyl",
+    "short": "Pionowy chwyt jak przy podaniu ręki. Nadgarstek nie skręca się w stronę blatu.",
+    "description": null,
+    "attributes": {
+      "shape": "pionowa",
+      "hand": "prawa",
+      "hand_note": "chwyt pionowy",
+      "size": "M",
+      "weight_g": 120,
+      "dims_mm": {
+        "w": 75,
+        "d": 108,
+        "h": 76
+      },
+      "connectivity": [
+        "2.4ghz",
+        "bt"
+      ],
+      "dpi_max": 4000,
+      "polling_hz": 1000,
+      "battery": "do 30 dni",
+      "hand_cm": [
+        17.0,
+        20.0
+      ],
+      "grips": [
+        "palm"
+      ],
+      "sensor": "optyczny"
+    },
+    "options": [
+      "color"
+    ],
+    "default_variant": "M-CZP-GRF",
+    "variants": [
+      {
+        "sku": "M-CZP-GRF",
+        "color": "grafit",
+        "price": 249.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "grafit"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "m-czapla_grafit_01-34",
+          "m-czapla_grafit_02-gora",
+          "m-czapla_grafit_03-bok",
+          "m-czapla_grafit_04-detal"
+        ],
+        "topdown": "m-czapla_grafit_top"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 0,
+      "programowanie": 2,
+      "biuro": 3,
+      "cisza": 2
+    },
+    "in_box": [
+      "odbiornik 2,4 GHz",
+      "kabel USB-C – USB-A 1 m"
+    ],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Zawiera akumulator litowo-jonowy: nie przebijać, nie podgrzewać."
+    }
+  },
+  {
+    "id": "p-tafla",
+    "slug": "tafla",
+    "category": "podkladki",
+    "name": "Tafla",
+    "brand": "Taktyl",
+    "short": "Gładka tkanina: mysz rusza z miejsca bez oporu. Do gier z szybkim śledzeniem celu.",
+    "description": null,
+    "attributes": {
+      "surface": "szybka",
+      "material": "tkanina gładka",
+      "thickness_mm": 4,
+      "edge": "obszyta",
+      "sizes": {
+        "m": {
+          "label": "M",
+          "w": 360,
+          "d": 300,
+          "type": "mysz"
+        },
+        "l": {
+          "label": "L",
+          "w": 450,
+          "d": 400,
+          "type": "mysz"
+        },
+        "xl": {
+          "label": "XL",
+          "w": 900,
+          "d": 400,
+          "type": "biurko"
+        },
+        "xxl": {
+          "label": "XXL",
+          "w": 1200,
+          "d": 500,
+          "type": "biurko"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-TFL-XL-GRF",
+    "variants": [
+      {
+        "sku": "P-TFL-M-GRF",
+        "color": "grafit",
+        "size": "m",
+        "price": 69.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-TFL-L-GRF",
+        "color": "grafit",
+        "size": "l",
+        "price": 99.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-TFL-XL-GRF",
+        "color": "grafit",
+        "size": "xl",
+        "price": 149.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-TFL-XXL-GRF",
+        "color": "grafit",
+        "size": "xxl",
+        "price": 219.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-TFL-M-MGL",
+        "color": "mgla",
+        "size": "m",
+        "price": 69.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 6,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-TFL-L-MGL",
+        "color": "mgla",
+        "size": "l",
+        "price": 99.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-TFL-XL-MGL",
+        "color": "mgla",
+        "size": "xl",
+        "price": 149.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-TFL-XXL-MGL",
+        "color": "mgla",
+        "size": "xxl",
+        "price": 219.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-TFL-M-KOB",
+        "color": "kobalt",
+        "size": "m",
+        "price": 69.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "kobalt"
+      },
+      {
+        "sku": "P-TFL-L-KOB",
+        "color": "kobalt",
+        "size": "l",
+        "price": 99.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "kobalt"
+      },
+      {
+        "sku": "P-TFL-XL-KOB",
+        "color": "kobalt",
+        "size": "xl",
+        "price": 149.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "kobalt"
+      },
+      {
+        "sku": "P-TFL-XXL-KOB",
+        "color": "kobalt",
+        "size": "xxl",
+        "price": 219.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "kobalt"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "p-tafla_grafit_01-34",
+          "p-tafla_grafit_02-gora",
+          "p-tafla_grafit_03-bok",
+          "p-tafla_grafit_04-detal"
+        ],
+        "texture": "p-tafla_grafit_tekstura"
+      },
+      "mgla": {
+        "packshots": [
+          "p-tafla_mgla_01-34",
+          "p-tafla_mgla_02-gora",
+          "p-tafla_mgla_03-bok",
+          "p-tafla_mgla_04-detal"
+        ],
+        "texture": "p-tafla_mgla_tekstura"
+      },
+      "kobalt": {
+        "packshots": [
+          "p-tafla_kobalt_01-34",
+          "p-tafla_kobalt_02-gora",
+          "p-tafla_kobalt_03-bok",
+          "p-tafla_kobalt_04-detal"
+        ],
+        "texture": "p-tafla_kobalt_tekstura"
+      }
+    },
+    "badges": [
+      "bestseller"
+    ],
+    "fit": {
+      "fps": 2,
+      "gry": 3,
+      "programowanie": 2,
+      "biuro": 1,
+      "cisza": 1
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  },
+  {
+    "id": "p-len",
+    "slug": "len",
+    "category": "podkladki",
+    "name": "Len",
+    "brand": "Taktyl",
+    "short": "Gruby splot hamuje mysz tam, gdzie ją zatrzymasz. Do precyzyjnego celowania.",
+    "description": null,
+    "attributes": {
+      "surface": "kontrolna",
+      "material": "tkanina o grubym splocie",
+      "thickness_mm": 5,
+      "edge": "obszyta",
+      "sizes": {
+        "m": {
+          "label": "M",
+          "w": 360,
+          "d": 300,
+          "type": "mysz"
+        },
+        "l": {
+          "label": "L",
+          "w": 450,
+          "d": 400,
+          "type": "mysz"
+        },
+        "xl": {
+          "label": "XL",
+          "w": 900,
+          "d": 400,
+          "type": "biurko"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-LEN-XL-GRF",
+    "variants": [
+      {
+        "sku": "P-LEN-M-GRF",
+        "color": "grafit",
+        "size": "m",
+        "price": 59.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-LEN-L-GRF",
+        "color": "grafit",
+        "size": "l",
+        "price": 89.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-LEN-XL-GRF",
+        "color": "grafit",
+        "size": "xl",
+        "price": 139.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-LEN-M-MGL",
+        "color": "mgla",
+        "size": "m",
+        "price": 59.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-LEN-L-MGL",
+        "color": "mgla",
+        "size": "l",
+        "price": 89.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-LEN-XL-MGL",
+        "color": "mgla",
+        "size": "xl",
+        "price": 139.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "p-len_grafit_01-34",
+          "p-len_grafit_02-gora",
+          "p-len_grafit_03-bok",
+          "p-len_grafit_04-detal"
+        ],
+        "texture": "p-len_grafit_tekstura"
+      },
+      "mgla": {
+        "packshots": [
+          "p-len_mgla_01-34",
+          "p-len_mgla_02-gora",
+          "p-len_mgla_03-bok",
+          "p-len_mgla_04-detal"
+        ],
+        "texture": "p-len_mgla_tekstura"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 3,
+      "gry": 2,
+      "programowanie": 1,
+      "biuro": 1,
+      "cisza": 1
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  },
+  {
+    "id": "p-szron",
+    "slug": "szron",
+    "category": "podkladki",
+    "name": "Szron",
+    "brand": "Taktyl",
+    "short": "Powłoka hybrydowa: szybki start, kontrolowane zatrzymanie. Nie chłonie wilgoci.",
+    "description": null,
+    "attributes": {
+      "surface": "zbalansowana",
+      "material": "hybryda (tkanina powlekana)",
+      "thickness_mm": 4,
+      "edge": "obszyta",
+      "sizes": {
+        "l": {
+          "label": "L",
+          "w": 450,
+          "d": 400,
+          "type": "mysz"
+        },
+        "xl": {
+          "label": "XL",
+          "w": 900,
+          "d": 400,
+          "type": "biurko"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-SZR-XL-GRF",
+    "variants": [
+      {
+        "sku": "P-SZR-L-GRF",
+        "color": "grafit",
+        "size": "l",
+        "price": 129.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-SZR-XL-GRF",
+        "color": "grafit",
+        "size": "xl",
+        "price": 189.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-SZR-L-KOB",
+        "color": "kobalt",
+        "size": "l",
+        "price": 129.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "kobalt"
+      },
+      {
+        "sku": "P-SZR-XL-KOB",
+        "color": "kobalt",
+        "size": "xl",
+        "price": 189.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "kobalt"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "p-szron_grafit_01-34",
+          "p-szron_grafit_02-gora",
+          "p-szron_grafit_03-bok",
+          "p-szron_grafit_04-detal"
+        ],
+        "texture": "p-szron_grafit_tekstura"
+      },
+      "kobalt": {
+        "packshots": [
+          "p-szron_kobalt_01-34",
+          "p-szron_kobalt_02-gora",
+          "p-szron_kobalt_03-bok",
+          "p-szron_kobalt_04-detal"
+        ],
+        "texture": "p-szron_kobalt_tekstura"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 2,
+      "gry": 2,
+      "programowanie": 2,
+      "biuro": 2,
+      "cisza": 1
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  },
+  {
+    "id": "p-lod",
+    "slug": "lod",
+    "category": "podkladki",
+    "name": "Lód",
+    "brand": "Taktyl",
+    "short": "Hartowane szkło: najmniejszy opór i powierzchnia, która się nie wyciera. Głośniejsza od tkaniny.",
+    "description": null,
+    "attributes": {
+      "surface": "bardzo szybka",
+      "material": "szkło hartowane",
+      "thickness_mm": 4,
+      "edge": "szlifowana",
+      "sizes": {
+        "m": {
+          "label": "M",
+          "w": 360,
+          "d": 300,
+          "type": "mysz"
+        },
+        "l": {
+          "label": "L",
+          "w": 450,
+          "d": 400,
+          "type": "mysz"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-LOD-L-GRF",
+    "variants": [
+      {
+        "sku": "P-LOD-M-GRF",
+        "color": "grafit",
+        "size": "m",
+        "price": 249.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-LOD-L-GRF",
+        "color": "grafit",
+        "size": "l",
+        "price": 329.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-LOD-M-MGL",
+        "color": "mgla",
+        "size": "m",
+        "price": 249.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-LOD-L-MGL",
+        "color": "mgla",
+        "size": "l",
+        "price": 329.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 0,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "p-lod_grafit_01-34",
+          "p-lod_grafit_02-gora",
+          "p-lod_grafit_03-bok",
+          "p-lod_grafit_04-detal"
+        ],
+        "texture": "p-lod_grafit_tekstura"
+      },
+      "mgla": {
+        "packshots": [
+          "p-lod_mgla_01-34",
+          "p-lod_mgla_02-gora",
+          "p-lod_mgla_03-bok",
+          "p-lod_mgla_04-detal"
+        ],
+        "texture": "p-lod_mgla_tekstura"
+      }
+    },
+    "badges": [
+      "nowosc"
+    ],
+    "fit": {
+      "fps": 2,
+      "gry": 2,
+      "programowanie": 0,
+      "biuro": 0,
+      "cisza": 0
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Szkło hartowane: nie upuszczać na krawędź."
+    }
+  },
+  {
+    "id": "p-filc",
+    "slug": "filc",
+    "category": "podkladki",
+    "name": "Filc",
+    "brand": "Taktyl",
+    "short": "Mata na całe biurko: wycisza stuk klawiatury i chroni blat. Nie do gier.",
+    "description": null,
+    "attributes": {
+      "surface": "biurowa",
+      "material": "filc poliestrowy",
+      "thickness_mm": 3,
+      "edge": "cięta",
+      "sizes": {
+        "xl": {
+          "label": "XL",
+          "w": 900,
+          "d": 400,
+          "type": "biurko"
+        },
+        "xxl": {
+          "label": "XXL",
+          "w": 1200,
+          "d": 500,
+          "type": "biurko"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-FLC-XL-GRF",
+    "variants": [
+      {
+        "sku": "P-FLC-XL-GRF",
+        "color": "grafit",
+        "size": "xl",
+        "price": 129.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-FLC-XXL-GRF",
+        "color": "grafit",
+        "size": "xxl",
+        "price": 179.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "grafit"
+      },
+      {
+        "sku": "P-FLC-XL-MGL",
+        "color": "mgla",
+        "size": "xl",
+        "price": 129.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "mgla"
+      },
+      {
+        "sku": "P-FLC-XXL-MGL",
+        "color": "mgla",
+        "size": "xxl",
+        "price": 179.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "mgla"
+      }
+    ],
+    "images": {
+      "grafit": {
+        "packshots": [
+          "p-filc_grafit_01-34",
+          "p-filc_grafit_02-gora",
+          "p-filc_grafit_03-bok",
+          "p-filc_grafit_04-detal"
+        ],
+        "texture": "p-filc_grafit_tekstura"
+      },
+      "mgla": {
+        "packshots": [
+          "p-filc_mgla_01-34",
+          "p-filc_mgla_02-gora",
+          "p-filc_mgla_03-bok",
+          "p-filc_mgla_04-detal"
+        ],
+        "texture": "p-filc_mgla_tekstura"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 0,
+      "programowanie": 2,
+      "biuro": 3,
+      "cisza": 3
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  },
+  {
+    "id": "p-korek",
+    "slug": "korek",
+    "category": "podkladki",
+    "name": "Korek",
+    "brand": "Taktyl",
+    "short": "Korek z antypoślizgowym spodem. Ciepły w dotyku, matowy, bez nadruku.",
+    "description": null,
+    "attributes": {
+      "surface": "biurowa",
+      "material": "korek naturalny z gumowym spodem",
+      "thickness_mm": 3,
+      "edge": "cięta",
+      "sizes": {
+        "xl": {
+          "label": "XL",
+          "w": 900,
+          "d": 400,
+          "type": "biurko"
+        }
+      }
+    },
+    "options": [
+      "size",
+      "color"
+    ],
+    "default_variant": "P-KRK-XL-NAT",
+    "variants": [
+      {
+        "sku": "P-KRK-XL-NAT",
+        "color": "naturalny",
+        "size": "xl",
+        "price": 119.0,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 34,
+        "images": "naturalny"
+      }
+    ],
+    "images": {
+      "naturalny": {
+        "packshots": [
+          "p-korek_naturalny_01-34",
+          "p-korek_naturalny_02-gora",
+          "p-korek_naturalny_03-bok",
+          "p-korek_naturalny_04-detal"
+        ],
+        "texture": "p-korek_naturalny_tekstura"
+      }
+    },
+    "badges": [],
+    "fit": {
+      "fps": 0,
+      "gry": 0,
+      "programowanie": 2,
+      "biuro": 3,
+      "cisza": 2
+    },
+    "in_box": [],
+    "gpsr": {
+      "manufacturer": "Taktyl (podmiot fikcyjny)",
+      "address": "ul. Klawiszowa 87, 00-000 Warszawa (adres fikcyjny)",
+      "contact": "bezpieczenstwo@taktyl.example",
+      "warnings": "Brak szczególnych ostrzeżeń."
+    }
+  }
+]

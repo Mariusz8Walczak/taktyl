@@ -1,0 +1,42 @@
+[
+  {
+    "id": "slizg",
+    "code": "SLZ",
+    "name": "Ślizg",
+    "type": "liniowy",
+    "type_label": "liniowy",
+    "force_g": 45,
+    "sound": "umiarkowany",
+    "summary": "Gładki skok bez progu. Szybkie, równe wciśnięcie."
+  },
+  {
+    "id": "prog",
+    "code": "PRG",
+    "name": "Próg",
+    "type": "taktylny",
+    "type_label": "taktylny",
+    "force_g": 55,
+    "sound": "umiarkowany",
+    "summary": "Wyczuwalny próg w połowie skoku. Czujesz zadziałanie bez dobijania do dna."
+  },
+  {
+    "id": "trzask",
+    "code": "TRZ",
+    "name": "Trzask",
+    "type": "klikajacy",
+    "type_label": "klikający",
+    "force_g": 60,
+    "sound": "głośny",
+    "summary": "Wyraźny klik przy zadziałaniu. Słychać go w całym pokoju."
+  },
+  {
+    "id": "szept",
+    "code": "SZP",
+    "name": "Szept",
+    "type": "cichy",
+    "type_label": "cichy liniowy",
+    "force_g": 40,
+    "sound": "cichy",
+    "summary": "Wytłumiony skok i powrót. Do open space i pracy nocą."
+  }
+]

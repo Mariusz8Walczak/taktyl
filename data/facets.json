@@ -1,0 +1,338 @@
+{
+  "klawiatury": [
+    {
+      "id": "rozmiar",
+      "label": "Rozmiar",
+      "type": "multi",
+      "attr": "size",
+      "values": [
+        {
+          "v": "60",
+          "label": "60%"
+        },
+        {
+          "v": "65",
+          "label": "65%"
+        },
+        {
+          "v": "75",
+          "label": "75%"
+        },
+        {
+          "v": "98",
+          "label": "1800 (98)"
+        },
+        {
+          "v": "tkl",
+          "label": "TKL"
+        },
+        {
+          "v": "100",
+          "label": "100%"
+        }
+      ]
+    },
+    {
+      "id": "przelacznik",
+      "label": "Typ przełącznika",
+      "type": "multi",
+      "attr": "variant.switch.type",
+      "values": [
+        {
+          "v": "liniowy",
+          "label": "Liniowy"
+        },
+        {
+          "v": "taktylny",
+          "label": "Taktylny"
+        },
+        {
+          "v": "klikajacy",
+          "label": "Klikający"
+        },
+        {
+          "v": "cichy",
+          "label": "Cichy liniowy"
+        }
+      ]
+    },
+    {
+      "id": "lacznosc",
+      "label": "Łączność",
+      "type": "multi",
+      "attr": "connectivity",
+      "values": [
+        {
+          "v": "usb-c",
+          "label": "Przewód USB-C"
+        },
+        {
+          "v": "2.4ghz",
+          "label": "2,4 GHz"
+        },
+        {
+          "v": "bt",
+          "label": "Bluetooth"
+        }
+      ]
+    },
+    {
+      "id": "hotswap",
+      "label": "Wymiana przełączników bez lutowania",
+      "type": "bool",
+      "attr": "hotswap"
+    },
+    {
+      "id": "obudowa",
+      "label": "Obudowa",
+      "type": "multi",
+      "attr": "case",
+      "values": [
+        {
+          "v": "aluminium",
+          "label": "Aluminium"
+        },
+        {
+          "v": "tworzywo",
+          "label": "Tworzywo"
+        }
+      ]
+    },
+    {
+      "id": "kolor",
+      "label": "Kolor",
+      "type": "multi",
+      "attr": "variant.color"
+    },
+    {
+      "id": "cena",
+      "label": "Cena",
+      "type": "range",
+      "attr": "variant.price",
+      "unit": "zł"
+    },
+    {
+      "id": "dostepnosc",
+      "label": "Tylko dostępne",
+      "type": "bool",
+      "attr": "variant.stock>0"
+    }
+  ],
+  "myszki": [
+    {
+      "id": "waga",
+      "label": "Waga",
+      "type": "buckets",
+      "attr": "weight_g",
+      "values": [
+        {
+          "v": "do-60",
+          "label": "do 60 g",
+          "max": 60
+        },
+        {
+          "v": "60-80",
+          "label": "60–80 g",
+          "min": 61,
+          "max": 80
+        },
+        {
+          "v": "od-80",
+          "label": "ponad 80 g",
+          "min": 81
+        }
+      ]
+    },
+    {
+      "id": "ksztalt",
+      "label": "Kształt",
+      "type": "multi",
+      "attr": "shape",
+      "values": [
+        {
+          "v": "symetryczna",
+          "label": "Symetryczna"
+        },
+        {
+          "v": "ergonomiczna",
+          "label": "Ergonomiczna"
+        },
+        {
+          "v": "pionowa",
+          "label": "Pionowa"
+        }
+      ]
+    },
+    {
+      "id": "rozmiar",
+      "label": "Rozmiar",
+      "type": "multi",
+      "attr": "size",
+      "values": [
+        {
+          "v": "S",
+          "label": "S"
+        },
+        {
+          "v": "M",
+          "label": "M"
+        },
+        {
+          "v": "L",
+          "label": "L"
+        }
+      ]
+    },
+    {
+      "id": "dlon",
+      "label": "Długość dłoni (cm)",
+      "type": "number-match",
+      "attr": "hand_cm",
+      "hint": "Od nadgarstka do czubka środkowego palca."
+    },
+    {
+      "id": "reka",
+      "label": "Ręka",
+      "type": "multi",
+      "attr": "hand",
+      "values": [
+        {
+          "v": "prawa",
+          "label": "Prawa"
+        },
+        {
+          "v": "obureczna",
+          "label": "Oburęczna"
+        }
+      ]
+    },
+    {
+      "id": "lacznosc",
+      "label": "Łączność",
+      "type": "multi",
+      "attr": "connectivity",
+      "values": [
+        {
+          "v": "przewod",
+          "label": "Przewodowa"
+        },
+        {
+          "v": "2.4ghz",
+          "label": "2,4 GHz"
+        },
+        {
+          "v": "bt",
+          "label": "Bluetooth"
+        }
+      ]
+    },
+    {
+      "id": "kolor",
+      "label": "Kolor",
+      "type": "multi",
+      "attr": "variant.color"
+    },
+    {
+      "id": "cena",
+      "label": "Cena",
+      "type": "range",
+      "attr": "variant.price",
+      "unit": "zł"
+    },
+    {
+      "id": "dostepnosc",
+      "label": "Tylko dostępne",
+      "type": "bool",
+      "attr": "variant.stock>0"
+    }
+  ],
+  "podkladki": [
+    {
+      "id": "typ",
+      "label": "Przeznaczenie",
+      "type": "multi",
+      "attr": "variant.size.type",
+      "values": [
+        {
+          "v": "mysz",
+          "label": "Pod myszkę (M, L)"
+        },
+        {
+          "v": "biurko",
+          "label": "Na biurko (XL, XXL)"
+        }
+      ]
+    },
+    {
+      "id": "rozmiar",
+      "label": "Rozmiar",
+      "type": "multi",
+      "attr": "variant.size",
+      "values": [
+        {
+          "v": "m",
+          "label": "M · 36 × 30 cm"
+        },
+        {
+          "v": "l",
+          "label": "L · 45 × 40 cm"
+        },
+        {
+          "v": "xl",
+          "label": "XL · 90 × 40 cm"
+        },
+        {
+          "v": "xxl",
+          "label": "XXL · 120 × 50 cm"
+        }
+      ]
+    },
+    {
+      "id": "powierzchnia",
+      "label": "Powierzchnia",
+      "type": "multi",
+      "attr": "surface",
+      "values": [
+        {
+          "v": "bardzo szybka",
+          "label": "Bardzo szybka"
+        },
+        {
+          "v": "szybka",
+          "label": "Szybka"
+        },
+        {
+          "v": "zbalansowana",
+          "label": "Zbalansowana"
+        },
+        {
+          "v": "kontrolna",
+          "label": "Kontrolna"
+        },
+        {
+          "v": "biurowa",
+          "label": "Biurowa (nie do gier)"
+        }
+      ]
+    },
+    {
+      "id": "kolor",
+      "label": "Kolor",
+      "type": "multi",
+      "attr": "variant.color"
+    },
+    {
+      "id": "cena",
+      "label": "Cena",
+      "type": "range",
+      "attr": "variant.price",
+      "unit": "zł"
+    },
+    {
+      "id": "dostepnosc",
+      "label": "Tylko dostępne",
+      "type": "bool",
+      "attr": "variant.stock>0"
+    }
+  ]
+}

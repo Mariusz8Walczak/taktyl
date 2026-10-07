@@ -1,0 +1,135 @@
+/* Taktyl — tokeny systemu (docs/06-design-system.md)
+   Jedyny plik, w którym wolno wpisać wartość koloru, rozmiaru, odstępu, promienia, cienia i czasu.
+   Kopiuj bez zmian do src/styles/tokens.css. Zmiana palety = zmiana tylko tego pliku. */
+
+@font-face{
+  font-family:"Archivo";
+  src:url("../assets/fonts/archivo-pl-400-700-w100-125.woff2") format("woff2");
+  /* W projekcie Astro zmień ścieżkę na "/fonts/archivo-pl-400-700-w100-125.woff2" */
+  font-weight:400 700;
+  font-stretch:100% 125%;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root{
+  color-scheme:light;
+
+  /* POWIERZCHNIE — „alfy” (jasne keycapy) */
+  --tlo:            #F2F4F6;  /* tło strony */
+  --tlo-alt:        #E6EAEE;  /* sekcje przeplatane, tło zdjęć, „blat” w podglądzie biurka */
+  --powierzchnia:   #FFFFFF;  /* karty, pola, szuflady */
+
+  /* TEKST — „mody” (ciemne keycapy) */
+  --tekst:          #1A212B;  /* 14,7:1 na --tlo */
+  --tekst-slaby:    #4A5563;  /*  6,9:1 na --tlo, 6,3:1 na --tlo-alt */
+
+  /* DZIAŁANIE — „Enter” (jedyny akcent: kliknięcie i cena) */
+  --akcent:         #2F54EB;  /* biały tekst 5,9:1; jako tekst na --tlo 5,3:1 */
+  --akcent-hover:   #2443C4;
+  --akcent-tekst:   #FFFFFF;
+  --akcent-krawedz: #1B34A3;  /* „spódnica” keycapa pod przyciskiem głównym */
+  --akcent-slaby:   #E4E9FF;  /* tło wybranego kafla; --akcent na nim 4,9:1 */
+
+  /* STRUKTURA */
+  --linia:          #DCE1E7;  /* podziały dekoracyjne */
+  --linia-pola:     #7D8796;  /* obrysy pól i kafli — 3,6:1 na --powierzchnia (WCAG 1.4.11) */
+
+  /* STANY — nigdy akcent */
+  --sukces:         #1E7A4A;  --sukces-tlo: #E5F3EB;
+  --blad:           #C0352B;  --blad-tlo:   #FBE9E7;
+  --uwaga:          #8F6400;  --uwaga-tlo:  #FFF3D6;
+
+  --fokus:          var(--akcent);
+  --nakladka:       rgb(26 33 43 / .48);
+
+  /* TYPOGRAFIA — jedna rodzina, dwie szerokości, dwie grubości */
+  --font: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --szer-tekst: 100%;   /* font-stretch tekstu */
+  --szer-naglowek: 125%;/* font-stretch nagłówków, cen, logotypu, klawiszy */
+  --w-zwykla: 400;
+  --w-mocna: 700;
+
+  --t-xs:  14px;  /* metadane, plakietki, podpisy */
+  --t-s:   16px;  /* interfejs, etykiety, przyciski */
+  --t-m:   18px;  /* tekst podstawowy */
+  --t-l:   22px;  /* wprowadzenia, nazwy na karcie produktu, cena na karcie */
+  --t-xl:  30px;  /* H2 */
+  --t-2xl: clamp(30px, 2rem + 1.4vw, 42px);  /* H1 podstron */
+  --t-3xl: clamp(38px, 1.6rem + 3.6vw, 60px);/* H1 pierwszego ekranu */
+
+  --lh-tekst: 1.55;
+  --lh-naglowek: 1.1;
+  --tracking-naglowek: -0.015em;
+
+  /* ODSTĘPY — jedna skala */
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 40px;  --s5: 64px;  --s6: 96px;
+  --max: 1280px;       /* kontener */
+  --max-tekst: 720px;  /* kolumna tekstu */
+  --cel-min: 44px;     /* minimalny cel kliknięcia */
+
+  /* PROMIEŃ — jeden + wyjątek dla żetonów, plakietek i próbek */
+  --r: 10px;
+  --r-pelny: 999px;
+
+  /* CIENIE — dwa poziomy podniesienia + krawędź klawisza + cień obiektu w podglądzie biurka */
+  --cien-1: 0 1px 3px rgb(26 33 43 / .08), 0 1px 2px rgb(26 33 43 / .06);
+  --cien-2: 0 12px 32px rgb(26 33 43 / .18);
+  --krawedz-klawisza: inset 0 -3px 0 var(--akcent-krawedz);
+  --krawedz-klawisza-wcisniety: inset 0 -1px 0 var(--akcent-krawedz);
+  --krawedz-klawisza-pob: inset 0 -3px 0 var(--linia);
+  --krawedz-klawisza-pob-wcisniety: inset 0 -1px 0 var(--linia);
+  --cien-obiektu: drop-shadow(0 6px 8px rgb(26 33 43 / .28));
+
+  /* WARSTWY — tylko te wartości */
+  --z-naglowek: 100;
+  --z-menu: 200;
+  --z-nakladka: 300;
+  --z-toast: 400;
+
+  /* RUCH (docs/07) */
+  --d-klik: 90ms;
+  --d-s: 160ms;
+  --d-m: 220ms;
+  --d-l: 300ms;
+  --d-scena: 900ms;     /* wyłącznie A-02 i A-16 */
+  --e-wyjscie: cubic-bezier(.2, .7, .2, 1);    /* elementy wchodzące, odpowiedź na działanie */
+  --e-wejscie: cubic-bezier(.4, 0, 1, 1);      /* elementy znikające */
+  --e-osadzenie: cubic-bezier(.3, 1.35, .5, 1);/* lekkie przeskoczenie i powrót: „osiadanie” */
+}
+
+/* CIEMNE — cała strona (P2) i lokalnie w sekcjach „mod” (P0). Te same nazwy, inne wartości. */
+[data-motyw="ciemny"],
+.sekcja--mod{
+  color-scheme:dark;
+  --tlo:            #12171E;
+  --tlo-alt:        #1A212B;
+  --powierzchnia:   #212935;
+  --tekst:          #EEF1F4;  /* 15,9:1 na --tlo */
+  --tekst-slaby:    #A9B3C0;  /*  6,9:1 na --powierzchnia */
+  --akcent:         #8299FF;  /* jaśniejszy kobalt; ciemny tekst 7,0:1 */
+  --akcent-hover:   #9DB0FF;
+  --akcent-tekst:   #0E1420;
+  --akcent-krawedz: #4F67D6;
+  --akcent-slaby:   #243058;
+  --linia:          #2E3846;
+  --linia-pola:     #6B7686;  /* 3,2:1 na --powierzchnia */
+  --sukces:         #4CC38A;  --sukces-tlo: #173326;
+  --blad:           #FF7A6E;  --blad-tlo:   #3A1D1B;
+  --uwaga:          #E5B547;  --uwaga-tlo:  #3A2E12;
+  --nakladka:       rgb(0 0 0 / .6);
+  --cien-1: 0 1px 3px rgb(0 0 0 / .4);
+  --cien-2: 0 12px 32px rgb(0 0 0 / .5);
+  background-color:var(--tlo);
+  color:var(--tekst);
+}
+
+@media (prefers-reduced-motion: reduce){
+  :root{ --d-klik:0ms; --d-s:0ms; --d-m:0ms; --d-l:0ms; --d-scena:0ms; }
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}

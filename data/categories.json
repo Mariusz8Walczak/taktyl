@@ -1,0 +1,26 @@
+[
+  {
+    "id": "klawiatury",
+    "slug": "klawiatury",
+    "name": "Klawiatury",
+    "h1": "Klawiatury mechaniczne",
+    "order": 1,
+    "intro": "60% do pełnowymiarowych. Wszystkie w układzie polskim programisty, większość z wymianą przełączników bez lutowania."
+  },
+  {
+    "id": "myszki",
+    "slug": "myszki",
+    "name": "Myszki",
+    "h1": "Myszki",
+    "order": 2,
+    "intro": "Od 49 do 120 g. Każda ma podany zakres długości dłoni, dla której jest projektowana."
+  },
+  {
+    "id": "podkladki",
+    "slug": "podkladki",
+    "name": "Podkładki",
+    "h1": "Podkładki i maty na biurko",
+    "order": 3,
+    "intro": "Pod samą myszkę (M, L) albo na całe biurko (XL, XXL). Kreator setu sprawdzi, czy zmieszczą klawiaturę i ruch myszki."
+  }
+]

@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Taktyl · podgląd systemu</title>
+<!-- W sklepie font wczytuje się z <link rel="preload" as="font" crossorigin>. Tu go nie ma, bo plik otwierany z dysku (file://) blokuje takie żądanie. -->
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+/* Podgląd korzysta wyłącznie z tokenów z ../assets/tokens.css. Jedyne kolory spoza tokenów to próbki produktów (dane). */
+html.bez-ruchu{ --d-klik:0ms; --d-s:0ms; --d-m:0ms; --d-l:0ms; --d-scena:0ms; }
+html.bez-ruchu *, html.bez-ruchu *::before, html.bez-ruchu *::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:var(--font); font-size:var(--t-m); line-height:var(--lh-tekst); color:var(--tekst); background:var(--tlo); }
+:focus-visible{ outline:3px solid var(--fokus); outline-offset:2px; }
+.wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--s3); }
+h1,h2,h3{ font-stretch:var(--szer-naglowek); font-weight:var(--w-mocna); line-height:var(--lh-naglowek); letter-spacing:var(--tracking-naglowek); margin:0 0 var(--s2); text-wrap:balance; }
+h1{ font-size:var(--t-3xl); line-height:1.05; }
+h2{ font-size:var(--t-xl); }
+h3{ font-size:var(--t-l); font-stretch:var(--szer-tekst); letter-spacing:0; }
+p{ margin:0 0 var(--s2); max-width:var(--max-tekst); text-wrap:pretty; }
+.slaby{ color:var(--tekst-slaby); }
+.maly{ font-size:var(--t-xs); }
+.ui{ font-size:var(--t-s); }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+section{ padding:var(--s5) 0; }
+section + section{ border-top:1px solid var(--linia); }
+.sekcja--mod{ border-top:0 !important; }
+
+/* pasek demo + nagłówek */
+.pasek-demo{ background:var(--tlo-alt); font-size:var(--t-xs); padding:var(--s1) 0; color:var(--tekst-slaby); }
+.naglowek{ position:sticky; top:0; z-index:var(--z-naglowek); background:var(--powierzchnia); border-bottom:1px solid var(--linia); }
+.naglowek .wrap{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2) var(--s3); min-height:72px; padding-top:var(--s1); padding-bottom:var(--s1); }
+@media (max-width:599px){ .szukaj{ order:3; flex-basis:100%; max-width:none; } .naglowek .wrap{ gap:var(--s1) var(--s2); } }
+.logo{ display:inline-flex; align-items:center; min-height:var(--cel-min); font-stretch:var(--szer-naglowek); font-weight:var(--w-mocna); font-size:var(--t-l); letter-spacing:-0.02em; color:var(--tekst); text-decoration:none; }
+.szukaj{ flex:1; position:relative; max-width:420px; }
+.szukaj input{ width:100%; }
+.szukaj kbd{ position:absolute; right:var(--s1); top:50%; transform:translateY(-50%); }
+.szukaj kbd.is-wcisniety{ transform:translateY(calc(-50% + 1px)); box-shadow:inset 0 -1px 0 var(--linia-pola); }
+.koszyk-btn{ position:relative; }
+.licznik{ position:absolute; top:-6px; right:-6px; min-width:22px; height:22px; padding:0 6px; border-radius:var(--r-pelny); background:var(--akcent); color:var(--akcent-tekst); font-size:var(--t-xs); font-weight:var(--w-mocna); display:grid; place-items:center; }
+.licznik.podskok{ animation:podskok var(--d-m) var(--e-osadzenie); }
+@keyframes podskok{ 50%{ transform:scale(1.25); } }
+.menu{ position:relative; }
+.menu__lista{ position:absolute; top:calc(100% + var(--s1)); left:0; z-index:var(--z-menu); min-width:240px; background:var(--powierzchnia); border-radius:var(--r); box-shadow:var(--cien-2); padding:var(--s1); list-style:none; margin:0;
+  opacity:0; transform:translateY(-4px); pointer-events:none; transition:opacity var(--d-s) var(--e-wejscie), transform var(--d-s) var(--e-wejscie); }
+.menu.is-otwarte .menu__lista{ opacity:1; transform:none; pointer-events:auto; transition-timing-function:var(--e-wyjscie); }
+.menu__lista a{ display:block; padding:var(--s1) var(--s2); color:var(--tekst); text-decoration:none; border-radius:var(--r); min-height:var(--cel-min); }
+.menu__lista a:hover{ background:var(--tlo-alt); }
+
+/* elementy podstawowe */
+input[type=text], input[type=search], input[type=number]{ font:inherit; font-size:var(--t-s); height:48px; padding:0 var(--s2); border:1px solid var(--linia-pola); border-radius:var(--r); background:var(--powierzchnia); color:var(--tekst); }
+kbd{ display:inline-grid; place-items:center; min-width:28px; height:28px; padding:0 var(--s1); font:inherit; font-size:var(--t-xs); font-weight:var(--w-mocna); font-stretch:var(--szer-naglowek);
+  background:var(--powierzchnia); color:var(--tekst); border:1px solid var(--linia-pola); border-radius:var(--r); box-shadow:inset 0 -2px 0 var(--linia-pola); transition:transform var(--d-klik) var(--e-wyjscie), box-shadow var(--d-klik) var(--e-wyjscie); }
+.btn{ font:inherit; font-size:var(--t-s); font-weight:var(--w-mocna); min-height:48px; padding:0 var(--s3); border-radius:var(--r); border:0; cursor:pointer; display:inline-flex; align-items:center; gap:var(--s1); text-decoration:none;
+  transition:transform var(--d-klik) var(--e-wyjscie), box-shadow var(--d-klik) var(--e-wyjscie), background-color var(--d-s) var(--e-wyjscie); }
+.btn-glowny{ background:var(--akcent); color:var(--akcent-tekst); box-shadow:var(--krawedz-klawisza); }
+.btn-glowny:hover{ background:var(--akcent-hover); }
+.btn-glowny:active, .btn-glowny.is-wcisniety{ transform:translateY(2px); box-shadow:var(--krawedz-klawisza-wcisniety); }
+.btn-poboczny{ background:var(--powierzchnia); color:var(--tekst); border:1px solid var(--linia-pola); box-shadow:var(--krawedz-klawisza-pob); }
+.btn-poboczny:active, .btn-poboczny.is-wcisniety{ transform:translateY(2px); box-shadow:var(--krawedz-klawisza-pob-wcisniety); }
+.btn[disabled]{ background:var(--linia); color:var(--tekst-slaby); box-shadow:none; cursor:not-allowed; border-color:transparent; }
+.btn-ikona{ min-width:var(--cel-min); min-height:var(--cel-min); padding:0 var(--s1); }
+.ikona{ flex:none; width:24px; height:24px; border:1px dashed currentColor; border-radius:var(--r); display:inline-grid; place-items:center; font-size:var(--t-xs); line-height:1; font-weight:var(--w-mocna); opacity:.8; }
+.rzad{ display:flex; flex-wrap:wrap; gap:var(--s2); align-items:center; }
+a{ color:var(--akcent); }
+
+/* paleta */
+.paleta{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:var(--s2); }
+.probka{ border-radius:var(--r); overflow:hidden; background:var(--powierzchnia); border:1px solid var(--linia); }
+.probka__kolor{ height:88px; border-bottom:1px solid var(--linia); display:flex; align-items:flex-end; padding:var(--s1); font-size:var(--t-xs); font-weight:var(--w-mocna); }
+.probka__opis{ padding:var(--s1) var(--s2) var(--s2); font-size:var(--t-xs); }
+.probka__opis code{ font-size:var(--t-xs); }
+.tabela{ width:100%; border-collapse:collapse; font-size:var(--t-s); }
+.tabela th, .tabela td{ text-align:left; padding:var(--s1) var(--s2) var(--s1) 0; border-bottom:1px solid var(--linia); }
+.tabela th{ font-weight:var(--w-zwykla); color:var(--tekst-slaby); }
+.ok{ color:var(--sukces); font-weight:var(--w-mocna); }
+.zle{ color:var(--blad); font-weight:var(--w-mocna); }
+
+/* typografia */
+.skala > div{ display:grid; grid-template-columns:120px 1fr; gap:var(--s2); align-items:baseline; padding:var(--s1) 0; border-bottom:1px solid var(--linia); }
+.skala > div > span{ min-width:0; }
+@media (max-width:599px){ .skala > div{ grid-template-columns:minmax(0, 1fr); gap:var(--s1); } }
+.cena{ font-stretch:var(--szer-naglowek); font-weight:var(--w-mocna); font-variant-numeric:tabular-nums; }
+
+/* karta produktu */
+.siatka{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:var(--s3); }
+.karta{ position:relative; background:var(--powierzchnia); border-radius:var(--r); overflow:hidden; }
+.karta:focus-within{ outline:3px solid var(--fokus); outline-offset:2px; }
+.karta__foto{ position:relative; aspect-ratio:1; background:var(--tlo-alt); overflow:hidden; }
+.foto-ph{ position:absolute; inset:0; display:grid; place-content:center; text-align:center; font-size:var(--t-xs); color:var(--tekst-slaby); padding:var(--s2); }
+.foto-ph--2{ background:var(--tlo-alt); opacity:0; transition:opacity var(--d-m) var(--e-wyjscie); }
+.szybko{ position:absolute; left:var(--s1); right:var(--s1); bottom:var(--s1); transform:translateY(calc(100% + var(--s1))); transition:transform var(--d-s) var(--e-wyjscie); justify-content:center; }
+@media (hover:hover) and (pointer:fine){
+  .karta:hover .foto-ph--2{ opacity:1; }
+  .karta:hover .szybko, .karta:focus-within .szybko{ transform:none; }
+}
+@media not ((hover:hover) and (pointer:fine)){ .szybko{ position:static; transform:none; margin:var(--s1); } }
+.karta__tresc{ padding:var(--s2); }
+.karta__nazwa{ font-size:var(--t-l); font-weight:var(--w-mocna); line-height:1.25; margin:0 0 var(--s1); }
+.karta__nazwa a{ color:var(--tekst); text-decoration:none; }
+.karta__nazwa a::after{ content:""; position:absolute; inset:0; }
+.karta .btn-ikona{ z-index:1; }
+.szybko{ z-index:1; }
+.parametry{ display:flex; flex-wrap:wrap; gap:var(--s1); font-size:var(--t-xs); color:var(--tekst-slaby); margin:0 0 var(--s1); padding:0; list-style:none; }
+.cena-blok{ display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--s1); }
+.cena-blok .cena{ font-size:var(--t-l); }
+.cena--promo{ color:var(--akcent); }
+.cena--stara{ font-size:var(--t-s); color:var(--tekst-slaby); text-decoration:line-through; }
+.omnibus{ font-size:var(--t-xs); color:var(--tekst-slaby); margin:var(--s1) 0 0; }
+.plakietki{ position:absolute; top:var(--s1); left:var(--s1); display:flex; gap:var(--s1); z-index:1; }
+.plakietka{ border-radius:var(--r-pelny); padding:2px var(--s1); font-size:var(--t-xs); font-weight:var(--w-mocna); }
+.plakietka--promo{ background:var(--akcent-slaby); color:var(--akcent); }
+.plakietka--nowosc{ background:var(--tekst); color:var(--tlo); }
+.plakietka--ostatnie{ background:var(--uwaga-tlo); color:var(--uwaga); }
+.ulubione{ position:absolute !important; top:var(--s1); right:var(--s1); background:var(--powierzchnia); border-radius:var(--r-pelny); }
+.ulubione[aria-pressed="true"] .ikona{ background:var(--akcent); color:var(--akcent-tekst); border-style:solid; }
+.ulubione.pop .ikona{ animation:pop var(--d-m) var(--e-osadzenie); }
+@keyframes pop{ 50%{ transform:scale(1.3); } }
+.kolory{ display:flex; gap:var(--s1); margin:var(--s1) 0; }
+.kolor{ width:28px; height:28px; border-radius:var(--r-pelny); border:1px solid var(--linia-pola); background:var(--probka); }
+
+/* kreator */
+.kreator{ display:grid; grid-template-columns:minmax(0, 3fr) minmax(0, 2fr); gap:var(--s4); align-items:start; }
+@media (max-width:991px){ .kreator{ grid-template-columns:minmax(0, 1fr); } }
+.kroki{ position:relative; height:6px; background:var(--linia); border-radius:var(--r-pelny); overflow:hidden; margin:0 0 var(--s3); }
+.kroki__pasek{ position:absolute; inset:0; background:var(--akcent); transform-origin:left; transform:scaleX(0); transition:transform var(--d-l) var(--e-wyjscie); }
+fieldset{ border:0; padding:0; margin:0 0 var(--s4); min-width:0; }
+legend{ font-stretch:var(--szer-naglowek); font-weight:var(--w-mocna); font-size:var(--t-l); margin-bottom:var(--s2); }
+.kafle{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:var(--s2); }
+.kafel{ position:relative; display:block; cursor:pointer; }
+.kafel input{ position:absolute; opacity:0; inset:0; margin:0; cursor:pointer; }
+.kafel__ramka{ display:block; height:100%; padding:var(--s2); background:var(--powierzchnia); border:1px solid var(--linia-pola); border-radius:var(--r);
+  transition:border-color var(--d-s) var(--e-wyjscie), background-color var(--d-s) var(--e-wyjscie), box-shadow var(--d-s) var(--e-wyjscie); }
+.kafel__nazwa{ display:block; font-weight:var(--w-mocna); }
+.kafel__opis{ display:block; font-size:var(--t-xs); color:var(--tekst-slaby); }
+.kafel__cena{ display:block; margin-top:var(--s1); font-size:var(--t-s); font-weight:var(--w-mocna); font-variant-numeric:tabular-nums; }
+.kafel input:checked + .kafel__ramka{ border-color:var(--akcent); background:var(--akcent-slaby); box-shadow:inset 0 0 0 1px var(--akcent); }
+.kafel input:focus-visible + .kafel__ramka{ outline:3px solid var(--fokus); outline-offset:2px; }
+.znacznik{ position:absolute; top:var(--s1); right:var(--s1); min-width:24px; height:24px; padding:0 6px; border-radius:var(--r-pelny); background:var(--akcent); color:var(--akcent-tekst); font-size:var(--t-xs); font-weight:var(--w-mocna); display:grid; place-items:center;
+  opacity:0; transform:scale(.6); transition:opacity var(--d-s) var(--e-wyjscie), transform var(--d-m) var(--e-osadzenie); }
+.kafel input:checked ~ .znacznik{ opacity:1; transform:none; }
+.zeton{ font:inherit; font-size:var(--t-s); min-height:var(--cel-min); padding:0 var(--s2); border-radius:var(--r-pelny); border:1px solid var(--linia-pola); background:var(--powierzchnia); color:var(--tekst); cursor:pointer; }
+.zeton[aria-pressed="true"]{ background:var(--akcent-slaby); border-color:var(--akcent); color:var(--tekst); }
+
+.podsumowanie{ position:sticky; top:96px; background:var(--powierzchnia); border-radius:var(--r); box-shadow:var(--cien-1); padding:var(--s3); }
+@media (max-width:991px){ .podsumowanie{ position:relative; top:0; } }
+.podsumowanie.is-komplet::before{ content:""; position:absolute; inset:-2px; border-radius:calc(var(--r) + 2px); padding:2px;
+  background:conic-gradient(from var(--kat), transparent 0 70%, var(--akcent) 85%, transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+  animation:obieg var(--d-scena) var(--e-wyjscie) 1 forwards; pointer-events:none; }
+@property --kat{ syntax:'<angle>'; inherits:false; initial-value:0deg; }
+@keyframes obieg{ from{ --kat:0deg; opacity:1; } 90%{ opacity:1; } to{ --kat:360deg; opacity:0; } }
+
+.scena{ position:relative; width:100%; overflow:hidden; border-radius:var(--r); background:var(--tlo-alt); margin-bottom:var(--s2); }
+.plotno{ position:absolute; top:0; left:0; transform-origin:0 0; }
+.plotno > *{ position:absolute; }
+.mata{ border-radius:4px; }
+.mata--brak{ border:2px dashed var(--linia-pola); display:grid; place-items:center; color:var(--tekst-slaby); }
+.ph-top{ overflow:hidden; background:var(--powierzchnia); border:2px dashed var(--linia-pola); display:grid; place-items:center; text-align:center; color:var(--tekst-slaby); filter:var(--cien-obiektu); line-height:1.2; }
+.ph-top, .mata--brak, .strefa span{ font-size:calc(var(--t-xs) / var(--s, 1)); }
+.scena__myszka{ writing-mode:vertical-rl; }
+.ph-top.bez-podpisu{ font-size:0 !important; }
+.strefa{ border:2px dashed var(--linia-pola); border-radius:var(--r); }
+.strefa span{ position:absolute; top:6px; left:6px; background:var(--powierzchnia); color:var(--tekst); padding:2px 6px; border-radius:var(--r); white-space:nowrap; }
+.strefa.is-uwaga{ border-color:var(--uwaga); }
+.strefa.is-uwaga span{ background:var(--uwaga-tlo); color:var(--uwaga); }
+.wchodzi{ animation:wejscie-elem var(--d-m) var(--e-osadzenie) both; }
+.wychodzi{ animation:wyjscie-elem var(--d-s) var(--e-wejscie) both; }
+@keyframes wejscie-elem{ from{ opacity:0; transform:translateY(-12px); } }
+@keyframes wyjscie-elem{ to{ opacity:0; transform:translateY(6px); } }
+.scena-start .scena__mata{ animation:mata-wejscie 400ms var(--e-wyjscie) both; }
+.scena-start .scena__klawiatura{ animation:opadanie 420ms var(--e-osadzenie) 120ms both; }
+.scena-start .scena__myszka{ animation:wjazd 380ms var(--e-osadzenie) 260ms both; }
+.scena-start .scena__strefa{ animation:pojawienie 220ms var(--e-wyjscie) 520ms both; }
+@keyframes mata-wejscie{ from{ transform:scale(.985); } }
+@keyframes opadanie{ from{ transform:translateY(-28px); } }
+@keyframes wjazd{ from{ transform:translateX(36px); } }
+@keyframes pojawienie{ from{ opacity:0; transform:translateY(4px); } }
+
+.wyniki{ min-height:112px; margin:0 0 var(--s2); }
+.wyniki__naglowek{ font-weight:var(--w-mocna); margin:0 0 var(--s1); }
+.wynik{ display:flex; gap:var(--s1); align-items:flex-start; font-size:var(--t-s); padding:var(--s1) var(--s2); border-radius:var(--r); margin-bottom:var(--s1); animation:pojawienie var(--d-s) var(--e-wyjscie) both; }
+.wynik--ok{ background:var(--sukces-tlo); color:var(--sukces); }
+.wynik--uwaga{ background:var(--uwaga-tlo); color:var(--uwaga); }
+.wynik--info{ background:var(--tlo-alt); color:var(--tekst-slaby); }
+.wynik .btn{ min-height:var(--cel-min); margin-top:var(--s1); }
+.kwoty{ display:grid; grid-template-columns:1fr auto; gap:var(--s1) var(--s2); font-size:var(--t-s); margin:0 0 var(--s2); }
+.kwoty dd{ margin:0; text-align:right; font-variant-numeric:tabular-nums; }
+.kwoty .razem{ font-size:var(--t-xl); }
+.kwoty dt.razem{ font-size:var(--t-l); align-self:baseline; }
+@media (max-width:399px){ .kwoty dd.razem{ font-size:var(--t-l); } .podsumowanie{ padding:var(--s2); } }
+.rabat-linia{ animation:pojawienie var(--d-m) var(--e-wyjscie) both; }
+
+/* szuflada, toast, pasek dostawy */
+.tlo-nakladki{ position:fixed; inset:0; background:var(--nakladka); z-index:var(--z-nakladka); opacity:0; pointer-events:none; transition:opacity var(--d-s) var(--e-wejscie); }
+.szuflada{ position:fixed; top:0; right:0; height:100dvh; width:min(420px, 100%); background:var(--powierzchnia); box-shadow:var(--cien-2); z-index:var(--z-nakladka); padding:var(--s3);
+  transform:translateX(100%); transition:transform var(--d-s) var(--e-wejscie); display:flex; flex-direction:column; gap:var(--s2); }
+.is-szuflada .tlo-nakladki{ opacity:1; pointer-events:auto; transition-timing-function:var(--e-wyjscie); transition-duration:var(--d-m); }
+.is-szuflada .szuflada{ transform:none; transition-duration:var(--d-m); transition-timing-function:var(--e-wyjscie); }
+.dostawa{ height:8px; background:var(--linia); border-radius:var(--r-pelny); overflow:hidden; }
+.dostawa__pasek{ height:100%; background:var(--sukces); transform-origin:left; transform:scaleX(0); transition:transform var(--d-l) var(--e-wyjscie); }
+.toasty{ position:fixed; right:var(--s3); bottom:var(--s3); z-index:var(--z-toast); display:grid; gap:var(--s1); }
+.toast{ padding:var(--s2) var(--s3); border-radius:var(--r); box-shadow:var(--cien-2); font-size:var(--t-s); animation:toast-in var(--d-m) var(--e-wyjscie) both; }
+.toast.znika{ animation:toast-out var(--d-s) var(--e-wejscie) both; }
+@keyframes toast-in{ from{ opacity:0; transform:translateY(16px); } }
+@keyframes toast-out{ to{ opacity:0; } }
+
+/* sortowanie z przejściem */
+.mini-siatka{ display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:var(--s2); margin-top:var(--s2); }
+.mini{ background:var(--powierzchnia); border-radius:var(--r); padding:var(--s2); font-size:var(--t-s); }
+::view-transition-group(*){ animation-duration:var(--d-m); animation-timing-function:var(--e-wyjscie); }
+
+.pasek-demo .wrap{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--s1); }
+.szuflada[hidden]{ display:none; }
+.przewin{ overflow-x:auto; }
+.tabela code{ word-break:break-word; }
+</style>
+</head>
+<body>
+<a class="sr" href="#tresc">Przejdź do treści</a>
+<div class="pasek-demo"><div class="wrap"><span>Podgląd systemu designu Taktyl — plik roboczy, nie strona sklepu. Taktyl to sklep demonstracyjny.</span><button class="btn btn-poboczny" id="ruch" aria-pressed="false">Ogranicz ruch: wył.</button></div></div>
+<header class="naglowek">
+  <div class="wrap">
+    <a class="logo" href="#">taktyl</a>
+    <div class="menu" id="menu">
+      <button class="btn btn-poboczny" aria-expanded="false" aria-controls="menu-lista" id="menu-btn">Klawiatury</button>
+      <ul class="menu__lista" id="menu-lista">
+        <li><a href="#">60–65%</a></li><li><a href="#">Bezprzewodowe</a></li><li><a href="#">Ciche</a></li><li><a href="#">Wszystkie klawiatury</a></li>
+      </ul>
+    </div>
+    <label class="szukaj"><span class="sr">Szukaj</span><input type="search" id="szukaj" placeholder="Szukaj: lupek, tkl, cicha"><kbd id="kbd-slash" aria-hidden="true">/</kbd></label>
+    <button class="btn btn-ikona btn-poboczny koszyk-btn" id="koszyk-btn" aria-label="Koszyk, 0 produktów"><span class="ikona" aria-hidden="true">ik</span><span class="licznik" id="licznik">0</span></button>
+  </div>
+</header>
+
+<main id="tresc">
+<section>
+  <div class="wrap">
+    <h1>Złóż set, który pasuje do biurka i&nbsp;dłoni.</h1>
+    <p class="slaby">Podgląd tokenów, komponentów i mikroanimacji z <code>docs/06</code> i <code>docs/07</code>. Wszystko na tej stronie bierze wartości z <code>assets/tokens.css</code>. Prostokąty z przerywaną linią to placeholdery w prawdziwych wymiarach — w sklepie zastąpią je zdjęcia.</p>
+    <div class="rzad">
+      <a class="btn btn-glowny" href="#kreator">Zbuduj set</a>
+      <a class="btn btn-poboczny" href="#karty">Gotowe sety</a>
+      <button class="btn btn-glowny" disabled>Nieaktywny</button>
+      <span class="ui slaby">Naciśnij <kbd>/</kbd>, żeby przejść do wyszukiwarki (A-17).</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Paleta: zestaw keycapów</h2>
+    <p class="slaby">Alfy to powierzchnie, mody to tekst i sekcje ciemne, Enter (kobalt) to jedyny akcent — tylko dla działania i ceny. Kontrasty liczone na żywo z wartości tokenów.</p>
+    <div class="paleta" id="paleta"></div>
+    <h3 style="margin-top:var(--s4)">Kontrasty (WCAG 2.1)</h3>
+    <div class="przewin"><table class="tabela" id="kontrasty"><thead><tr><th>Para</th><th>Jasny</th><th>Ciemny</th><th>Próg</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Typografia: Archivo, dwie szerokości</h2>
+    <div class="skala" id="skala"></div>
+  </div>
+</section>
+
+<section id="karty">
+  <div class="wrap">
+    <h2>Karta produktu</h2>
+    <p class="slaby">Najechanie kursorem: drugie ujęcie i „Szybko dodaj” (A-09). Dodanie: przycisk, licznik i szuflada (A-03), toast (A-15), pasek darmowej dostawy (A-11). Ulubione: A-10.</p>
+    <div class="siatka">
+      <article class="karta">
+        <div class="karta__foto">
+          <div class="foto-ph">Granit TKL · Grafit<br>zdjęcie w przygotowaniu</div>
+          <div class="foto-ph foto-ph--2">Granit TKL · Grafit<br>ujęcie 2: widok z góry</div>
+          <div class="plakietki"><span class="plakietka plakietka--promo">−14%</span></div>
+          <button class="btn btn-ikona ulubione" aria-pressed="false" aria-label="Dodaj do ulubionych: Granit TKL"><span class="ikona" aria-hidden="true">ik</span></button>
+          <button class="btn btn-glowny szybko" data-dodaj="Granit TKL" data-cena="59900">Szybko dodaj</button>
+        </div>
+        <div class="karta__tresc">
+          <h3 class="karta__nazwa"><a href="#">Granit TKL</a></h3>
+          <ul class="parametry"><li>TKL</li><li>· 2,4&nbsp;GHz, przewód</li><li>· 4 przełączniki</li></ul>
+          <div class="kolory"><span class="kolor" style="--probka:#2B3038" title="Grafit"></span><span class="kolor" style="--probka:#D9DDE2" title="Mgła"></span><span class="sr">Dostępne kolory: Grafit, Mgła</span></div>
+          <div class="cena-blok"><span class="cena cena--promo">599,00&nbsp;zł</span><span class="cena--stara">699,00&nbsp;zł</span></div>
+          <p class="omnibus">Najniższa cena z 30 dni przed obniżką: 699,00&nbsp;zł</p>
+        </div>
+      </article>
+      <article class="karta">
+        <div class="karta__foto">
+          <div class="foto-ph">Jerzyk · Mgła<br>zdjęcie w przygotowaniu</div>
+          <div class="foto-ph foto-ph--2">Jerzyk · Mgła<br>ujęcie 2: profil z boku</div>
+          <div class="plakietki"><span class="plakietka plakietka--ostatnie">Ostatnie sztuki</span></div>
+          <button class="btn btn-ikona ulubione" aria-pressed="false" aria-label="Dodaj do ulubionych: Jerzyk"><span class="ikona" aria-hidden="true">ik</span></button>
+          <button class="btn btn-glowny szybko" data-dodaj="Jerzyk" data-cena="44900">Szybko dodaj</button>
+        </div>
+        <div class="karta__tresc">
+          <h3 class="karta__nazwa"><a href="#">Jerzyk</a></h3>
+          <ul class="parametry"><li>49&nbsp;g</li><li>· symetryczna</li><li>· dłoń 18–20,5&nbsp;cm</li></ul>
+          <div class="kolory"><span class="kolor" style="--probka:#2B3038" title="Grafit"></span><span class="kolor" style="--probka:#D9DDE2" title="Mgła"></span><span class="sr">Dostępne kolory: Grafit, Mgła</span></div>
+          <div class="cena-blok"><span class="cena">449,00&nbsp;zł</span></div>
+        </div>
+      </article>
+      <article class="karta">
+        <div class="karta__foto">
+          <div class="foto-ph">Bazalt 75 · Kobalt<br>zdjęcie w przygotowaniu</div>
+          <div class="foto-ph foto-ph--2">Bazalt 75 · Kobalt<br>ujęcie 2: widok z góry</div>
+          <div class="plakietki"><span class="plakietka plakietka--nowosc">Nowość</span></div>
+          <button class="btn btn-ikona ulubione" aria-pressed="false" aria-label="Dodaj do ulubionych: Bazalt 75"><span class="ikona" aria-hidden="true">ik</span></button>
+          <button class="btn btn-glowny szybko" data-dodaj="Bazalt 75" data-cena="74900">Szybko dodaj</button>
+        </div>
+        <div class="karta__tresc">
+          <h3 class="karta__nazwa"><a href="#">Bazalt 75</a></h3>
+          <ul class="parametry"><li>75%</li><li>· aluminium</li><li>· 3 tryby łączności</li></ul>
+          <div class="kolory"><span class="kolor" style="--probka:#2B3038" title="Grafit"></span><span class="kolor" style="--probka:#D9DDE2" title="Mgła"></span><span class="kolor" style="--probka:#2B4FD6" title="Kobalt"></span><span class="sr">Dostępne kolory: Grafit, Mgła, Kobalt</span></div>
+          <div class="cena-blok"><span class="cena">od 749,00&nbsp;zł</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="maly slaby" style="margin-top:var(--s2)">Kwadraty „ik” to miejsca na ikony z zestawu szablonu — podgląd ich nie rysuje.</p>
+  </div>
+</section>
+
+<section id="kreator">
+  <div class="wrap">
+    <h2>Kreator setu (wycinek)</h2>
+    <p class="slaby">Prawdziwe wymiary z <code>data/products.json</code>, skala 1&nbsp;px = 1&nbsp;mm. Na start: A-02 (set ląduje na biurku). Zmiana elementu: A-06. Cena: A-04. Komplet po wyborze podkładki: A-16. Spróbuj: profil FPS + Tafla M, albo Marmur 100 + profil FPS + Szron XL.</p>
+    <div class="kreator">
+      <div>
+        <div class="kroki" aria-hidden="true"><div class="kroki__pasek" id="kroki"></div></div>
+        <fieldset><legend>Do czego?</legend><div class="rzad" id="profile"></div></fieldset>
+        <fieldset><legend>Klawiatura</legend><div class="kafle" id="k-kafle"></div></fieldset>
+        <fieldset><legend>Myszka</legend><div class="kafle" id="m-kafle"></div></fieldset>
+        <fieldset><legend>Podkładka</legend><div class="kafle" id="p-kafle"></div><p style="margin-top:var(--s2)"><button class="btn btn-poboczny" id="bez-podkladki">Usuń podkładkę z setu</button></p></fieldset>
+      </div>
+      <aside class="podsumowanie" id="podsumowanie" aria-labelledby="pods-h">
+        <h3 id="pods-h">Twój set</h3>
+        <div class="scena" id="scena"><div class="plotno" id="plotno" role="img" aria-label=""></div></div>
+        <div class="wyniki" id="wyniki" aria-live="polite"></div>
+        <dl class="kwoty" id="kwoty"></dl>
+        <span class="sr" data-kwota-live aria-live="polite" id="kwota-live"></span>
+        <div class="rzad"><button class="btn btn-glowny" id="set-do-koszyka">Dodaj set do koszyka</button><button class="btn btn-poboczny" id="powtorz">Powtórz A-02</button></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Przejście siatki przy sortowaniu (A-14)</h2>
+    <div class="rzad"><button class="zeton" aria-pressed="true" data-sort="asc">Cena rosnąco</button><button class="zeton" aria-pressed="false" data-sort="desc">Cena malejąco</button></div>
+    <div class="mini-siatka" id="mini"></div>
+  </div>
+</section>
+
+<section class="sekcja--mod">
+  <div class="wrap">
+    <h2>Sekcja ciemna („mody”)</h2>
+    <p>Ta sama nazwa tokenów, inne wartości. Akcent i fokus przełączają się na jasny kobalt — przejdź tu klawiszem Tab i sprawdź obrys.</p>
+    <div class="rzad">
+      <button class="btn btn-glowny">Zbuduj set</button>
+      <button class="btn btn-poboczny">Gotowe sety</button>
+      <button class="zeton" aria-pressed="true">Ciche</button>
+      <button class="zeton" aria-pressed="false">Do gier</button>
+      <a href="#">Odnośnik w sekcji ciemnej</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="tlo-nakladki" id="tlo"></div>
+<aside class="szuflada" id="szuflada" role="dialog" aria-modal="true" aria-labelledby="szuflada-h" hidden>
+  <h2 id="szuflada-h" tabindex="-1" style="font-size:var(--t-xl)">Koszyk</h2>
+  <p class="ui" id="dostawa-tekst"></p>
+  <div class="dostawa"><div class="dostawa__pasek" id="dostawa"></div></div>
+  <ul id="lista-koszyka" class="ui" style="padding-left:var(--s3); margin:0"></ul>
+  <p class="ui"><strong>Razem: <span class="cena" id="koszyk-razem">0,00 zł</span></strong></p>
+  <div class="rzad"><button class="btn btn-glowny">Przejdź do zamówienia</button><button class="btn btn-poboczny" id="zamknij">Zamknij</button></div>
+</aside>
+<div class="toasty" id="toasty" role="status" aria-live="polite"></div>
+
+<script>
+// ---------- dane (wycinek z data/*.json) ----------
+const PROFILE = { programowanie:{ label:'Programowanie', zone:220 }, fps:{ label:'Gry FPS, niski sens', zone:400 } };
+const K = [
+  { id:'k-kwarc-60', name:'Kwarc 60', w:293, d:102, price:29900, opis:'60% · 29,3 cm' },
+  { id:'k-bazalt-75', name:'Bazalt 75', w:327, d:140, price:74900, opis:'75% · 32,7 cm' },
+  { id:'k-marmur-100', name:'Marmur 100', w:440, d:135, price:34900, opis:'100% · 44 cm' },
+];
+const M = [
+  { id:'m-jerzyk', name:'Jerzyk', w:63, d:120, price:44900, opis:'49 g · dłoń 18–20,5 cm' },
+  { id:'m-pustulka', name:'Pustułka', w:66, d:126, price:39900, opis:'62 g · dłoń 19–21,5 cm' },
+];
+const P = [
+  { id:'p-tafla-m', name:'Tafla M', w:360, d:300, type:'mysz', price:6900, swatch:'#2B4FD6', kolor:'Kobalt' },
+  { id:'p-tafla-l', name:'Tafla L', w:450, d:400, type:'mysz', price:9900, swatch:'#2B4FD6', kolor:'Kobalt' },
+  { id:'p-szron-xl', name:'Szron XL', w:900, d:400, type:'biurko', price:18900, swatch:'#2B3038', kolor:'Grafit' },
+  { id:'p-tafla-xxl', name:'Tafla XXL', w:1200, d:500, type:'biurko', price:21900, swatch:'#2B4FD6', kolor:'Kobalt', fit:{ fps:2, programowanie:2 } },
+  { id:'p-filc-xxl', name:'Filc XXL', w:1200, d:500, type:'biurko', price:17900, swatch:'#D9DDE2', kolor:'Mgła', fit:{ fps:0, programowanie:2 } },
+];
+const GAP = 30, MARGIN = 20;
+const stan = { profil:'programowanie', k:'k-bazalt-75', m:'m-pustulka', p:'p-szron-xl' };
+
+// ---------- narzędzia ----------
+const zl = new Intl.NumberFormat('pl-PL', { style:'currency', currency:'PLN' });
+const cm = mm => (mm / 10).toLocaleString('pl-PL', { maximumFractionDigits:1 });
+const pr = new Intl.PluralRules('pl');
+const odm = (n, f) => `${n} ${f[pr.select(n)] || f.many}`;
+const $ = s => document.querySelector(s);
+const bezRuchu = () => document.documentElement.classList.contains('bez-ruchu') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+const znajdz = (lista, id) => lista.find(x => x.id === id) || null;
+
+// ---------- paleta i kontrasty ----------
+const TOKENY = [
+  ['--tlo','tło strony (alfa)'], ['--tlo-alt','sekcje, tło zdjęć'], ['--powierzchnia','karty, pola'],
+  ['--tekst','tekst (mod)'], ['--tekst-slaby','tekst pomocniczy'], ['--akcent','Enter: działanie i cena'],
+  ['--akcent-slaby','wybrany kafel'], ['--linia-pola','obrysy pól'], ['--sukces','stan: ok'], ['--uwaga','stan: uwaga'], ['--blad','stan: błąd'],
+];
+function lum(rgb){ const c = rgb.match(/\d+(\.\d+)?/g).slice(0,3).map(Number).map(v => { v/=255; return v <= .03928 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4); }); return .2126*c[0] + .7152*c[1] + .0722*c[2]; }
+function cr(a, b){ const x = lum(a), y = lum(b); return (Math.max(x,y) + .05) / (Math.min(x,y) + .05); }
+function kolorTokenu(el, t){ const p = document.createElement('span'); p.style.color = `var(${t})`; el.appendChild(p); const c = getComputedStyle(p).color; p.remove(); return c; }
+function rysujPalete(){
+  const box = $('#paleta');
+  TOKENY.forEach(([t, rola]) => {
+    const d = document.createElement('div'); d.className = 'probka';
+    const ciemnyTekst = ['--tlo','--tlo-alt','--powierzchnia','--akcent-slaby'].includes(t);
+    d.innerHTML = `<div class="probka__kolor" style="background:var(${t}); color:var(${ciemnyTekst ? '--tekst' : '--powierzchnia'})">${t}</div><div class="probka__opis"><strong>${rola}</strong><br><code></code></div>`;
+    box.appendChild(d);
+    d.querySelector('code').textContent = getComputedStyle(document.documentElement).getPropertyValue(t).trim();
+  });
+  const ciemna = document.querySelector('.sekcja--mod');
+  const PARY = [ ['--tekst','--tlo',4.5], ['--tekst-slaby','--powierzchnia',4.5], ['--akcent-tekst','--akcent',4.5], ['--akcent','--tlo',4.5], ['--linia-pola','--powierzchnia',3], ['--uwaga','--uwaga-tlo',4.5] ];
+  const tb = $('#kontrasty tbody');
+  PARY.forEach(([a, b, prog]) => {
+    const j = cr(kolorTokenu(document.body, a), kolorTokenu(document.body, b));
+    const c = cr(kolorTokenu(ciemna, a), kolorTokenu(ciemna, b));
+    const f = v => `<span class="${v >= prog ? 'ok' : 'zle'}">${v.toFixed(2).replace('.', ',')}</span>`;
+    tb.insertAdjacentHTML('beforeend', `<tr><td><code>${a}</code> na <code>${b}</code></td><td>${f(j)}</td><td>${f(c)}</td><td>${String(prog).replace('.', ',')}</td></tr>`);
+  });
+}
+
+// ---------- typografia ----------
+function rysujSkale(){
+  const S = [ ['--t-3xl','H1 pierwszego ekranu','125%',700,'Złóż set, który pasuje'], ['--t-2xl','H1 podstrony','125%',700,'Klawiatury mechaniczne'],
+    ['--t-xl','H2 · cena na karcie produktu','125%',700,'1203,30 zł'], ['--t-l','H3 · nazwa · wprowadzenie','100%',700,'Bazalt 75 — aluminiowa 75% z pokrętłem'],
+    ['--t-m','tekst podstawowy','100%',400,'Zostaje rząd F, znika blok nawigacji: klawiatura jest o 3,3 cm węższa od TKL. Zażółć gęślą jaźń.'],
+    ['--t-s','interfejs, przyciski','100%',700,'Dodaj do koszyka · Dodaj do setu'], ['--t-xs','metadane, plakietki','100%',400,'Najniższa cena z 30 dni przed obniżką: 699,00 zł'] ];
+  const box = $('#skala');
+  S.forEach(([t, rola, sz, w, txt]) => box.insertAdjacentHTML('beforeend', `<div><span class="maly slaby"><code>${t}</code><br>${rola}</span><span style="font-size:var(${t}); font-stretch:${sz}; font-weight:${w}; line-height:1.2">${txt}</span></div>`));
+}
+
+// ---------- koszyk, toast, szuflada ----------
+const koszyk = [];
+let ostatniFokus = null;
+function toast(tekst){
+  const t = document.createElement('div'); t.className = 'toast sekcja--mod'; t.textContent = tekst;
+  $('#toasty').appendChild(t);
+  setTimeout(() => { t.classList.add('znika'); t.addEventListener('animationend', () => t.remove(), { once:true }); if (bezRuchu()) t.remove(); }, 4000);
+}
+function otworzSzuflade(){
+  ostatniFokus = document.activeElement;
+  const s = $('#szuflada'); s.hidden = false;
+  requestAnimationFrame(() => { document.body.classList.add('is-szuflada'); $('#szuflada-h').focus(); });
+  const suma = koszyk.reduce((a, x) => a + x.cena, 0), prog = 29900;
+  $('#lista-koszyka').innerHTML = koszyk.map(x => `<li>${x.nazwa} — ${zl.format(x.cena/100)}</li>`).join('');
+  $('#koszyk-razem').textContent = zl.format(suma/100);
+  $('#dostawa-tekst').textContent = suma >= prog ? 'Masz darmową dostawę.' : `Brakuje ${zl.format((prog - suma)/100)} do darmowej dostawy.`;
+  requestAnimationFrame(() => { $('#dostawa').style.transform = `scaleX(${Math.min(1, suma/prog)})`; });
+}
+function zamknijSzuflade(){
+  document.body.classList.remove('is-szuflada');
+  setTimeout(() => { $('#szuflada').hidden = true; }, bezRuchu() ? 0 : 220);
+  ostatniFokus?.focus();
+}
+function dodaj(nazwa, cena, przycisk){
+  koszyk.push({ nazwa, cena });
+  const l = $('#licznik'); l.textContent = koszyk.length; $('#koszyk-btn').setAttribute('aria-label', `Koszyk, ${odm(koszyk.length, {one:'produkt', few:'produkty', many:'produktów'})}`);
+  l.classList.remove('podskok'); void l.offsetWidth; l.classList.add('podskok');
+  if (przycisk){ const t = przycisk.textContent; przycisk.textContent = 'Dodano'; setTimeout(() => przycisk.textContent = t, 1200); }
+  toast('Dodano do koszyka');
+  otworzSzuflade();
+}
+document.addEventListener('click', e => {
+  const d = e.target.closest('[data-dodaj]'); if (d) dodaj(d.dataset.dodaj, Number(d.dataset.cena), d);
+  const u = e.target.closest('.ulubione');
+  if (u){ const on = u.getAttribute('aria-pressed') !== 'true'; u.setAttribute('aria-pressed', on); if (on){ u.classList.remove('pop'); void u.offsetWidth; u.classList.add('pop'); toast('Dodano do ulubionych'); } else toast('Usunięto z ulubionych'); }
+});
+$('#zamknij').addEventListener('click', zamknijSzuflade);
+$('#tlo').addEventListener('click', zamknijSzuflade);
+$('#koszyk-btn').addEventListener('click', otworzSzuflade);
+
+// ---------- A-01 przy klawiaturze, A-17, skróty, menu ----------
+document.addEventListener('keydown', e => {
+  const b = e.target.closest?.('.btn-glowny, .btn-poboczny');
+  if (b && (e.key === 'Enter' || e.key === ' ')){ b.classList.add('is-wcisniety'); setTimeout(() => b.classList.remove('is-wcisniety'), 90); }
+  const wPolu = e.target.matches('input, textarea, [contenteditable]');
+  if (e.key === '/' && !wPolu){ e.preventDefault(); const k = $('#kbd-slash'); k.classList.add('is-wcisniety'); setTimeout(() => k.classList.remove('is-wcisniety'), 90); $('#szukaj').focus(); }
+  if (e.key === 'Escape'){ if (document.body.classList.contains('is-szuflada')) zamknijSzuflade(); zamknijMenu(); }
+  if (e.key === 'Tab' && document.body.classList.contains('is-szuflada')){
+    const f = [...$('#szuflada').querySelectorAll('button, [href], input, [tabindex="-1"]')]; const pierwszy = f[0], ostatni = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === pierwszy){ e.preventDefault(); ostatni.focus(); }
+    else if (!e.shiftKey && document.activeElement === ostatni){ e.preventDefault(); pierwszy.focus(); }
+  }
+});
+function zamknijMenu(){ $('#menu').classList.remove('is-otwarte'); $('#menu-btn').setAttribute('aria-expanded', 'false'); }
+$('#menu-btn').addEventListener('click', () => { const o = $('#menu').classList.toggle('is-otwarte'); $('#menu-btn').setAttribute('aria-expanded', String(o)); });
+document.addEventListener('click', e => { if (!e.target.closest('#menu')) zamknijMenu(); });
+
+// ---------- kreator: kafle ----------
+function kafel(grupa, x, opis, cena){
+  return `<label class="kafel"><input type="radio" name="${grupa}" value="${x.id}" ${stan[grupa] === x.id ? 'checked' : ''}>
+    <span class="kafel__ramka"><span class="kafel__nazwa">${x.name}</span><span class="kafel__opis">${opis}</span><span class="kafel__cena">${zl.format(cena/100)}</span></span>
+    <span class="znacznik" aria-hidden="true">wybrano</span></label>`;
+}
+function rysujKafle(){
+  $('#profile').innerHTML = Object.entries(PROFILE).map(([id, p]) => `<button class="zeton" data-profil="${id}" aria-pressed="${stan.profil === id}">${p.label}</button>`).join('');
+  $('#k-kafle').innerHTML = K.map(x => kafel('k', x, x.opis, x.price)).join('');
+  $('#m-kafle').innerHTML = M.map(x => kafel('m', x, x.opis, x.price)).join('');
+  $('#p-kafle').innerHTML = P.map(x => kafel('p', x, `${cm(x.w)} × ${cm(x.d)} cm · ${x.type === 'biurko' ? 'na biurko' : 'pod myszkę'} · ${x.kolor}`, x.price)).join('');
+}
+document.addEventListener('change', e => {
+  if (!['k', 'm', 'p'].includes(e.target.name)) return;
+  const byl = komplet(); const poprzedni = stan[e.target.name];
+  stan[e.target.name] = e.target.value; odswiez({ zmienione:e.target.name, poprzedni, bylKomplet:byl });
+});
+document.addEventListener('click', e => {
+  const z = e.target.closest('[data-profil]'); if (z){ stan.profil = z.dataset.profil; document.querySelectorAll('[data-profil]').forEach(b => b.setAttribute('aria-pressed', b === z)); odswiez({}); }
+  const s = e.target.closest('[data-zamien]'); if (s){ const byl = komplet(); const poprzedni = stan.p; stan.p = s.dataset.zamien; document.querySelector(`input[name=p][value="${stan.p}"]`).checked = true; odswiez({ zmienione:'p', poprzedni, bylKomplet:byl }); }
+});
+$('#bez-podkladki').addEventListener('click', () => { const poprzedni = stan.p; stan.p = null; document.querySelectorAll('input[name=p]').forEach(i => i.checked = false); odswiez({ zmienione:'p', poprzedni, bylKomplet:true }); });
+$('#set-do-koszyka').addEventListener('click', e => { const c = ceny(); if (!komplet()) { toast('Wybierz klawiaturę, myszkę i podkładkę'); return; } dodaj('Twój set · −10%', c.razem, e.currentTarget); });
+
+// ---------- kreator: reguły i ceny ----------
+const komplet = () => !!(stan.k && stan.m && stan.p);
+function reguly(){
+  const k = znajdz(K, stan.k), m = znajdz(M, stan.m), p = znajdz(P, stan.p), zone = PROFILE[stan.profil].zone, w = [];
+  if (p && p.type === 'biurko' && k && m){
+    const req = 2*MARGIN + k.w + GAP + zone;
+    if (p.w >= req) w.push({ poziom:'ok', tekst:`Mieści się: klawiatura ${cm(k.w)} cm + ${cm(zone)} cm na myszkę. Zapas: ${cm(p.w - req)} cm.` });
+    else { const pasuje = P.filter(x => x.type === 'biurko' && x.w >= req).sort((a, b) => a.price - b.price);
+      const alt = pasuje.find(x => (x.fit?.[stan.profil] ?? 2) >= 2) || pasuje[0];  // docs/03 §4.3: najpierw fit[profil] >= 2
+      w.push({ poziom:'uwaga', tekst:`Podkładka ma ${cm(p.w)} cm, a ten set potrzebuje ${cm(req)} cm (klawiatura ${cm(k.w)} cm + ${cm(zone)} cm na myszkę + odstępy).`, alt }); }
+  }
+  if (p && p.type === 'mysz' && m){
+    if (p.w >= zone) w.push({ poziom:'ok', tekst:`Na ruch myszki masz ${cm(p.w)} cm, potrzebujesz około ${cm(zone)} cm.` });
+    else { const alt = P.filter(x => x.type === 'mysz' && x.w >= zone).sort((a, b) => a.price - b.price)[0];
+      w.push({ poziom:'uwaga', tekst:`Przy profilu „${PROFILE[stan.profil].label}” mysz potrzebuje około ${cm(zone)} cm, a podkładka ma ${cm(p.w)} cm.`, alt }); }
+  }
+  if (k && m) w.push({ poziom:'info', tekst:'Klawiatura i myszka mają osobne odbiorniki 2,4 GHz: zajmą dwa porty USB.' });
+  return w.sort((a, b) => ['uwaga', 'ok', 'info'].indexOf(a.poziom) - ['uwaga', 'ok', 'info'].indexOf(b.poziom));
+}
+function ceny(){
+  const pozycje = [znajdz(K, stan.k), znajdz(M, stan.m), znajdz(P, stan.p)].filter(Boolean);
+  const suma = pozycje.reduce((a, x) => a + x.price, 0), rabat = komplet() ? Math.round(suma * 10 / 100) : 0;
+  return { suma, rabat, razem:suma - rabat };
+}
+let ostatniaKwota = null;
+function animujKwote(el, odGr, doGr, ms = 300){
+  const live = $('#kwota-live');
+  if (bezRuchu() || odGr === null || odGr === doGr){ el.textContent = zl.format(doGr/100); live.textContent = `Razem ${el.textContent}`; return; }
+  const t0 = performance.now(), ease = t => 1 - Math.pow(1 - t, 3);
+  const krok = now => { const t = Math.min(1, (now - t0)/ms); el.textContent = zl.format(Math.round(odGr + (doGr - odGr)*ease(t))/100);
+    if (t < 1) requestAnimationFrame(krok); else live.textContent = `Razem ${el.textContent}`; };
+  requestAnimationFrame(krok);
+}
+
+// ---------- kreator: scena (DeskStage) ----------
+function geometria(){
+  const k = znajdz(K, stan.k), m = znajdz(M, stan.m), p = znajdz(P, stan.p), zone = PROFILE[stan.profil].zone;
+  const g = { el:[] };
+  if (!p || p.type === 'biurko'){
+    const pw = p ? p.w : 900, pd = p ? p.d : 400;
+    const req = 2*MARGIN + (k ? k.w : 0) + GAP + zone;
+    g.W = Math.max(pw, req); g.D = Math.max(pd, (k ? k.d : 0) + 2*MARGIN);
+    g.el.push(p ? { typ:'mata', x:0, y:0, w:pw, h:pd, p } : { typ:'mata-brak', x:0, y:0, w:900, h:400 });
+    const kx = MARGIN; if (k) g.el.push({ typ:'klawiatura', x:kx, y:(g.D - k.d)/2, w:k.w, h:k.d, k });
+    const zx = MARGIN + (k ? k.w : 0) + GAP; g.el.push({ typ:'strefa', x:zx, y:MARGIN, w:zone, h:pd - 2*MARGIN, uwaga: p ? (zx + zone + MARGIN > p.w) : false });
+    if (m) g.el.push({ typ:'myszka', x:zx + zone/2 - m.w/2, y:(g.D - m.d)/2, w:m.w, h:m.d, m });
+  } else {
+    g.W = MARGIN + (k ? k.w : 0) + GAP + Math.max(p.w, zone) + MARGIN; g.D = Math.max(p.d, (k ? k.d : 0) + 2*MARGIN);
+    const px = MARGIN + (k ? k.w : 0) + GAP, py = (g.D - p.d)/2;
+    g.el.push({ typ:'mata', x:px, y:py, w:p.w, h:p.d, p });
+    if (k) g.el.push({ typ:'klawiatura', x:MARGIN, y:(g.D - k.d)/2, w:k.w, h:k.d, k });
+    g.el.push({ typ:'strefa', x:px, y:py + MARGIN, w:zone, h:p.d - 2*MARGIN, uwaga: zone > p.w });
+    if (m) g.el.push({ typ:'myszka', x:px + p.w/2 - m.w/2, y:(g.D - m.d)/2, w:m.w, h:m.d, m });
+  }
+  return g;
+}
+function elementSceny(e){
+  const d = document.createElement('div');
+  d.style.cssText = `left:${e.x}px; top:${e.y}px; width:${e.w}px; height:${e.h}px;`;
+  if (e.typ === 'mata'){ d.className = 'mata scena__mata'; d.style.background = e.p.swatch; d.style.outline = '1px solid var(--linia-pola)'; d.dataset.klucz = 'p:' + e.p.id; }
+  if (e.typ === 'mata-brak'){ d.className = 'mata mata--brak scena__mata'; d.textContent = 'Tu będzie podkładka (XL: 90 × 40 cm)'; d.dataset.klucz = 'p:brak'; }
+  if (e.typ === 'klawiatura'){ d.className = 'ph-top scena__klawiatura'; d.textContent = `${e.k.name} · ${cm(e.k.w)} × ${cm(e.k.d)} cm`; d.dataset.klucz = 'k:' + e.k.id; }
+  if (e.typ === 'myszka'){ d.className = 'ph-top scena__myszka'; d.textContent = e.m.name; d.dataset.klucz = 'm:' + e.m.id; }
+  if (e.typ === 'strefa'){ d.className = 'strefa scena__strefa' + (e.uwaga ? ' is-uwaga' : ''); d.innerHTML = `<span>Ruch myszki: ${cm(e.w)} cm</span>`; d.dataset.klucz = 'strefa'; }
+  return d;
+}
+function rysujScene(zmienione, poprzedni){
+  const scena = $('#scena'), plotno = $('#plotno'), g = geometria();
+  const stare = Object.fromEntries([...plotno.children].map(c => [c.dataset.klucz, c]));
+  plotno.innerHTML = '';
+  plotno.style.width = g.W + 'px'; plotno.style.height = g.D + 'px';
+  g.el.forEach(e => { const d = elementSceny(e); plotno.appendChild(d);
+    if (zmienione && d.dataset.klucz.startsWith(zmienione + ':') && !bezRuchu() && stare[d.dataset.klucz] === undefined) d.classList.add('wchodzi'); });
+  if (zmienione && poprzedni && !bezRuchu()){
+    const st = stare[zmienione + ':' + poprzedni]; if (st && zmienione !== 'p'){ st.classList.add('wychodzi'); plotno.appendChild(st); st.addEventListener('animationend', () => st.remove(), { once:true }); }
+  }
+  skaluj();
+  const k = znajdz(K, stan.k), m = znajdz(M, stan.m), p = znajdz(P, stan.p);
+  plotno.setAttribute('aria-label', `Podgląd: ${[k?.name, m?.name].filter(Boolean).join(' i ') || 'pusty set'}${p ? ' na podkładce ' + p.name : ', bez podkładki'}.`);
+}
+function skaluj(){
+  const scena = $('#scena'), plotno = $('#plotno');
+  const s = scena.clientWidth / parseFloat(plotno.style.width);
+  plotno.style.transform = `scale(${s})`; plotno.style.setProperty('--s', s);
+  scena.style.height = parseFloat(plotno.style.height) * s + 'px';
+  // podpis tylko, gdy placeholder po skalowaniu ma co najmniej 80 px szerokości i wysokości (docs/03 §5.3)
+  plotno.querySelectorAll('.ph-top').forEach(el => el.classList.toggle('bez-podpisu', Math.min(el.offsetWidth, el.offsetHeight) * s < 80));
+}
+new ResizeObserver(skaluj).observe($('#scena'));
+
+// ---------- kreator: odświeżenie ----------
+function odswiez({ zmienione = null, poprzedni = null, bylKomplet = komplet() } = {}){
+  rysujScene(zmienione, poprzedni);
+  const w = reguly(), uwag = w.filter(x => x.poziom === 'uwaga').length;
+  const naglowek = !komplet() ? 'Set niekompletny' : uwag ? `Pasuje z ${uwag} ${uwag === 1 ? 'uwagą' : 'uwagami'}` : 'Pasuje';
+  $('#wyniki').innerHTML = `<p class="wyniki__naglowek">${naglowek}</p>` + w.map(x => `<div class="wynik wynik--${x.poziom}"><span class="ikona" aria-hidden="true">${x.poziom === 'ok' ? 'ok' : x.poziom === 'uwaga' ? '!' : 'i'}</span><div>${x.tekst}${x.alt ? `<br><button class="btn btn-poboczny" data-zamien="${x.alt.id}">Zmień na ${x.alt.name} (${x.alt.price - znajdz(P, stan.p).price >= 0 ? '+' : '−'}${zl.format(Math.abs(x.alt.price - znajdz(P, stan.p).price)/100)})</button>` : ''}</div></div>`).join('');
+  const c = ceny();
+  $('#kwoty').innerHTML = `<dt>Suma</dt><dd>${zl.format(c.suma/100)}</dd>` + (c.rabat ? `<dt class="rabat-linia">Rabat za set</dt><dd class="rabat-linia">−${zl.format(c.rabat/100)}</dd>` : `<dt class="maly slaby">Rabat 10% po dodaniu wszystkich trzech</dt><dd></dd>`) + `<dt class="cena razem">Razem</dt><dd class="cena razem" aria-hidden="true" id="razem"></dd>`;
+  animujKwote($('#razem'), ostatniaKwota, c.razem); ostatniaKwota = c.razem;
+  $('#kroki').style.transform = `scaleX(${[stan.k, stan.m, stan.p].filter(Boolean).length / 3})`;
+  const pods = $('#podsumowanie');
+  if (!bylKomplet && komplet() && !bezRuchu()){ pods.classList.remove('is-komplet'); void pods.offsetWidth; pods.classList.add('is-komplet'); const koniec = e => { if (e.animationName !== 'obieg') return; pods.classList.remove('is-komplet'); pods.removeEventListener('animationend', koniec); }; pods.addEventListener('animationend', koniec); }  // animationend bąbelkuje z dzieci — sprawdź nazwę
+}
+function startSceny(){
+  if (bezRuchu()) return;
+  const sc = $('#scena'); sc.classList.remove('scena-start'); void sc.offsetWidth; sc.classList.add('scena-start');
+}
+$('#powtorz').addEventListener('click', startSceny);
+
+// ---------- A-14 ----------
+const MINI = [ ['Kwarc 60', 29900], ['Łupek 65', 42900], ['Bazalt 75', 74900], ['Kreda 98', 54900], ['Granit TKL', 59900], ['Marmur 100', 34900] ];
+function rysujMini(kier){
+  const box = $('#mini'); const lista = [...MINI].sort((a, b) => kier === 'asc' ? a[1] - b[1] : b[1] - a[1]);
+  box.innerHTML = lista.map(([n, c]) => `<div class="mini" style="view-transition-name:mini-${n.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/gi, 'l').replace(/\s/g, '-').toLowerCase()}"><strong>${n}</strong><br><span class="cena">${zl.format(c/100)}</span></div>`).join('');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-sort]'); if (!b) return;
+  document.querySelectorAll('[data-sort]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  const r = () => rysujMini(b.dataset.sort);
+  if (!document.startViewTransition || bezRuchu()) r(); else document.startViewTransition(r);
+});
+
+// ---------- przełącznik ruchu ----------
+$('#ruch').addEventListener('click', e => { const on = document.documentElement.classList.toggle('bez-ruchu'); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.textContent = `Ogranicz ruch: ${on ? 'wł.' : 'wył.'}`; });
+
+// ---------- start ----------
+rysujPalete(); rysujSkale(); rysujKafle(); rysujMini('asc'); odswiez({});
+document.fonts?.ready.then(() => { skaluj(); });
+new IntersectionObserver((w, o) => { if (w[0].isIntersecting){ startSceny(); o.disconnect(); } }, { threshold:.4 }).observe($('#scena'));
+</script>
+</body>
+</html>

@@ -1,0 +1,3488 @@
+[
+  {
+    "key": "k-kwarc-60_grafit_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_grafit_01-34-400.webp",
+      "img/produkty/k-kwarc-60_grafit_01-34-800.webp",
+      "img/produkty/k-kwarc-60_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_grafit_02-gora",
+    "product_id": "k-kwarc-60",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_grafit_02-gora-400.webp",
+      "img/produkty/k-kwarc-60_grafit_02-gora-800.webp",
+      "img/produkty/k-kwarc-60_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_grafit_03-bok",
+    "product_id": "k-kwarc-60",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_grafit_03-bok-400.webp",
+      "img/produkty/k-kwarc-60_grafit_03-bok-800.webp",
+      "img/produkty/k-kwarc-60_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_grafit_04-detal",
+    "product_id": "k-kwarc-60",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_grafit_04-detal-400.webp",
+      "img/produkty/k-kwarc-60_grafit_04-detal-800.webp",
+      "img/produkty/k-kwarc-60_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_grafit_top",
+    "product_id": "k-kwarc-60",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 293,
+      "d": 102
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-kwarc-60_grafit_top@1x.webp",
+      "img/top/k-kwarc-60_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        293,
+        102
+      ],
+      "2x": [
+        586,
+        204
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_mgla_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_mgla_01-34-400.webp",
+      "img/produkty/k-kwarc-60_mgla_01-34-800.webp",
+      "img/produkty/k-kwarc-60_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_mgla_02-gora",
+    "product_id": "k-kwarc-60",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_mgla_02-gora-400.webp",
+      "img/produkty/k-kwarc-60_mgla_02-gora-800.webp",
+      "img/produkty/k-kwarc-60_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_mgla_03-bok",
+    "product_id": "k-kwarc-60",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_mgla_03-bok-400.webp",
+      "img/produkty/k-kwarc-60_mgla_03-bok-800.webp",
+      "img/produkty/k-kwarc-60_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_mgla_04-detal",
+    "product_id": "k-kwarc-60",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_mgla_04-detal-400.webp",
+      "img/produkty/k-kwarc-60_mgla_04-detal-800.webp",
+      "img/produkty/k-kwarc-60_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_mgla_top",
+    "product_id": "k-kwarc-60",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 293,
+      "d": 102
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-kwarc-60_mgla_top@1x.webp",
+      "img/top/k-kwarc-60_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        293,
+        102
+      ],
+      "2x": [
+        586,
+        204
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_grafit_01-34",
+    "product_id": "k-lupek-65",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_grafit_01-34-400.webp",
+      "img/produkty/k-lupek-65_grafit_01-34-800.webp",
+      "img/produkty/k-lupek-65_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_grafit_02-gora",
+    "product_id": "k-lupek-65",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_grafit_02-gora-400.webp",
+      "img/produkty/k-lupek-65_grafit_02-gora-800.webp",
+      "img/produkty/k-lupek-65_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_grafit_03-bok",
+    "product_id": "k-lupek-65",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_grafit_03-bok-400.webp",
+      "img/produkty/k-lupek-65_grafit_03-bok-800.webp",
+      "img/produkty/k-lupek-65_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_grafit_04-detal",
+    "product_id": "k-lupek-65",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_grafit_04-detal-400.webp",
+      "img/produkty/k-lupek-65_grafit_04-detal-800.webp",
+      "img/produkty/k-lupek-65_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_grafit_top",
+    "product_id": "k-lupek-65",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 318,
+      "d": 108
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-lupek-65_grafit_top@1x.webp",
+      "img/top/k-lupek-65_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        318,
+        108
+      ],
+      "2x": [
+        636,
+        216
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_mgla_01-34",
+    "product_id": "k-lupek-65",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_mgla_01-34-400.webp",
+      "img/produkty/k-lupek-65_mgla_01-34-800.webp",
+      "img/produkty/k-lupek-65_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_mgla_02-gora",
+    "product_id": "k-lupek-65",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_mgla_02-gora-400.webp",
+      "img/produkty/k-lupek-65_mgla_02-gora-800.webp",
+      "img/produkty/k-lupek-65_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_mgla_03-bok",
+    "product_id": "k-lupek-65",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_mgla_03-bok-400.webp",
+      "img/produkty/k-lupek-65_mgla_03-bok-800.webp",
+      "img/produkty/k-lupek-65_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_mgla_04-detal",
+    "product_id": "k-lupek-65",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_mgla_04-detal-400.webp",
+      "img/produkty/k-lupek-65_mgla_04-detal-800.webp",
+      "img/produkty/k-lupek-65_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_mgla_top",
+    "product_id": "k-lupek-65",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 318,
+      "d": 108
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-lupek-65_mgla_top@1x.webp",
+      "img/top/k-lupek-65_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        318,
+        108
+      ],
+      "2x": [
+        636,
+        216
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_kobalt_01-34",
+    "product_id": "k-lupek-65",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_kobalt_01-34-400.webp",
+      "img/produkty/k-lupek-65_kobalt_01-34-800.webp",
+      "img/produkty/k-lupek-65_kobalt_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_kobalt_02-gora",
+    "product_id": "k-lupek-65",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_kobalt_02-gora-400.webp",
+      "img/produkty/k-lupek-65_kobalt_02-gora-800.webp",
+      "img/produkty/k-lupek-65_kobalt_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_kobalt_03-bok",
+    "product_id": "k-lupek-65",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_kobalt_03-bok-400.webp",
+      "img/produkty/k-lupek-65_kobalt_03-bok-800.webp",
+      "img/produkty/k-lupek-65_kobalt_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_kobalt_04-detal",
+    "product_id": "k-lupek-65",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_kobalt_04-detal-400.webp",
+      "img/produkty/k-lupek-65_kobalt_04-detal-800.webp",
+      "img/produkty/k-lupek-65_kobalt_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_kobalt_top",
+    "product_id": "k-lupek-65",
+    "color": "kobalt",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 318,
+      "d": 108
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-lupek-65_kobalt_top@1x.webp",
+      "img/top/k-lupek-65_kobalt_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        318,
+        108
+      ],
+      "2x": [
+        636,
+        216
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_grafit_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_grafit_01-34-400.webp",
+      "img/produkty/k-bazalt-75_grafit_01-34-800.webp",
+      "img/produkty/k-bazalt-75_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_grafit_02-gora",
+    "product_id": "k-bazalt-75",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_grafit_02-gora-400.webp",
+      "img/produkty/k-bazalt-75_grafit_02-gora-800.webp",
+      "img/produkty/k-bazalt-75_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_grafit_03-bok",
+    "product_id": "k-bazalt-75",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_grafit_03-bok-400.webp",
+      "img/produkty/k-bazalt-75_grafit_03-bok-800.webp",
+      "img/produkty/k-bazalt-75_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_grafit_04-detal",
+    "product_id": "k-bazalt-75",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_grafit_04-detal-400.webp",
+      "img/produkty/k-bazalt-75_grafit_04-detal-800.webp",
+      "img/produkty/k-bazalt-75_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_grafit_top",
+    "product_id": "k-bazalt-75",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 327,
+      "d": 140
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-bazalt-75_grafit_top@1x.webp",
+      "img/top/k-bazalt-75_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        327,
+        140
+      ],
+      "2x": [
+        654,
+        280
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_mgla_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_mgla_01-34-400.webp",
+      "img/produkty/k-bazalt-75_mgla_01-34-800.webp",
+      "img/produkty/k-bazalt-75_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_mgla_02-gora",
+    "product_id": "k-bazalt-75",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_mgla_02-gora-400.webp",
+      "img/produkty/k-bazalt-75_mgla_02-gora-800.webp",
+      "img/produkty/k-bazalt-75_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_mgla_03-bok",
+    "product_id": "k-bazalt-75",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_mgla_03-bok-400.webp",
+      "img/produkty/k-bazalt-75_mgla_03-bok-800.webp",
+      "img/produkty/k-bazalt-75_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_mgla_04-detal",
+    "product_id": "k-bazalt-75",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_mgla_04-detal-400.webp",
+      "img/produkty/k-bazalt-75_mgla_04-detal-800.webp",
+      "img/produkty/k-bazalt-75_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_mgla_top",
+    "product_id": "k-bazalt-75",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 327,
+      "d": 140
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-bazalt-75_mgla_top@1x.webp",
+      "img/top/k-bazalt-75_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        327,
+        140
+      ],
+      "2x": [
+        654,
+        280
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_kobalt_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_kobalt_01-34-400.webp",
+      "img/produkty/k-bazalt-75_kobalt_01-34-800.webp",
+      "img/produkty/k-bazalt-75_kobalt_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_kobalt_02-gora",
+    "product_id": "k-bazalt-75",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_kobalt_02-gora-400.webp",
+      "img/produkty/k-bazalt-75_kobalt_02-gora-800.webp",
+      "img/produkty/k-bazalt-75_kobalt_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_kobalt_03-bok",
+    "product_id": "k-bazalt-75",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_kobalt_03-bok-400.webp",
+      "img/produkty/k-bazalt-75_kobalt_03-bok-800.webp",
+      "img/produkty/k-bazalt-75_kobalt_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_kobalt_04-detal",
+    "product_id": "k-bazalt-75",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_kobalt_04-detal-400.webp",
+      "img/produkty/k-bazalt-75_kobalt_04-detal-800.webp",
+      "img/produkty/k-bazalt-75_kobalt_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_kobalt_top",
+    "product_id": "k-bazalt-75",
+    "color": "kobalt",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 327,
+      "d": 140
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-bazalt-75_kobalt_top@1x.webp",
+      "img/top/k-bazalt-75_kobalt_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        327,
+        140
+      ],
+      "2x": [
+        654,
+        280
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_mgla_01-34",
+    "product_id": "k-kreda-98",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_mgla_01-34-400.webp",
+      "img/produkty/k-kreda-98_mgla_01-34-800.webp",
+      "img/produkty/k-kreda-98_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_mgla_02-gora",
+    "product_id": "k-kreda-98",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_mgla_02-gora-400.webp",
+      "img/produkty/k-kreda-98_mgla_02-gora-800.webp",
+      "img/produkty/k-kreda-98_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_mgla_03-bok",
+    "product_id": "k-kreda-98",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_mgla_03-bok-400.webp",
+      "img/produkty/k-kreda-98_mgla_03-bok-800.webp",
+      "img/produkty/k-kreda-98_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_mgla_04-detal",
+    "product_id": "k-kreda-98",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_mgla_04-detal-400.webp",
+      "img/produkty/k-kreda-98_mgla_04-detal-800.webp",
+      "img/produkty/k-kreda-98_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_mgla_top",
+    "product_id": "k-kreda-98",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 385,
+      "d": 138
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-kreda-98_mgla_top@1x.webp",
+      "img/top/k-kreda-98_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        385,
+        138
+      ],
+      "2x": [
+        770,
+        276
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_grafit_01-34",
+    "product_id": "k-kreda-98",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_grafit_01-34-400.webp",
+      "img/produkty/k-kreda-98_grafit_01-34-800.webp",
+      "img/produkty/k-kreda-98_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_grafit_02-gora",
+    "product_id": "k-kreda-98",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_grafit_02-gora-400.webp",
+      "img/produkty/k-kreda-98_grafit_02-gora-800.webp",
+      "img/produkty/k-kreda-98_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_grafit_03-bok",
+    "product_id": "k-kreda-98",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_grafit_03-bok-400.webp",
+      "img/produkty/k-kreda-98_grafit_03-bok-800.webp",
+      "img/produkty/k-kreda-98_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_grafit_04-detal",
+    "product_id": "k-kreda-98",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_grafit_04-detal-400.webp",
+      "img/produkty/k-kreda-98_grafit_04-detal-800.webp",
+      "img/produkty/k-kreda-98_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_grafit_top",
+    "product_id": "k-kreda-98",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 385,
+      "d": 138
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-kreda-98_grafit_top@1x.webp",
+      "img/top/k-kreda-98_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        385,
+        138
+      ],
+      "2x": [
+        770,
+        276
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_grafit_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_grafit_01-34-400.webp",
+      "img/produkty/k-granit-tkl_grafit_01-34-800.webp",
+      "img/produkty/k-granit-tkl_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_grafit_02-gora",
+    "product_id": "k-granit-tkl",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_grafit_02-gora-400.webp",
+      "img/produkty/k-granit-tkl_grafit_02-gora-800.webp",
+      "img/produkty/k-granit-tkl_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_grafit_03-bok",
+    "product_id": "k-granit-tkl",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_grafit_03-bok-400.webp",
+      "img/produkty/k-granit-tkl_grafit_03-bok-800.webp",
+      "img/produkty/k-granit-tkl_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_grafit_04-detal",
+    "product_id": "k-granit-tkl",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_grafit_04-detal-400.webp",
+      "img/produkty/k-granit-tkl_grafit_04-detal-800.webp",
+      "img/produkty/k-granit-tkl_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_grafit_top",
+    "product_id": "k-granit-tkl",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 360,
+      "d": 140
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-granit-tkl_grafit_top@1x.webp",
+      "img/top/k-granit-tkl_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        360,
+        140
+      ],
+      "2x": [
+        720,
+        280
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_mgla_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_mgla_01-34-400.webp",
+      "img/produkty/k-granit-tkl_mgla_01-34-800.webp",
+      "img/produkty/k-granit-tkl_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_mgla_02-gora",
+    "product_id": "k-granit-tkl",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_mgla_02-gora-400.webp",
+      "img/produkty/k-granit-tkl_mgla_02-gora-800.webp",
+      "img/produkty/k-granit-tkl_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_mgla_03-bok",
+    "product_id": "k-granit-tkl",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_mgla_03-bok-400.webp",
+      "img/produkty/k-granit-tkl_mgla_03-bok-800.webp",
+      "img/produkty/k-granit-tkl_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_mgla_04-detal",
+    "product_id": "k-granit-tkl",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_mgla_04-detal-400.webp",
+      "img/produkty/k-granit-tkl_mgla_04-detal-800.webp",
+      "img/produkty/k-granit-tkl_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_mgla_top",
+    "product_id": "k-granit-tkl",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 360,
+      "d": 140
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-granit-tkl_mgla_top@1x.webp",
+      "img/top/k-granit-tkl_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        360,
+        140
+      ],
+      "2x": [
+        720,
+        280
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_grafit_01-34",
+    "product_id": "k-marmur-100",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_grafit_01-34-400.webp",
+      "img/produkty/k-marmur-100_grafit_01-34-800.webp",
+      "img/produkty/k-marmur-100_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_grafit_02-gora",
+    "product_id": "k-marmur-100",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_grafit_02-gora-400.webp",
+      "img/produkty/k-marmur-100_grafit_02-gora-800.webp",
+      "img/produkty/k-marmur-100_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_grafit_03-bok",
+    "product_id": "k-marmur-100",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_grafit_03-bok-400.webp",
+      "img/produkty/k-marmur-100_grafit_03-bok-800.webp",
+      "img/produkty/k-marmur-100_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_grafit_04-detal",
+    "product_id": "k-marmur-100",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_grafit_04-detal-400.webp",
+      "img/produkty/k-marmur-100_grafit_04-detal-800.webp",
+      "img/produkty/k-marmur-100_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_grafit_top",
+    "product_id": "k-marmur-100",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 440,
+      "d": 135
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-marmur-100_grafit_top@1x.webp",
+      "img/top/k-marmur-100_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        440,
+        135
+      ],
+      "2x": [
+        880,
+        270
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_mgla_01-34",
+    "product_id": "k-marmur-100",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_mgla_01-34-400.webp",
+      "img/produkty/k-marmur-100_mgla_01-34-800.webp",
+      "img/produkty/k-marmur-100_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_mgla_02-gora",
+    "product_id": "k-marmur-100",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_mgla_02-gora-400.webp",
+      "img/produkty/k-marmur-100_mgla_02-gora-800.webp",
+      "img/produkty/k-marmur-100_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_mgla_03-bok",
+    "product_id": "k-marmur-100",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_mgla_03-bok-400.webp",
+      "img/produkty/k-marmur-100_mgla_03-bok-800.webp",
+      "img/produkty/k-marmur-100_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_mgla_04-detal",
+    "product_id": "k-marmur-100",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_mgla_04-detal-400.webp",
+      "img/produkty/k-marmur-100_mgla_04-detal-800.webp",
+      "img/produkty/k-marmur-100_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_mgla_top",
+    "product_id": "k-marmur-100",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 440,
+      "d": 135
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/k-marmur-100_mgla_top@1x.webp",
+      "img/top/k-marmur-100_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        440,
+        135
+      ],
+      "2x": [
+        880,
+        270
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_grafit_01-34",
+    "product_id": "m-jerzyk",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_grafit_01-34-400.webp",
+      "img/produkty/m-jerzyk_grafit_01-34-800.webp",
+      "img/produkty/m-jerzyk_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_grafit_02-gora",
+    "product_id": "m-jerzyk",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_grafit_02-gora-400.webp",
+      "img/produkty/m-jerzyk_grafit_02-gora-800.webp",
+      "img/produkty/m-jerzyk_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_grafit_03-bok",
+    "product_id": "m-jerzyk",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_grafit_03-bok-400.webp",
+      "img/produkty/m-jerzyk_grafit_03-bok-800.webp",
+      "img/produkty/m-jerzyk_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_grafit_04-detal",
+    "product_id": "m-jerzyk",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_grafit_04-detal-400.webp",
+      "img/produkty/m-jerzyk_grafit_04-detal-800.webp",
+      "img/produkty/m-jerzyk_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_grafit_top",
+    "product_id": "m-jerzyk",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 63,
+      "d": 120
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-jerzyk_grafit_top@1x.webp",
+      "img/top/m-jerzyk_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        63,
+        120
+      ],
+      "2x": [
+        126,
+        240
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_mgla_01-34",
+    "product_id": "m-jerzyk",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_mgla_01-34-400.webp",
+      "img/produkty/m-jerzyk_mgla_01-34-800.webp",
+      "img/produkty/m-jerzyk_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_mgla_02-gora",
+    "product_id": "m-jerzyk",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_mgla_02-gora-400.webp",
+      "img/produkty/m-jerzyk_mgla_02-gora-800.webp",
+      "img/produkty/m-jerzyk_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_mgla_03-bok",
+    "product_id": "m-jerzyk",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_mgla_03-bok-400.webp",
+      "img/produkty/m-jerzyk_mgla_03-bok-800.webp",
+      "img/produkty/m-jerzyk_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_mgla_04-detal",
+    "product_id": "m-jerzyk",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_mgla_04-detal-400.webp",
+      "img/produkty/m-jerzyk_mgla_04-detal-800.webp",
+      "img/produkty/m-jerzyk_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_mgla_top",
+    "product_id": "m-jerzyk",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 63,
+      "d": 120
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-jerzyk_mgla_top@1x.webp",
+      "img/top/m-jerzyk_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        63,
+        120
+      ],
+      "2x": [
+        126,
+        240
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_grafit_01-34",
+    "product_id": "m-mewa",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_grafit_01-34-400.webp",
+      "img/produkty/m-mewa_grafit_01-34-800.webp",
+      "img/produkty/m-mewa_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_grafit_02-gora",
+    "product_id": "m-mewa",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_grafit_02-gora-400.webp",
+      "img/produkty/m-mewa_grafit_02-gora-800.webp",
+      "img/produkty/m-mewa_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_grafit_03-bok",
+    "product_id": "m-mewa",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_grafit_03-bok-400.webp",
+      "img/produkty/m-mewa_grafit_03-bok-800.webp",
+      "img/produkty/m-mewa_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_grafit_04-detal",
+    "product_id": "m-mewa",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_grafit_04-detal-400.webp",
+      "img/produkty/m-mewa_grafit_04-detal-800.webp",
+      "img/produkty/m-mewa_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_grafit_top",
+    "product_id": "m-mewa",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 60,
+      "d": 116
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-mewa_grafit_top@1x.webp",
+      "img/top/m-mewa_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        60,
+        116
+      ],
+      "2x": [
+        120,
+        232
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_mgla_01-34",
+    "product_id": "m-mewa",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_mgla_01-34-400.webp",
+      "img/produkty/m-mewa_mgla_01-34-800.webp",
+      "img/produkty/m-mewa_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_mgla_02-gora",
+    "product_id": "m-mewa",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_mgla_02-gora-400.webp",
+      "img/produkty/m-mewa_mgla_02-gora-800.webp",
+      "img/produkty/m-mewa_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_mgla_03-bok",
+    "product_id": "m-mewa",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_mgla_03-bok-400.webp",
+      "img/produkty/m-mewa_mgla_03-bok-800.webp",
+      "img/produkty/m-mewa_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_mgla_04-detal",
+    "product_id": "m-mewa",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_mgla_04-detal-400.webp",
+      "img/produkty/m-mewa_mgla_04-detal-800.webp",
+      "img/produkty/m-mewa_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_mgla_top",
+    "product_id": "m-mewa",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 60,
+      "d": 116
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-mewa_mgla_top@1x.webp",
+      "img/top/m-mewa_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        60,
+        116
+      ],
+      "2x": [
+        120,
+        232
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_kobalt_01-34",
+    "product_id": "m-mewa",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_kobalt_01-34-400.webp",
+      "img/produkty/m-mewa_kobalt_01-34-800.webp",
+      "img/produkty/m-mewa_kobalt_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_kobalt_02-gora",
+    "product_id": "m-mewa",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_kobalt_02-gora-400.webp",
+      "img/produkty/m-mewa_kobalt_02-gora-800.webp",
+      "img/produkty/m-mewa_kobalt_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_kobalt_03-bok",
+    "product_id": "m-mewa",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_kobalt_03-bok-400.webp",
+      "img/produkty/m-mewa_kobalt_03-bok-800.webp",
+      "img/produkty/m-mewa_kobalt_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_kobalt_04-detal",
+    "product_id": "m-mewa",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_kobalt_04-detal-400.webp",
+      "img/produkty/m-mewa_kobalt_04-detal-800.webp",
+      "img/produkty/m-mewa_kobalt_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_kobalt_top",
+    "product_id": "m-mewa",
+    "color": "kobalt",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 60,
+      "d": 116
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-mewa_kobalt_top@1x.webp",
+      "img/top/m-mewa_kobalt_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        60,
+        116
+      ],
+      "2x": [
+        120,
+        232
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_grafit_01-34",
+    "product_id": "m-pustulka",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_grafit_01-34-400.webp",
+      "img/produkty/m-pustulka_grafit_01-34-800.webp",
+      "img/produkty/m-pustulka_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_grafit_02-gora",
+    "product_id": "m-pustulka",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_grafit_02-gora-400.webp",
+      "img/produkty/m-pustulka_grafit_02-gora-800.webp",
+      "img/produkty/m-pustulka_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_grafit_03-bok",
+    "product_id": "m-pustulka",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_grafit_03-bok-400.webp",
+      "img/produkty/m-pustulka_grafit_03-bok-800.webp",
+      "img/produkty/m-pustulka_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_grafit_04-detal",
+    "product_id": "m-pustulka",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_grafit_04-detal-400.webp",
+      "img/produkty/m-pustulka_grafit_04-detal-800.webp",
+      "img/produkty/m-pustulka_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_grafit_top",
+    "product_id": "m-pustulka",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 66,
+      "d": 126
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-pustulka_grafit_top@1x.webp",
+      "img/top/m-pustulka_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        66,
+        126
+      ],
+      "2x": [
+        132,
+        252
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_mgla_01-34",
+    "product_id": "m-pustulka",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_mgla_01-34-400.webp",
+      "img/produkty/m-pustulka_mgla_01-34-800.webp",
+      "img/produkty/m-pustulka_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_mgla_02-gora",
+    "product_id": "m-pustulka",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_mgla_02-gora-400.webp",
+      "img/produkty/m-pustulka_mgla_02-gora-800.webp",
+      "img/produkty/m-pustulka_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_mgla_03-bok",
+    "product_id": "m-pustulka",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_mgla_03-bok-400.webp",
+      "img/produkty/m-pustulka_mgla_03-bok-800.webp",
+      "img/produkty/m-pustulka_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_mgla_04-detal",
+    "product_id": "m-pustulka",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_mgla_04-detal-400.webp",
+      "img/produkty/m-pustulka_mgla_04-detal-800.webp",
+      "img/produkty/m-pustulka_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_mgla_top",
+    "product_id": "m-pustulka",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 66,
+      "d": 126
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-pustulka_mgla_top@1x.webp",
+      "img/top/m-pustulka_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        66,
+        126
+      ],
+      "2x": [
+        132,
+        252
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_grafit_01-34",
+    "product_id": "m-wrobel",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_grafit_01-34-400.webp",
+      "img/produkty/m-wrobel_grafit_01-34-800.webp",
+      "img/produkty/m-wrobel_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_grafit_02-gora",
+    "product_id": "m-wrobel",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_grafit_02-gora-400.webp",
+      "img/produkty/m-wrobel_grafit_02-gora-800.webp",
+      "img/produkty/m-wrobel_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_grafit_03-bok",
+    "product_id": "m-wrobel",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_grafit_03-bok-400.webp",
+      "img/produkty/m-wrobel_grafit_03-bok-800.webp",
+      "img/produkty/m-wrobel_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_grafit_04-detal",
+    "product_id": "m-wrobel",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_grafit_04-detal-400.webp",
+      "img/produkty/m-wrobel_grafit_04-detal-800.webp",
+      "img/produkty/m-wrobel_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_grafit_top",
+    "product_id": "m-wrobel",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 64,
+      "d": 121
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-wrobel_grafit_top@1x.webp",
+      "img/top/m-wrobel_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        64,
+        121
+      ],
+      "2x": [
+        128,
+        242
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_mgla_01-34",
+    "product_id": "m-wrobel",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_mgla_01-34-400.webp",
+      "img/produkty/m-wrobel_mgla_01-34-800.webp",
+      "img/produkty/m-wrobel_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_mgla_02-gora",
+    "product_id": "m-wrobel",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_mgla_02-gora-400.webp",
+      "img/produkty/m-wrobel_mgla_02-gora-800.webp",
+      "img/produkty/m-wrobel_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_mgla_03-bok",
+    "product_id": "m-wrobel",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_mgla_03-bok-400.webp",
+      "img/produkty/m-wrobel_mgla_03-bok-800.webp",
+      "img/produkty/m-wrobel_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_mgla_04-detal",
+    "product_id": "m-wrobel",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_mgla_04-detal-400.webp",
+      "img/produkty/m-wrobel_mgla_04-detal-800.webp",
+      "img/produkty/m-wrobel_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_mgla_top",
+    "product_id": "m-wrobel",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 64,
+      "d": 121
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-wrobel_mgla_top@1x.webp",
+      "img/top/m-wrobel_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        64,
+        121
+      ],
+      "2x": [
+        128,
+        242
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_grafit_01-34",
+    "product_id": "m-kos",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_grafit_01-34-400.webp",
+      "img/produkty/m-kos_grafit_01-34-800.webp",
+      "img/produkty/m-kos_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_grafit_02-gora",
+    "product_id": "m-kos",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_grafit_02-gora-400.webp",
+      "img/produkty/m-kos_grafit_02-gora-800.webp",
+      "img/produkty/m-kos_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_grafit_03-bok",
+    "product_id": "m-kos",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_grafit_03-bok-400.webp",
+      "img/produkty/m-kos_grafit_03-bok-800.webp",
+      "img/produkty/m-kos_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_grafit_04-detal",
+    "product_id": "m-kos",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_grafit_04-detal-400.webp",
+      "img/produkty/m-kos_grafit_04-detal-800.webp",
+      "img/produkty/m-kos_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_grafit_top",
+    "product_id": "m-kos",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 80,
+      "d": 128
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-kos_grafit_top@1x.webp",
+      "img/top/m-kos_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        80,
+        128
+      ],
+      "2x": [
+        160,
+        256
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_mgla_01-34",
+    "product_id": "m-kos",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_mgla_01-34-400.webp",
+      "img/produkty/m-kos_mgla_01-34-800.webp",
+      "img/produkty/m-kos_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_mgla_02-gora",
+    "product_id": "m-kos",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_mgla_02-gora-400.webp",
+      "img/produkty/m-kos_mgla_02-gora-800.webp",
+      "img/produkty/m-kos_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_mgla_03-bok",
+    "product_id": "m-kos",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_mgla_03-bok-400.webp",
+      "img/produkty/m-kos_mgla_03-bok-800.webp",
+      "img/produkty/m-kos_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_mgla_04-detal",
+    "product_id": "m-kos",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_mgla_04-detal-400.webp",
+      "img/produkty/m-kos_mgla_04-detal-800.webp",
+      "img/produkty/m-kos_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_mgla_top",
+    "product_id": "m-kos",
+    "color": "mgla",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 80,
+      "d": 128
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-kos_mgla_top@1x.webp",
+      "img/top/m-kos_mgla_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        80,
+        128
+      ],
+      "2x": [
+        160,
+        256
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_grafit_01-34",
+    "product_id": "m-czapla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_grafit_01-34-400.webp",
+      "img/produkty/m-czapla_grafit_01-34-800.webp",
+      "img/produkty/m-czapla_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_grafit_02-gora",
+    "product_id": "m-czapla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_grafit_02-gora-400.webp",
+      "img/produkty/m-czapla_grafit_02-gora-800.webp",
+      "img/produkty/m-czapla_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_grafit_03-bok",
+    "product_id": "m-czapla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_grafit_03-bok-400.webp",
+      "img/produkty/m-czapla_grafit_03-bok-800.webp",
+      "img/produkty/m-czapla_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_grafit_04-detal",
+    "product_id": "m-czapla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_grafit_04-detal-400.webp",
+      "img/produkty/m-czapla_grafit_04-detal-800.webp",
+      "img/produkty/m-czapla_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_grafit_top",
+    "product_id": "m-czapla",
+    "color": "grafit",
+    "size": null,
+    "kind": "topdown",
+    "description": "wycinek z góry, przezroczyste tło, bez cienia",
+    "dims_mm": {
+      "w": 75,
+      "d": 108
+    },
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/top/m-czapla_grafit_top@1x.webp",
+      "img/top/m-czapla_grafit_top@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        75,
+        108
+      ],
+      "2x": [
+        150,
+        216
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_grafit_01-34",
+    "product_id": "p-tafla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_grafit_01-34-400.webp",
+      "img/produkty/p-tafla_grafit_01-34-800.webp",
+      "img/produkty/p-tafla_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_grafit_02-gora",
+    "product_id": "p-tafla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_grafit_02-gora-400.webp",
+      "img/produkty/p-tafla_grafit_02-gora-800.webp",
+      "img/produkty/p-tafla_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_grafit_03-bok",
+    "product_id": "p-tafla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_grafit_03-bok-400.webp",
+      "img/produkty/p-tafla_grafit_03-bok-800.webp",
+      "img/produkty/p-tafla_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_grafit_04-detal",
+    "product_id": "p-tafla",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_grafit_04-detal-400.webp",
+      "img/produkty/p-tafla_grafit_04-detal-800.webp",
+      "img/produkty/p-tafla_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_grafit_tekstura",
+    "product_id": "p-tafla",
+    "color": "grafit",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-tafla_grafit_tekstura@1x.webp",
+      "img/tekstury/p-tafla_grafit_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mgla_01-34",
+    "product_id": "p-tafla",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_mgla_01-34-400.webp",
+      "img/produkty/p-tafla_mgla_01-34-800.webp",
+      "img/produkty/p-tafla_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mgla_02-gora",
+    "product_id": "p-tafla",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_mgla_02-gora-400.webp",
+      "img/produkty/p-tafla_mgla_02-gora-800.webp",
+      "img/produkty/p-tafla_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mgla_03-bok",
+    "product_id": "p-tafla",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_mgla_03-bok-400.webp",
+      "img/produkty/p-tafla_mgla_03-bok-800.webp",
+      "img/produkty/p-tafla_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mgla_04-detal",
+    "product_id": "p-tafla",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_mgla_04-detal-400.webp",
+      "img/produkty/p-tafla_mgla_04-detal-800.webp",
+      "img/produkty/p-tafla_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mgla_tekstura",
+    "product_id": "p-tafla",
+    "color": "mgla",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-tafla_mgla_tekstura@1x.webp",
+      "img/tekstury/p-tafla_mgla_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kobalt_01-34",
+    "product_id": "p-tafla",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_kobalt_01-34-400.webp",
+      "img/produkty/p-tafla_kobalt_01-34-800.webp",
+      "img/produkty/p-tafla_kobalt_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kobalt_02-gora",
+    "product_id": "p-tafla",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_kobalt_02-gora-400.webp",
+      "img/produkty/p-tafla_kobalt_02-gora-800.webp",
+      "img/produkty/p-tafla_kobalt_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kobalt_03-bok",
+    "product_id": "p-tafla",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_kobalt_03-bok-400.webp",
+      "img/produkty/p-tafla_kobalt_03-bok-800.webp",
+      "img/produkty/p-tafla_kobalt_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kobalt_04-detal",
+    "product_id": "p-tafla",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_kobalt_04-detal-400.webp",
+      "img/produkty/p-tafla_kobalt_04-detal-800.webp",
+      "img/produkty/p-tafla_kobalt_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kobalt_tekstura",
+    "product_id": "p-tafla",
+    "color": "kobalt",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-tafla_kobalt_tekstura@1x.webp",
+      "img/tekstury/p-tafla_kobalt_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_grafit_01-34",
+    "product_id": "p-len",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_grafit_01-34-400.webp",
+      "img/produkty/p-len_grafit_01-34-800.webp",
+      "img/produkty/p-len_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_grafit_02-gora",
+    "product_id": "p-len",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_grafit_02-gora-400.webp",
+      "img/produkty/p-len_grafit_02-gora-800.webp",
+      "img/produkty/p-len_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_grafit_03-bok",
+    "product_id": "p-len",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_grafit_03-bok-400.webp",
+      "img/produkty/p-len_grafit_03-bok-800.webp",
+      "img/produkty/p-len_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_grafit_04-detal",
+    "product_id": "p-len",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_grafit_04-detal-400.webp",
+      "img/produkty/p-len_grafit_04-detal-800.webp",
+      "img/produkty/p-len_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_grafit_tekstura",
+    "product_id": "p-len",
+    "color": "grafit",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-len_grafit_tekstura@1x.webp",
+      "img/tekstury/p-len_grafit_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_mgla_01-34",
+    "product_id": "p-len",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_mgla_01-34-400.webp",
+      "img/produkty/p-len_mgla_01-34-800.webp",
+      "img/produkty/p-len_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_mgla_02-gora",
+    "product_id": "p-len",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_mgla_02-gora-400.webp",
+      "img/produkty/p-len_mgla_02-gora-800.webp",
+      "img/produkty/p-len_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_mgla_03-bok",
+    "product_id": "p-len",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_mgla_03-bok-400.webp",
+      "img/produkty/p-len_mgla_03-bok-800.webp",
+      "img/produkty/p-len_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_mgla_04-detal",
+    "product_id": "p-len",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_mgla_04-detal-400.webp",
+      "img/produkty/p-len_mgla_04-detal-800.webp",
+      "img/produkty/p-len_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_mgla_tekstura",
+    "product_id": "p-len",
+    "color": "mgla",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-len_mgla_tekstura@1x.webp",
+      "img/tekstury/p-len_mgla_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_grafit_01-34",
+    "product_id": "p-szron",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_grafit_01-34-400.webp",
+      "img/produkty/p-szron_grafit_01-34-800.webp",
+      "img/produkty/p-szron_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_grafit_02-gora",
+    "product_id": "p-szron",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_grafit_02-gora-400.webp",
+      "img/produkty/p-szron_grafit_02-gora-800.webp",
+      "img/produkty/p-szron_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_grafit_03-bok",
+    "product_id": "p-szron",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_grafit_03-bok-400.webp",
+      "img/produkty/p-szron_grafit_03-bok-800.webp",
+      "img/produkty/p-szron_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_grafit_04-detal",
+    "product_id": "p-szron",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_grafit_04-detal-400.webp",
+      "img/produkty/p-szron_grafit_04-detal-800.webp",
+      "img/produkty/p-szron_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_grafit_tekstura",
+    "product_id": "p-szron",
+    "color": "grafit",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-szron_grafit_tekstura@1x.webp",
+      "img/tekstury/p-szron_grafit_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_kobalt_01-34",
+    "product_id": "p-szron",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_kobalt_01-34-400.webp",
+      "img/produkty/p-szron_kobalt_01-34-800.webp",
+      "img/produkty/p-szron_kobalt_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_kobalt_02-gora",
+    "product_id": "p-szron",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_kobalt_02-gora-400.webp",
+      "img/produkty/p-szron_kobalt_02-gora-800.webp",
+      "img/produkty/p-szron_kobalt_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_kobalt_03-bok",
+    "product_id": "p-szron",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_kobalt_03-bok-400.webp",
+      "img/produkty/p-szron_kobalt_03-bok-800.webp",
+      "img/produkty/p-szron_kobalt_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_kobalt_04-detal",
+    "product_id": "p-szron",
+    "color": "kobalt",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_kobalt_04-detal-400.webp",
+      "img/produkty/p-szron_kobalt_04-detal-800.webp",
+      "img/produkty/p-szron_kobalt_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_kobalt_tekstura",
+    "product_id": "p-szron",
+    "color": "kobalt",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-szron_kobalt_tekstura@1x.webp",
+      "img/tekstury/p-szron_kobalt_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_grafit_01-34",
+    "product_id": "p-lod",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_grafit_01-34-400.webp",
+      "img/produkty/p-lod_grafit_01-34-800.webp",
+      "img/produkty/p-lod_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_grafit_02-gora",
+    "product_id": "p-lod",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_grafit_02-gora-400.webp",
+      "img/produkty/p-lod_grafit_02-gora-800.webp",
+      "img/produkty/p-lod_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_grafit_03-bok",
+    "product_id": "p-lod",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_grafit_03-bok-400.webp",
+      "img/produkty/p-lod_grafit_03-bok-800.webp",
+      "img/produkty/p-lod_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_grafit_04-detal",
+    "product_id": "p-lod",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_grafit_04-detal-400.webp",
+      "img/produkty/p-lod_grafit_04-detal-800.webp",
+      "img/produkty/p-lod_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_grafit_tekstura",
+    "product_id": "p-lod",
+    "color": "grafit",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-lod_grafit_tekstura@1x.webp",
+      "img/tekstury/p-lod_grafit_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_mgla_01-34",
+    "product_id": "p-lod",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_mgla_01-34-400.webp",
+      "img/produkty/p-lod_mgla_01-34-800.webp",
+      "img/produkty/p-lod_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_mgla_02-gora",
+    "product_id": "p-lod",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_mgla_02-gora-400.webp",
+      "img/produkty/p-lod_mgla_02-gora-800.webp",
+      "img/produkty/p-lod_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_mgla_03-bok",
+    "product_id": "p-lod",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_mgla_03-bok-400.webp",
+      "img/produkty/p-lod_mgla_03-bok-800.webp",
+      "img/produkty/p-lod_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_mgla_04-detal",
+    "product_id": "p-lod",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_mgla_04-detal-400.webp",
+      "img/produkty/p-lod_mgla_04-detal-800.webp",
+      "img/produkty/p-lod_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_mgla_tekstura",
+    "product_id": "p-lod",
+    "color": "mgla",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-lod_mgla_tekstura@1x.webp",
+      "img/tekstury/p-lod_mgla_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_grafit_01-34",
+    "product_id": "p-filc",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_grafit_01-34-400.webp",
+      "img/produkty/p-filc_grafit_01-34-800.webp",
+      "img/produkty/p-filc_grafit_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_grafit_02-gora",
+    "product_id": "p-filc",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_grafit_02-gora-400.webp",
+      "img/produkty/p-filc_grafit_02-gora-800.webp",
+      "img/produkty/p-filc_grafit_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_grafit_03-bok",
+    "product_id": "p-filc",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_grafit_03-bok-400.webp",
+      "img/produkty/p-filc_grafit_03-bok-800.webp",
+      "img/produkty/p-filc_grafit_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_grafit_04-detal",
+    "product_id": "p-filc",
+    "color": "grafit",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_grafit_04-detal-400.webp",
+      "img/produkty/p-filc_grafit_04-detal-800.webp",
+      "img/produkty/p-filc_grafit_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_grafit_tekstura",
+    "product_id": "p-filc",
+    "color": "grafit",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-filc_grafit_tekstura@1x.webp",
+      "img/tekstury/p-filc_grafit_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mgla_01-34",
+    "product_id": "p-filc",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_mgla_01-34-400.webp",
+      "img/produkty/p-filc_mgla_01-34-800.webp",
+      "img/produkty/p-filc_mgla_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mgla_02-gora",
+    "product_id": "p-filc",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_mgla_02-gora-400.webp",
+      "img/produkty/p-filc_mgla_02-gora-800.webp",
+      "img/produkty/p-filc_mgla_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mgla_03-bok",
+    "product_id": "p-filc",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_mgla_03-bok-400.webp",
+      "img/produkty/p-filc_mgla_03-bok-800.webp",
+      "img/produkty/p-filc_mgla_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mgla_04-detal",
+    "product_id": "p-filc",
+    "color": "mgla",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_mgla_04-detal-400.webp",
+      "img/produkty/p-filc_mgla_04-detal-800.webp",
+      "img/produkty/p-filc_mgla_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mgla_tekstura",
+    "product_id": "p-filc",
+    "color": "mgla",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-filc_mgla_tekstura@1x.webp",
+      "img/tekstury/p-filc_mgla_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-korek_naturalny_01-34",
+    "product_id": "p-korek",
+    "color": "naturalny",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujęcie 3/4 z przodu",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-korek_naturalny_01-34-400.webp",
+      "img/produkty/p-korek_naturalny_01-34-800.webp",
+      "img/produkty/p-korek_naturalny_01-34-1600.webp"
+    ],
+    "priority": "P0",
+    "status": "brak"
+  },
+  {
+    "key": "p-korek_naturalny_02-gora",
+    "product_id": "p-korek",
+    "color": "naturalny",
+    "kind": "packshot",
+    "shot": "02-gora",
+    "description": "widok z góry",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-korek_naturalny_02-gora-400.webp",
+      "img/produkty/p-korek_naturalny_02-gora-800.webp",
+      "img/produkty/p-korek_naturalny_02-gora-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-korek_naturalny_03-bok",
+    "product_id": "p-korek",
+    "color": "naturalny",
+    "kind": "packshot",
+    "shot": "03-bok",
+    "description": "profil z boku",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-korek_naturalny_03-bok-400.webp",
+      "img/produkty/p-korek_naturalny_03-bok-800.webp",
+      "img/produkty/p-korek_naturalny_03-bok-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-korek_naturalny_04-detal",
+    "product_id": "p-korek",
+    "color": "naturalny",
+    "kind": "packshot",
+    "shot": "04-detal",
+    "description": "detal (przełącznik / spód / splot)",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-korek_naturalny_04-detal-400.webp",
+      "img/produkty/p-korek_naturalny_04-detal-800.webp",
+      "img/produkty/p-korek_naturalny_04-detal-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-korek_naturalny_tekstura",
+    "product_id": "p-korek",
+    "color": "naturalny",
+    "kind": "texture",
+    "description": "bezszwowy kafel powierzchni widzianej z góry, równe światło, bez krawędzi i cieni",
+    "tile_mm": 200,
+    "scale": "1x: 1 px = 1 mm; 2x: 2 px = 1 mm",
+    "files": [
+      "img/tekstury/p-korek_naturalny_tekstura@1x.webp",
+      "img/tekstury/p-korek_naturalny_tekstura@2x.webp"
+    ],
+    "pixels": {
+      "1x": [
+        200,
+        200
+      ],
+      "2x": [
+        400,
+        400
+      ]
+    },
+    "priority": "P0",
+    "status": "brak"
+  }
+]

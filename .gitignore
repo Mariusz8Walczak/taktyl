@@ -1,0 +1,62 @@
+# Zależności i narzędzia
+node_modules/
+.pnpm-store/
+.turbo/
+*.tsbuildinfo
+
+# Build
+dist/
+build/
+out/
+.next/
+.nest/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Docker i środowisko
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
+docker-compose.crafto.yml
+*.local
+
+# Szablon Crafto i zasoby płatne (licencja: nie publikować)
+html/
+vendor/
+*.zip
+*.rar
+*.7z
+
+# Zrzuty bazy (poza katalogiem seed/)
+*.sql
+*.dump
+*.bak
+!seed/**
+
+# IDE i lokalne ustawienia
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+.claude/settings.local.json
+
+# Logi
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# lokalna lista zakazanych marek (skill taktyl-audyt-tresci) - nie publikować
+.claude/marki-zakazane.local.txt

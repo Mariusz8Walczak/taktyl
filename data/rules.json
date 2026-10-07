@@ -1,0 +1,99 @@
+{
+  "units": "mm",
+  "profiles": {
+    "fps": {
+      "label": "Gry FPS, niski sens",
+      "mouse_zone_mm": 400,
+      "default_switch": "slizg"
+    },
+    "gry": {
+      "label": "Gry (inne)",
+      "mouse_zone_mm": 300,
+      "default_switch": "slizg"
+    },
+    "programowanie": {
+      "label": "Programowanie",
+      "mouse_zone_mm": 220,
+      "default_switch": "prog"
+    },
+    "biuro": {
+      "label": "Praca biurowa",
+      "mouse_zone_mm": 220,
+      "default_switch": "prog"
+    },
+    "cisza": {
+      "label": "Cicha praca (open space)",
+      "mouse_zone_mm": 220,
+      "default_switch": "szept"
+    }
+  },
+  "no_profile": {
+    "mouse_zone_mm": 260,
+    "message": "Przyjęliśmy 26 cm na ruch myszki. Wybierz, do czego jest set, a sprawdzimy dokładniej."
+  },
+  "gap_keyboard_mouse_mm": 30,
+  "edge_margin_mm": 20,
+  "checks": [
+    {
+      "id": "pad-width-desk",
+      "applies": "pad.size.type == 'biurko' && keyboard && mouse",
+      "level_fail": "uwaga",
+      "formula": "required = 2*edge_margin + keyboard.w + gap + mouse_zone; ok = pad.w >= required",
+      "ok": "Mieści się: klawiatura {kb_cm} cm + {zone_cm} cm na myszkę. Zapas: {spare_cm} cm.",
+      "fail": "Podkładka ma {pad_cm} cm, a ten set potrzebuje {req_cm} cm (klawiatura {kb_cm} cm + {zone_cm} cm na myszkę + odstępy). {suggestion}"
+    },
+    {
+      "id": "pad-depth-desk",
+      "applies": "pad.size.type == 'biurko' && keyboard",
+      "level_fail": "uwaga",
+      "formula": "ok = pad.d >= keyboard.d + 2*edge_margin",
+      "ok": null,
+      "fail": "Klawiatura ma {kb_d_cm} cm głębokości, mata {pad_d_cm} cm. Krawędź klawiatury wyjdzie poza matę."
+    },
+    {
+      "id": "pad-width-mouse",
+      "applies": "pad.size.type == 'mysz' && mouse",
+      "level_fail": "uwaga",
+      "formula": "ok = pad.w >= mouse_zone",
+      "ok": "Na ruch myszki masz {pad_cm} cm, potrzebujesz około {zone_cm} cm.",
+      "fail": "Przy profilu „{profile}” mysz potrzebuje około {zone_cm} cm, a podkładka ma {pad_cm} cm. {suggestion}"
+    },
+    {
+      "id": "hand-size",
+      "applies": "mouse && user.hand_cm",
+      "level_fail": "uwaga",
+      "formula": "ok = mouse.hand_cm[0] <= user.hand_cm <= mouse.hand_cm[1]",
+      "ok": "Twoja dłoń ({hand} cm) mieści się w zakresie tej myszki ({min}–{max} cm).",
+      "fail": "{mouse} jest projektowana na dłoń {min}–{max} cm, Twoja ma {hand} cm. {suggestion}"
+    },
+    {
+      "id": "two-receivers",
+      "applies": "keyboard.connectivity has '2.4ghz' && mouse.connectivity has '2.4ghz'",
+      "level_fail": "info",
+      "formula": "always info",
+      "ok": null,
+      "fail": "Klawiatura i myszka mają osobne odbiorniki 2,4 GHz: zajmą dwa porty USB."
+    },
+    {
+      "id": "color-harmony",
+      "applies": "keyboard && mouse && pad",
+      "level_fail": null,
+      "formula": "ok = wszystkie kolory mają ten sam harmony albo harmony == 'neutralny'",
+      "ok": "Spójna kolorystyka: {color}.",
+      "fail": null
+    }
+  ],
+  "suggestion_order": {
+    "pad": [
+      "większy rozmiar tego samego modelu i koloru",
+      "najtańsza dostępna podkładka spełniająca regułę z fit[profil] >= 2",
+      "najtańsza dostępna podkładka spełniająca regułę"
+    ],
+    "mouse": [
+      "myszka o tym samym kształcie z zakresem dłoni obejmującym wartość",
+      "dowolna myszka z zakresem obejmującym wartość",
+      "myszka z najbliższym zakresem + komunikat, że żadna nie obejmuje"
+    ]
+  },
+  "never_block": true
+}

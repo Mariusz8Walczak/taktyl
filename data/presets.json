@@ -1,0 +1,58 @@
+[
+  {
+    "id": "programista",
+    "name": "Programista",
+    "profile": "programowanie",
+    "skus": [
+      "K-BZL75-GRF-PRG",
+      "M-PST-GRF",
+      "P-SZR-XL-GRF"
+    ],
+    "note": "75% z taktylnym przełącznikiem, ergonomiczna mysz i zbalansowana mata na biurko.",
+    "sum": 1337.0,
+    "set_discount": 133.7,
+    "total": 1203.3
+  },
+  {
+    "id": "fps",
+    "name": "FPS na niskim sensie",
+    "profile": "fps",
+    "skus": [
+      "K-KWR60-GRF-SLZ",
+      "M-JRZ-GRF",
+      "P-LEN-XL-GRF"
+    ],
+    "note": "Najwęższa klawiatura, 49 g myszki i kontrolna mata: 40 cm na ruch ramieniem.",
+    "sum": 887.0,
+    "set_discount": 88.7,
+    "total": 798.3
+  },
+  {
+    "id": "open-space",
+    "name": "Cichy open space",
+    "profile": "cisza",
+    "skus": [
+      "K-KRD98-MGL-SZP",
+      "M-KOS-MGL",
+      "P-FLC-XL-MGL"
+    ],
+    "note": "Ciche przełączniki, ciche przyciski myszy i filc, który tłumi stuk.",
+    "sum": 1007.0,
+    "set_discount": 100.7,
+    "total": 906.3
+  },
+  {
+    "id": "kobalt",
+    "name": "Kobalt",
+    "profile": "gry",
+    "skus": [
+      "K-LPK65-KOB-SLZ",
+      "M-MEW-KOB",
+      "P-TFL-XL-KOB"
+    ],
+    "note": "Jeden kolor od klawiatury po podkładkę. 65% ze strzałkami, lekka mysz, szybka tkanina.",
+    "sum": 857.0,
+    "set_discount": 85.7,
+    "total": 771.3
+  }
+]
