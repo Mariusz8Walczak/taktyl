@@ -1,7 +1,7 @@
 // B-011 (docs/15 par. 6, docs/17 par. 3.6, ADR-0006 pkt 6): dziennik zmian. Wpis powstaje w TEJ SAMEJ transakcji co mutacja
 // (`withAudit`), wiec nie ma zmiany bez wpisu ani wpisu bez zmiany. Tabela jest tylko do dopisywania (wyzwalacz w bazie).
 import { Inject, Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import type { auditListQuerySchema, Role } from "@taktyl/contracts";
 import type { z } from "zod";
 import { CLOCK, type Clock } from "../common/clock.js";

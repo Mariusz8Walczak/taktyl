@@ -4,7 +4,8 @@ import "reflect-metadata";
 import { fileURLToPath } from "node:url";
 import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Test } from "@nestjs/testing";
-import { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "../src/prisma/client.js";
+import { createPrismaClient } from "../src/prisma/create-client.js";
 import type { DestinationStream } from "pino";
 import request from "supertest";
 import { runSeed } from "../prisma/seed/run.js";
@@ -77,7 +78,7 @@ export async function bootApp(
     ...options.env,
   });
   const config = loadEnv(process.env);
-  const prisma = new PrismaClient({ datasourceUrl: dbUrl });
+  const prisma = createPrismaClient(dbUrl);
   if (options.seed !== false) await reseed(prisma);
   const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
     .overrideProvider(CLOCK)

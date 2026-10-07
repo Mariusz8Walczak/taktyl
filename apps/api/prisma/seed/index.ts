@@ -2,7 +2,7 @@
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PrismaClient } from "@prisma/client";
+import { createPrismaClient } from "../../src/prisma/create-client.js";
 import { runSeed } from "./run.js";
 
 /** Idzie w gore od pliku, az znajdzie katalog z data/products.json (zrodlo i bundle w dist maja rozne glebokosci). */
@@ -26,7 +26,7 @@ async function main(): Promise<void> {
   const now = process.env.SEED_NOW ? new Date(process.env.SEED_NOW) : new Date();
   if (Number.isNaN(now.getTime())) throw new Error("SEED_NOW: niepoprawna data ISO");
 
-  const prisma = new PrismaClient({ datasourceUrl: url });
+  const prisma = createPrismaClient(url);
   try {
     await runSeed(prisma, { root, now, reset, log: (m) => console.log(`[seed] ${m}`) });
     console.log(reset ? "[seed] reset-demo zakonczony" : "[seed] seed zakonczony");

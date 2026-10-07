@@ -2,7 +2,7 @@
 // GET: pelne ustawienia razem z kodami i wylaczonymi pozycjami; PATCH (owner, If-Match): walidacja zakresow i spojnosci,
 // audyt przed -> po (tylko zmienione sekcje) i znaczniki rewalidacji w jednej transakcji.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import type {
   adminSettingsSchema,
   ProblemFieldError,

@@ -2,7 +2,7 @@
 // z ON CONFLICT DO NOTHING, wiec ponowny przebieg nie dubluje i nie nadpisuje edycji z backpanelu.
 // Konta admina tworzy TAKTYL-45, nie seed.
 import { toGrosze } from "@taktyl/domain";
-import { Prisma, type PrismaClient } from "@prisma/client";
+import { Prisma, type PrismaClient } from "../../src/prisma/client.js";
 import { buildPriceHistory } from "./history.js";
 import { loadSeedData, type SeedData } from "./load.js";
 

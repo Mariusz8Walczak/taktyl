@@ -2,7 +2,7 @@
 // TYLKO gdy w bazie nie ma zadnego konta owner. Bez zmiennych: ostrzezenie i brak konta. Haslo nigdy nie trafia do logow.
 // W DEMO_MODE tworzone jest tez konto systemowe viewer@taktyl.example (bez hasla).
 import { Inject, Injectable, Logger, type OnApplicationBootstrap } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import { AuditService, systemAudit } from "../audit/audit.service.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { APP_CONFIG } from "../config/config.module.js";

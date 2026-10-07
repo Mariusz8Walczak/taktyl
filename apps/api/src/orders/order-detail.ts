@@ -1,5 +1,5 @@
 // F-178, F-202, B-202: wspolne mapowanie zamowienia z bazy na kontrakt `orderDetailSchema` (sklep i backpanel).
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import { orderDetailSchema, type OrderDetail } from "@taktyl/contracts";
 import { respond } from "../common/zod.pipe.js";
 

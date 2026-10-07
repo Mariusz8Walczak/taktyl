@@ -1,7 +1,7 @@
 // F-177, F-178, F-179 (docs/16 par. 5, 6.3, ADR-0007): symulacja platnosci. Zero danych kart i kodow BLIK.
 // `paid` zmniejsza stany w jednej transakcji z blokada wierszy (SELECT ... FOR UPDATE, sku rosnaco = bez zakleszczen).
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import { paymentSimulateResponseSchema, type ProblemFieldError } from "@taktyl/contracts";
 import { AppException } from "../common/app-exception.js";
 import { CLOCK, type Clock } from "../common/clock.js";

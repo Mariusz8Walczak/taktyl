@@ -1,7 +1,7 @@
 // B-102 (docs/17 par. 7, 10): test integracyjny seeda na prawdziwym PostgreSQL (kontener).
 // Wymaga TEST_DATABASE_URL (baza po `prisma migrate deploy`); test CZYSCI te baze. Bez zmiennej jest pomijany.
 import { fileURLToPath } from "node:url";
-import { PrismaClient } from "@prisma/client";
+import { createPrismaClient } from "../../src/prisma/create-client.js";
 import { priceSet } from "@taktyl/domain";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { runSeed } from "./run.js";
@@ -11,7 +11,7 @@ const root = fileURLToPath(new URL("../../../../", import.meta.url));
 const NOW = new Date("2026-10-07T10:00:00Z");
 
 describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
-  const prisma = new PrismaClient({ datasourceUrl: url ?? "postgresql://invalid" });
+  const prisma = createPrismaClient(url ?? "postgresql://invalid");
   let first: Record<string, number> = {};
 
   const counts = async (): Promise<Record<string, number>> => ({

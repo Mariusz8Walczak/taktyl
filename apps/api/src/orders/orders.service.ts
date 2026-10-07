@@ -1,7 +1,7 @@
 // F-170...F-176, F-178, F-180, F-201, F-202 (docs/16 par. 6.2, ADR-0007): zamowienia.
 // API nie ufa klientowi: ponowna wycena z bazy (domena), kwoty z `expected_total_gr` tylko porownywane.
 import { Inject, Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import {
   orderCreatedSchema,
   orderListSchema,
@@ -33,9 +33,22 @@ function isUniqueViolation(e: unknown): e is Prisma.PrismaClientKnownRequestErro
   return e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002";
 }
 
+// I-008 (Prisma 7, adapter pg): meta.target znika, informacja o naruszonym ograniczeniu jest w
+// meta.driverAdapterError.cause.constraint ({ fields } albo { index }), a nazwa modelu w meta.modelName.
 function targetOf(e: Prisma.PrismaClientKnownRequestError): string {
-  const t = e.meta?.target;
-  return Array.isArray(t) ? t.join(",") : String(t ?? "");
+  const meta = (e.meta ?? {}) as {
+    target?: unknown;
+    modelName?: string;
+    driverAdapterError?: {
+      cause?: { constraint?: { fields?: string[]; index?: string } };
+    };
+  };
+  if (meta.target !== undefined) {
+    return Array.isArray(meta.target) ? meta.target.join(",") : String(meta.target);
+  }
+  const constraint = meta.driverAdapterError?.cause?.constraint;
+  const fields = constraint?.fields?.join(",") ?? constraint?.index ?? "";
+  return fields || meta.modelName || "";
 }
 
 @Injectable()

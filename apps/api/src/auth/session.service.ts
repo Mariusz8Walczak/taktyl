@@ -2,7 +2,7 @@
 // jego SHA-256 (id sesji). Wygasniecie: 12 h od logowania (expires_at) i 30 min bezczynnosci (last_seen_at).
 // CSRF: token powiazany z sesja (HMAC SESSION_SECRET nad id i csrf_secret) wysylany w naglowku X-CSRF-Token.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma, Session } from "@prisma/client";
+import type { Prisma, Session } from "../prisma/client.js";
 import type { Role } from "@taktyl/contracts";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { APP_CONFIG } from "../config/config.module.js";
