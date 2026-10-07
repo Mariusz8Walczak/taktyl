@@ -6,3 +6,6 @@ export * from "./catalog.js";
 export * from "./shop.js";
 export * from "./pricing.js";
 export * from "./rules.js";
+export * from "./shipping.js";
+export * from "./nip.js";
+export * from "./search.js";
