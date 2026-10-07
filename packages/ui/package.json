@@ -29,6 +29,7 @@
     "audit:tokens": "node ../../scripts/audit-tokens.mjs"
   },
   "dependencies": {
+    "@taktyl/domain": "workspace:*",
     "@taktyl/tokens": "workspace:*"
   },
   "peerDependencies": {

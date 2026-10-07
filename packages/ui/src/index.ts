@@ -44,3 +44,16 @@ export {
   topdownCaption,
 } from "./image/manifest.js";
 export type { ManifestEntry, ManifestKind, ManifestStatus } from "./image/manifest.js";
+export { DeskStage, MIN_CAPTION_PX } from "./desk/desk-stage.js";
+export type { DeskKeyboard, DeskMouse, DeskPad, DeskStageProps } from "./desk/desk-stage.js";
+export { computeDeskGeometry, NO_PAD_CANVAS } from "./desk/geometry.js";
+export type {
+  DeskGeometry,
+  DeskGeometryInput,
+  DeskLayout,
+  PadType,
+  Rect,
+  SizeMm,
+} from "./desk/geometry.js";
+export { composeDeskLabel, resultBadgeText, zoneCaption } from "./desk/labels.js";
+export type { DeskLabelInput, DeskResult } from "./desk/labels.js";

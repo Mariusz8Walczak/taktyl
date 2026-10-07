@@ -92,6 +92,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@taktyl/domain':
+        specifier: workspace:*
+        version: link:../domain
       '@taktyl/tokens':
         specifier: workspace:*
         version: link:../tokens

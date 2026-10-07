@@ -13,6 +13,7 @@
   --tk-fokus-grub: 3px; /* docs/06 §5: :focus-visible 3 px */
   --tk-klik: 2px; /* A-01: przesuniecie klawisza o 2 px */
   --tk-mm: 1px; /* plotno podgladu: 1 px = 1 mm (docs/09 §4.2) */
+  --tk-scena-kompakt: 30dvh; /* DeskStage compact: wysokosc <= 30% ekranu (docs/03 §3) */
   --tk-szuflada-szer: 26rem;
   --tk-okno-szer: 36rem;
   --tk-menu-min: 14rem;

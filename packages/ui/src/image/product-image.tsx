@@ -29,6 +29,8 @@ export interface ProductImageProps {
   decorative?: boolean;
   /** Pierwszy ekran: fetchpriority=high i loading=eager (docs/11 pkt 16); inaczej loading=lazy. */
   priority?: boolean;
+  /** Podpis placeholdera wycinka z gory; false, gdy po przeskalowaniu placeholder jest za maly (docs/03 §5.3). */
+  showCaption?: boolean;
   className?: string;
 }
 
@@ -51,6 +53,7 @@ export function ProductImage({
   alt,
   decorative,
   priority = false,
+  showCaption = true,
   className,
 }: ProductImageProps) {
   const isPackshot = entry.kind === "packshot";
@@ -108,7 +111,7 @@ export function ProductImage({
           <span className="tk-obraz__brak">{W_PRZYGOTOWANIU}</span>
         </>
       ) : null}
-      {entry.kind === "topdown" ? (
+      {entry.kind === "topdown" && showCaption ? (
         <span className="tk-obraz__linia">{topdownCaption(productName, mm)}</span>
       ) : null}
     </div>

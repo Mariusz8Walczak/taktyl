@@ -1,0 +1,97 @@
+/* DeskStage (F-106, docs/03 §5). Plotno ma wymiary w mm (zmienne --x --y --w --d z danych, 1 mm = --tk-mm)
+   i skale --s. Zewnetrzny kontener rezerwuje wysokosc przez aspect-ratio, wiec uklad sie nie przesuwa.
+   Haki ruchu A-02 i A-06 (TAKTYL-36): .scena__mata, __klawiatura, __myszka, __strefa, __wynik. */
+
+.tk-scena {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: var(--tk-sc-w) / var(--tk-sc-d);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.tk-scena--kompakt {
+  width: min(100%, calc(var(--tk-scena-kompakt) * var(--tk-sc-w) / var(--tk-sc-d)));
+  margin-inline: auto;
+}
+.tk-scena__platno {
+  /* --s = 100cqw / szerokosc plotna (bezjednostkowo); ResizeObserver nadpisuje ta sama wartoscia. */
+  --s: tan(atan2(100cqw, calc(var(--tk-sc-w) * var(--tk-mm))));
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: calc(var(--tk-sc-w) * var(--tk-mm));
+  height: calc(var(--tk-sc-d) * var(--tk-mm));
+  transform: scale(var(--s));
+  transform-origin: 0 0;
+}
+.tk-scena__el {
+  position: absolute;
+  left: calc(var(--x) * var(--tk-mm));
+  top: calc(var(--y) * var(--tk-mm));
+  width: calc(var(--w) * var(--tk-mm));
+  height: calc(var(--d) * var(--tk-mm));
+  box-sizing: border-box;
+}
+.tk-scena__el > .tk-obraz {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+}
+.tk-scena__obiekt {
+  filter: var(--cien-obiektu);
+}
+
+/* Mata i podkladka: tekstura jako tlo; placeholder = kolor probki z danych */
+.tk-scena__mata {
+  border-radius: calc(var(--r) / var(--s));
+  overflow: hidden;
+  background-size: calc(var(--tk-kafel) * var(--tk-mm)) calc(var(--tk-kafel) * var(--tk-mm));
+}
+.tk-scena__mata--brak {
+  display: grid;
+  place-content: center;
+  background-color: var(--powierzchnia);
+  border: var(--tk-linia-2) dashed var(--linia-pola);
+  color: var(--tekst-slaby);
+  text-align: center;
+}
+
+/* Strefa myszki: obrys przerywany --linia-pola, przy uwadze --uwaga */
+.tk-scena__strefa {
+  border: var(--tk-linia-2) dashed var(--linia-pola);
+  color: var(--tekst);
+  padding: calc(var(--s1) / var(--s));
+}
+.tk-scena__strefa.is-uwaga {
+  border-color: var(--uwaga);
+  color: var(--uwaga);
+}
+.tk-scena__strefa-poza {
+  background-color: var(--uwaga-tlo);
+  border: var(--tk-linia-2) dashed var(--uwaga);
+  opacity: 0.7;
+}
+.tk-scena__podpis {
+  font-size: calc(var(--t-xs) / var(--s));
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* Plakietka wyniku (A-02): poza plotnem, rozmiar z tokenow */
+.tk-scena__wynik {
+  position: absolute;
+  right: var(--s1);
+  bottom: var(--s1);
+  padding: calc(var(--s1) / 2) var(--s1);
+  border-radius: var(--r-pelny);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-size: var(--t-xs);
+  font-weight: 700;
+}
+.tk-scena__wynik.is-uwaga {
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
