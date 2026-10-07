@@ -33,3 +33,14 @@ export type { MenuProps } from "./overlay/menu.js";
 export { TOAST_MAX, TOAST_MS, ToastProvider, ToastRegion, useToast } from "./overlay/toast.js";
 export type { ToastOptions, ToastProviderProps } from "./overlay/toast.js";
 export { getFocusable, trapTab } from "./overlay/focus.js";
+export { Picture, ProductImage } from "./image/product-image.js";
+export type { ProductImageProps } from "./image/product-image.js";
+export {
+  buildSrcSet,
+  fallbackSrc,
+  findManifestEntry,
+  intrinsicSize,
+  packshotAlt,
+  topdownCaption,
+} from "./image/manifest.js";
+export type { ManifestEntry, ManifestKind, ManifestStatus } from "./image/manifest.js";

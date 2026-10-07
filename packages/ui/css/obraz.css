@@ -1,0 +1,55 @@
+/* Obraz produktu i placeholdery (docs/09 §5). Wymiary z manifestu przekazuja zmienne --tk-w i --tk-d (mm),
+   a plotno ma skale 1 px = 1 mm (--tk-mm). aspect-ratio rezerwuje miejsce: CLS = 0. */
+
+.tk-obraz {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+img.tk-obraz {
+  height: auto;
+}
+img.tk-obraz--packshot {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--tlo-alt);
+}
+.tk-obraz--topdown,
+.tk-obraz--texture {
+  width: calc(var(--tk-w) * var(--tk-mm));
+  aspect-ratio: var(--tk-w) / var(--tk-d);
+}
+
+/* Placeholdery: te same wymiary i proporcje co docelowe zdjecie */
+.tk-obraz--placeholder {
+  display: grid;
+  place-content: center;
+  gap: calc(var(--s1) / 2);
+  padding: var(--s1);
+  overflow: hidden;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.tk-obraz--packshot.tk-obraz--placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--tlo-alt);
+}
+.tk-obraz--topdown.tk-obraz--placeholder {
+  background-color: var(--powierzchnia);
+  border: var(--tk-linia-2) dashed var(--linia-pola);
+}
+.tk-obraz--texture.tk-obraz--placeholder {
+  background-color: var(--tk-swatch);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+}
+.tk-obraz__linia {
+  display: block;
+}
+.tk-obraz__brak {
+  display: block;
+  margin-top: var(--s1);
+}

@@ -42,6 +42,19 @@ Wspólny kod (`src/overlay/`): `useOverlayBehavior` (Esc tylko dla górnej nakla
 | `Menu`, `MenuLink`, `MenuButton`                             | wzorzec „disclosure”: `aria-expanded`, `aria-controls`, Esc oddaje fokus przyciskowi, klik poza menu i wyjście fokusu zamykają bez kradzieży fokusu, strzałki, Home, End                                                      | A-12: `opacity` + `translateY(-4px -> 0)`, `--d-s`                                                               |
 | `ToastProvider`, `useToast`, `ToastRegion`                   | region `role="status"` istnieje przed treścią, maks. 3 toasty, 4 s, pauza na najechanie i fokus, opcjonalne „Cofnij”, brak `alert`/`confirm`/`prompt`; toast ma `.sekcja--mod`, `--cien-2`, warstwę `--z-toast`               | A-15: wejście `translateY(16px -> 0)` + `opacity` (`--d-m`), wyjście samo `opacity` (`--d-s`)                    |
 
+## Obraz produktu (TAKTYL-26)
+
+`ProductImage` (alias `Picture`) czyta wpis `ManifestEntry` zgodny z `assets/manifest.json` (`key`, `kind`: `packshot` / `topdown` / `texture`, `dims_mm`, `files`, `pixels`, `status`: `gotowe` / `brak`). Pomocnicze: `buildSrcSet`, `intrinsicSize`, `packshotAlt`, `topdownCaption`, `findManifestEntry`.
+
+| Status   | Rodzaj     | Wynik                                                                                                                                                                                |
+| -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `gotowe` | wszystkie  | `<img>` z `srcset` (packshot: szerokości `w`, pozostałe: gęstość `x`), `sizes`, `width`, `height`, `alt`; `priority` daje `loading="eager"` i `fetchpriority="high"`, inaczej `lazy` |
+| `brak`   | `packshot` | kwadrat `--tlo-alt`: nazwa produktu, kolor, „zdjęcie w przygotowaniu”; `role="img"` z nazwą                                                                                          |
+| `brak`   | `topdown`  | prostokąt `dims_mm` w płótnie 1 px = 1 mm, `--powierzchnia`, obrys 2 px przerywany `--linia-pola`, podpis „Bazalt 75 · 32,7 × 14 cm”                                                 |
+| `brak`   | `texture`  | prostokąt wypełniony kolorem próbki z `colors.json -> swatch` (prop `swatch`), obrys 1 px `--linia-pola`                                                                             |
+
+Zdjęcie i placeholder mają te same klasy rozmiaru i te same zmienne `--tk-w`, `--tk-d` oraz `aspect-ratio`, więc podmiana nie przesuwa układu (CLS = 0). Alt ujęcia produktowego: „{nazwa} w kolorze {kolor}, {opis ujęcia}” (`docs/09` §4.4); elementy podglądu biurka i miniatury mają `alt=""` (domyślnie dla `topdown` i `texture`).
+
 ## Testy
 
 `pnpm --filter @taktyl/ui test` (Vitest, jsdom, Testing Library, user-event, `vitest-axe`). Całość weryfikujemy w Dockerze (`node:22-alpine`).
