@@ -5,3 +5,4 @@ export * from "./orders";
 export * from "./content";
 export * from "./settings";
 export * from "./audit";
+export * from "./media";

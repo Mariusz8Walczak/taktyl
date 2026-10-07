@@ -13,6 +13,8 @@ export const errorCodeSchema = z.enum([
   "rate_limited",
   "idempotency_conflict",
   "invalid_transition",
+  "unsupported_media_type",
+  "payload_too_large",
   "internal_error",
 ]);
 export type ErrorCode = z.infer<typeof errorCodeSchema>;

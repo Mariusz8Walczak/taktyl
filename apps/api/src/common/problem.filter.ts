@@ -18,6 +18,8 @@ const TITLES: Record<ErrorCode, string> = {
   rate_limited: "Za duzo zadan",
   idempotency_conflict: "Konflikt klucza idempotencji",
   invalid_transition: "Niedozwolone przejscie statusu",
+  unsupported_media_type: "Nieobslugiwany typ pliku",
+  payload_too_large: "Plik jest za duzy",
   internal_error: "Blad serwera",
 };
 
@@ -26,6 +28,8 @@ function codeForStatus(status: number): ErrorCode {
   if (status === 403) return "forbidden";
   if (status === 404) return "not_found";
   if (status === 409) return "conflict";
+  if (status === 413) return "payload_too_large";
+  if (status === 415) return "unsupported_media_type";
   if (status === 429) return "rate_limited";
   if (status >= 500) return "internal_error";
   return "validation_failed";

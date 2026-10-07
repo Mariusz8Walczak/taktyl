@@ -73,18 +73,3 @@ export const settingsPatchSchema = z
   })
   .refine((v) => Object.keys(v).length > 0, "pusty PATCH");
 
-// Media (docs/09, assets/manifest.json). Wgranie pliku to multipart, wiec kontrakt dotyczy metadanych i odpowiedzi.
-export const mediaEntrySchema = z.object({
-  key: z.string(),
-  kind: z.enum(["packshot", "topdown", "texture"]),
-  shot: z.string().nullable(),
-  priority: z.enum(["P0", "P1"]),
-  status: z.enum(["brak", "gotowe"]),
-  files: z.array(z.string()),
-  pixels: z.object({ w: z.int().positive(), h: z.int().positive() }).nullable(),
-  updated_at: dateTimeSchema.nullable(),
-});
-export const mediaListSchema = z.object({ items: z.array(mediaEntrySchema) });
-export const mediaUploadResponseSchema = mediaEntrySchema.extend({ status: z.literal("gotowe") });
-/** Dozwolone typy plikow przy wgrywaniu (415 poza nimi). */
-export const MEDIA_ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
