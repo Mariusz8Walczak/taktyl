@@ -1,0 +1,93 @@
+/* Panel podgladu zdarzen (TAKTYL-60, F-243): wysuwany z prawej, position: fixed (bez wplywu na uklad i CLS), ruch
+   tylko transform. Ladowany wylacznie przy ?pomiar. Wylacznie tokeny (regula 2). */
+.pomiar__przycisk {
+  position: fixed;
+  right: var(--s2);
+  bottom: var(--s2);
+  z-index: var(--z-nakladka);
+}
+.pomiar__panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: var(--z-nakladka);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: min(100vw, calc(var(--s6) * 4));
+  height: 100dvh;
+  padding: var(--s2);
+  gap: var(--s2);
+  border-left: var(--tk-linia-1) solid var(--linia);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  box-shadow: var(--cien-2);
+  animation: pomiar-wejscie var(--d-m) var(--e-wyjscie) both;
+}
+.pomiar__panel[hidden] {
+  display: none;
+}
+@keyframes pomiar-wejscie {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+.pomiar__naglowek {
+  display: grid;
+  gap: var(--s1);
+}
+.pomiar__tytul {
+  margin: 0;
+  font-size: var(--t-l);
+}
+.pomiar__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.pomiar__stan {
+  min-height: var(--s3);
+  margin: 0;
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+.pomiar__pusto {
+  margin: 0;
+  color: var(--tekst-slaby);
+}
+.pomiar__lista {
+  display: grid;
+  flex: 1 1 auto;
+  align-content: start;
+  gap: var(--s1);
+  overflow-y: auto;
+}
+.pomiar__wpis {
+  padding: var(--s1);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+}
+.pomiar__nazwa {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-s);
+}
+.pomiar__czas {
+  color: var(--tekst-slaby);
+  font-variant-numeric: tabular-nums;
+}
+.pomiar__json {
+  max-height: calc(var(--s6) * 2);
+  margin: 0;
+  overflow: auto;
+  font-size: var(--t-xs);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pomiar__panel {
+    animation: none;
+  }
+}
