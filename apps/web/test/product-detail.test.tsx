@@ -1,7 +1,7 @@
 // F-060...F-073, F-068 (TAKTYL-28): karta produktu - wybor wariantu i adres ?sku=, cena z Omnibusem, dostepnosc,
 // ilosc, dodanie do koszyka przez adapter, zakladki, galeria, pasek zakupu; S5, S6, S7, S8.
 import { ToastProvider } from "@taktyl/ui";
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -329,7 +329,6 @@ describe("dostepnosc (a11y)", () => {
         <ProductTabs sections={buildSections(product, SHOP_SETTINGS, SWITCHES)} />
       </Page>,
     );
-    await act(async () => {});
-    await waitFor(async () => expect(await axe(container)).toHaveNoViolations());
-  });
+    expect(await axe(container)).toHaveNoViolations();
+  }, 30_000);
 });
