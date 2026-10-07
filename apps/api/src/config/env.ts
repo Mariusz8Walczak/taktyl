@@ -87,6 +87,14 @@ export const envSchema = z.object({
   // F-221, F-223 (docs/17 par. 9): retencja wiadomosci z kontaktu i zapisow newslettera (usuwanie po N dniach).
   MESSAGE_RETENTION_DAYS: z.coerce.number().int().min(1).default(30),
   MEDIA_DIR: z.string().default("/data/media"),
+  // B-502 (docs/15 par. 11.1): adres publiczny wolumenu media (Caddy /media) i najwiekszy plik; twardy limit multipart 32 MB.
+  MEDIA_PUBLIC_URL: z.string().default("http://taktyl.localhost/media"),
+  MEDIA_MAX_BYTES: z.coerce
+    .number()
+    .int()
+    .min(1024)
+    .max(32 * 1024 * 1024)
+    .default(2 * 1024 * 1024),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   METRICS_ENABLED: bool,
   // B-230/B-231 (TAKTYL-22): limity zadan i dokumentacja OpenAPI (poza produkcja zawsze wlaczona).

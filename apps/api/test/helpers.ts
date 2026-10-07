@@ -38,6 +38,9 @@ const OPTIONAL_ENV = [
   "OUTBOX_POLL_MS",
   "OUTBOX_BATCH_SIZE",
   "REVALIDATE_TIMEOUT_MS",
+  "MEDIA_DIR",
+  "MEDIA_MAX_BYTES",
+  "MEDIA_PUBLIC_URL",
 ];
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 

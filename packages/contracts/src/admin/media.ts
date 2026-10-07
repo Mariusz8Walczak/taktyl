@@ -66,7 +66,10 @@ export const mediaProgressSchema = z.object({
 export type MediaProgress = z.infer<typeof mediaProgressSchema>;
 
 /** GET /v1/admin/media: `items` po filtrach, `progress` zawsze z calego manifestu. */
-export const mediaListSchema = pageOf(mediaEntrySchema).extend({ progress: mediaProgressSchema });
+export const mediaListSchema = pageOf(mediaEntrySchema).extend({
+  per_page: z.int().min(1).max(200),
+  progress: mediaProgressSchema,
+});
 
 export const mediaWarningSchema = z.object({
   /** no_alpha: plik bez przezroczystego tla (B-505), ostrzezenie, nie blokada */
