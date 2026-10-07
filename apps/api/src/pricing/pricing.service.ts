@@ -1,7 +1,7 @@
 // B-214 (docs/17 par. 5, ADR-0005): serwis cen - lowest_30d z price_history. Zadnego recznego pola.
 import { Inject, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service.js";
-import { computePromotion, type PriceRow } from "./lowest30d.js";
+import { computePromotion, type PriceRow } from "@taktyl/domain";
 
 @Injectable()
 export class PricingService {

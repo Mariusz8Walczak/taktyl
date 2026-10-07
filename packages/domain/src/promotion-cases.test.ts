@@ -1,6 +1,6 @@
 // B-214 (docs/17 par. 5): testy algorytmu lowest_30d - S5, S6, lancuch obnizek, wzrost ceny, cena niezmieniona > 30 dni.
 import { describe, expect, it } from "vitest";
-import { computePromotion, type PriceRow } from "./lowest30d.js";
+import { computePromotion, type PriceRow } from "./promotion.js";
 
 const DAY = 86_400_000;
 const NOW = new Date("2026-10-07T10:00:00Z");

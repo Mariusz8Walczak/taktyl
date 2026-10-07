@@ -16,7 +16,7 @@ import type {
   variantCreateSchema,
   variantPatchSchema,
 } from "@taktyl/contracts";
-import { normalizeSearchText } from "@taktyl/domain";
+import { computePromotion, normalizeSearchText, type PriceRow } from "@taktyl/domain";
 import type { z } from "zod";
 import { type AuditContext, AuditService } from "../audit/audit.service.js";
 import { AppException, notFound, validationFailed } from "../common/app-exception.js";
@@ -25,7 +25,6 @@ import { preconditionFailed } from "../common/if-match.js";
 import { maskEmail } from "../common/pii-mask.js";
 import { OutboxService, stockTags } from "../outbox/outbox.service.js";
 import { priceTags, productCreatedTags, productTags, reviewTags } from "../outbox/tags.js";
-import { computePromotion, type PriceRow } from "../pricing/lowest30d.js";
 import { PricingService } from "../pricing/pricing.service.js";
 import { PrismaService } from "../prisma/prisma.service.js";
 import {

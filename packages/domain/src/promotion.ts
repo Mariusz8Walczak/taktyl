@@ -1,6 +1,6 @@
 // B-105, B-106, F-064 (docs/17 par. 5, ADR-0005): "najnizsza cena z 30 dni przed obnizka" liczona z historii cen.
 // Czysta funkcja bez I/O; nie istnieje reczne pole. Backpanel uzywa jej do podgladu skutku zmiany ceny przed zapisem;
-// wartosc autorytatywna po zapisie zwraca API (price-history). Zgodna z apps/api/src/pricing/lowest30d.ts (ADM-004).
+// wartosc autorytatywna po zapisie zwraca API (price-history). Jedyne zrodlo: API tez importuje ja stad (ADM-004, API-018).
 import type { Grosze } from "./money.js";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
