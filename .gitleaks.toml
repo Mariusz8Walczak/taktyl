@@ -1,0 +1,25 @@
+# I-007 (ADR-0008, docs/19, TAKTYL-8): konfiguracja gitleaks. Reguly domyslne + waskie allowlisty.
+title = "Taktyl"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Placeholdery CHANGE_ME i plik przykladowy (bez prawdziwych sekretow)"
+paths = [
+  '''^\.env\.example$''',
+]
+regexes = [
+  '''CHANGE_ME''',
+]
+
+# Falszywe trafienia reguly generic-api-key: pola "key" w manifescie zdjec (klucze obrazow, nie sekrety)
+# i stale testowe w testach API (np. udawane hasla). Wylacznie ta jedna regula i tylko te pliki.
+[[allowlists]]
+description = "Klucze obrazow w manifescie zdjec i stale testowe (nie sa sekretami)"
+targetRules = ["generic-api-key"]
+paths = [
+  '''^assets/manifest\.json$''',
+  '''^docs/09-grafika-i-zdjecia\.md$''',
+  '''^apps/api/(src|test)/.*\.test\.ts$''',
+]

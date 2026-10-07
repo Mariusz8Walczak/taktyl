@@ -46,3 +46,13 @@ Zmiana jest skończona, gdy:
 ## Zgłaszanie błędów i bezpieczeństwa
 
 Błędy: issue z szablonu `blad`. Podatności: wyłącznie prywatnie, zgodnie z `SECURITY.md`.
+
+## Hook pre-commit (kontrola sciezek i sekretow)
+
+Repozytorium ma hook w `.githooks/pre-commit`: kontrola sciezek zakazanych (`html/`, `vendor/`, `*.zip`, `.env*`, zrzuty bazy, prywatny adres e-mail) oraz gitleaks na zmianach w indeksie (jesli jest zainstalowany). Wlacz go raz po sklonowaniu:
+
+```
+git config core.hooksPath .githooks
+```
+
+Te same kontrole uruchamia CI (`kontrola-sciezek`, `gitleaks`), wiec hook jest tylko szybkim ostrzezeniem przed pushem. Reczne uruchomienie: `sh scripts/check-forbidden-paths.sh` (test negatywny: `--self-test`).

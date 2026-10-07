@@ -1,0 +1,19 @@
+#!/bin/sh
+# I-007 (ADR-0008, TAKTYL-8): hook pre-commit. Wlaczenie: git config core.hooksPath .githooks
+# 1) kontrola sciezek zakazanych (html/, vendor/, *.zip, .env*, zrzuty bazy, prywatny e-mail),
+# 2) gitleaks na zmianach w indeksie (jesli zainstalowany).
+set -u
+root="$(git rev-parse --show-toplevel)"
+cd "$root" || exit 1
+
+sh scripts/check-forbidden-paths.sh || exit 1
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --staged --redact --config .gitleaks.toml --no-banner || {
+    echo "pre-commit: gitleaks znalazl sekret w zmianach. Usun go i zrotuj (docs/19 par. 11)." >&2
+    exit 1
+  }
+else
+  echo "pre-commit: gitleaks nie jest zainstalowany, pomijam (CI i tak go uruchomi)." >&2
+fi
+exit 0
