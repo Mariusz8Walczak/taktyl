@@ -2,12 +2,12 @@
 # I-002 (ADR-0009, TAKTYL-3): obraz Next.js (sklep), tryb standalone. Kontekst budowy: korzen repo.
 #   docker build -f apps/web/Dockerfile .
 # Obraz bazowy: tag z konkretna wersja + digest (aktualizuje Dependabot, ADR-0009).
-ARG NODE_IMAGE=node:22.23.3-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+ARG NODE_IMAGE=node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 
 FROM ${NODE_IMAGE} AS base
 ENV PNPM_HOME=/pnpm     npm_config_store_dir=/pnpm/store     CI=true     NEXT_TELEMETRY_DISABLED=1
 ENV PATH=$PNPM_HOME:$PATH
-RUN apk add --no-cache libc6-compat  && corepack enable  && corepack prepare pnpm@9.15.4 --activate
+RUN apk add --no-cache libc6-compat  && corepack enable  && corepack prepare pnpm@12.10.1 --activate
 WORKDIR /app
 
 # 1) Przycinamy monorepo do @taktyl/web i jego zaleznosci workspace.

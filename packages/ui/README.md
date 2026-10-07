@@ -57,4 +57,4 @@ Zdjęcie i placeholder mają te same klasy rozmiaru i te same zmienne `--tk-w`, 
 
 ## Testy
 
-`pnpm --filter @taktyl/ui test` (Vitest, jsdom, Testing Library, user-event, `vitest-axe`). Całość weryfikujemy w Dockerze (`node:22-alpine`).
+`pnpm --filter @taktyl/ui test` (Vitest, jsdom, Testing Library, user-event, `vitest-axe`). Całość weryfikujemy w Dockerze (`node:24-alpine`).

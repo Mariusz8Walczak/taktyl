@@ -29,4 +29,5 @@ Decyzje architektoniczne: `docs/adr/`. Dokumenty rozszerzające: `docs/13`–`do
 - **Przedrostki ID (reguła 8):** oprócz `F-xxx` i `A-xx` używamy `B-xxx` (backpanel i API) oraz `I-xxx` (infrastruktura, Docker, CI). Podawaj je w commitach i w komentarzach nad kodem.
 - **Docker-first (ADR-0009):** całość (baza, API, sklep, backpanel, proxy, seed, testy) działa w Dockerze; nie zakładaj lokalnego Node ani Postgresa. Testy i audyty mierz na stosie z `docker compose`.
 - **Publiczne repo (ADR-0008, ADR-0004):** nigdy nie commituj `html/`, `vendor/`, `.env*` (poza `.env.example`), kluczy, haseł, dumpów bazy ani plików szablonu Crafto. Przed każdym pushem lista kontrolna z `docs/19`. Adres e-mail tylko w domenie `taktyl.example`; commity z adresem `noreply` GitHuba.
+- **Wersje zależności (ADR-0010):** przed przypięciem wersji sprawdź najnowszą stabilną: `npm view <pkg> version` (i `dist-tags`) albo `docker buildx imagetools inspect <obraz>`; nie polegaj na pamięci. Piny i warunki odblokowania (TypeScript, jsdom, Postgres 16) są w ADR-0010.
 - **Kolejność czytania:** `README.md` → `docs/01`–`docs/12` → `docs/adr/` → `docs/13`–`docs/21` → `docs/decyzje.md`.

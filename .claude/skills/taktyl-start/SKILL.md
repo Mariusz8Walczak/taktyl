@@ -27,6 +27,7 @@ Przed **każdym kolejnym** zadaniem czytasz dokument, którego zadanie dotyczy (
 - Brak w dokumentach = pytanie (`Q-xx` w `docs/decyzje.md`), nie zgadywanie.
 - Wszystko działa w Dockerze (ADR-0009); nie zakładaj lokalnego Node ani Postgresa.
 - Repo jest publiczne: przed commitem `taktyl-straznik-repo`.
+- Wersje zależności i obrazów (ADR-0010, I-008): przed przypięciem wersji sprawdź najnowszą stabilną (`npm view <pkg> version`, `npm view <pkg> dist-tags`, `docker buildx imagetools inspect <obraz>`); nie polegaj na pamięci.
 
 ## Kontrola na starcie
 - [ ] Wiem, które ID (`F-xxx`/`B-xxx`/`I-xxx`) realizuję.

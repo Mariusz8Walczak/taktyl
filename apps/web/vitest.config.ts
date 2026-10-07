@@ -1,7 +1,8 @@
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  esbuild: { jsx: "automatic" },
+  // I-008 (TAKTYL-75): Vitest 5 / Vite 8 transformuje JSX przez oxc (opcja esbuild jest ignorowana).
+  oxc: { jsx: { runtime: "automatic" } },
   test: {
     environment: "jsdom",
     globals: true,
