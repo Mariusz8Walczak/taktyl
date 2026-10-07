@@ -155,9 +155,11 @@ Pól `sum`, `set_discount`, `total` z `presets.json` **nie przechowujemy**: serw
 | `no_profile` | Json | strefa 260 mm i komunikat |
 | `gap_keyboard_mouse_mm`, `edge_margin_mm` | Int | 30, 20 |
 | `checks` | Json | reguły i szablony komunikatów |
+| `suggestion_order` | Json | kolejność propozycji zmian (`rules.json`) |
+| `never_block` | Bool | reguły nigdy nie blokują zamówienia |
 | `version`, `updated_at` | Int, Ts | |
 
-**`facet_definitions`** (`facets.json`): `category_id`, `id`, `label`, `type` (`multi`/`range`/`bool`/`buckets`/`number-match`), `attr`, `values` (Json), `position`; PK `(category_id, id)`.
+**`facet_definitions`** (`facets.json`): `category_id`, `id`, `label`, `type` (`multi`/`range`/`bool`/`buckets`/`number-match`), `attr`, `values` (Json, null), `unit` (null), `hint` (null), `position`; PK `(category_id, id)`.
 
 ### 3.2. Ustawienia sklepu
 
@@ -172,6 +174,7 @@ Pól `sum`, `set_discount`, `total` z `presets.json` **nie przechowujemy**: serw
 | `dispatch_cutoff_hour` | Int | 14 |
 | `returns_days`, `statutory_withdrawal_days` | Int | 30, 14 |
 | `payment_simulation` | Bool | `true` |
+| `promo_window_days` | Int | 30, okno promocji z §5 |
 | `demo_label`, `demo_email_domain`, `demo_phone` | Text | etykieta demo (F-001) |
 | `company` | Json | dane fikcyjnej firmy (bez NIP/REGON/KRS/BDO — reguła 5, `docs/11`) |
 | `version`, `updated_at` | Int, Ts | |
@@ -209,7 +212,7 @@ Indeksy: `(sku, valid_from DESC)`; częściowy UQ `(sku) WHERE valid_to IS NULL`
 | `status` | Text | nie | `pending_payment`, `payment_failed`, `paid`, `processing`, `shipped`, `delivered`, `cancelled` (`docs/16` §5) |
 | `order_token_hash` | Text | nie | skrót SHA-256 tokenu zwróconego klientowi; sam token nie jest przechowywany |
 | `idempotency_key` | Text UQ | nie | `Idempotency-Key`; wiersz w osobnej tabeli `idempotency_keys` (§3.7) dla odpowiedzi |
-| `contact_email`, `contact_phone` | Text | nie | dane osobowe, patrz §9 |
+| `contact_email`, `contact_phone` | Text | tak | dane osobowe, `NULL` po anonimizacji (§9); przy zapisie zamówienia zawsze wypełnione (walidacja Zod) |
 | `shipping_method_id` | Text FK | nie | |
 | `shipping_address` | Json | tak | `name`, `street`, `postcode`, `city`, albo `point` (id punktu); dla `odbior` — `name` |
 | `invoice` | Json | tak | `nip`, `name`, `address` (NIP walidowany w `domain`; w repo żadnych przykładowych NIP-ów) |

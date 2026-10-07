@@ -1,0 +1,534 @@
+// B-101 (docs/17): schemat bazy Taktyl. Kwoty w groszach (Int, sufiks _gr), czas jako timestamptz.
+// Ograniczenia, ktorych Prisma nie wyraza (CHECK, czesciowe indeksy, NULLS NOT DISTINCT,
+// wyzwalacze tylko-dopisywanie), sa w migracji SQL *_constraints (docs/17 par. 8).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------- Katalog
+
+model Category {
+  id        String    @id
+  slug      String    @unique
+  name      String
+  h1        String
+  intro     String
+  position  Int
+  version   Int       @default(1)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  products  Product[]
+
+  @@map("categories")
+}
+
+model Color {
+  id            String         @id
+  code          String         @unique
+  label         String
+  harmony       String
+  swatch        String
+  variants      Variant[]
+  productImages ProductImage[]
+
+  @@map("colors")
+}
+
+model Switch {
+  id        String    @id
+  code      String    @unique
+  name      String
+  type      String
+  typeLabel String    @map("type_label")
+  forceG    Int       @map("force_g")
+  sound     String
+  summary   String
+  variants  Variant[]
+
+  @@map("switches")
+}
+
+model Product {
+  id                String         @id
+  slug              String         @unique
+  categoryId        String         @map("category_id")
+  name              String
+  brand             String         @default("Taktyl")
+  short             String
+  description       String?
+  attributes        Json
+  options           String[]
+  defaultVariantSku String?        @map("default_variant_sku")
+  badges            String[]
+  fit               Json
+  inBox             String[]       @map("in_box")
+  gpsr              Json
+  status            String         @default("active")
+  version           Int            @default(1)
+  createdAt         DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  category          Category       @relation(fields: [categoryId], references: [id])
+  defaultVariant    Variant?       @relation("ProductDefaultVariant", fields: [defaultVariantSku], references: [sku])
+  variants          Variant[]      @relation("ProductVariants")
+  images            ProductImage[]
+  reviews           Review[]
+
+  @@index([categoryId, status])
+  @@map("products")
+}
+
+model Variant {
+  sku            String          @id
+  productId      String          @map("product_id")
+  colorId        String          @map("color_id")
+  switchId       String?         @map("switch_id")
+  sizeKey        String?         @map("size_key")
+  priceGr        Int             @map("price_gr")
+  regularPriceGr Int?            @map("regular_price_gr")
+  stock          Int
+  imagesKey      String          @map("images_key")
+  status         String          @default("active")
+  version        Int             @default(1)
+  updatedAt      DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  product        Product         @relation("ProductVariants", fields: [productId], references: [id])
+  defaultOf      Product[]       @relation("ProductDefaultVariant")
+  color          Color           @relation(fields: [colorId], references: [id])
+  switch         Switch?         @relation(fields: [switchId], references: [id])
+  prices         PriceHistory[]
+  stockMovements StockMovement[]
+  presetItems    PresetItem[]
+  orderItems     OrderItem[]
+
+  @@index([productId])
+  @@index([colorId])
+  @@index([switchId])
+  @@index([productId, status])
+  @@map("variants")
+}
+
+model ProductImage {
+  key         String   @id
+  productId   String   @map("product_id")
+  colorId     String   @map("color_id")
+  kind        String
+  shot        String?
+  description String?
+  priority    String
+  status      String
+  files       String[]
+  dimsMm      Json?    @map("dims_mm")
+  pixels      Json?
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  product     Product  @relation(fields: [productId], references: [id])
+  color       Color    @relation(fields: [colorId], references: [id])
+
+  @@index([productId, colorId])
+  @@map("product_images")
+}
+
+model Preset {
+  id        String       @id
+  name      String
+  profile   String
+  note      String
+  position  Int
+  version   Int          @default(1)
+  updatedAt DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  items     PresetItem[]
+
+  @@map("presets")
+}
+
+model PresetItem {
+  presetId   String  @map("preset_id")
+  categoryId String  @map("category_id")
+  sku        String
+  preset     Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)
+  variant    Variant @relation(fields: [sku], references: [sku])
+
+  @@id([presetId, categoryId])
+  @@map("preset_items")
+}
+
+model RuleSettings {
+  id                 String   @id
+  units              String
+  profiles           Json
+  noProfile          Json     @map("no_profile")
+  gapKeyboardMouseMm Int      @map("gap_keyboard_mouse_mm")
+  edgeMarginMm       Int      @map("edge_margin_mm")
+  checks             Json
+  suggestionOrder    Json     @map("suggestion_order")
+  neverBlock         Boolean  @map("never_block")
+  version            Int      @default(1)
+  updatedAt          DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("rule_settings")
+}
+
+model FacetDefinition {
+  categoryId String  @map("category_id")
+  id         String
+  label      String
+  type       String
+  attr       String
+  values     Json?
+  unit       String?
+  hint       String?
+  position   Int
+
+  @@id([categoryId, id])
+  @@map("facet_definitions")
+}
+
+// ---------------------------------------------------------------- Ustawienia sklepu
+
+model ShopSettings {
+  id                      String   @id
+  currency                String
+  locale                  String
+  timezone                String
+  freeShippingThresholdGr Int      @map("free_shipping_threshold_gr")
+  setDiscountPercent      Int      @map("set_discount_percent")
+  setDiscountCategories   String[] @map("set_discount_categories")
+  dispatchCutoffHour      Int      @map("dispatch_cutoff_hour")
+  returnsDays             Int      @map("returns_days")
+  statutoryWithdrawalDays Int      @map("statutory_withdrawal_days")
+  paymentSimulation       Boolean  @map("payment_simulation")
+  promoWindowDays         Int      @default(30) @map("promo_window_days")
+  demoLabel               String   @map("demo_label")
+  demoEmailDomain         String   @map("demo_email_domain")
+  demoPhone               String   @map("demo_phone")
+  company                 Json
+  version                 Int      @default(1)
+  updatedAt               DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("shop_settings")
+}
+
+model ShippingMethod {
+  id              String   @id
+  label           String
+  priceGr         Int      @map("price_gr")
+  etaBusinessDays Int      @map("eta_business_days")
+  fields          String[]
+  address         String?
+  position        Int
+  active          Boolean  @default(true)
+  orders          Order[]
+
+  @@map("shipping_methods")
+}
+
+model PaymentMethod {
+  id       String  @id
+  label    String
+  position Int
+  active   Boolean @default(true)
+
+  @@map("payment_methods")
+}
+
+model DiscountCode {
+  code      String    @id
+  type      String
+  value     Int?
+  scope     String
+  label     String
+  active    Boolean   @default(true)
+  validFrom DateTime? @map("valid_from") @db.Timestamptz(6)
+  validTo   DateTime? @map("valid_to") @db.Timestamptz(6)
+
+  @@map("discount_codes")
+}
+
+model PickupPoint {
+  id     String  @id
+  city   String
+  label  String
+  active Boolean @default(true)
+
+  @@index([city])
+  @@map("pickup_points")
+}
+
+// ---------------------------------------------------------------- Ceny i magazyn
+
+model PriceHistory {
+  id        BigInt     @id @default(autoincrement())
+  sku       String
+  priceGr   Int        @map("price_gr")
+  validFrom DateTime   @map("valid_from") @db.Timestamptz(6)
+  validTo   DateTime?  @map("valid_to") @db.Timestamptz(6)
+  changedBy String?    @map("changed_by")
+  reason    String?
+  variant   Variant    @relation(fields: [sku], references: [sku])
+  author    AdminUser? @relation(fields: [changedBy], references: [id])
+
+  @@index([sku, validFrom(sort: Desc)])
+  @@map("price_history")
+}
+
+model StockMovement {
+  id          BigInt   @id @default(autoincrement())
+  sku         String
+  delta       Int
+  stockAfter  Int      @map("stock_after")
+  kind        String
+  orderNumber String?  @map("order_number")
+  reason      String?
+  actor       String?
+  at          DateTime @default(now()) @db.Timestamptz(6)
+  variant     Variant  @relation(fields: [sku], references: [sku])
+
+  @@index([sku, at(sort: Desc)])
+  @@map("stock_movements")
+}
+
+// ---------------------------------------------------------------- Zamowienia
+
+model Order {
+  number           String               @id
+  status           String
+  orderTokenHash   String               @map("order_token_hash")
+  idempotencyKey   String               @unique @map("idempotency_key")
+  contactEmail     String?              @map("contact_email")
+  contactPhone     String?              @map("contact_phone")
+  shippingMethodId String               @map("shipping_method_id")
+  shippingAddress  Json?                @map("shipping_address")
+  invoice          Json?
+  paymentType      String               @map("payment_type")
+  couponCode       String?              @map("coupon_code")
+  itemsGr          Int                  @map("items_gr")
+  setDiscountGr    Int                  @map("set_discount_gr")
+  couponDiscountGr Int                  @map("coupon_discount_gr")
+  shippingGr       Int                  @map("shipping_gr")
+  totalGr          Int                  @map("total_gr")
+  consents         Json
+  dispatchDate     DateTime?            @map("dispatch_date") @db.Date
+  deliveryDate     DateTime?            @map("delivery_date") @db.Date
+  createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  paidAt           DateTime?            @map("paid_at") @db.Timestamptz(6)
+  updatedAt        DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  internalNote     String?              @map("internal_note")
+  shippingMethod   ShippingMethod       @relation(fields: [shippingMethodId], references: [id])
+  items            OrderItem[]
+  statusHistory    OrderStatusHistory[]
+  payment          Payment?
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+  @@index([orderTokenHash])
+  @@map("orders")
+}
+
+model OrderItem {
+  id               String  @id @default(cuid())
+  orderNumber      String  @map("order_number")
+  groupId          String? @map("group_id")
+  sku              String
+  name             String
+  variantLabel     String  @map("variant_label")
+  qty              Int
+  unitPriceGr      Int     @map("unit_price_gr")
+  setDiscountGr    Int     @default(0) @map("set_discount_gr")
+  couponDiscountGr Int     @default(0) @map("coupon_discount_gr")
+  order            Order   @relation(fields: [orderNumber], references: [number], onDelete: Cascade)
+  variant          Variant @relation(fields: [sku], references: [sku])
+
+  @@index([orderNumber])
+  @@index([sku])
+  @@map("order_items")
+}
+
+model OrderStatusHistory {
+  id          BigInt   @id @default(autoincrement())
+  orderNumber String   @map("order_number")
+  fromStatus  String?  @map("from_status")
+  toStatus    String   @map("to_status")
+  actor       String
+  note        String?
+  at          DateTime @default(now()) @db.Timestamptz(6)
+  order       Order    @relation(fields: [orderNumber], references: [number], onDelete: Cascade)
+
+  @@index([orderNumber, at])
+  @@map("order_status_history")
+}
+
+// Platnosc symulowana. Brak pol na dane kart, kody BLIK i hasla (regula 10).
+model Payment {
+  orderNumber   String    @id @map("order_number")
+  type          String
+  amountGr      Int       @map("amount_gr")
+  status        String
+  attempts      Int       @default(0)
+  lastAttemptAt DateTime? @map("last_attempt_at") @db.Timestamptz(6)
+  order         Order     @relation(fields: [orderNumber], references: [number], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+// ---------------------------------------------------------------- Tresci
+
+model ContentPage {
+  id           String            @id @default(cuid())
+  slug         String            @unique
+  type         String
+  title        String
+  lead         String?
+  bodyMd       String            @map("body_md")
+  status       String            @default("draft")
+  demoNotice   Boolean           @default(false) @map("demo_notice")
+  guideProfile String?           @map("guide_profile")
+  publishedAt  DateTime?         @map("published_at") @db.Timestamptz(6)
+  version      Int               @default(1)
+  updatedAt    DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  revisions    ContentRevision[]
+
+  @@index([type, status])
+  @@map("content_pages")
+}
+
+model ContentRevision {
+  id     String      @id @default(cuid())
+  pageId String      @map("page_id")
+  bodyMd String      @map("body_md")
+  title  String
+  author String?
+  at     DateTime    @default(now()) @db.Timestamptz(6)
+  page   ContentPage @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  user   AdminUser?  @relation(fields: [author], references: [id])
+
+  @@index([pageId, at(sort: Desc)])
+  @@map("content_revisions")
+}
+
+model FaqItem {
+  id       String @id @default(cuid())
+  question String
+  answerMd String @map("answer_md")
+  position Int
+  status   String @default("published")
+
+  @@map("faq_items")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  productId    String   @map("product_id")
+  author       String
+  date         DateTime @db.Date
+  rating       Int
+  variantLabel String   @map("variant_label")
+  text         String
+  demo         Boolean  @default(true)
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, date(sort: Desc)])
+  @@map("reviews")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  email     String
+  subject   String
+  body      String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  handled   Boolean  @default(false)
+
+  @@map("contact_messages")
+}
+
+model NewsletterSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("newsletter_signups")
+}
+
+// ---------------------------------------------------------------- Backpanel i infrastruktura
+
+model AdminUser {
+  id           String            @id @default(cuid())
+  email        String            @unique
+  passwordHash String?           @map("password_hash")
+  role         String
+  active       Boolean           @default(true)
+  lastLoginAt  DateTime?         @map("last_login_at") @db.Timestamptz(6)
+  createdAt    DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  sessions     Session[]
+  auditLogs    AuditLog[]
+  priceChanges PriceHistory[]
+  revisions    ContentRevision[]
+
+  @@map("admin_users")
+}
+
+model Session {
+  id         String    @id
+  userId     String    @map("user_id")
+  csrfSecret String    @map("csrf_secret")
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  ipHash     String?   @map("ip_hash")
+  userAgent  String?   @map("user_agent")
+  user       AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// Tabela tylko do dopisywania (wyzwalacz w migracji *_constraints).
+model AuditLog {
+  id        BigInt     @id @default(autoincrement())
+  at        DateTime   @default(now()) @db.Timestamptz(6)
+  actorId   String?    @map("actor_id")
+  actorRole String     @map("actor_role")
+  action    String
+  entity    String
+  entityId  String     @map("entity_id")
+  before    Json?
+  after     Json?
+  requestId String     @map("request_id")
+  actor     AdminUser? @relation(fields: [actorId], references: [id])
+  outbox    Outbox[]
+
+  @@index([entity, entityId, at(sort: Desc)])
+  @@index([at(sort: Desc)])
+  @@map("audit_log")
+}
+
+model Outbox {
+  id            BigInt    @id @default(autoincrement())
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  tags          String[]
+  auditId       BigInt?   @map("audit_id")
+  status        String    @default("pending")
+  attempts      Int       @default(0)
+  nextAttemptAt DateTime  @default(now()) @map("next_attempt_at") @db.Timestamptz(6)
+  lastError     String?   @map("last_error")
+  sentAt        DateTime? @map("sent_at") @db.Timestamptz(6)
+  audit         AuditLog? @relation(fields: [auditId], references: [id])
+
+  @@index([status, nextAttemptAt])
+  @@map("outbox")
+}
+
+model IdempotencyKey {
+  key            String   @id
+  requestHash    String   @map("request_hash")
+  responseStatus Int      @map("response_status")
+  responseBody   Json     @map("response_body")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt      DateTime @map("expires_at") @db.Timestamptz(6)
+
+  @@index([expiresAt])
+  @@map("idempotency_keys")
+}

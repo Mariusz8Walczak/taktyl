@@ -40,6 +40,8 @@ vendor/
 *.dump
 *.bak
 !seed/**
+# migracje Prisma to kod, nie zrzuty bazy
+!apps/api/prisma/migrations/**/*.sql
 
 # IDE i lokalne ustawienia
 .idea/

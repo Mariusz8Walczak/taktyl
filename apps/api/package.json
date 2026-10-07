@@ -2,15 +2,36 @@
   "name": "@taktyl/api",
   "version": "0.0.0",
   "private": true,
-  "description": "NestJS: REST API sklepu i backpanelu (szkielet)",
+  "description": "NestJS: REST API sklepu i backpanelu",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/main.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
+    "build": "prisma generate && tsup",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
     "lint": "eslint .",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "typecheck": "prisma generate && tsc -p tsconfig.json --noEmit",
+    "test": "prisma generate && vitest run --passWithNoTests",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed/index.ts",
+    "db:reset-demo": "tsx prisma/seed/index.ts --reset"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@prisma/client": "^6.16.0",
+    "@taktyl/contracts": "workspace:*",
+    "@taktyl/domain": "workspace:*",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "tsx": "^4.19.2",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.0",
+    "prisma": "^6.16.0",
+    "tsup": "^8.3.5"
   }
 }

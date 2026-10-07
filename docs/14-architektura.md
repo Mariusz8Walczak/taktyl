@@ -180,6 +180,9 @@ Każda mutacja API przy zatwierdzeniu transakcji zapisuje w `outbox` poniższe z
 | Ustawienia sklepu: rabat setu, próg dostawy, metody dostawy i płatności, kody, punkty odbioru, etykieta demo | `shop-settings` | stopka, koszyk, kasa, główna, karta (dostawa i zwroty), kreator (rabat) |
 | Strona informacyjna lub artykuł poradnika | `content:{slug}`, `content:guide` | ta strona, lista poradnika, główna (3 karty) |
 | Opinia demo | `reviews:{slug}`, `product:{slug}` | karta produktu |
+| Pytanie FAQ | `content:faq` | strona FAQ |
+| Ruch magazynowy (`stock_movements`), historia statusów zamówienia, płatność, pozycje zamówienia | — (stan wariantu: patrz wiersz „Stan magazynowy wariantu”) | tylko backpanel |
+| Wiadomość z formularza, zapis newslettera, sesja, klucz idempotencji | — (bez tagów) | tylko backpanel |
 | Zamówienie, status zamówienia | — (bez tagów) | tylko backpanel i `konto` (no-store) |
 | Użytkownik backpanelu, audyt | — | tylko backpanel |
 

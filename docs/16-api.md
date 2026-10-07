@@ -275,14 +275,14 @@ Odpowiedź `201`:
 
 ```json
 {
-  "number": "TK-261007-A1B2",
+  "number": "TK-261007-A7B2",
   "status": "pending_payment",
   "order_token": "<losowy-token-do-przechowania-w-przegladarce>",
   "currency": "PLN",
   "items_total_gr": 120330,
   "shipping_gr": 0,
   "total_gr": 120330,
-  "payment": { "type": "blik", "simulate_url": "/zamowienie/platnosc?id=TK-261007-A1B2" },
+  "payment": { "type": "blik", "simulate_url": "/zamowienie/platnosc?id=TK-261007-A7B2" },
   "eta": { "dispatch_date": "2026-10-07", "delivery_date": "2026-10-08" }
 }
 ```
@@ -299,7 +299,7 @@ Reguły:
 
 ### 6.3. `POST /v1/orders/{number}/payment/simulate`
 
-Żądanie: `{ "outcome": "failed" }` → odpowiedź `200` `{ "status": "payment_failed", "transaction_id": "TK-261007-A1B2" }`; potem `{ "outcome": "paid" }` → `{ "status": "paid", "transaction_id": "TK-261007-A1B2" }`. `transaction_id` jest numerem zamówienia (ten sam klucz używa `purchase` w `docs/10`).
+Żądanie: `{ "outcome": "failed" }` → odpowiedź `200` `{ "status": "payment_failed", "transaction_id": "TK-261007-A7B2" }`; potem `{ "outcome": "paid" }` → `{ "status": "paid", "transaction_id": "TK-261007-A7B2" }`. `transaction_id` jest numerem zamówienia (ten sam klucz używa `purchase` w `docs/10`).
 
 ## 7. Zgodność ze zdarzeniami pomiaru
 
