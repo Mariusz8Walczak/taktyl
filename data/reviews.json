@@ -1,0 +1,646 @@
+{
+  "k-kwarc-60": [
+    {
+      "author": "Ola K.",
+      "date": "2026-09-14",
+      "rating": 5,
+      "variant": "Grafit · Ślizg",
+      "text": "Szerokość 29,3 cm zostawia na biurku dużo miejsca na myszkę.",
+      "demo": true
+    },
+    {
+      "author": "Marek T.",
+      "date": "2026-08-22",
+      "rating": 4,
+      "variant": "Mgła · Próg",
+      "text": "Próg 55 g daje wyczuwalne zadziałanie, a klawiatura waży tylko 590 g. Brakuje mi łączności bezprzewodowej, bo model działa wyłącznie na przewodzie USB-C. Na biurku, które nie zmienia miejsca, to jednak nie przeszkadza.",
+      "demo": true
+    },
+    {
+      "author": "Julia P.",
+      "date": "2026-07-30",
+      "rating": 3,
+      "variant": "Grafit · Trzask",
+      "text": "Trzask jest głośny, dokładnie jak w opisie. W domu nikomu nie przeszkadza, ale do biura bym go nie wzięła.",
+      "demo": true
+    },
+    {
+      "author": "Piotr W.",
+      "date": "2026-06-18",
+      "rating": 5,
+      "variant": "Mgła · Szept",
+      "text": "Hot-swap pozwolił mi sprawdzić drugi przełącznik bez lutowania, ale zostałem przy Szepcie. 40 g i cichy dźwięk w zupełności wystarczają do pracy nocą.",
+      "demo": true
+    }
+  ],
+  "k-lupek-65": [
+    {
+      "author": "Kasia M.",
+      "date": "2026-09-28",
+      "rating": 5,
+      "variant": "Kobalt · Próg",
+      "text": "Trzy tryby łączności: przewód, 2,4 GHz i Bluetooth. W domu używam odbiornika, a z laptopem łączę się przez Bluetooth. Odbiornik 2,4 GHz jest w zestawie.",
+      "demo": true
+    },
+    {
+      "author": "Tomek R.",
+      "date": "2026-09-02",
+      "rating": 4,
+      "variant": "Grafit · Ślizg",
+      "text": "Mocowanie gasket tłumi stuk lepiej, niż się spodziewałem po obudowie z tworzywa. Klawiatura waży 780 g, więc na gładkim blacie lekko się przesuwa.",
+      "demo": true
+    },
+    {
+      "author": "Ania B.",
+      "date": "2026-08-11",
+      "rating": 3,
+      "variant": "Mgła · Trzask",
+      "text": "Trzask jest głośny i słychać go przez ścianę. Klawiatura wygląda dobrze, ale w mieszkaniu z kimś wolałabym Szept.",
+      "demo": true
+    },
+    {
+      "author": "Wojtek S.",
+      "date": "2026-07-04",
+      "rating": 5,
+      "variant": "Grafit · Szept",
+      "text": "Mam strzałki i 68 klawiszy w 31,8 cm szerokości. Podświetlenie RGB jest czytelne wieczorem.",
+      "demo": true
+    },
+    {
+      "author": "Ewa N.",
+      "date": "2026-05-19",
+      "rating": 4,
+      "variant": "Kobalt · Ślizg",
+      "text": "Keycapy PBT double-shot są matowe i przyjemne w dotyku.",
+      "demo": true
+    }
+  ],
+  "k-bazalt-75": [
+    {
+      "author": "Marta L.",
+      "date": "2026-10-01",
+      "rating": 5,
+      "variant": "Grafit · Próg",
+      "text": "Pokrętło głośności zmieniło sposób, w jaki słucham muzyki przy pracy. Aluminiowa obudowa waży 1850 g i nie rusza się z miejsca.",
+      "demo": true
+    },
+    {
+      "author": "Bartek G.",
+      "date": "2026-09-12",
+      "rating": 5,
+      "variant": "Kobalt · Ślizg",
+      "text": "Rząd F zostaje, a klawiatura jest o 3,3 cm węższa od TKL. Myszka dostała więcej miejsca bez rezygnacji z klawiszy funkcyjnych.",
+      "demo": true
+    },
+    {
+      "author": "Karolina D.",
+      "date": "2026-08-29",
+      "rating": 4,
+      "variant": "Mgła · Szept",
+      "text": "Szept jest cichy i nadaje się do pracy nocą. Klawiatura jest ciężka, więc do plecaka bym jej nie brała.",
+      "demo": true
+    },
+    {
+      "author": "Michał Z.",
+      "date": "2026-07-21",
+      "rating": 3,
+      "variant": "Grafit · Trzask",
+      "text": "Trzask jest głośny, zgodnie z opisem. Wykonanie jest solidne, ale przy 60 g palce męczą mi się szybciej niż przy Ślizgu. Do domu wystarcza, do biura bym go nie brał.",
+      "demo": true
+    },
+    {
+      "author": "Iga F.",
+      "date": "2026-06-09",
+      "rating": 5,
+      "variant": "Mgła · Próg",
+      "text": "Łączę się przez 2,4 GHz i Bluetooth, zależnie od komputera. Gasket tłumi stuk, a podświetlenie RGB jest czytelne wieczorem.",
+      "demo": true
+    },
+    {
+      "author": "Adam C.",
+      "date": "2026-05-02",
+      "rating": 4,
+      "variant": "Kobalt · Próg",
+      "text": "Hot-swap pozwala wymienić przełączniki bez lutowania.",
+      "demo": true
+    }
+  ],
+  "k-kreda-98": [
+    {
+      "author": "Dorota H.",
+      "date": "2026-09-20",
+      "rating": 5,
+      "variant": "Mgła · Próg",
+      "text": "Blok numeryczny mieści się w 38,5 cm, czyli o 5,5 cm mniej niż w Marmurze 100. Do arkuszy w pracy to dla mnie dobry kompromis. Mam 98 klawiszy zamiast 104 i nie tęsknię za brakującymi.",
+      "demo": true
+    },
+    {
+      "author": "Paweł J.",
+      "date": "2026-08-15",
+      "rating": 4,
+      "variant": "Grafit · Szept",
+      "text": "98 klawiszy i cichy skok: w open space nikt nie narzeka. Keycapy PBT dye-sub są matowe. Szept ma 40 g i jest lekki w obsłudze. Do laptopa łączę ją przez Bluetooth.",
+      "demo": true
+    },
+    {
+      "author": "Ola S.",
+      "date": "2026-07-08",
+      "rating": 3,
+      "variant": "Grafit · Ślizg",
+      "text": "Do gier jej nie polecam: przy szerokim ruchu myszki 38,5 cm szerokości zabiera zbyt dużo miejsca. Do pracy z liczbami sprawdza się dobrze.",
+      "demo": true
+    },
+    {
+      "author": "Rafał K.",
+      "date": "2026-05-27",
+      "rating": 5,
+      "variant": "Mgła · Trzask",
+      "text": "Trzask słychać w całym pokoju, więc używam jej tylko u siebie.",
+      "demo": true
+    }
+  ],
+  "k-granit-tkl": [
+    {
+      "author": "Szymon A.",
+      "date": "2026-09-25",
+      "rating": 5,
+      "variant": "Grafit · Ślizg",
+      "text": "Mocowanie top mount i aluminium, razem 2100 g: klawiatura stoi jak przyklejona. Pełny blok nawigacji i brak bloku numerycznego zostawiają miejsce na myszkę. Na podkładce XL zostaje mi zapas.",
+      "demo": true
+    },
+    {
+      "author": "Natalia O.",
+      "date": "2026-08-30",
+      "rating": 4,
+      "variant": "Mgła · Próg",
+      "text": "Próg 55 g jest wyczuwalny w połowie skoku, dokładnie jak w opisie. Brakuje mi tylko podświetlenia, bo ta klawiatura go nie ma.",
+      "demo": true
+    },
+    {
+      "author": "Łukasz B.",
+      "date": "2026-07-17",
+      "rating": 4,
+      "variant": "Grafit · Próg",
+      "text": "Do programowania mam strzałki i blok nawigacji pod ręką. Odbiornik 2,4 GHz działa bez zarzutu, ale Bluetooth w tym modelu nie ma.",
+      "demo": true
+    },
+    {
+      "author": "Weronika E.",
+      "date": "2026-06-12",
+      "rating": 3,
+      "variant": "Mgła · Szept",
+      "text": "Szept jest cichy, ale klawiatura jest ciężka i niewygodna do przenoszenia. Na stałe miejsce na biurku sprawdza się dobrze.",
+      "demo": true
+    },
+    {
+      "author": "Jan M.",
+      "date": "2026-04-24",
+      "rating": 5,
+      "variant": "Grafit · Trzask",
+      "text": "Trzask i aluminiowa obudowa dają wyraźny klik, choć słychać go w całym pokoju.",
+      "demo": true
+    }
+  ],
+  "k-marmur-100": [
+    {
+      "author": "Grzegorz P.",
+      "date": "2026-09-09",
+      "rating": 4,
+      "variant": "Grafit · Próg",
+      "text": "Pełne 104 klawisze na przewodzie, bez konfiguracji. Brak hot-swap oznacza, że Próg zostaje na stałe. Wybierałem go uważnie i na razie jestem zadowolony.",
+      "demo": true
+    },
+    {
+      "author": "Agnieszka W.",
+      "date": "2026-08-03",
+      "rating": 5,
+      "variant": "Mgła · Ślizg",
+      "text": "Blok numeryczny do księgowości jest tym, czego szukałam. 44 cm szerokości wymaga dużej podkładki, ale XXL ją mieści.",
+      "demo": true
+    },
+    {
+      "author": "Krzysztof D.",
+      "date": "2026-06-26",
+      "rating": 3,
+      "variant": "Grafit · Trzask",
+      "text": "Trzask jest głośny, więc klawiatura trafiła do domowego biura. Obudowa z tworzywa i masa 1050 g robią wrażenie lżejszej niż aluminiowe modele.",
+      "demo": true
+    },
+    {
+      "author": "Zofia R.",
+      "date": "2026-05-14",
+      "rating": 4,
+      "variant": "Mgła · Szept",
+      "text": "Szept 40 g jest cichy, a białe podświetlenie wystarcza wieczorem.",
+      "demo": true
+    }
+  ],
+  "m-jerzyk": [
+    {
+      "author": "Kuba N.",
+      "date": "2026-10-02",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "49 g to różnica, którą czuć już po pierwszej godzinie. Odbiornik 2,4 GHz jest w zestawie, więc działa od razu. Przedłużacz odbiornika pozwala ustawić go bliżej myszki.",
+      "demo": true
+    },
+    {
+      "author": "Magda T.",
+      "date": "2026-09-06",
+      "rating": 4,
+      "variant": "Mgła",
+      "text": "Chwyt claw i dłoń 19 cm: zakres 18–20,5 cm trafia w sam środek. Przyciski boczne są po lewej stronie, więc dla osób leworęcznych to nie jest model.",
+      "demo": true
+    },
+    {
+      "author": "Dawid L.",
+      "date": "2026-08-08",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Częstotliwość 4000 Hz i 26 000 DPI robią swoje w grach, w których prowadzę mysz ramieniem.",
+      "demo": true
+    },
+    {
+      "author": "Sylwia Z.",
+      "date": "2026-07-02",
+      "rating": 3,
+      "variant": "Mgła",
+      "text": "Dla mojej dłoni 17 cm jest za duża, to poniżej zakresu 18–20,5 cm. Kreator od razu zaproponował Mewę i miał rację.",
+      "demo": true
+    },
+    {
+      "author": "Filip K.",
+      "date": "2026-05-30",
+      "rating": 4,
+      "variant": "Grafit",
+      "text": "Chwyt palm i claw działają oba, bo kształt jest symetryczny. Przy 49 g trzeba przyzwyczaić się do braku ciężaru.",
+      "demo": true
+    }
+  ],
+  "m-mewa": [
+    {
+      "author": "Hania P.",
+      "date": "2026-09-18",
+      "rating": 5,
+      "variant": "Kobalt",
+      "text": "Mam dłoń 16,5 cm, a Mewa jest jedyną myszką w katalogu, w której się mieszczę. 55 g i przyciski boczne po obu stronach. Odbiornik 2,4 GHz jest w zestawie.",
+      "demo": true
+    },
+    {
+      "author": "Olek M.",
+      "date": "2026-08-05",
+      "rating": 4,
+      "variant": "Grafit",
+      "text": "Chwyt fingertip jest wygodny przy szerokości 60 mm.",
+      "demo": true
+    },
+    {
+      "author": "Basia G.",
+      "date": "2026-06-21",
+      "rating": 5,
+      "variant": "Mgła",
+      "text": "Do 90 h pracy bez ładowania, według opisu. Jestem leworęczna, a przyciski boczne są po obu stronach.",
+      "demo": true
+    },
+    {
+      "author": "Mateusz E.",
+      "date": "2026-05-11",
+      "rating": 3,
+      "variant": "Grafit",
+      "text": "26 000 DPI to dla mnie więcej, niż potrzebuję. Mysz jest mała, a przy dłoni 18 cm po godzinie z chwytem claw zaczyna męczyć.",
+      "demo": true
+    }
+  ],
+  "m-pustulka": [
+    {
+      "author": "Renata S.",
+      "date": "2026-09-30",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Profil pod prawą dłoń i chwyt palm przy dłoni 19 cm, czyli na początku zakresu 19–21,5 cm. Przez cały dzień pracy nadgarstek jest rozluźniony. Odbiornik 2,4 GHz jest w zestawie.",
+      "demo": true
+    },
+    {
+      "author": "Tomasz H.",
+      "date": "2026-08-19",
+      "rating": 4,
+      "variant": "Mgła",
+      "text": "Trzy tryby łączności i do 100 h pracy według opisu. 62 g to mało jak na myszkę w rozmiarze L.",
+      "demo": true
+    },
+    {
+      "author": "Alicja F.",
+      "date": "2026-07-12",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Rozmiar L i 126 mm długości wypełniają moją dłoń 21 cm w całości.",
+      "demo": true
+    },
+    {
+      "author": "Konrad B.",
+      "date": "2026-05-06",
+      "rating": 3,
+      "variant": "Mgła",
+      "text": "Model tylko dla prawej ręki, więc mój leworęczny kolega nie może z niej korzystać. Poza tym kształt jest wygodny.",
+      "demo": true
+    }
+  ],
+  "m-wrobel": [
+    {
+      "author": "Paulina R.",
+      "date": "2026-09-15",
+      "rating": 4,
+      "variant": "Mgła",
+      "text": "Przewód zamiast baterii oznacza, że nie muszę pamiętać o ładowaniu. 12 000 DPI w zupełności wystarcza mi do pracy.",
+      "demo": true
+    },
+    {
+      "author": "Marcin J.",
+      "date": "2026-08-01",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Kształt symetryczny i zakres 17,5–19,5 cm pasują do mojej dłoni 18 cm. Przyciski boczne po lewej są tam, gdzie trzeba.",
+      "demo": true
+    },
+    {
+      "author": "Edyta W.",
+      "date": "2026-06-04",
+      "rating": 3,
+      "variant": "Mgła",
+      "text": "68 g to więcej niż w Jerzyku (49 g) i czuć to przy szybkich ruchach. Do biura wystarcza.",
+      "demo": true
+    },
+    {
+      "author": "Robert Z.",
+      "date": "2026-04-29",
+      "rating": 4,
+      "variant": "Grafit",
+      "text": "Uniwersalny kształt i chwyt palm lub claw, jak w opisie, ale brak trybu bezprzewodowego jest dla mnie wadą.",
+      "demo": true
+    }
+  ],
+  "m-kos": [
+    {
+      "author": "Joanna K.",
+      "date": "2026-09-24",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Ciche przyciski były powodem zakupu, bo pracuję w open space. Przełączanie między trzema komputerami działa bez problemu. Z kółka ze swobodnym obrotem korzystam rzadziej, ale się przydaje.",
+      "demo": true
+    },
+    {
+      "author": "Przemek T.",
+      "date": "2026-08-17",
+      "rating": 4,
+      "variant": "Mgła",
+      "text": "Kółko z trybem swobodnego obrotu przydaje się w długich arkuszach. 98 g to sporo, ale do pracy wystarcza.",
+      "demo": true
+    },
+    {
+      "author": "Lena M.",
+      "date": "2026-07-09",
+      "rating": 3,
+      "variant": "Grafit",
+      "text": "Dłoń 18 cm jest o 0,5 cm poniżej zakresu 18,5–21,5 cm i czuć to przy chwycie palm. Gdybym zmierzyła dłoń wcześniej, wybrałabym inny model.",
+      "demo": true
+    },
+    {
+      "author": "Stefan D.",
+      "date": "2026-05-22",
+      "rating": 5,
+      "variant": "Mgła",
+      "text": "Do 70 dni pracy według opisu, a do wyboru 2,4 GHz i Bluetooth.",
+      "demo": true
+    }
+  ],
+  "m-czapla": [
+    {
+      "author": "Gabriela N.",
+      "date": "2026-09-04",
+      "rating": 5,
+      "variant": "Grafit",
+      "text": "Chwyt pionowy rozwiązał problem z nadgarstkiem, który skręcał się w stronę blatu. Wysokość 76 mm wymaga przyzwyczajenia. Po kilku dniach wolę ją od płaskich myszek.",
+      "demo": true
+    },
+    {
+      "author": "Artur L.",
+      "date": "2026-07-26",
+      "rating": 3,
+      "variant": "Grafit",
+      "text": "120 g to dużo w porównaniu z Jerzykiem (49 g). 4000 DPI wystarcza do pracy, ale nie do szybkich gier.",
+      "demo": true
+    },
+    {
+      "author": "Monika S.",
+      "date": "2026-06-02",
+      "rating": 4,
+      "variant": "Grafit",
+      "text": "Zakres dłoni 17–20 cm obejmuje moje 19 cm.",
+      "demo": true
+    }
+  ],
+  "p-tafla": [
+    {
+      "author": "Krzysiek W.",
+      "date": "2026-09-29",
+      "rating": 5,
+      "variant": "Grafit · XL",
+      "text": "Gładka tkanina, mysz rusza z miejsca bez oporu. 90 × 40 cm mieści klawiaturę i ruch myszki w moim zestawie. Krawędź jest obszyta.",
+      "demo": true
+    },
+    {
+      "author": "Ewelina P.",
+      "date": "2026-09-01",
+      "rating": 4,
+      "variant": "Kobalt · L",
+      "text": "Powierzchnia szybka, jak w opisie. 45 × 40 cm wystarcza mi przy niskim sensie, ale przy większym zasięgu przydałaby się XL.",
+      "demo": true
+    },
+    {
+      "author": "Hubert O.",
+      "date": "2026-07-28",
+      "rating": 5,
+      "variant": "Mgła · XXL",
+      "text": "120 × 50 cm to całe biurko pod klawiaturą i myszką. Krawędź jest obszyta, a grubość to 4 mm.",
+      "demo": true
+    },
+    {
+      "author": "Dominika B.",
+      "date": "2026-06-15",
+      "rating": 3,
+      "variant": "Grafit · M",
+      "text": "36 cm szerokości to za mało przy profilu FPS i kreator słusznie ostrzegał. Do mniejszego ruchu myszką wystarcza.",
+      "demo": true
+    },
+    {
+      "author": "Sebastian F.",
+      "date": "2026-05-08",
+      "rating": 4,
+      "variant": "Grafit · L",
+      "text": "Tkanina jest gładka i szybka.",
+      "demo": true
+    }
+  ],
+  "p-len": [
+    {
+      "author": "Anna C.",
+      "date": "2026-09-17",
+      "rating": 5,
+      "variant": "Grafit · L",
+      "text": "Gruby splot hamuje mysz tam, gdzie ją zatrzymuję. Grubość 5 mm jest wyczuwalna pod nadgarstkiem. Wybrałam rozmiar L, 45 × 40 cm.",
+      "demo": true
+    },
+    {
+      "author": "Wiktor R.",
+      "date": "2026-08-09",
+      "rating": 4,
+      "variant": "Mgła · XL",
+      "text": "Do precyzyjnego celowania powierzchnia kontrolna daje przewidywalne zatrzymanie. XL ma 90 cm szerokości, więc mieści też klawiaturę.",
+      "demo": true
+    },
+    {
+      "author": "Kinga S.",
+      "date": "2026-06-28",
+      "rating": 3,
+      "variant": "Grafit · M",
+      "text": "Opór jest wyraźnie większy niż na Tafli. Trzeba się przyzwyczaić, zwłaszcza przy szybkich ruchach.",
+      "demo": true
+    },
+    {
+      "author": "Mikołaj H.",
+      "date": "2026-05-16",
+      "rating": 5,
+      "variant": "Mgła · L",
+      "text": "Kontrola, której szukałem w grach z celowaniem.",
+      "demo": true
+    }
+  ],
+  "p-szron": [
+    {
+      "author": "Ilona D.",
+      "date": "2026-09-10",
+      "rating": 4,
+      "variant": "Grafit · L",
+      "text": "Szybki start i kontrolowane zatrzymanie, czyli coś pośrodku między Taflą a Lnem.",
+      "demo": true
+    },
+    {
+      "author": "Radek M.",
+      "date": "2026-08-13",
+      "rating": 5,
+      "variant": "Kobalt · XL",
+      "text": "Powłoka hybrydowa nie chłonie wilgoci, więc nie boję się o nią przy kubku obok. Grubość to 4 mm.",
+      "demo": true
+    },
+    {
+      "author": "Oliwia K.",
+      "date": "2026-07-03",
+      "rating": 3,
+      "variant": "Grafit · XL",
+      "text": "90 cm szerokości i 40 cm głębokości mieści mój set. Powierzchnia jest dobra, ale niczym szczególnym się nie wyróżnia.",
+      "demo": true
+    },
+    {
+      "author": "Daniel P.",
+      "date": "2026-05-25",
+      "rating": 4,
+      "variant": "Kobalt · L",
+      "text": "Powierzchnia zbalansowana sprawdza się w grach i w pracy, bo ani nie hamuje za mocno, ani nie ucieka spod ręki.",
+      "demo": true
+    }
+  ],
+  "p-lod": [
+    {
+      "author": "Bartosz W.",
+      "date": "2026-09-08",
+      "rating": 4,
+      "variant": "Grafit · M",
+      "text": "Najmniejszy opór w całej ofercie podkładek. Szkło jest głośniejsze od tkaniny, co słychać przy szybkich ruchach. Wybrałem rozmiar M, 36 × 30 cm.",
+      "demo": true
+    },
+    {
+      "author": "Karolina N.",
+      "date": "2026-08-02",
+      "rating": 5,
+      "variant": "Mgła · L",
+      "text": "Hartowane szkło, 4 mm grubości i szlifowana krawędź. Powierzchnia się nie wyciera, w przeciwieństwie do tkaniny.",
+      "demo": true
+    },
+    {
+      "author": "Jerzy A.",
+      "date": "2026-06-23",
+      "rating": 3,
+      "variant": "Grafit · L",
+      "text": "Za głośna w pokoju, w którym ktoś śpi. Do gier się nadaje, ale do pracy biurowej bym jej nie wybrał.",
+      "demo": true
+    },
+    {
+      "author": "Zuzanna F.",
+      "date": "2026-05-04",
+      "rating": 4,
+      "variant": "Grafit · M",
+      "text": "Rozmiar M ma 36 cm szerokości i nadaje się do niskiego ruchu myszki.",
+      "demo": true
+    }
+  ],
+  "p-filc": [
+    {
+      "author": "Teresa G.",
+      "date": "2026-09-22",
+      "rating": 5,
+      "variant": "Grafit · XXL",
+      "text": "Filc wycisza stuk klawiatury i chroni blat. 120 × 50 cm to całe stanowisko pracy. Wybrałam XXL, bo mam klawiaturę 100%.",
+      "demo": true
+    },
+    {
+      "author": "Marian B.",
+      "date": "2026-08-07",
+      "rating": 4,
+      "variant": "Mgła · XL",
+      "text": "Powierzchnia biurowa jest w porządku do pracy, ale do gier mi nie pasuje, tak jak pisze opis. Krawędź jest cięta, bez obszycia.",
+      "demo": true
+    },
+    {
+      "author": "Ida K.",
+      "date": "2026-07-01",
+      "rating": 3,
+      "variant": "Grafit · XL",
+      "text": "Grubość 3 mm to mniej niż w tkaninach. Wyciszenie klawiatury jest wyraźne, ale mysz ślizga się na niej wolniej, niż bym chciała.",
+      "demo": true
+    },
+    {
+      "author": "Oskar T.",
+      "date": "2026-05-20",
+      "rating": 5,
+      "variant": "Mgła · XXL",
+      "text": "Pod klawiaturą 100% i myszką mieści się z zapasem, a filc poliestrowy jest miękki w dotyku.",
+      "demo": true
+    }
+  ],
+  "p-korek": [
+    {
+      "author": "Helena M.",
+      "date": "2026-09-13",
+      "rating": 5,
+      "variant": "Naturalny korek · XL",
+      "text": "Ciepły w dotyku i matowy, bez nadruku. Antypoślizgowy spód trzyma matę w miejscu. Kolor Naturalny korek dobrze wygląda na jasnym blacie.",
+      "demo": true
+    },
+    {
+      "author": "Wojciech S.",
+      "date": "2026-07-24",
+      "rating": 4,
+      "variant": "Naturalny korek · XL",
+      "text": "Jedyny rozmiar to XL, 90 × 40 cm. Przy klawiaturze Marmur 100 i profilu FPS byłaby za wąska o 1 cm, ale przy pracy biurowej mieści wszystko.",
+      "demo": true
+    },
+    {
+      "author": "Natalia W.",
+      "date": "2026-06-06",
+      "rating": 3,
+      "variant": "Naturalny korek · XL",
+      "text": "Powierzchnia jest matowa i hamuje mysz, więc do szybkich gier mi nie odpowiada.",
+      "demo": true
+    }
+  ]
+}

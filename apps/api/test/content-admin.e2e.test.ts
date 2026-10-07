@@ -94,17 +94,26 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
 
   // ------------------------------------------------------------------ strony i artykuly
 
-  it("lista i szczegoly stron z seeda: 5 stron prawnych i informacyjnych, ETag = wersja", async () => {
-    const list = await call("viewer", "get", "/v1/admin/content");
+  it("lista i szczegoly stron z seeda: 8 stron (5 prawnych i 3 informacyjne) i 4 poradniki, ETag = wersja", async () => {
+    const list = await call("viewer", "get", "/v1/admin/content?type=page");
     expect(list.body.items.map((i: { slug: string }) => i.slug).sort()).toEqual([
       "cookies",
       "dostawa-i-platnosci",
+      "kontakt",
+      "o-sklepie",
       "polityka-prywatnosci",
       "regulamin",
+      "zuzyty-sprzet",
       "zwroty-i-reklamacje",
     ]);
     expect(list.body.items.every((i: { type: string }) => i.type === "page")).toBe(true);
-    expect((await call("viewer", "get", "/v1/admin/content?type=guide")).body.items).toEqual([]);
+    const guides = await call("viewer", "get", "/v1/admin/content?type=guide");
+    expect(guides.body.items.map((i: { slug: string }) => i.slug).sort()).toEqual([
+      "jak-dobrac-mysz-do-dloni",
+      "jak-wybrac-przelaczniki",
+      "jaka-podkladka",
+      "rozmiary-klawiatur",
+    ]);
     const p = await page("regulamin");
     const one = await call("viewer", "get", `/v1/admin/content/${p.id}`);
     expect(one.status).toBe(200);
@@ -327,6 +336,10 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
   // ------------------------------------------------------------------ FAQ
 
   it("B-307: FAQ - zapis uporzadkowanej listy, zmiana kolejnosci, usuwanie pominietych, sanityzacja, znacznik content:faq", async () => {
+    expect((await call("viewer", "get", "/v1/admin/faq")).body.items.length).toBeGreaterThanOrEqual(
+      8,
+    );
+    await t.prisma.faqItem.deleteMany();
     expect((await call("viewer", "get", "/v1/admin/faq")).body.items).toEqual([]);
     const put = (items: object[]) => call("editor", "put", "/v1/admin/faq", { items });
     const first = await put([
@@ -489,6 +502,9 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
     call("editor", "put", `/v1/admin/products/${id}/reviews`, { items });
 
   it("B-302/B-303: opinie - zapis 3-6, srednia i liczba, stala etykieta, demo=true w bazie, znaczniki reviews:{slug} i product:{slug}", async () => {
+    const seeded = await call("viewer", "get", "/v1/admin/reviews?product_id=m-wrobel");
+    expect(seeded.body.items[0].count).toBeGreaterThanOrEqual(3);
+    await t.prisma.review.deleteMany({ where: { productId: "m-wrobel" } });
     const empty = await call("viewer", "get", "/v1/admin/reviews?product_id=m-wrobel");
     expect(empty.body).toMatchObject({ label: REVIEWS_LABEL });
     expect(empty.body.items[0]).toMatchObject({ slug: "wrobel", count: 0, avg: null });
@@ -546,6 +562,7 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
       expect(r.status, JSON.stringify(items).slice(0, 120)).toBe(422);
       if (code) expect(JSON.stringify(r.body.errors)).toContain(code);
     };
+    const seededReviews = await t.prisma.review.count();
     await bad(reviewSet(2));
     await bad([...reviewSet(6), review()]);
     await bad(reviewSet(3).map((r, i) => (i === 0 ? { ...r, rating: 2 } : r)));
@@ -584,7 +601,7 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
       "invalid_domain",
     );
     expect((await putReviews(reviewSet(3), "m-nie-ma")).status).toBe(404);
-    expect(await t.prisma.review.count()).toBe(0);
+    expect(await t.prisma.review.count()).toBe(seededReviews);
     expect(await outbox()).toHaveLength(0);
   });
 

@@ -196,3 +196,47 @@ export const pageFrontmatterSchema = z.strictObject({
   updated: z.iso.date(),
   demo: z.enum(["true", "false"]).transform((v) => v === "true"),
 });
+
+// F-220 (D-011): poradnik to strona typu `guide`; `profile` trafia do `guide_profile`, `reading_minutes` jest kontrolna
+// (baza go nie przechowuje, sklep liczy czas czytania z dlugosci), `demo` musi byc true.
+export const guideFrontmatterSchema = z.strictObject({
+  slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  title: z.string().min(2),
+  updated: z.iso.date(),
+  lead: z.string().min(20).max(220),
+  profile: z.string().min(1),
+  reading_minutes: z
+    .string()
+    .regex(/^\d{1,2}$/)
+    .transform(Number)
+    .pipe(z.int().min(1).max(30)),
+  demo: z.literal("true").transform(() => true as const),
+});
+
+// F-076, docs/04 par. 8: opinie demo. Autor to imie i inicjal; oceny 3-5; `demo` zawsze true (CHECK w bazie);
+// `variant` to etykieta wariantu ("Grafit · Prog"), w bazie `variant_label`.
+export const REVIEW_AUTHOR = /^\p{Lu}\p{Ll}+ \p{Lu}\.$/u;
+export const reviewSchema = z.strictObject({
+  author: z.string().regex(REVIEW_AUTHOR),
+  date: z.iso.date(),
+  rating: z.int().min(3).max(5),
+  variant: z.string().min(1),
+  text: z.string().min(1).max(600),
+  demo: z.literal(true),
+});
+export const reviewsFileSchema = z.record(z.string().min(1), z.array(reviewSchema).min(3).max(6));
+
+// F-221: FAQ (content/faq.json). `key` daje stabilny identyfikator wiersza `faq_items.id` (`faq-<key>`).
+export const faqFileSchema = z
+  .array(
+    z.strictObject({
+      key: z
+        .string()
+        .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+        .max(30),
+      question: z.string().trim().min(5).max(200),
+      answer_md: z.string().trim().min(5).max(3000),
+    }),
+  )
+  .min(1)
+  .max(50);

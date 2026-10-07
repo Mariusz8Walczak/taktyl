@@ -64,7 +64,50 @@ describe.skipIf(!hasDb)("F-076, F-220, F-221 publiczne tresci i opinie (PostgreS
     await t.http().get("/v1/content/pages/ZLY%20SLUG").expect(400);
   });
 
+  it("seed: 4 poradniki, FAQ i opinie z plikow tresci sa dostepne w API (F-220, F-221, F-076)", async () => {
+    const guides = guideListSchema.parse(
+      (await t.http().get("/v1/content/guides").expect(200)).body,
+    );
+    expect(guides.items.map((g) => g.slug).sort()).toEqual([
+      "jak-dobrac-mysz-do-dloni",
+      "jak-wybrac-przelaczniki",
+      "jaka-podkladka",
+      "rozmiary-klawiatur",
+    ]);
+    for (const g of guides.items) {
+      expect(g.lead).toBeTruthy();
+      expect(g.guide_profile).toBeTruthy();
+    }
+    const guide = contentPageSchema.parse(
+      (await t.http().get("/v1/content/guides/jak-wybrac-przelaczniki").expect(200)).body,
+    );
+    expect(guide).toMatchObject({
+      type: "guide",
+      guide_profile: "programowanie",
+      demo_notice: true,
+    });
+    expect(guide.body_md).toContain("(/zbuduj-set?profil=programowanie)");
+    for (const slug of ["o-sklepie", "kontakt", "zuzyty-sprzet"]) {
+      const page = contentPageSchema.parse(
+        (await t.http().get(`/v1/content/pages/${slug}`).expect(200)).body,
+      );
+      expect(page.demo_notice).toBe(true);
+    }
+    const faq = faqSchema.parse((await t.http().get("/v1/content/faq").expect(200)).body);
+    expect(faq.items.length).toBeGreaterThanOrEqual(8);
+    const reviews = reviewsResponseSchema.parse(
+      (await t.http().get("/v1/products/bazalt-75/reviews").expect(200)).body,
+    );
+    expect(reviews.label).toBe(REVIEWS_LABEL);
+    expect(reviews.count).toBeGreaterThanOrEqual(3);
+    expect(reviews.count).toBeLessThanOrEqual(6);
+    expect(reviews.avg).not.toBeNull();
+    expect(reviews.items.every((r) => r.demo && r.rating >= 3 && r.rating <= 5)).toBe(true);
+    expect(JSON.stringify(reviews)).not.toMatch(/aggregateRating|@type|schema\.org/);
+  });
+
   it("poradnik: lista tylko opublikowanych (najnowsze pierwsze) i artykul po slugu", async () => {
+    await t.prisma.contentPage.deleteMany({ where: { type: "guide" } });
     expect(
       guideListSchema.parse((await t.http().get("/v1/content/guides").expect(200)).body).items,
     ).toEqual([]);
@@ -100,6 +143,7 @@ describe.skipIf(!hasDb)("F-076, F-220, F-221 publiczne tresci i opinie (PostgreS
   });
 
   it("FAQ: tylko opublikowane, w ustalonej kolejnosci", async () => {
+    await t.prisma.faqItem.deleteMany();
     await t.prisma.faqItem.createMany({
       data: [
         { question: "Drugie?", answerMd: "B", position: 2 },
@@ -113,6 +157,7 @@ describe.skipIf(!hasDb)("F-076, F-220, F-221 publiczne tresci i opinie (PostgreS
 
   it("opinie: etykieta demo, srednia z liczba (1 miejsce), najnowsze pierwsze, brak aggregateRating", async () => {
     const product = await t.prisma.product.findFirstOrThrow({ where: { status: "active" } });
+    await t.prisma.review.deleteMany({ where: { productId: product.id } });
     await t.prisma.review.createMany({
       data: [
         {
@@ -155,6 +200,7 @@ describe.skipIf(!hasDb)("F-076, F-220, F-221 publiczne tresci i opinie (PostgreS
 
   it("opinie: produkt bez opinii ma avg null i count 0; nieznany lub ukryty produkt to 404", async () => {
     const product = await t.prisma.product.findFirstOrThrow({ where: { status: "active" } });
+    await t.prisma.review.deleteMany({ where: { productId: product.id } });
     const empty = reviewsResponseSchema.parse(
       (await t.http().get(`/v1/products/${product.slug}/reviews`).expect(200)).body,
     );

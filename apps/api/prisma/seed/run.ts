@@ -1,6 +1,8 @@
 // B-102 (docs/17 par. 7): seed idempotentny. Wiersze wstawiane po kluczach naturalnych (id/sku/slug/code/key)
 // z ON CONFLICT DO NOTHING, wiec ponowny przebieg nie dubluje i nie nadpisuje edycji z backpanelu.
 // Konta admina tworzy TAKTYL-45, nie seed.
+// Tresci (D-011): strony i poradniki po slug (ON CONFLICT DO NOTHING); opinie i FAQ to zestawy edytowane w calosci w backpanelu
+// (PUT), wiec seed wstawia je tylko wtedy, gdy produkt nie ma jeszcze zadnej opinii, a faq_items jest puste.
 import { REVALIDATE_TAG_PATTERN } from "@taktyl/contracts";
 import { toGrosze } from "@taktyl/domain";
 import { Prisma, type PrismaClient } from "../../src/prisma/client.js";
@@ -406,7 +408,7 @@ async function seedAll(tx: Tx, d: SeedData, now: Date, ins: Record<string, numbe
     await tx.pickupPoint.createMany({ data: s.pickup_points, skipDuplicates: true }),
   );
 
-  // 9. Tresci: strony informacyjne i prawne.
+  // 9. Tresci: strony informacyjne i prawne (F-221), poradniki (F-220), FAQ (F-221), opinie demo (F-076).
   add(
     "content_pages",
     await tx.contentPage.createMany({
@@ -419,6 +421,61 @@ async function seedAll(tx: Tx, d: SeedData, now: Date, ins: Record<string, numbe
         demoNotice: p.demoNotice,
         publishedAt: new Date(`${p.updated}T00:00:00Z`),
       })),
+      skipDuplicates: true,
+    }),
+  );
+  add(
+    "content_guides",
+    await tx.contentPage.createMany({
+      data: d.guides.map((g) => ({
+        slug: g.slug,
+        type: "guide",
+        title: g.title,
+        lead: g.lead,
+        bodyMd: g.bodyMd,
+        status: "published",
+        demoNotice: g.demoNotice,
+        guideProfile: g.profile,
+        publishedAt: new Date(`${g.updated}T00:00:00Z`),
+      })),
+      skipDuplicates: true,
+    }),
+  );
+  add(
+    "faq_items",
+    (await tx.faqItem.count()) > 0
+      ? { count: 0 }
+      : await tx.faqItem.createMany({
+          data: d.faq.map((q) => ({
+            id: q.id,
+            question: q.question,
+            answerMd: q.answerMd,
+            position: q.position,
+            status: "published",
+          })),
+          skipDuplicates: true,
+        }),
+  );
+  const withReviews = new Set(
+    (await tx.review.findMany({ select: { productId: true }, distinct: ["productId"] })).map(
+      (r) => r.productId,
+    ),
+  );
+  add(
+    "reviews",
+    await tx.review.createMany({
+      data: d.reviews
+        .filter((r) => !withReviews.has(r.productId))
+        .map((r) => ({
+          id: r.id,
+          productId: r.productId,
+          author: r.author,
+          date: r.date,
+          rating: r.rating,
+          variantLabel: r.variantLabel,
+          text: r.text,
+          demo: true,
+        })),
       skipDuplicates: true,
     }),
   );

@@ -1,0 +1,62 @@
+[
+  {
+    "key": "demo",
+    "question": "Czy mogę tu naprawdę coś kupić?",
+    "answer_md": "Nie. Taktyl to sklep demonstracyjny: nie realizujemy zamówień i nie pobieramy płatności. Możesz przejść cały proces, od wyboru produktów po ekran potwierdzenia, ale nic nie zostanie wysłane ani obciążone."
+  },
+  {
+    "key": "platnosc",
+    "question": "Jak wygląda płatność w sklepie demonstracyjnym?",
+    "answer_md": "Płatność jest symulacją. Wybierasz metodę (BLIK, kartę płatniczą, szybki przelew albo przelew tradycyjny), a na ekranie płatności decydujesz, czy symulować udaną, czy odrzuconą płatność. Nie ma pól na numer karty, kod BLIK ani hasło i nigdy ich nie wpisujesz."
+  },
+  {
+    "key": "dostawa",
+    "question": "Ile kosztuje dostawa i kiedy by dotarła?",
+    "answer_md": "Automat paczkowy kosztuje 12,99 zł, kurier 16,99 zł, a odbiór osobisty w Warszawie 0,00 zł. Dostawa automatem i kurierem trwa 1 dzień roboczy od wysyłki. Zamówienie złożone do 14:00 w dzień roboczy wychodzi tego samego dnia. Od 299 zł wartości zamówienia dostawa jest darmowa. Szczegóły: [Dostawa i płatności](/dostawa-i-platnosci)."
+  },
+  {
+    "key": "rabat-setu",
+    "question": "Jak działa rabat 10% na set?",
+    "answer_md": "Rabat obejmuje set złożony z klawiatury, myszki i podkładki. Liczymy go od aktualnych cen wariantów, więc uwzględnia też promocje. W koszyku widzisz go jako osobną linię „Rabat za set”. Rabat za set nie łączy się z kodami rabatowymi."
+  },
+  {
+    "key": "kody",
+    "question": "Do czego służą kody TAKTYL10 i DOSTAWA0?",
+    "answer_md": "To kody demonstracyjne. TAKTYL10 daje −10% na produkty spoza setów i nie obejmuje pozycji w setach, bo set ma własny rabat. DOSTAWA0 zeruje koszt dostawy. Kod wpisujesz w koszyku."
+  },
+  {
+    "key": "kreator",
+    "question": "Czym jest kreator setu?",
+    "answer_md": "Kreator pozwala złożyć klawiaturę, myszkę i podkładkę w jeden set. Zaczynasz od profilu: gry FPS, inne gry, programowanie, praca biurowa albo cicha praca. Opcjonalnie podajesz długość dłoni. Kreator sprawdza, czy podkładka mieści klawiaturę i ruch myszki oraz czy myszka pasuje do dłoni. Gdy coś się nie zgadza, pokazuje uwagę i propozycję zmiany, ale nigdy nie blokuje zamówienia. [Zbuduj set](/zbuduj-set)."
+  },
+  {
+    "key": "omnibus",
+    "question": "Dlaczego przy promocji widzę „najniższą cenę z 30 dni”?",
+    "answer_md": "Przy każdej obniżce ceny pokazujemy najniższą cenę z 30 dni przed obniżką. To punkt odniesienia wymagany przepisami o informowaniu o cenach (dyrektywa Omnibus). Rabat za set i kody rabatowe nie są obniżką ceny produktu, więc pokazujemy je osobno w podsumowaniu."
+  },
+  {
+    "key": "zwrot",
+    "question": "Ile mam czasu na odstąpienie od umowy?",
+    "answer_md": "Ustawowo masz 14 dni na odstąpienie od umowy zawartej na odległość. W Taktylu: 30. Termin liczysz od dnia, w którym towar trafił do Ciebie, a odstąpić możesz bez podawania przyczyny. Wzór formularza znajdziesz w regulaminie, a zasady opisuje strona [Zwroty i reklamacje](/zwroty-i-reklamacje). Ponieważ sklep jest demonstracyjny, nie ma towaru do zwrotu."
+  },
+  {
+    "key": "reklamacja",
+    "question": "Jak zgłosić reklamację?",
+    "answer_md": "Jeśli towar jest niezgodny z umową, napisz na reklamacje@taktyl.example. Opisz, co się stało, kiedy to zauważyłeś i czego oczekujesz: naprawy, wymiany, obniżenia ceny albo odstąpienia od umowy. Dołącz numer zamówienia. Odpowiadamy w ciągu 14 dni od otrzymania reklamacji. Pełne zasady: [Zwroty i reklamacje](/zwroty-i-reklamacje)."
+  },
+  {
+    "key": "opinie",
+    "question": "Skąd się biorą opinie przy produktach?",
+    "answer_md": "Opinie przy produktach są przykładowe, napisane na potrzeby sklepu demonstracyjnego. Dlatego sekcja ma etykietę „Opinie przykładowe — sklep demonstracyjny”, a średnia zawsze pokazuje liczbę opinii."
+  },
+  {
+    "key": "koszyk",
+    "question": "Gdzie jest zapisany mój koszyk?",
+    "answer_md": "Koszyk, ulubione, porównanie i zapisane sety pamięta Twoja przeglądarka (pamięć lokalna). Po wyczyszczeniu danych witryny znikają. Szczegóły: [Cookies](/cookies) i [Polityka prywatności](/polityka-prywatnosci)."
+  },
+  {
+    "key": "kontakt",
+    "question": "Jak się z Wami skontaktować?",
+    "answer_md": "Napisz na kontakt@taktyl.example albo użyj formularza na stronie [Kontakt](/kontakt). Telefon: +48 22 000 00 00. W sklepie demonstracyjnym nie wysyłamy e-maili, więc odpowiedź nie nadejdzie."
+  }
+]

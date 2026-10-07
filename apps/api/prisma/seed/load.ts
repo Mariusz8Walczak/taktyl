@@ -4,15 +4,17 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { toGrosze } from "@taktyl/domain";
 import type { z } from "zod";
-import { parsePage, type SeedPage } from "./content.js";
+import { parseGuide, parsePage, type SeedGuide, type SeedPage } from "./content.js";
 import {
   categorySchema,
   colorsSchema,
   descriptionsSchema,
+  faqFileSchema,
   facetsSchema,
   manifestSchema,
   presetSchema,
   productSchema,
+  reviewsFileSchema,
   rulesSchema,
   shopSchema,
   switchSchema,
@@ -47,6 +49,28 @@ export interface SeedData {
   descriptions: Record<string, string>;
   manifest: RawManifestEntry[];
   pages: SeedPage[];
+  guides: SeedGuide[];
+  reviews: SeedReview[];
+  faq: SeedFaq[];
+}
+
+/** F-076: opinia demo; `id` jest deterministyczny (`rv-<produkt>-<n>`), `variantLabel` to etykieta wariantu. */
+export interface SeedReview {
+  id: string;
+  productId: string;
+  author: string;
+  date: Date;
+  rating: number;
+  variantLabel: string;
+  text: string;
+}
+
+/** F-221: pytanie FAQ; `id` to `faq-<key>`, kolejnosc z pliku (`position` od 1). */
+export interface SeedFaq {
+  id: string;
+  question: string;
+  answerMd: string;
+  position: number;
 }
 
 export class SeedValidationError extends Error {}
@@ -68,7 +92,7 @@ function fail(file: string, msg: string): never {
 }
 
 /** B-102: czyta wszystkie pliki, waliduje schematami i spojnoscia referencji. Blad przerywa seed. */
-export function loadSeedData(root: string): SeedData {
+export function loadSeedData(root: string, now?: Date): SeedData {
   const categories = readJson(root, "data/categories.json", categorySchema.array());
   const colorMap = readJson(root, "data/colors.json", colorsSchema);
   const switches = readJson(root, "data/switches.json", switchSchema.array());
@@ -85,6 +109,14 @@ export function loadSeedData(root: string): SeedData {
     .filter((f) => f.endsWith(".md"))
     .sort()
     .map((f) => parsePage(readFileSync(join(pagesDir, f), "utf8"), `content/pages/${f}`));
+
+  const guidesDir = join(root, "content/guides");
+  const guides = readdirSync(guidesDir)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((f) => parseGuide(readFileSync(join(guidesDir, f), "utf8"), `content/guides/${f}`));
+  const reviewsRaw = readJson(root, "data/reviews.json", reviewsFileSchema);
+  const faqRaw = readJson(root, "content/faq.json", faqFileSchema);
 
   const colors = Object.entries(colorMap).map(([id, c]) => ({ id, ...c }));
   const categoryIds = new Set(categories.map((c) => c.id));
@@ -184,11 +216,60 @@ export function loadSeedData(root: string): SeedData {
   for (const cat of Object.keys(facets)) {
     if (!categoryIds.has(cat)) fail("data/facets.json", `nieznana kategoria ${cat}`);
   }
+  // Strony i poradniki to jedna tabela (`content_pages.slug` UQ), wiec slug musi byc unikalny lacznie.
   const slugs = new Set<string>();
   for (const pg of pages) {
     if (slugs.has(pg.slug)) fail("content/pages", `zdublowany slug ${pg.slug}`);
     slugs.add(pg.slug);
   }
+  for (const g of guides) {
+    if (slugs.has(g.slug))
+      fail("content/guides", `slug ${g.slug} zajety (strona lub inny poradnik)`);
+    slugs.add(g.slug);
+    if (!(g.profile in rules.profiles))
+      fail("content/guides", `${g.slug}: profil ${g.profile} spoza data/rules.json`);
+  }
+
+  // Opinie: kazdy produkt ma wlasny zestaw; wariant z etykiety istnieje (kolor, kolor + przelacznik, kolor + rozmiar).
+  const reviews: SeedReview[] = [];
+  for (const id of Object.keys(reviewsRaw)) {
+    if (!productIds.has(id)) fail("data/reviews.json", `opinie dla nieznanego produktu ${id}`);
+  }
+  for (const p of products) {
+    const list = reviewsRaw[p.id];
+    if (!list) fail("data/reviews.json", `brak opinii dla produktu ${p.id}`);
+    const labels = new Set<string>();
+    for (const v of p.variants) {
+      const c = colorById.get(v.color)?.label ?? "";
+      labels.add(c);
+      const sw = v.switch === undefined ? undefined : switchById.get(v.switch);
+      if (sw) labels.add(`${c} · ${sw.name}`);
+      if (v.size) labels.add(`${c} · ${v.size.toUpperCase()}`);
+    }
+    list.forEach((r, i) => {
+      if (!labels.has(r.variant))
+        fail("data/reviews.json", `${p.id}[${i}]: wariant "${r.variant}" nie istnieje`);
+      const date = new Date(`${r.date}T00:00:00Z`);
+      if (now && date.getTime() > now.getTime())
+        fail("data/reviews.json", `${p.id}[${i}]: data ${r.date} z przyszlosci`);
+      reviews.push({
+        id: `rv-${p.id}-${i + 1}`,
+        productId: p.id,
+        author: r.author,
+        date,
+        rating: r.rating,
+        variantLabel: r.variant,
+        text: r.text,
+      });
+    });
+  }
+
+  const faqKeys = new Set<string>();
+  const faq: SeedFaq[] = faqRaw.map((q, i) => {
+    if (faqKeys.has(q.key)) fail("content/faq.json", `zdublowany klucz ${q.key}`);
+    faqKeys.add(q.key);
+    return { id: `faq-${q.key}`, question: q.question, answerMd: q.answer_md, position: i + 1 };
+  });
 
   return {
     categories,
@@ -203,5 +284,8 @@ export function loadSeedData(root: string): SeedData {
     descriptions,
     manifest,
     pages,
+    guides,
+    reviews,
+    faq,
   };
 }

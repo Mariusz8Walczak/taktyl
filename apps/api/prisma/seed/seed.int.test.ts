@@ -26,7 +26,10 @@ describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
     stockMovements: await prisma.stockMovement.count(),
     productImages: await prisma.productImage.count(),
     facets: await prisma.facetDefinition.count(),
-    pages: await prisma.contentPage.count(),
+    pages: await prisma.contentPage.count({ where: { type: "page" } }),
+    guides: await prisma.contentPage.count({ where: { type: "guide" } }),
+    faq: await prisma.faqItem.count(),
+    reviews: await prisma.review.count(),
     shipping: await prisma.shippingMethod.count(),
     payments: await prisma.paymentMethod.count(),
     codes: await prisma.discountCode.count(),
@@ -65,6 +68,54 @@ describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
     expect(
       await prisma.contentPage.count({ where: { status: "published", demoNotice: true } }),
     ).toBeGreaterThanOrEqual(5);
+  });
+
+  it("F-220, F-221, F-076: tresci P1 w bazie (4 poradniki, 8 stron, FAQ, opinie 3-6 na produkt)", async () => {
+    const guides = await prisma.contentPage.findMany({ where: { type: "guide" } });
+    expect(guides.map((g) => g.slug).sort()).toEqual([
+      "jak-dobrac-mysz-do-dloni",
+      "jak-wybrac-przelaczniki",
+      "jaka-podkladka",
+      "rozmiary-klawiatur",
+    ]);
+    const profiles = (await prisma.ruleSettings.findUniqueOrThrow({ where: { id: "default" } }))
+      .profiles as Record<string, unknown>;
+    for (const g of guides) {
+      expect(g.status).toBe("published");
+      expect(g.lead).toBeTruthy();
+      expect(Object.keys(profiles)).toContain(g.guideProfile);
+      expect(g.bodyMd).toContain(`/zbuduj-set?profil=${g.guideProfile}`);
+    }
+    expect(await prisma.contentPage.count({ where: { type: "page", status: "published" } })).toBe(
+      8,
+    );
+    expect(await prisma.faqItem.count({ where: { status: "published" } })).toBeGreaterThanOrEqual(
+      8,
+    );
+
+    const grouped = await prisma.review.groupBy({ by: ["productId"], _count: { _all: true } });
+    expect(grouped).toHaveLength(18);
+    for (const g of grouped) {
+      expect(g._count._all).toBeGreaterThanOrEqual(3);
+      expect(g._count._all).toBeLessThanOrEqual(6);
+    }
+    expect(await prisma.review.count({ where: { demo: false } })).toBe(0);
+    expect(
+      await prisma.review.count({ where: { OR: [{ rating: { lt: 3 } }, { rating: { gt: 5 } }] } }),
+    ).toBe(0);
+    const orphaned = await prisma.$queryRaw<{ id: string }[]>`
+      SELECT r.id FROM reviews r
+      WHERE NOT EXISTS (
+        SELECT 1 FROM variants v
+        JOIN colors c ON c.id = v.color_id
+        LEFT JOIN switches s ON s.id = v.switch_id
+        WHERE v.product_id = r.product_id AND r.variant_label IN (
+          c.label,
+          c.label || ' · ' || COALESCE(s.name, ''),
+          c.label || ' · ' || UPPER(COALESCE(v.size_key, ''))
+        )
+      )`;
+    expect(orphaned).toEqual([]);
   });
 
   it("stany pokazowe z JSON (docs/04 par. 2)", async () => {
@@ -176,6 +227,32 @@ describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
     expect((await prisma.product.findUniqueOrThrow({ where: { id: "k-kwarc-60" } })).name).toBe(
       "Edycja z backpanelu",
     );
+  });
+
+  it("seed nie nadpisuje edycji tresci z backpanelu (poradnik, FAQ, opinie)", async () => {
+    const slug = "jak-wybrac-przelaczniki";
+    const original = await prisma.contentPage.findUniqueOrThrow({ where: { slug } });
+    const faq = await prisma.faqItem.findUniqueOrThrow({ where: { id: "faq-demo" } });
+    const victim = await prisma.review.findFirstOrThrow({ where: { productId: "k-bazalt-75" } });
+    await prisma.contentPage.update({ where: { slug }, data: { title: "Edycja poradnika" } });
+    await prisma.faqItem.update({ where: { id: faq.id }, data: { question: "Edycja pytania?" } });
+    await prisma.review.delete({ where: { id: victim.id } });
+    const second = (await runSeed(prisma, { root, now: new Date("2026-11-01T10:00:00Z") }))
+      .inserted;
+    expect(second.reviews).toBe(0);
+    expect(second.faq_items).toBe(0);
+    expect(second.content_guides).toBe(0);
+    expect((await prisma.contentPage.findUniqueOrThrow({ where: { slug } })).title).toBe(
+      "Edycja poradnika",
+    );
+    expect((await prisma.faqItem.findUniqueOrThrow({ where: { id: faq.id } })).question).toBe(
+      "Edycja pytania?",
+    );
+    expect(await prisma.review.count({ where: { productId: "k-bazalt-75" } })).toBe(5);
+    // Przywrocenie stanu dla kolejnych testow.
+    await prisma.contentPage.update({ where: { slug }, data: { title: original.title } });
+    await prisma.faqItem.update({ where: { id: faq.id }, data: { question: faq.question } });
+    await prisma.review.create({ data: victim });
   });
 
   it("reset-demo: czysci zamowienia i dane osobowe, zostawia konta, seeduje od nowa", async () => {
