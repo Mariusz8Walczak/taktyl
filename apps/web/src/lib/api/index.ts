@@ -16,3 +16,5 @@ export {
   getSwitches,
 } from "./catalog";
 export type { ApiFilterQuery, ListingParams } from "./catalog";
+export { getContentPage, getFaq, getGuide, getGuides, getReviews, getSearch } from "./content";
+export type { FaqItem, GuideSummary, ReviewsResponse, SearchResponse } from "./content";

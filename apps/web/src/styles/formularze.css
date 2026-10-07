@@ -1,0 +1,79 @@
+/* F-221, F-223: formularz kontaktowy i zapis do newslettera. Tylko tokeny (regula 2). */
+
+.formularz {
+  display: grid;
+  gap: var(--s2);
+  max-width: var(--max-tekst);
+  margin-top: var(--s4);
+}
+.formularz__tytul {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.formularz .tk-btn {
+  justify-self: start;
+}
+.formularz__zgoda {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+}
+.formularz__zgoda input {
+  flex: none;
+  width: var(--s3);
+  height: var(--s3);
+  margin-top: var(--s1);
+  accent-color: var(--akcent);
+}
+.formularz__zgoda span {
+  padding-block: var(--s1);
+}
+
+/* ---- newsletter w stopce (sekcja ciemna: tokeny przelacza .sekcja--mod) ---- */
+.newsletter {
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+.newsletter__opis {
+  margin: 0 0 var(--s2);
+  max-width: var(--max-tekst);
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+.newsletter__formularz {
+  display: grid;
+  gap: var(--s2);
+  max-width: var(--max-tekst);
+}
+.newsletter__pole .tk-pole__kontrolka {
+  width: 100%;
+}
+.newsletter__wyslij {
+  justify-self: start;
+}
+.newsletter__stan {
+  margin: 0;
+  min-height: var(--s3); /* miejsce na komunikat: nie przesuwa stopki */
+  font-size: var(--t-s);
+}
+.newsletter .tk-pole__blad[hidden] {
+  display: none;
+}
+@media (min-width: 768px) {
+  .newsletter__formularz {
+    grid-template-columns: minmax(0, 2fr) auto;
+    align-items: start;
+  }
+  .newsletter__zgoda-grupa,
+  .newsletter__stan {
+    grid-column: 1 / -1;
+  }
+  .newsletter__wyslij {
+    align-self: end;
+  }
+}

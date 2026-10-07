@@ -25,6 +25,11 @@ const PAGES = [
   { path: "/", kind: "tresc" },
   { path: "/klawiatury", kind: "tresc" },
   { path: "/klawiatury/bazalt-75", kind: "tresc" },
+  { path: "/poradnik", kind: "tresc" },
+  { path: "/poradnik/rozmiary-klawiatur", kind: "tresc" },
+  { path: "/faq", kind: "tresc" },
+  { path: "/kontakt", kind: "tresc" },
+  { path: "/szukaj?q=lupek", kind: "tresc" },
   { path: "/zbuduj-set", kind: "apka" },
   { path: "/koszyk", kind: "apka" },
 ];

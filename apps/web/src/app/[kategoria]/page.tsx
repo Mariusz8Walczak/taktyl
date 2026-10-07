@@ -27,10 +27,14 @@ const PAGE_SIZE = 12;
 const MAX_PAGE = 20;
 /** Po 6. karcie (indeks 5) tylko klawiatury i podkladki (docs/05 §3 pkt 8). */
 const SET_PROMPT_INDEX = 5;
-const GUIDE_LINK: Record<string, string> = {
-  klawiatury: "Jaki rozmiar klawiatury wybrać?",
-  myszki: "Jak dobrać myszkę do dłoni?",
-  podkladki: "Jaka podkładka: szybka, kontrolna, mata na biurko?",
+/** Wejscie z listingu do konkretnego poradnika (F-220; docs/05 §3 pkt 2). */
+const GUIDE_LINK: Record<string, { label: string; href: string }> = {
+  klawiatury: { label: "Jaki rozmiar klawiatury wybrać?", href: "/poradnik/rozmiary-klawiatur" },
+  myszki: { label: "Jak dobrać myszkę do dłoni?", href: "/poradnik/jak-dobrac-mysz-do-dloni" },
+  podkladki: {
+    label: "Jaka podkładka: szybka, kontrolna, mata na biurko?",
+    href: "/poradnik/jaka-podkladka",
+  },
 };
 
 type Props = {
@@ -97,8 +101,8 @@ export default async function ListingPage({ params, searchParams }: Props) {
         <h1 className="naglowek-strony">{applyNbsp(category.h1)}</h1>
         <p className="wstep">{applyNbsp(category.intro)}</p>
         <p>
-          <Link href="/poradnik" className="tk-link">
-            {GUIDE_LINK[category.id]}
+          <Link href={GUIDE_LINK[category.id]?.href ?? "/poradnik"} className="tk-link">
+            {GUIDE_LINK[category.id]?.label}
           </Link>
         </p>
       </header>

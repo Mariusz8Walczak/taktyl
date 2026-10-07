@@ -1,0 +1,300 @@
+/* F-220, F-221, F-076, F-007: poradnik, tresc z Markdownu, harmonijka FAQ, opinie, formularz wyszukiwania na stronie wynikow.
+   Tylko tokeny (regula 2). Importowany przez komponenty, nie przez layout. */
+
+/* ---- lista poradnikow i karta (wzorzec `blog-grid`) ---- */
+.poradnik-lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s3);
+  margin-top: var(--s4);
+}
+@media (min-width: 768px) {
+  .poradnik-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.poradnik-karta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  height: 100%;
+  padding: var(--s3);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.poradnik-karta:hover {
+  box-shadow: var(--cien-1);
+}
+.poradnik-karta__tytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+}
+.poradnik-karta__link {
+  color: var(--tekst);
+  text-decoration: none;
+}
+/* cala karta klikalna przez jeden odnosnik (jak karta produktu) */
+.poradnik-karta__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r);
+}
+.poradnik-karta__link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: var(--tk-linia-2);
+  text-underline-offset: 0.2em;
+}
+.poradnik-karta__lead {
+  margin: 0;
+  line-height: 1.5;
+}
+.poradnik-karta__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.poradnik-karta .poradnik-karta__meta {
+  margin-top: auto;
+}
+
+/* ---- artykul (wzorzec `blog-details`) ---- */
+.poradnik {
+  max-width: var(--max-tekst);
+}
+.poradnik__spis {
+  margin-block: var(--s3);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.poradnik__spis-tytul {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.poradnik__spis-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
+.poradnik__cta {
+  display: grid;
+  justify-items: start;
+  gap: var(--s2);
+  margin-top: var(--s4);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--akcent-slaby);
+}
+.poradnik__cta-tytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+
+/* ---- tresc z Markdownu ---- */
+.tresc-tekst {
+  max-width: var(--max-tekst);
+  font-size: var(--t-m);
+  line-height: var(--lh-tekst);
+}
+.tresc-tekst h2,
+.tresc-tekst h3,
+.tresc-tekst h4 {
+  margin: var(--s4) 0 var(--s1);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+  letter-spacing: var(--tracking-naglowek);
+  scroll-margin-top: calc(var(--naglowek-wys, var(--s5)) + var(--s2));
+}
+.tresc-tekst h2 {
+  font-size: var(--t-xl);
+}
+.tresc-tekst h3 {
+  font-size: var(--t-l);
+}
+.tresc-tekst h4 {
+  font-size: var(--t-m);
+}
+.tresc-tekst p,
+.tresc-tekst ul,
+.tresc-tekst ol {
+  margin: 0 0 var(--s2);
+}
+.tresc-tekst ul,
+.tresc-tekst ol {
+  padding-left: var(--s3);
+}
+.tresc-tekst blockquote {
+  margin: 0 0 var(--s2);
+  padding: var(--s1) var(--s2);
+  border-left: var(--tk-linia-2) solid var(--linia-pola);
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.tresc-tekst hr {
+  margin-block: var(--s3);
+  border: 0;
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+.tresc-tekst code {
+  font-size: 0.9em;
+}
+.tresc-tabela {
+  margin: 0 0 var(--s2);
+  overflow-x: auto;
+}
+.tresc-tabela table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-s);
+}
+.tresc-tabela th,
+.tresc-tabela td {
+  padding: var(--s1) var(--s2);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  text-align: left;
+  vertical-align: top;
+}
+.tresc-tabela th {
+  font-weight: var(--w-mocna);
+  white-space: nowrap;
+}
+
+/* ---- FAQ: harmonijka (disclosure) ---- */
+.faq {
+  max-width: var(--max-tekst);
+  margin-top: var(--s3);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+.faq__pozycja {
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.faq__pytanie {
+  margin: 0;
+  font-size: var(--t-m);
+}
+.faq__przycisk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  width: 100%;
+  min-height: var(--cel-min);
+  padding: var(--s2) 0;
+  border: 0;
+  background: none;
+  color: var(--tekst);
+  font: inherit;
+  font-weight: var(--w-mocna);
+  text-align: left;
+  cursor: pointer;
+}
+.faq__przycisk:hover {
+  color: var(--akcent);
+}
+.faq__znak {
+  flex: none;
+  font-size: var(--t-l);
+  line-height: 1;
+}
+.faq__odpowiedz {
+  padding-bottom: var(--s2);
+}
+.faq__odpowiedz[hidden] {
+  display: none;
+}
+.faq__odpowiedz .tresc-tekst {
+  font-size: var(--t-s);
+}
+
+/* ---- opinie (F-076) ---- */
+.opinie {
+  margin-top: var(--s5);
+  max-width: var(--max-tekst);
+  scroll-margin-top: calc(var(--naglowek-wys, var(--s5)) + var(--s2));
+}
+.opinie__naglowek {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.opinie__etykieta {
+  display: inline-block;
+  margin: 0 0 var(--s2);
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+}
+.opinie__podsumowanie {
+  margin: 0 0 var(--s3);
+  font-size: var(--t-l);
+}
+.opinie__gwiazdki {
+  letter-spacing: 0.1em;
+  color: var(--tekst);
+}
+.opinie__lista {
+  display: grid;
+  gap: var(--s3);
+}
+.opinia {
+  padding-bottom: var(--s3);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.opinia__ocena {
+  margin: 0 0 var(--s1);
+  font-weight: var(--w-mocna);
+}
+.opinia__tresc {
+  margin: 0 0 var(--s1);
+  line-height: var(--lh-tekst);
+}
+.opinia__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s2);
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+
+/* ---- /szukaj: formularz i licznik ---- */
+.szukaj-formularz {
+  max-width: var(--max-tekst);
+  margin-bottom: var(--s3);
+}
+.szukaj-formularz__wiersz {
+  display: flex;
+  gap: var(--s1);
+}
+.szukaj-formularz__wiersz .tk-pole__kontrolka {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.szukaj-licznik {
+  margin: 0 0 var(--s2);
+  color: var(--tekst-slaby);
+}
+.szukaj-poradniki {
+  margin-top: var(--s4);
+}
+.szukaj-poradniki__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}

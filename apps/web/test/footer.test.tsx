@@ -6,14 +6,14 @@ import { Footer } from "../src/components/layout/footer";
 import { SHOP_SETTINGS } from "./fixtures";
 
 describe("Footer (F-009)", () => {
-  it("ma landmark contentinfo i dokladnie 4 kolumny z wlasciwymi tytulami", () => {
+  it("ma landmark contentinfo i 4 kolumny z wlasciwymi tytulami i zapis do newslettera (F-223)", () => {
     render(<Footer settings={SHOP_SETTINGS} />);
     const footer = screen.getByRole("contentinfo");
     expect(
       within(footer)
         .getAllByRole("heading", { level: 2 })
         .map((h) => h.textContent),
-    ).toEqual(["Sklep", "Pomoc", "Informacje prawne", "Kontakt"]);
+    ).toEqual(["Sklep", "Pomoc", "Informacje prawne", "Kontakt", "Newsletter"]);
   });
 
   it("pokazuje etykiete demo, platnosci i dostawe tekstem z ustawien", () => {

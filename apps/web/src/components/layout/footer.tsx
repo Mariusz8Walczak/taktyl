@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { FOOTER_HELP, FOOTER_LEGAL, FOOTER_SHOP } from "../../lib/nav";
 import type { NavItem } from "../../lib/nav";
 import { CookieSettingsButton } from "../consent/cookie-settings-button";
+import { Newsletter } from "../forms/newsletter";
 
 function LinkColumn({
   title,
@@ -69,6 +70,8 @@ export function Footer({ settings }: { settings: PublicShopSettings }) {
             </address>
           </div>
         </div>
+        {/* F-223, TAKTYL-58: zapis do newslettera (znaczniki z serwera, logika leniwie) */}
+        <Newsletter />
         <div className="stopka__dol">
           <p className="stopka__demo">{demo.label}</p>
           <p className="stopka__info">
