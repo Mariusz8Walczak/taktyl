@@ -10,4 +10,6 @@
   --adm-szkielet-wys: 1.25rem;
   --adm-pasek-prawy: 20rem; /* prawa kolumna edycji produktu */
   --adm-zakladka-min: 7rem;
+  --adm-miniatura: 4rem; /* miniatura wgranego zdjecia (B-508) */
+  --adm-diff-kolumna: 16rem; /* kolumna wartosci w roznicy wpisu dziennika (B-012) */
 }

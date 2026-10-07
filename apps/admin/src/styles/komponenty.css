@@ -352,3 +352,45 @@
   text-decoration: underline;
   text-decoration-style: wavy;
 }
+
+/* ---- media i dziennik (B-508, B-012) ---- */
+.adm-miniatura {
+  inline-size: var(--adm-miniatura);
+  block-size: var(--adm-miniatura);
+  object-fit: contain;
+  vertical-align: middle;
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.adm-liczby {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--adm-pole-min)), 1fr));
+  gap: var(--s2);
+  margin: 0;
+}
+.adm-liczby dt {
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.adm-liczby dd {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+.adm-roznica {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+.adm-roznica th,
+.adm-roznica td {
+  padding: var(--s1);
+  text-align: start;
+  vertical-align: top;
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  overflow-wrap: anywhere;
+}
+.adm-roznica td {
+  min-inline-size: var(--adm-diff-kolumna);
+}

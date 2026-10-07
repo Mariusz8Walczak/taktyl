@@ -13,7 +13,8 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { href: "/ustawienia", label: "Ustawienia" },
   { href: "/tresci", label: "Treści" },
   { href: "/zgloszenia", label: "Zgłoszenia" },
-  { href: "/dziennik", label: "Dziennik zmian", soon: true },
+  { href: "/media", label: "Zdjęcia" },
+  { href: "/dziennik", label: "Dziennik zmian" },
 ];
 
 export function isActive(pathname: string, href: string): boolean {

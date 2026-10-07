@@ -1,6 +1,10 @@
 // B-001, B-100..B-115, B-200..B-205, B-400..B-408: typowane wywolania API admina (docs/16 §3). Kazde wywolanie
 // ma schemat odpowiedzi z @taktyl/contracts; mutacje niosa X-CSRF-Token (client.ts) i If-Match tam, gdzie wymaga tego API.
 import {
+  auditListSchema,
+  dashboardSchema,
+  mediaListSchema,
+  mediaUploadResponseSchema,
   adminContentListSchema,
   adminContentResponseSchema,
   adminFaqSchema,
@@ -17,6 +21,8 @@ import {
   sessionResponseSchema,
   stockMovementsResponseSchema,
   type adminMessageListQuerySchema,
+  type auditListQuerySchema,
+  type mediaListQuerySchema,
   type adminOrderListQuerySchema,
   type adminProductListQuerySchema,
   type contentPatchSchema,
@@ -246,4 +252,37 @@ export const messagesApi = {
       path: `${A}/messages/${encodeURIComponent(id)}`,
       schema: null,
     }).then(() => undefined),
+};
+
+/** B-500..B-508: manifest zdjec i wgrywanie plikow dostarczonych przez czlowieka (multipart: pole pliku = nazwa miejsca). */
+export const mediaApi = {
+  list: (query: Partial<z.output<typeof mediaListQuerySchema>>) =>
+    apiRequest({ path: `${A}/media`, query, schema: mediaListSchema }).then((r) => r.data),
+  upload: (key: string, files: Record<string, File>) => {
+    const form = new FormData();
+    for (const [slot, file] of Object.entries(files)) form.append(slot, file, file.name);
+    return apiRequest({
+      method: "POST",
+      path: `${A}/media/${encodeURIComponent(key)}`,
+      body: form,
+      schema: mediaUploadResponseSchema,
+    }).then((r) => r.data);
+  },
+  remove: (key: string) =>
+    apiRequest({
+      method: "DELETE",
+      path: `${A}/media/${encodeURIComponent(key)}`,
+      schema: mediaUploadResponseSchema,
+    }).then((r) => r.data),
+};
+
+/** B-600..B-607: liczby i listy pulpitu (jeden endpoint, tylko odczyt). */
+export const dashboardApi = {
+  get: () => apiRequest({ path: `${A}/dashboard`, schema: dashboardSchema }).then((r) => r.data),
+};
+
+/** B-011, B-012: dziennik zmian z filtrami i paginacja. */
+export const auditApi = {
+  list: (query: Partial<z.output<typeof auditListQuerySchema>>) =>
+    apiRequest({ path: `${A}/audit`, query, schema: auditListSchema }).then((r) => r.data),
 };

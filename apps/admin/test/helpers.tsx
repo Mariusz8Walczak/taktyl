@@ -67,7 +67,17 @@ export function mockApi(routes: Record<string, Handler | Response>): Call[] {
         headers: Object.fromEntries(
           Object.entries((init?.headers ?? {}) as Record<string, string>),
         ),
-        body: init?.body ? JSON.parse(String(init.body)) : undefined,
+        body:
+          typeof FormData !== "undefined" && init?.body instanceof FormData
+            ? {
+                form: [...init.body.entries()].map(([k, v]) => [
+                  k,
+                  v instanceof File ? v.name : String(v),
+                ]),
+              }
+            : init?.body
+              ? JSON.parse(String(init.body))
+              : undefined,
       };
       calls.push(call);
       const path = url.split("?")[0] as string;

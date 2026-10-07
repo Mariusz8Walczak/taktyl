@@ -3,13 +3,18 @@
 // produktu po kazdym zapisie, API-011), wiec ekran odswieza sie bez dodatkowego zapytania.
 import type {
   adminMessageListQuerySchema,
+  auditListQuerySchema,
+  mediaListQuerySchema,
   adminOrderListQuerySchema,
   adminProductListQuerySchema,
 } from "@taktyl/contracts";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { z } from "zod";
 import {
+  auditApi,
   catalogApi,
+  dashboardApi,
+  mediaApi,
   contentApi,
   faqApi,
   messagesApi,
@@ -23,6 +28,9 @@ export type OrderListParams = Partial<z.output<typeof adminOrderListQuerySchema>
 
 export type MessageListParams = Partial<z.output<typeof adminMessageListQuerySchema>>;
 
+export type MediaListParams = Partial<z.output<typeof mediaListQuerySchema>>;
+export type AuditListParams = Partial<z.output<typeof auditListQuerySchema>>;
+
 export const keys = {
   products: (p: ProductListParams) => ["products", p] as const,
   productsAll: ["products"] as const,
@@ -34,6 +42,10 @@ export const keys = {
   settings: ["settings"] as const,
   content: (type: string) => ["content", type] as const,
   faq: ["faq"] as const,
+  media: (p: MediaListParams) => ["media", p] as const,
+  mediaAll: ["media"] as const,
+  dashboard: ["dashboard"] as const,
+  audit: (p: AuditListParams) => ["audit", p] as const,
   reviews: ["reviews"] as const,
   messages: (p: MessageListParams) => ["messages", p] as const,
 };
@@ -71,5 +83,19 @@ export const useMessages = (params: MessageListParams) =>
   useQuery({
     queryKey: keys.messages(params),
     queryFn: () => messagesApi.list(params),
+    placeholderData: keepPreviousData,
+  });
+export const useMedia = (params: MediaListParams) =>
+  useQuery({
+    queryKey: keys.media(params),
+    queryFn: () => mediaApi.list(params),
+    placeholderData: keepPreviousData,
+  });
+export const useDashboard = () =>
+  useQuery({ queryKey: keys.dashboard, queryFn: () => dashboardApi.get() });
+export const useAudit = (params: AuditListParams) =>
+  useQuery({
+    queryKey: keys.audit(params),
+    queryFn: () => auditApi.list(params),
     placeholderData: keepPreviousData,
   });

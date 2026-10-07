@@ -112,8 +112,8 @@ describe("powloka panelu", () => {
     // przyszle ekrany: tekst z etykieta "wkrotce", nie odnosnik
     expect(screen.getAllByRole("link", { name: /Treści/ }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /Zgłoszenia/ }).length).toBeGreaterThan(0);
-    expect(screen.queryByRole("link", { name: /Dziennik zmian/ })).toBeNull();
-    expect(screen.getAllByText("wkrótce").length).toBe(1);
+    expect(screen.getAllByRole("link", { name: /Dziennik zmian/ }).length).toBeGreaterThan(0);
+    expect(screen.queryAllByText("wkrótce").length).toBe(0);
     expect(screen.getByText(/Rola: Viewer/)).toBeInTheDocument();
     expect(await axe(container)).toHaveNoViolations();
   });
