@@ -9,6 +9,8 @@ import {
   searchResponseSchema,
 } from "@taktyl/contracts";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { bootApp, hasDb, type TestEnv } from "./helpers.js";
 
 describe.skipIf(!hasDb)("B-216 katalog (PostgreSQL)", () => {
@@ -21,6 +23,44 @@ describe.skipIf(!hasDb)("B-216 katalog (PostgreSQL)", () => {
   });
 
   const names = (body: { items: { name: string }[] }): string[] => body.items.map((i) => i.name);
+
+  // TAKTYL-78 (F-021): rozmiar myszek S/M/L (wielkie litery w data/facets.json) nie jest odrzucany przez kontrakt.
+  describe("TAKTYL-78 filtr rozmiaru myszek", () => {
+    const raw = JSON.parse(
+      readFileSync(fileURLToPath(new URL("../../../data/products.json", import.meta.url)), "utf8"),
+    ) as { products?: unknown } | unknown[];
+    const all = (Array.isArray(raw) ? raw : (raw.products as unknown[])) as {
+      category: string;
+      name: string;
+      attributes: { size?: string };
+    }[];
+    const mice = all.filter((p) => p.category === "myszki");
+    const expected = (sizes: string[]): string[] =>
+      mice
+        .filter((p) => sizes.includes(p.attributes.size ?? ""))
+        .map((p) => p.name)
+        .sort();
+
+    it.each([["S"], ["M"], ["L"], ["S", "L"]])(
+      "rozmiar=%s zwraca produkty o tym rozmiarze",
+      async (...sizes) => {
+        const res = await t
+          .http()
+          .get(`/v1/products?category=myszki&rozmiar=${sizes.join(",")}`)
+          .expect(200);
+        const body = listingResponseSchema.parse(res.body);
+        expect(expected(sizes).length).toBeGreaterThan(0);
+        expect(names(body).sort()).toEqual(expected(sizes));
+        expect(body.total).toBe(expected(sizes).length);
+      },
+    );
+
+    it("facety myszek z rozmiarem=M maja poprawne liczniki, a smiec daje 400", async () => {
+      const res = await t.http().get("/v1/facets?category=myszki&rozmiar=M").expect(200);
+      facetsResponseSchema.parse(res.body);
+      await t.http().get("/v1/products?category=myszki&rozmiar=M;DROP").expect(400);
+    });
+  });
 
   it("S1: klawiatury 75% + Bluetooth = 1 produkt (Bazalt 75)", async () => {
     const res = await t

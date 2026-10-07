@@ -162,9 +162,11 @@ export const productCardSchema = z.object({
 export type ProductCard = z.infer<typeof productCardSchema>;
 
 // Filtry w adresie (docs/04 §6). Wartosci po przecinku; cena w GROSZACH (docs/16 §1).
+// TAKTYL-78: wartosci `v` z facets.json maja wielkie litery (myszki: S, M, L), cyfry, kropki i myslniki.
 const csv = z
   .string()
-  .regex(/^[a-z0-9.]+(?:-[a-z0-9.]+)*(?:,[a-z0-9.]+(?:-[a-z0-9.]+)*)*$/)
+  .max(200)
+  .regex(/^[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*(?:,[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)*$/)
   .transform((v) => v.split(","));
 export const filtersSchema = z.object({
   rozmiar: csv.optional(),

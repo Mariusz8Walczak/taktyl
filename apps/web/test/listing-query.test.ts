@@ -101,7 +101,7 @@ describe("zadanie do API (cena w groszach, docs/16 §1)", () => {
     expect(toApiFilters(parseQuery({ dlon: "5" }, DEFS, "myszki").filters, FACETS)).toEqual({});
   });
 
-  it("wartosc w ksztalcie spoza kontraktu API (np. rozmiar myszki S) nie psuje zadania", () => {
+  it("TAKTYL-78: rozmiar myszki S/M/L (wielkie litery) trafia do API i zawęża wyniki", () => {
     const facets: Facet[] = [
       {
         id: "rozmiar",
@@ -109,13 +109,26 @@ describe("zadanie do API (cena w groszach, docs/16 §1)", () => {
         type: "multi",
         values: [
           { v: "S", label: "S", count: 1, disabled: false },
-          { v: "m", label: "M", count: 1, disabled: false },
+          { v: "M", label: "M", count: 1, disabled: false },
         ],
       },
     ];
-    const q = parseQuery({ rozmiar: "S,m" }, facetDefs(facets), "myszki");
-    expect(q.filters).toEqual({ rozmiar: ["S", "m"] });
-    expect(toApiFilters(q.filters, facets)).toEqual({ rozmiar: "m" });
+    const q = parseQuery({ rozmiar: "S,M" }, facetDefs(facets), "myszki");
+    expect(q.filters).toEqual({ rozmiar: ["S", "M"] });
+    expect(toApiFilters(q.filters, facets)).toEqual({ rozmiar: "S,M" });
+  });
+
+  it("wartosc spoza ksztaltu API (spacja) nie psuje zadania", () => {
+    const facets: Facet[] = [
+      {
+        id: "kolor",
+        label: "Kolor",
+        type: "multi",
+        values: [{ v: "a b", label: "A B", count: 1, disabled: false }],
+      },
+    ];
+    const q = parseQuery({ kolor: "a b" }, facetDefs(facets), "myszki");
+    expect(toApiFilters(q.filters, facets)).toEqual({});
   });
 
   it("bool i listy", () => {

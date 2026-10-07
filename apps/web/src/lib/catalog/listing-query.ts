@@ -63,8 +63,8 @@ export function toSearch(query: ListingQuery, defs: readonly FacetDef[]): string
 }
 
 const DLON = /^\d{2}(?:\.\d)?$/;
-/** Wartosc listy w ksztalcie przyjmowanym przez API (contracts: male litery, cyfry, kropka, myslnik). */
-const API_VALUE = /^[a-z0-9.]+(?:-[a-z0-9.]+)*$/;
+/** Wartosc listy w ksztalcie przyjmowanym przez API (contracts: litery, cyfry, kropka, myslnik; TAKTYL-78). */
+const API_VALUE = /^[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*$/;
 
 /**
  * Filtry z adresu -> parametry API. `cena` w groszach; brakujacy koniec zakresu = granica z facetu.
@@ -79,7 +79,7 @@ export function toApiFilters(
     const value = filters[facet.id];
     if (value === undefined || value === false) continue;
     if (Array.isArray(value)) {
-      // Wartosc spoza ksztaltu API (np. rozmiar myszki "S") dalaby 400 i 500 strony: pomijana (WEB-010).
+      // Wartosc spoza ksztaltu API (np. reczny adres ze spacja) dalaby 400 i 500 strony: pomijana (WEB-010).
       const ok = value.filter((v) => API_VALUE.test(v));
       if (ok.length > 0) out[facet.id] = ok.join(",");
     } else if (value === true) {

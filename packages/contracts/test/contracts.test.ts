@@ -312,3 +312,57 @@ describe("formularze i opinie publiczne (TAKTYL-76)", () => {
     expect(reviewsResponseSchema.safeParse({ avg: null, count: 0, items: [] }).success).toBe(false);
   });
 });
+
+// TAKTYL-78 (F-021): kazda wartosc kazdego facetu z data/facets.json przechodzi filtersSchema, smieci odpadaja.
+describe.skipIf(!existsSync(fileURLToPath(new URL("../../../data/facets.json", import.meta.url))))(
+  "TAKTYL-78: filtry zgodne z data/facets.json",
+  () => {
+    const facets = JSON.parse(
+      readFileSync(fileURLToPath(new URL("../../../data/facets.json", import.meta.url)), "utf8"),
+    ) as Record<string, { id: string; type: string; values?: { v: string }[] }[]>;
+    const cases = Object.entries(facets).flatMap(([cat, list]) =>
+      list.flatMap((f) => (f.values ?? []).map((v) => ({ cat, id: f.id, v: v.v }))),
+    );
+
+    it("data/facets.json ma wartosci do sprawdzenia, w tym myszki S/M/L", () => {
+      expect(cases.length).toBeGreaterThan(30);
+      expect(cases.filter((c) => c.cat === "myszki" && c.id === "rozmiar").map((c) => c.v)).toEqual(
+        ["S", "M", "L"],
+      );
+    });
+
+    it.each(cases)("$cat/$id=$v przechodzi", ({ cat, id, v }) => {
+      const parsed = listingQuerySchema.parse({ category: cat, [id]: v });
+      expect((parsed as Record<string, unknown>)[id]).toEqual([v]);
+    });
+
+    it("lista po przecinku i zestawy wartosci przechodza", () => {
+      expect(listingQuerySchema.parse({ category: "myszki", rozmiar: "S,M,L" }).rozmiar).toEqual([
+        "S",
+        "M",
+        "L",
+      ]);
+    });
+
+    it.each([
+      "",
+      "S,",
+      ",S",
+      "S,,M",
+      "-S",
+      "S-",
+      "a b",
+      "S;DROP",
+      "S'--",
+      "<script>",
+      "../x",
+      "S%20M",
+      "ł",
+      "a".repeat(201),
+    ])("smiec %j odpada", (bad) => {
+      expect(listingQuerySchema.safeParse({ category: "myszki", rozmiar: bad }).success).toBe(
+        false,
+      );
+    });
+  },
+);
