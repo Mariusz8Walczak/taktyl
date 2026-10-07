@@ -68,3 +68,6 @@ next-env.d.ts
 
 # worktree agentow Claude Code - nigdy nie publikowac
 .claude/worktrees/
+
+# Prisma 7: wygenerowany klient (prisma generate)
+apps/api/src/generated/

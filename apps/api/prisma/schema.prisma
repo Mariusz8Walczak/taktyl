@@ -2,13 +2,17 @@
 // Ograniczenia, ktorych Prisma nie wyraza (CHECK, czesciowe indeksy, NULLS NOT DISTINCT,
 // wyzwalacze tylko-dopisywanie), sa w migracji SQL *_constraints (docs/17 par. 8).
 
+// I-008 (ADR-0010): Prisma 7 - generator "prisma-client" (kod TS w src/generated, bundlowany przez tsup),
+// adres bazy w prisma.config.ts i w adapterze sterownika (@prisma/adapter-pg).
 generator client {
-  provider = "prisma-client-js"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 // ---------------------------------------------------------------- Katalog

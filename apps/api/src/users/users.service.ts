@@ -2,7 +2,7 @@
 // dezaktywacja, reset hasla. Tylko owner. Ostatniego aktywnego owner nie da sie odebrac ani wylaczyc (409).
 // Kazda zmiana: wpis audit_log w tej samej transakcji (bez hasel i hashy), uniewaznienie sesji zmienianego konta.
 import { Inject, Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import type { Role } from "@taktyl/contracts";
 import { type AuditContext, AuditService } from "../audit/audit.service.js";
 import { DEMO_VIEWER_EMAIL } from "../auth/auth.service.js";

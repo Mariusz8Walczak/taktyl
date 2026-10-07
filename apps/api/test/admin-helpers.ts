@@ -1,7 +1,7 @@
 // B-001, B-006 (TAKTYL-45): pomocnicze funkcje testow backpanelu (konta, logowanie, sprzatanie tabel auth).
 import { randomBytes } from "node:crypto";
 import { hash } from "@node-rs/argon2";
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "../src/prisma/client.js";
 import { expect } from "vitest";
 import type { TestEnv } from "./helpers.js";
 

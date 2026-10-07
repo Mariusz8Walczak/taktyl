@@ -2,7 +2,7 @@
 // Jednolity komunikat bledu logowania (brak enumeracji kont, rowniez czasowej: nieistniejace konto tez kosztuje jedno
 // sprawdzenie argon2). Zdarzenia bezpieczenstwa trafiaja do audit_log w tej samej transakcji co zmiana sesji.
 import { Inject, Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import type { Role, SessionResponse } from "@taktyl/contracts";
 import { type AuditContext, AuditService, systemAudit } from "../audit/audit.service.js";
 import { AppException, notFound } from "../common/app-exception.js";

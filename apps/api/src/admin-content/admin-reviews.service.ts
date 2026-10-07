@@ -2,7 +2,7 @@
 // Opis: czysty tekst (tagi usuwane), zakazane slowa i dlugosc to OSTRZEZENIA. Opinie: 3-6, oceny 3-5, `demo = true` zawsze
 // (CHECK w bazie), autor "imie + inicjal", data do 6 miesiecy wstecz, wariant istniejacy; etykieta sekcji jest stala.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import {
   REVIEWS_LABEL,
   type descriptionPutSchema,

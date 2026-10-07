@@ -2,7 +2,7 @@
 // artykuly poradnika i FAQ w backpanelu. Tresc jest sanityzowana allowlista (Markdown ograniczony), walidowana pod katem
 // tresci prawnych i marek, a kazda zmiana ma audyt, ostatnie 20 wersji i znaczniki content:{slug}, content:guide, content:faq.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import type {
   contentCreateSchema,
   contentPatchSchema,

@@ -3,7 +3,7 @@
 // Kazda zmiana: wiersz order_status_history i wpis audit_log w tej samej transakcji; anulowanie oplaconego zamowienia
 // zwraca stany magazynowe (blokada wierszy, ruch `sale_reverted`) i zapisuje znaczniki rewalidacji w outbox.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import type {
   adminOrderListQuerySchema,
   orderNoteRequestSchema,

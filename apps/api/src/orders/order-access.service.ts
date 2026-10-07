@@ -1,7 +1,7 @@
 // F-178, F-202 (docs/16 par. 1.1, par. 4 pkt 6, ADR-0007): dostep do zamowienia wylacznie z poprawnym X-Order-Token.
 // Numer sam w sobie nie daje dostepu; zly token = 404 (nie ujawniamy istnienia numeru), brak tokenu = 401.
 import { Inject, Injectable } from "@nestjs/common";
-import type { Order } from "@prisma/client";
+import type { Order } from "../prisma/client.js";
 import { orderTokenHeaderSchema } from "@taktyl/contracts";
 import { notFound, unauthorized, validationFailed } from "../common/app-exception.js";
 import { hashOrderToken, tokenMatchesHash } from "../common/order-token.js";

@@ -10,7 +10,7 @@ ENV PNPM_HOME=/pnpm \
     npm_config_store_dir=/pnpm/store \
     CI=true
 ENV PATH=$PNPM_HOME:$PATH
-# Prisma (silnik zapytan) wymaga OpenSSL na Alpine.
+# Prisma (CLI migracji) i sterownik pg korzystaja z OpenSSL na Alpine.
 RUN apk add --no-cache openssl \
  && corepack enable \
  && corepack prepare pnpm@12.10.1 --activate
@@ -31,16 +31,11 @@ COPY --from=pruner /app/out/full/ ./
 COPY tsconfig.base.json ./
 RUN pnpm turbo run build --filter=@taktyl/api
 
-# 3) Tylko zaleznosci produkcyjne + wygenerowany klient Prisma (silnik) z etapu build.
+# 3) Tylko zaleznosci produkcyjne. Klient Prisma 7 (src/generated) jest w bundlu tsup, silnik Rust zniknal (ADR-0010).
 FROM base AS prod-deps
 COPY --from=pruner /app/out/json/ ./
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile --prod --ignore-scripts
-RUN --mount=from=build,source=/app,target=/b \
-    set -eu; \
-    src="$(ls -d /b/node_modules/.pnpm/@prisma+client@*/node_modules/.prisma)"; \
-    dst="$(ls -d node_modules/.pnpm/@prisma+client@*/node_modules)"; \
-    cp -r "$src" "$dst/"
 # Narzedzia budowania, ktore wpadaja jako zaleznosci (tsx, esbuild, typescript, CLI Prisma), nie sa potrzebne w runtime.
 RUN rm -rf node_modules/.pnpm/typescript@* node_modules/.pnpm/tsx@* node_modules/.pnpm/esbuild@* \
            node_modules/.pnpm/@esbuild+* node_modules/.pnpm/prisma@* node_modules/.pnpm/@prisma+engines@*

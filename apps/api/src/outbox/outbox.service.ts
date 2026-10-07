@@ -1,7 +1,7 @@
 // B-060 (ADR-0003, docs/14 par. 6, docs/17 par. 3.6): zapis znacznikow rewalidacji do `outbox` w tej samej transakcji co zmiana.
 // Wysylka jest osobno: OutboxWorker (po commicie, z ponawianiem). Tu tylko zapis i sygnal "pobudz worker".
 import { Inject, Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../prisma/client.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { isValidTag } from "./tags.js";
 
