@@ -43,6 +43,10 @@ Zmiana jest skończona, gdy:
 3. Pull request z wypełnionym szablonem; wymagane zielone CI i akceptacja.
 4. Scalenie squashem.
 
+## Tryb demo w pracy nad kodem
+
+Zmiany dotykające resetu danych, limitów lub kont demo testuj na osobnym projekcie Compose, bez ruszania cudzych stosów: `docker compose -p moj-test --profile demo up --build --wait` (unikalny `PROXY_HTTP_PORT` w `.env`), potem `sh scripts/smoke-demo.sh` i `docker compose -p moj-test --profile demo down -v` (tylko własny projekt). `DEMO_MODE=true` wolno ustawiać wyłącznie w środowisku bez prawdziwych danych (opis zmiennych w `README.md`, sekcja „Tryb demo”). CI uruchamia ten sam test w jobie `e2e-demo`, a workflowy lintuje job `actionlint` (lokalnie: `docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:1.7.12`).
+
 ## Zgłaszanie błędów i bezpieczeństwa
 
 Błędy: issue z szablonu `blad`. Podatności: wyłącznie prywatnie, zgodnie z `SECURITY.md`.

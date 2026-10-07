@@ -62,6 +62,9 @@ export const envSchema = z.object({
   ),
   DEMO_MODE: bool,
   DEMO_RESET_CRON: z.string().default("0 4 * * *"),
+  // I-009 (TAKTYL-65): sufity limitow zadan/min/IP w DEMO_MODE (min z limitem bazowym endpointu): odczyt i zapisy.
+  DEMO_THROTTLE_READ_LIMIT: z.coerce.number().int().min(1).max(10_000).default(60),
+  DEMO_THROTTLE_WRITE_LIMIT: z.coerce.number().int().min(1).max(10_000).default(5),
   REVALIDATE_URL: z.string().url().optional(),
   REVALIDATE_SECRET: secret,
   // Lista nazw prawdziwych marek do odrzucania w tekstach panelu (regula 5); tylko lokalnie z .env, nigdy w repo.

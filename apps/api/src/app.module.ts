@@ -11,9 +11,10 @@ import { AuthModule } from "./auth/auth.module.js";
 import { CartQuoteModule } from "./cart-quote/cart-quote.module.js";
 import { CatalogModule } from "./catalog/catalog.module.js";
 import { CommonModule } from "./common/common.module.js";
-import { RATE_WINDOW_MS, LIMITS } from "./common/rate-limits.js";
+import { configureDemoThrottle, RATE_WINDOW_MS, LIMITS } from "./common/rate-limits.js";
 import { APP_CONFIG, ConfigModule } from "./config/config.module.js";
 import type { AppConfig } from "./config/env.js";
+import { DemoModule } from "./demo/demo.module.js";
 import { HealthController } from "./health/health.controller.js";
 import { OpenApiModule } from "./openapi/openapi.module.js";
 import { OrdersModule } from "./orders/orders.module.js";
@@ -49,13 +50,17 @@ import { UsersModule } from "./users/users.module.js";
     AdminSettingsModule,
     AdminContentModule,
     PublicContentModule,
+    DemoModule,
     OpenApiModule,
     ThrottlerModule.forRootAsync({
       inject: [APP_CONFIG],
-      useFactory: (config: AppConfig) => ({
+      useFactory: (config: AppConfig) => {
+        configureDemoThrottle(config);
+        return {
         throttlers: [{ name: "default", ttl: RATE_WINDOW_MS, limit: LIMITS.default.limit }],
         skipIf: () => !config.RATE_LIMIT_ENABLED,
-      }),
+        };
+      },
     }),
   ],
   controllers: [HealthController],

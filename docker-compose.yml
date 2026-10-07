@@ -278,7 +278,10 @@ services:
       db-test: { condition: service_healthy }
 
   # ------------------------------------------------------------------ profil demo
-  # Cykliczny reset danych demo (tylko gdy DEMO_MODE=true). Odstep w sekundach: DEMO_RESET_INTERVAL_SECONDS.
+  # I-009 (B-014, TAKTYL-65): cykliczny reset danych demo, tylko gdy DEMO_MODE=true (inaczej usluga konczy sie bledem).
+  # Odstep: DEMO_RESET_INTERVAL_MINUTES (domyslnie 60); DEMO_RESET_INTERVAL_SECONDS (jesli ustawione) ma pierwszenstwo, do testow.
+  # Pierwszy reset po pierwszym odstepie, nie przy starcie. Reset to jedna transakcja (TRUNCATE + seed + audit + outbox):
+  # konta i sesje backpanelu zostaja, a znaczniki rewalidacji w outboxie odswiezaja sklep (worker w api).
   reset-demo:
     build: *api-build
     image: taktyl-api:local
@@ -287,11 +290,16 @@ services:
     env_file: *env-file
     environment: *db-env
     entrypoint: ["sh", "-c"]
+    # obraz api ma HEALTHCHECK na porcie 4000; ta usluga nie nasluchuje, wiec zdrowie = dziala proces petli
+    healthcheck:
+      disable: true
     command:
       - |
         if [ "$${DEMO_MODE:-false}" != "true" ]; then echo "reset-demo: DEMO_MODE nie jest true, koncze"; exit 1; fi
+        interval="$${DEMO_RESET_INTERVAL_SECONDS:-$$(( $${DEMO_RESET_INTERVAL_MINUTES:-60} * 60 ))}"
+        echo "reset-demo: reset co $${interval} s"
         while true; do
-          sleep "$${DEMO_RESET_INTERVAL_SECONDS:-86400}"
+          sleep "$$interval"
           node dist/seed.js --reset || echo "reset-demo: blad resetu, kolejna proba w nastepnym cyklu"
         done
     depends_on:

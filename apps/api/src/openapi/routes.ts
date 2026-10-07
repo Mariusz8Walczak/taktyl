@@ -11,6 +11,8 @@ import {
   adminReviewListQuerySchema,
   adminReviewListSchema,
   contentCreateSchema,
+  demoResetRequestSchema,
+  demoResetResponseSchema,
   contentPatchSchema,
   descriptionPutSchema,
   descriptionResponseSchema,
@@ -605,6 +607,24 @@ export const ROUTES: RouteDoc[] = [
     errors: [{ status: 404, code: "not_found" }],
     security: "session",
     role: "editor",
+    noStore: true,
+  },
+
+  // ---- B-014 (TAKTYL-65): reset danych demo -------------------------------------------------------------------------
+  {
+    method: "post",
+    path: "/v1/admin/demo/reset",
+    summary: "Reset danych demo do stanu z seeda (tylko owner i DEMO_MODE=true; body { confirm: \"reset\" })",
+    tag: "admin: demo",
+    ids: ["B-014"],
+    body: demoResetRequestSchema,
+    success: { status: 200, schema: demoResetResponseSchema, description: "Dane przywrocone do seeda." },
+    errors: [
+      { status: 404, code: "not_found (gdy tryb demo wylaczony)" },
+      { status: 422, code: "validation_failed (brak potwierdzenia)" },
+    ],
+    security: "session",
+    role: "owner",
     noStore: true,
   },
 

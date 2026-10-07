@@ -3,6 +3,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useState } from "react";
 import { useSettings } from "../../lib/queries";
+import { DemoResetPanel } from "./demo-reset";
 import { PageHeader } from "../ui/page-header";
 import { QueryBoundary } from "../ui/query-state";
 import {
@@ -23,7 +24,7 @@ const TABS = [
   ["firma", "Firma i etykiety"],
 ] as const;
 
-export function SettingsView() {
+export function SettingsView({ demoMode = false }: { demoMode?: boolean }) {
   const query = useSettings();
   const [tab, setTab] = useState<string>("dostawa");
   return (
@@ -60,6 +61,7 @@ export function SettingsView() {
           </Tabs.Root>
         )}
       </QueryBoundary>
+      <DemoResetPanel demoMode={demoMode} />
     </div>
   );
 }

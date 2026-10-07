@@ -1,6 +1,7 @@
 // B-102 (docs/17 par. 7): seed idempotentny. Wiersze wstawiane po kluczach naturalnych (id/sku/slug/code/key)
 // z ON CONFLICT DO NOTHING, wiec ponowny przebieg nie dubluje i nie nadpisuje edycji z backpanelu.
 // Konta admina tworzy TAKTYL-45, nie seed.
+import { REVALIDATE_TAG_PATTERN } from "@taktyl/contracts";
 import { toGrosze } from "@taktyl/domain";
 import { Prisma, type PrismaClient } from "../../src/prisma/client.js";
 import { buildPriceHistory } from "./history.js";
@@ -17,7 +18,22 @@ export interface SeedOptions {
   /** Najpierw wyczysc dane biznesowe (reset-demo), konta admina zostaja. */
   reset?: boolean;
   log?: (msg: string) => void;
+  /**
+   * I-009 (B-014, TAKTYL-65): tylko z `reset`. Po reseedzie, w TEJ SAMEJ transakcji, zapisuje wpis `demo.reset` w audit_log
+   * i wiersz outbox ze wszystkimi znacznikami sklepu (sklep odswieza sie po resecie). Bez tego pola (testy) nic nie jest dopisywane.
+   */
+  notify?: DemoResetNotice;
 }
+
+/** Kto wykonal reset: owner z backpanelu (B-014) albo harmonogram/CLI (`system`). */
+export interface DemoResetNotice {
+  actorId: string | null;
+  actorRole: "owner" | "system";
+  requestId: string;
+}
+
+/** Klucz blokady doradczej: jeden reset naraz (przycisk, CLI i petla reset-demo nie nakladaja sie). */
+const RESET_LOCK_KEY = 7310065;
 
 export interface SeedReport {
   inserted: Record<string, number>;
@@ -27,7 +43,7 @@ export interface SeedReport {
 export const RESET_KEEP_TABLES = ["admin_users", "sessions", "_prisma_migrations"];
 
 /** B-102: reset-demo. Usuwa dane biznesowe (w tym zamowienia z danymi osobowymi, ADR-0007) i zeruje sekwencje. */
-export async function resetDemoData(prisma: PrismaClient): Promise<string[]> {
+export async function resetDemoData(prisma: PrismaClient | Tx): Promise<string[]> {
   const rows = await prisma.$queryRaw<{ tablename: string }[]>`
     SELECT tablename FROM pg_tables WHERE schemaname = 'public'`;
   const tables = rows.map((r) => r.tablename).filter((t) => !RESET_KEEP_TABLES.includes(t));
@@ -38,21 +54,64 @@ export async function resetDemoData(prisma: PrismaClient): Promise<string[]> {
   return tables;
 }
 
+/** I-009: komplet znacznikow sklepu po resecie (docs/14 par. 6): katalog, presety, reguly, ustawienia, kategorie, produkty, tresci. */
+async function allShopTags(tx: Tx): Promise<string[]> {
+  const [categories, products, pages] = await Promise.all([
+    tx.category.findMany({ select: { id: true } }),
+    tx.product.findMany({ select: { slug: true } }),
+    tx.contentPage.findMany({ select: { slug: true } }),
+  ]);
+  const tags = new Set<string>(["catalog", "presets", "rules", "shop-settings", "content:guide"]);
+  for (const c of categories) {
+    tags.add(`category:${c.id}`);
+    tags.add(`facets:${c.id}`);
+  }
+  for (const p of products) {
+    tags.add(`product:${p.slug}`);
+    tags.add(`reviews:${p.slug}`);
+  }
+  for (const p of pages) tags.add(`content:${p.slug}`);
+  return [...tags].filter((t) => REVALIDATE_TAG_PATTERN.test(t)).sort();
+}
+
 /** B-102: uruchamia seed. Zwraca liczbe faktycznie wstawionych wierszy per tabela (0 = nic nowego). */
 export async function runSeed(prisma: PrismaClient, opts: SeedOptions): Promise<SeedReport> {
   const log = opts.log ?? (() => undefined);
   const now = opts.now ?? new Date();
-  const data = loadSeedData(opts.root);
-
-  if (opts.reset) {
-    const cleared = await resetDemoData(prisma);
-    log(`reset-demo: wyczyszczono ${cleared.length} tabel`);
-  }
+  const data = loadSeedData(opts.root, now);
 
   const inserted: Record<string, number> = {};
+  // I-009: reset + seed w jednej transakcji. TRUNCATE trzyma blokady do commitu, wiec rownolegle zadania API widza
+  // albo stary, albo nowy stan (nigdy pusta baze); lock_timeout chroni przed wiszeniem, gdy ktos trzyma dluga transakcje.
   await prisma.$transaction(
     async (tx) => {
+      if (opts.reset) {
+        await tx.$executeRawUnsafe(`SET LOCAL lock_timeout = '20s'`);
+        await tx.$executeRawUnsafe(`SELECT pg_advisory_xact_lock(${RESET_LOCK_KEY})`);
+        const cleared = await resetDemoData(tx);
+        log(`reset-demo: wyczyszczono ${cleared.length} tabel`);
+      }
       await seedAll(tx, data, now, inserted);
+      if (opts.reset && opts.notify) {
+        const tags = await allShopTags(tx);
+        const audit = await tx.auditLog.create({
+          data: {
+            at: now,
+            actorId: opts.notify.actorId,
+            actorRole: opts.notify.actorRole,
+            action: "demo.reset",
+            entity: "demo",
+            entityId: "reset",
+            after: { tags: tags.length },
+            requestId: opts.notify.requestId,
+          },
+          select: { id: true },
+        });
+        await tx.outbox.create({
+          data: { tags, status: "pending", createdAt: now, nextAttemptAt: now, auditId: audit.id },
+        });
+        log(`reset-demo: rewalidacja ${tags.length} znacznikow w outboxie`);
+      }
     },
     { timeout: 120_000, maxWait: 30_000 },
   );

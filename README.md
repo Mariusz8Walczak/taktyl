@@ -67,6 +67,29 @@ Skróty (`make help`): `make up`, `make dev`, `make test`, `make reset` (dane de
 
 Stan projektu: kod nie powstał jeszcze w całości, więc polecenia opisują stan docelowy (`docs/adr/0009-docker-first.md`).
 
+## Tryb demo
+
+Publiczne demo (I-009, `docs/15` B-007 i B-014, ADR-0006) włącza się w `.env` i uruchamia profilem `demo`:
+
+```bash
+# w .env: DEMO_MODE=true
+docker compose --profile demo up --build --wait   # albo: make demo
+sh scripts/smoke-demo.sh                          # test dymny trybu demo (albo: make smoke-demo)
+```
+
+| Zmienna | Znaczenie |
+|---|---|
+| `DEMO_MODE` | `true` = przycisk „Wejdź jako viewer” (tylko odczyt), reset danych demo, zaostrzone limity żądań |
+| `DEMO_RESET_INTERVAL_MINUTES` | odstęp między cyklicznymi resetami (usługa `reset-demo`), domyślnie `60`; pierwszy reset po pierwszym odstępie |
+| `DEMO_THROTTLE_READ_LIMIT`, `DEMO_THROTTLE_WRITE_LIMIT` | sufity żądań na minutę na adres IP (odczyt, zapisy i logowanie), domyślnie `60` i `5`; liczy się mniejszy z sufitem i limitem endpointu |
+| `ORDER_RETENTION_DAYS`, `MESSAGE_RETENTION_DAYS` | po tylu dniach (domyślnie `30`) znikają dane osobowe zamówień oraz zgłoszenia z formularzy |
+
+Zachowanie: reset (`db:reset-demo`) przywraca dane z `data/*.json` w jednej transakcji (żądania widzą stan sprzed albo po resecie), nie rusza kont ani sesji backpanelu i plików w wolumenie `media`, zapisuje wpis `demo.reset` w dzienniku zmian i wysyła znaczniki rewalidacji, więc sklep odświeża się sam. Ręcznie: `make reset`, albo przycisk „Zresetuj dane demo” w Ustawieniach (tylko `owner`, wymaga wpisania słowa „reset”). Przy `DEMO_MODE=false` endpoint `POST /v1/admin/demo/reset` odpowiada `404`, a usługa `reset-demo` odmawia startu.
+
+Start od zera (S31): `docker compose --profile demo up --build --wait` na świeżych wolumenach zajął 197 s (limit z `docs/12`: 10 min), pomiar i metoda w `docs/decyzje.md` (I-009). Job CI `e2e-demo` mierzy to przy każdym pushu.
+
+**Uwaga bezpieczeństwa: nigdy nie ustawiaj `DEMO_MODE=true` w środowisku z prawdziwymi danymi.** Reset usuwa zamówienia i zgłoszenia, a konto `viewer` wchodzi bez hasła.
+
 ## Status projektu
 
 **Etap: dokumentacja i planowanie.** Gotowe są: dokumentacja produktu (`docs/01`–`docs/12`), dane katalogu (`data/`), tokeny i font (`assets/`), decyzje architektoniczne (`docs/adr/`), PRD i specyfikacje (`docs/13`–`docs/21`), definicje agentów i skilli. **Kod aplikacji jest w budowie** wg planu z `docs/21`. Repozytorium nie obiecuje więcej, niż w nim jest.

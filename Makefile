@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test reset logs build ps lint typecheck audit-tokens smoke clean
+.PHONY: help env up down dev dev-down test reset logs build ps lint typecheck audit-tokens smoke demo smoke-demo clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -60,6 +60,16 @@ audit-tokens: env ## audyt tokenow w kontenerze
 
 smoke: ## test dymny dzialajacego stosu (noindex na hostach, /health, 18 produktow)
 	@sh scripts/smoke-stack.sh
+
+# I-009 (B-014, TAKTYL-65): tryb demo. Wymaga DEMO_MODE=true w .env; NIGDY z prawdziwymi danymi (reset kasuje zamowienia).
+demo: env ## stos z trybem demo (profil demo: cykliczny reset co DEMO_RESET_INTERVAL_MINUTES, domyslnie 60)
+	@grep -q '^DEMO_MODE=true' .env || { echo "Ustaw DEMO_MODE=true w .env (tylko dla srodowiska bez prawdziwych danych)." >&2; exit 1; }
+	$(COMPOSE) --profile demo up --build -d --wait
+	@echo "Sklep:     http://taktyl.localhost$(SITE_PORT)"
+	@echo "Backpanel: http://admin.taktyl.localhost$(SITE_PORT)  (Wejdz jako viewer; reset: Ustawienia, tylko owner)"
+
+smoke-demo: ## test dymny trybu demo (reset przywraca seed); wymaga make demo
+	@sh scripts/smoke-demo.sh
 
 clean: ## zatrzymuje stos i KASUJE wolumeny (baza, media, node_modules dev)
 	$(COMPOSE) --profile dev --profile test --profile demo down -v --remove-orphans

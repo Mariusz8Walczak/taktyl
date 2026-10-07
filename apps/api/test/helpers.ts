@@ -22,6 +22,8 @@ export const NOW = new Date("2026-10-07T10:00:00Z");
 /** Zmienne ustawiane tylko przez wybrane testy (czyszczone przy kazdym starcie aplikacji). */
 const OPTIONAL_ENV = [
   "DEMO_MODE",
+  "DEMO_THROTTLE_READ_LIMIT",
+  "DEMO_THROTTLE_WRITE_LIMIT",
   "ADMIN_BOOTSTRAP_EMAIL",
   "ADMIN_BOOTSTRAP_PASSWORD",
   "SESSION_IDLE_MINUTES",
