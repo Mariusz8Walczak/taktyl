@@ -1,0 +1,312 @@
+# I-003 (ADR-0009, TAKTYL-4): stos Taktyla w Docker Compose. Wymagane: Docker + Compose v2, git.
+#   cp .env.example .env   (wpisz sekrety lokalnie albo: make env)
+#   docker compose up --build                      sklep, backpanel, API, baza, proxy
+#   make dev                                       hot reload (profil dev)
+#   docker compose --profile test run --rm test    testy w kontenerze
+# Konfiguracja wylacznie z .env (poza repo). Port bazy NIE jest wystawiony na host.
+name: taktyl
+
+x-env-file: &env-file
+  - path: .env
+    required: false
+
+x-api-build: &api-build
+  context: .
+  dockerfile: apps/api/Dockerfile
+  target: api
+
+# Adres bazy sklada sie z POSTGRES_* (jedno haslo w .env, bez rozjazdu z DATABASE_URL).
+x-db-env: &db-env
+  DATABASE_URL: postgresql://${POSTGRES_USER:-taktyl}:${POSTGRES_PASSWORD:?ustaw POSTGRES_PASSWORD w .env (make env)}@db:5432/${POSTGRES_DB:-taktyl}?schema=public
+
+x-pg-health: &pg-health
+  test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+  interval: 5s
+  timeout: 3s
+  retries: 12
+  start_period: 5s
+
+# Wspolne dla uslug profilu dev: caly monorepo montowany z hosta, node_modules w wolumenach.
+x-dev: &dev
+  build:
+    context: .
+    dockerfile: infra/docker/Dockerfile.workspace
+  image: taktyl-workspace:local
+  env_file: *env-file
+  working_dir: /app
+  profiles: [dev]
+  restart: "no"
+  volumes:
+    - .:/app
+    - nm-root:/app/node_modules
+    - nm-api:/app/apps/api/node_modules
+    - nm-web:/app/apps/web/node_modules
+    - nm-admin:/app/apps/admin/node_modules
+    - nm-contracts:/app/packages/contracts/node_modules
+    - nm-domain:/app/packages/domain/node_modules
+    - nm-tokens:/app/packages/tokens/node_modules
+    - nm-ui:/app/packages/ui/node_modules
+    - media:/data/media
+
+services:
+  # ------------------------------------------------------------------ domyslny stos (produkcyjny tryb lokalny)
+  db:
+    image: postgres:16.15-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-taktyl}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?ustaw POSTGRES_PASSWORD w .env (make env)}
+      POSTGRES_DB: ${POSTGRES_DB:-taktyl}
+      TZ: ${TZ:-Europe/Warsaw}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck: *pg-health
+
+  migrate:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: migrate
+    image: taktyl-migrate:local
+    env_file: *env-file
+    environment: *db-env
+    depends_on:
+      db: { condition: service_healthy }
+    restart: "no"
+
+  seed:
+    build: *api-build
+    image: taktyl-api:local
+    command: ["node", "dist/seed.js"]
+    env_file: *env-file
+    environment: *db-env
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    restart: "no"
+
+  api:
+    build: *api-build
+    image: taktyl-api:local
+    restart: unless-stopped
+    env_file: *env-file
+    environment: *db-env
+    volumes:
+      - media:/data/media
+    depends_on:
+      seed: { condition: service_completed_successfully }
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-http://taktyl.localhost}
+        PUBLIC_API_URL: ${PUBLIC_API_URL:-http://api.taktyl.localhost}
+        PUBLIC_ADMIN_URL: ${PUBLIC_ADMIN_URL:-http://admin.taktyl.localhost}
+        PUBLIC_GTM_ID: ${PUBLIC_GTM_ID:-}
+    image: taktyl-web:local
+    restart: unless-stopped
+    env_file: *env-file
+    environment:
+      PORT: "3000"
+      INTERNAL_API_URL: http://api:4000
+    depends_on:
+      api: { condition: service_healthy }
+
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+      args:
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-http://taktyl.localhost}
+        PUBLIC_API_URL: ${PUBLIC_API_URL:-http://api.taktyl.localhost}
+        PUBLIC_ADMIN_URL: ${PUBLIC_ADMIN_URL:-http://admin.taktyl.localhost}
+    image: taktyl-admin:local
+    restart: unless-stopped
+    env_file: *env-file
+    environment:
+      PORT: "3001"
+      INTERNAL_API_URL: http://api:4000
+    depends_on:
+      api: { condition: service_healthy }
+
+  proxy:
+    image: caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+    restart: unless-stopped
+    # Caddy slucha wewnatrz na 8080 i dziala jako nie-root; host mapuje PROXY_HTTP_PORT (domyslnie 80).
+    user: "65532:65532"
+    cap_drop: [ALL]
+    # binarny Caddy ma setcap cap_net_bind_service; bez tej zdolnosci exec konczy sie "operation not permitted"
+    cap_add: [NET_BIND_SERVICE]
+    read_only: true
+    ports:
+      - "${PROXY_HTTP_PORT:-80}:8080"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - media:/srv/media:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    tmpfs:
+      - /tmp
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    depends_on:
+      web: { condition: service_healthy }
+      admin: { condition: service_healthy }
+      api: { condition: service_healthy }
+
+  # ------------------------------------------------------------------ profil dev (hot reload, kod z hosta)
+  # Start: make dev (= docker compose --profile dev up db migrate seed api-dev web-dev admin-dev proxy-dev).
+  # Lista uslug jest jawna, bo uslugi domyslne (api, web, admin, proxy) tez wstaja z profilem dev.
+  api-dev:
+    <<: *dev
+    environment:
+      <<: *db-env
+      NODE_ENV: development
+    command:
+      - sh
+      - -c
+      - pnpm turbo run build --filter='@taktyl/api^...' && pnpm --filter @taktyl/api db:generate && pnpm --filter @taktyl/api dev
+    depends_on:
+      seed: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4000/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+      start_period: 60s
+
+  web-dev:
+    <<: *dev
+    environment:
+      NODE_ENV: development
+      INTERNAL_API_URL: http://api-dev:4000
+    command:
+      - sh
+      - -c
+      - pnpm turbo run build --filter='@taktyl/web^...' && pnpm --filter @taktyl/web dev
+    depends_on:
+      api-dev: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+      start_period: 90s
+
+  admin-dev:
+    <<: *dev
+    environment:
+      NODE_ENV: development
+      INTERNAL_API_URL: http://api-dev:4000
+    command:
+      - sh
+      - -c
+      - pnpm turbo run build --filter='@taktyl/admin^...' && pnpm --filter @taktyl/admin dev
+    depends_on:
+      api-dev: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3001/api/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+      start_period: 90s
+
+  proxy-dev:
+    image: caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+    profiles: [dev]
+    restart: "no"
+    user: "65532:65532"
+    cap_drop: [ALL]
+    # binarny Caddy ma setcap cap_net_bind_service; bez tej zdolnosci exec konczy sie "operation not permitted"
+    cap_add: [NET_BIND_SERVICE]
+    read_only: true
+    environment:
+      WEB_UPSTREAM: web-dev:3000
+      ADMIN_UPSTREAM: admin-dev:3001
+      API_UPSTREAM: api-dev:4000
+    ports:
+      - "${PROXY_HTTP_PORT:-80}:8080"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - media:/srv/media:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    tmpfs:
+      - /tmp
+    depends_on:
+      web-dev: { condition: service_healthy }
+      admin-dev: { condition: service_healthy }
+      api-dev: { condition: service_healthy }
+
+  # ------------------------------------------------------------------ profil test
+  # Baza testowa to osobny kontener w pamieci (tmpfs): test integracyjny CZYSCI baze (docs/decyzje API-003),
+  # wiec nigdy nie moze trafic w baze robocza.
+  db-test:
+    image: postgres:16.15-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    profiles: [test]
+    restart: "no"
+    environment:
+      POSTGRES_USER: taktyl
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?ustaw POSTGRES_PASSWORD w .env (make env)}
+      POSTGRES_DB: taktyl_test
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck: *pg-health
+
+  # Vitest (domain, contracts, ui, api z baza testowa). Miejsce na Playwright + axe + Lighthouse:
+  # dojda jako kolejne kroki infra/docker/run-tests.sh i obraz z przegladarkami (docs/12).
+  test:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.workspace
+    image: taktyl-workspace:local
+    profiles: [test]
+    restart: "no"
+    env_file: *env-file
+    environment:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://taktyl:${POSTGRES_PASSWORD:?ustaw POSTGRES_PASSWORD w .env (make env)}@db-test:5432/taktyl_test?schema=public
+      TEST_DATABASE_URL: postgresql://taktyl:${POSTGRES_PASSWORD:?ustaw POSTGRES_PASSWORD w .env (make env)}@db-test:5432/taktyl_test?schema=public
+    working_dir: /app
+    command: ["sh", "infra/docker/run-tests.sh"]
+    depends_on:
+      db-test: { condition: service_healthy }
+
+  # ------------------------------------------------------------------ profil demo
+  # Cykliczny reset danych demo (tylko gdy DEMO_MODE=true). Odstep w sekundach: DEMO_RESET_INTERVAL_SECONDS.
+  reset-demo:
+    build: *api-build
+    image: taktyl-api:local
+    profiles: [demo]
+    restart: unless-stopped
+    env_file: *env-file
+    environment: *db-env
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        if [ "$${DEMO_MODE:-false}" != "true" ]; then echo "reset-demo: DEMO_MODE nie jest true, koncze"; exit 1; fi
+        while true; do
+          sleep "$${DEMO_RESET_INTERVAL_SECONDS:-86400}"
+          node dist/seed.js --reset || echo "reset-demo: blad resetu, kolejna proba w nastepnym cyklu"
+        done
+    depends_on:
+      api: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  media:
+  caddy-data:
+  caddy-config:
+  nm-root:
+  nm-api:
+  nm-web:
+  nm-admin:
+  nm-contracts:
+  nm-domain:
+  nm-tokens:
+  nm-ui:
