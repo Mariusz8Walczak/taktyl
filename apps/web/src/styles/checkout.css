@@ -1,0 +1,228 @@
+/* Zamowienie i statusy platnosci (TAKTYL-41, TAKTYL-42): F-170...F-180. Wylacznie tokeny (regula 2) i rozmiary z bloku
+   ponizej (WEB-010). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4): 576 / 768 / 992 / 1200 / 1400.
+   `fieldset { min-width: 0 }` i kolumny `minmax(0, 1fr)` (docs/11 pulapka 31). */
+
+:root {
+  /* Kolumna podsumowania kasy na komputerze. */
+  --zam-podsumowanie-szer: 24rem;
+  /* Najmniejsza szerokosc kafla wyboru dostawy, punktu i platnosci. */
+  --zam-kafel-min: 14rem;
+}
+
+.zam__uklad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "tel"
+    "form";
+  gap: var(--s3);
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .zam__uklad {
+    grid-template-columns: minmax(0, 1fr) var(--zam-podsumowanie-szer);
+    grid-template-areas: "form kol";
+    gap: var(--s4);
+  }
+}
+
+/* ---- formularz ---- */
+.zam__formularz {
+  grid-area: form;
+  display: grid;
+  gap: var(--s4);
+  min-width: 0;
+}
+.zam__sekcja {
+  display: grid;
+  gap: var(--s2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.zam__grupa {
+  min-width: 0;
+}
+.zam__naglowek {
+  margin: 0 0 var(--s1);
+  padding: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+}
+.zam__kafle {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--zam-kafel-min)), 1fr));
+  gap: var(--s2);
+}
+.zam__punkty {
+  display: grid;
+  gap: var(--s2);
+}
+.zam__brak-punktow,
+.zam__wybrany,
+.zam__info {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.zam__blad-grupy {
+  margin: 0;
+}
+.zam__braki {
+  margin: var(--s1) 0 0;
+  padding-left: var(--s3);
+}
+.zam__faktura {
+  display: grid;
+  gap: var(--s2);
+}
+.zam__zgoda {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+  min-height: var(--cel-min);
+  cursor: pointer;
+  font-size: var(--t-s);
+}
+.zam__zgoda input {
+  flex: none;
+  width: var(--cel-min);
+  height: var(--cel-min);
+  margin: 0;
+  accent-color: var(--akcent);
+}
+.zam__zgoda span {
+  align-self: center;
+}
+.zam__wyslij {
+  display: grid;
+  gap: var(--s2);
+  justify-items: start;
+}
+.zam__demo {
+  margin: 0;
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+  font-size: var(--t-s);
+  max-width: var(--max-tekst);
+}
+.zam__zamow {
+  min-width: var(--zam-kafel-min);
+}
+
+/* ---- podsumowanie: telefon (zwiniete nad formularzem) i kolumna z prawej (F-170) ---- */
+.zam-podsumowanie {
+  padding: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.zam-podsumowanie--telefon {
+  grid-area: tel;
+}
+.zam-podsumowanie--kolumna {
+  grid-area: kol;
+  display: none;
+}
+@media (min-width: 992px) {
+  .zam-podsumowanie--telefon {
+    display: none;
+  }
+  .zam-podsumowanie--kolumna {
+    display: block;
+    padding: var(--s3);
+    position: sticky;
+    top: calc(var(--naglowek-wys) + var(--s2));
+  }
+}
+.zam-podsumowanie__przelacznik {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  cursor: pointer;
+  font-weight: var(--w-mocna);
+}
+.zam-podsumowanie__naglowek {
+  margin: 0 0 var(--s2);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.zam-podsumowanie__tresc {
+  display: grid;
+  gap: var(--s2);
+  padding-top: var(--s1);
+}
+.zam-podsumowanie__pozycje-szczegoly summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  cursor: pointer;
+}
+.zam-podsumowanie__pozycje {
+  display: grid;
+  gap: var(--s1);
+  font-size: var(--t-s);
+}
+.zam-podsumowanie__pozycje li {
+  display: grid;
+}
+.zam-podsumowanie__sklad,
+.zam-podsumowanie__ladowanie {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+
+/* ---- statusy platnosci ---- */
+.zam-status__karta {
+  display: grid;
+  gap: var(--s3);
+  max-width: var(--max-tekst);
+}
+.zam-status__numer,
+.zam-status__tekst,
+.zam-status__uwaga {
+  margin: 0;
+  font-size: var(--t-m);
+}
+.zam-status__uwaga {
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.zam-status__numer strong {
+  font-variant-numeric: tabular-nums;
+}
+.zam-status__podtytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.zam-status__pozycje {
+  display: grid;
+  gap: var(--s1);
+}
+.zam-status__pozycje li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.zam-status__kroki {
+  margin: 0;
+  padding-left: var(--s3);
+  display: grid;
+  gap: var(--s1);
+}
+.zam-status__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.zam-status__akcje a,
+.zam-status a.tk-btn {
+  text-decoration: none;
+}
