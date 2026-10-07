@@ -9,6 +9,7 @@ const hosts = (
   process.env.E2E_HOSTS ?? "taktyl.localhost,admin.taktyl.localhost,api.taktyl.localhost"
 ).split(",");
 export const SITE_URL = process.env.E2E_SITE_URL ?? "http://taktyl.localhost";
+export const ADMIN_URL = process.env.E2E_ADMIN_URL ?? "http://admin.taktyl.localhost";
 
 const launchOptions = {
   args: [`--host-resolver-rules=${hosts.map((h) => `MAP ${h} ${proxy}`).join(",")}`],
@@ -38,18 +39,30 @@ export default defineConfig({
     launchOptions,
   },
   projects: [
+    // TAKTYL-54 (S25-S36): jedno logowanie na przebieg (limity prob logowania), stan sesji w .auth/ (poza repo).
+    { name: "setup", testMatch: /auth\.setup\.ts/ },
     {
       name: "desktop",
+      testIgnore: [/auth\.setup\.ts/, /[\/]backpanel[\/]/],
       use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } },
     },
     {
       name: "mobile",
       grep: /@mobile/,
+      testIgnore: [/auth\.setup\.ts/, /[\/]backpanel[\/]/],
       use: {
         ...devices["Pixel 7"],
         viewport: { width: 360, height: Number(process.env.E2E_MOBILE_HEIGHT ?? 740) },
         launchOptions,
       },
+    },
+    // Scenariusze backpanelu i propagacji zmieniaja dane wspolne ze sklepem (cena Wrobla, stan Jerzyka), wiec startuja
+    // dopiero po zakonczeniu S1-S24; dane wracaja do seedu przy kolejnym przebiegu (e2e-reset) albo `make reset`.
+    {
+      name: "backpanel",
+      testMatch: /[\/]backpanel[\/].*\.spec\.ts$/,
+      dependencies: ["setup", "desktop", "mobile"],
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } },
     },
   ],
 });

@@ -37,9 +37,9 @@ test: env ## Vitest w kontenerze test (baza testowa w tmpfs)
 	$(COMPOSE) --profile test run --rm test
 	$(COMPOSE) --profile test down --remove-orphans
 
-# I-010 (TAKTYL-44): Playwright S1-S24 (docs/12) w kontenerze e2e na pelnym stosie; kazdy przebieg zaczyna od db:reset-demo.
+# I-010 (TAKTYL-44): Playwright S1-S36 (docs/12; S25+ w projekcie backpanel po S1-S24, TAKTYL-54) w kontenerze e2e na pelnym stosie; kazdy przebieg zaczyna od db:reset-demo.
 # Raport HTML: e2e/playwright-report/index.html, slady i zrzuty bledow: e2e/test-results. Pojedynczy plik: make e2e ARGS="tests/pomiar.spec.ts".
-e2e: env ## Playwright S1-S24 w kontenerze e2e (stos, reset demo, testy); ARGS="..." przekazuje argumenty do playwright test
+e2e: env ## Playwright S1-S36 w kontenerze e2e (stos, reset demo, testy); ARGS="..." przekazuje argumenty do playwright test
 	$(COMPOSE) up -d --build --wait
 	$(COMPOSE) --profile e2e run --rm --build e2e pnpm exec playwright test $(ARGS)
 

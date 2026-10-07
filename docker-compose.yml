@@ -309,6 +309,10 @@ services:
       E2E_PROXY: proxy:8080
       E2E_WORKERS: ${E2E_WORKERS:-3}
       E2E_RETRIES: ${E2E_RETRIES:-1}
+      # TAKTYL-54 (S25-S36): konto owner z .env stosu (nigdy w repo) i sekret webhooka (S30); konta editor/viewer tworzy setup z owner.
+      E2E_ADMIN_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL:-}
+      E2E_ADMIN_PASSWORD: ${ADMIN_BOOTSTRAP_PASSWORD:-}
+      E2E_REVALIDATE_SECRET: ${REVALIDATE_SECRET:-}
     volumes:
       - ./e2e/playwright-report:/work/playwright-report
       - ./e2e/test-results:/work/test-results

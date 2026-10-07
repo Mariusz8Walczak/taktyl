@@ -71,3 +71,4 @@ next-env.d.ts
 
 # Prisma 7: wygenerowany klient (prisma generate)
 apps/api/src/generated/
+e2e/.auth/

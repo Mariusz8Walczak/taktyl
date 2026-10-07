@@ -176,6 +176,26 @@ Wszystko uruchamia się w Dockerze (ADR-0009); kontener `test` startuje od `db:r
 | Zależności | `pnpm audit`, Dependabot | brak wysokich i krytycznych podatności | tak (wysokie i krytyczne) |
 | ID w commitach | skrypt na komunikacie commita | komunikat zawiera `F-`, `A-`, `B-` lub `I-` (reguła 8 `CLAUDE.md`) | tak |
 
+### 7.2. Pokrycie automatyczne S25 do S36 (Playwright, projekt `backpanel`, TAKTYL-54)
+
+Pliki w `e2e/tests/backpanel/`; projekt `backpanel` startuje po S1-S24 (zmienia dane wspólne ze sklepem), a dane wracają do seedu przy kolejnym `db:reset-demo` (`e2e-reset` przed przebiegiem albo `make reset`).
+
+| # | Plik | Stan |
+|---|---|---|
+| S25 | `s25-cena-propagacja.spec.ts` (też B-S2) | automatyczny; mierzy czas od zapisu do nowej ceny w sklepie (budżet 5 s) |
+| S26 | `s26-zamowienie-w-panelu.spec.ts` (też B-S6) | automatyczny |
+| S27 | `s27-stan-brak.spec.ts` (też B-S3) | automatyczny z odstępstwem od brzmienia (Q-08): kafel Mgła nieaktywny z „Brak”, koszyk blokuje, API 409 |
+| S28 | `s28-s29-role-i-dziennik.spec.ts` (też B-S5) | automatyczny; viewer to konto z setupu (stos e2e ma `DEMO_MODE=false`) |
+| S29 | `s28-s29-role-i-dziennik.spec.ts` | automatyczny (cena, stan, status zamówienia; ustawienia w B-S4) |
+| S30 | `s30-s34-s35-webhook-i-api.spec.ts` | błędny i poprawny podpis: automatyczny; część „wyłącz sklep, zmień cenę, włącz sklep”: `test.fixme` (kontener e2e nie steruje Dockerem), należy do job-a CI `e2e-demo` (TAKTYL-71) |
+| S31 | CI `e2e-demo` | poza e2e |
+| S32 | `smoke-demo` / CI `e2e-demo` | w e2e tylko negatyw: bez `DEMO_MODE` brak przycisku resetu i viewer |
+| S33 | CI (gitleaks, kontrola ścieżek) | poza e2e |
+| S34 | `s30-s34-s35-webhook-i-api.spec.ts` | automatyczny (nagłówki na 3 hostach, meta i `robots.txt` sklepu) |
+| S35 | `s30-s34-s35-webhook-i-api.spec.ts` | automatyczny |
+| S36 | `b-s-panel.spec.ts` (axe ekranów panelu); reszta (Lighthouse, audyt designu, 0 obcych domen panelu) | axe: automatyczny; reszta w TAKTYL-71 |
+| B-S1, B-S4, B-S7, B-S8 | `b-s-panel.spec.ts` | automatyczne (B-S8 opisuje aktualne zachowanie: ostrzeżenie, nie blokada, Q-07) |
+
 ## 8. Pomiar
 
 `docs/10` §7 — kolejność zdarzeń, liczby zamiast tekstów, jeden `purchase`.
