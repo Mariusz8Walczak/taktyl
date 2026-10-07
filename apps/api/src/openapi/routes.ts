@@ -43,6 +43,8 @@ import {
   updateUserRequestSchema,
   updateUserResponseSchema,
   usersResponseSchema,
+  revalidateRequestSchema,
+  revalidateResponseSchema,
   type Role,
 } from "@taktyl/contracts";
 import type { z } from "zod";
@@ -489,6 +491,24 @@ export const ROUTES: RouteDoc[] = [
     errors: [{ status: 404, code: "not_found" }],
     security: "session",
     role: "editor",
+    noStore: true,
+  },
+
+  // ---- B-060, B-061 (TAKTYL-46): propagacja zmian ------------------------------------------------------------------
+  {
+    method: "post",
+    path: "/v1/admin/revalidate",
+    summary: "Reczna rewalidacja znacznikow (diagnostyka); znaczniki trafiaja do outbox",
+    tag: "admin: propagacja",
+    ids: ["B-061"],
+    body: revalidateRequestSchema,
+    success: {
+      status: 202,
+      schema: revalidateResponseSchema,
+      description: "Znaczniki zakolejkowane.",
+    },
+    security: "session",
+    role: "owner",
     noStore: true,
   },
 ];

@@ -151,13 +151,13 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 | DELETE | `/v1/admin/media/{key}` | owner | usunięcie pliku, `status: brak` (wraca placeholder) | — | B-051 | j.w. |
 | GET | `/v1/admin/audit` | viewer | dziennik: kto, kiedy, encja, `before`/`after`; filtry `actor_id`, `entity`, `entity_id`, `from`, `to`; `page`/`per_page`; viewer: pola osobowe zamaskowane | — | B-011, B-012 | |
 | GET | `/v1/admin/dashboard` | viewer | liczby: zamówienia do obsługi, niskie stany, brakujące zdjęcia, nieudane webhooki | — | B-002 | |
-| POST | `/v1/admin/revalidate` | owner | ręczne wysłanie znaczników (diagnostyka); `{ "tags": ["catalog"] }` | 422 | B-061 | podane |
+| POST | `/v1/admin/revalidate` | owner | ręczne wysłanie znaczników (diagnostyka); `{ "tags": ["catalog"] }`; znaczniki trafiają do `outbox` (ponawianie jak przy mutacjach), odpowiedź `202 { "revalidated": [...] }` (API-010) | 422 | B-061 | podane |
 
 ### 3.6. Wewnętrzny webhook (api → web)
 
 | Metoda | Ścieżka (w `web`) | Uwierzytelnienie | Opis |
 |---|---|---|---|
-| POST | `/api/revalidate` | `X-Taktyl-Signature` = HMAC-SHA256(`REVALIDATE_SECRET`, `timestamp + "." + body`), `X-Taktyl-Timestamp` ≤ 5 min | `{ "tags": ["product:bazalt-75","catalog"] }` → `revalidateTag` dla każdego; odpowiedź `{ "revalidated": [...] }`; `401` gdy podpis zły |
+| POST | `/api/revalidate` | `X-Taktyl-Signature` = hex HMAC-SHA256(`REVALIDATE_SECRET`, `timestamp + "." + body`), `X-Taktyl-Timestamp` = sekundy unix, okno ± 5 min | `{ "tags": ["product:bazalt-75","catalog"] }` → `revalidateTag` dla każdego (znaczniki tylko z listy formatów `docs/14` §6); odpowiedź `{ "revalidated": [...] }`; `401` gdy podpis zły, brakujący lub przeterminowany, `422` gdy znacznik spoza listy (API-010) |
 
 ## 4. Reguły autoryzacji (skrót testowalny)
 

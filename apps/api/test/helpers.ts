@@ -29,6 +29,11 @@ const OPTIONAL_ENV = [
   "LOGIN_MAX_ATTEMPTS",
   "LOGIN_IP_MAX_ATTEMPTS",
   "LOGIN_WINDOW_MINUTES",
+  "REVALIDATE_URL",
+  "OUTBOX_WORKER_ENABLED",
+  "OUTBOX_POLL_MS",
+  "OUTBOX_BATCH_SIZE",
+  "REVALIDATE_TIMEOUT_MS",
 ];
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 

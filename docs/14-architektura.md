@@ -255,6 +255,7 @@ Plik `.env` poza repo; w repo `.env.example` z placeholderami (ADR-0008). Walida
 | `DEMO_RESET_CRON` | reset-demo | harmonogram resetu | `0 4 * * *` |
 | `REVALIDATE_URL` | api | adres webhooka sklepu | `http://web:3000/api/revalidate` |
 | `REVALIDATE_SECRET` | api, web | klucz HMAC webhooka | `<losowy-32B>` |
+| `OUTBOX_WORKER_ENABLED`, `OUTBOX_POLL_MS`, `OUTBOX_BATCH_SIZE`, `REVALIDATE_TIMEOUT_MS` | api | worker outboxa: włącznik (domyślnie `true`), interwał (2000 ms), paczka wierszy (100), limit czasu webhooka (5000 ms) | `true`, `2000`, `100`, `5000` |
 | `MEDIA_DIR` | api | katalog wolumenu zdjęć | `/data/media` |
 | `MEDIA_PUBLIC_URL` | web, admin | prefiks adresów zdjęć | `http://taktyl.localhost/media` |
 | `PUBLIC_GTM_ID` | web | opcjonalny kontener tagów (`docs/10`) | puste |

@@ -64,6 +64,11 @@ export const envSchema = z.object({
   DEMO_RESET_CRON: z.string().default("0 4 * * *"),
   REVALIDATE_URL: z.string().url().optional(),
   REVALIDATE_SECRET: secret,
+  // B-060 (TAKTYL-46): worker outboxa - interwal, rozmiar paczki, limit czasu webhooka.
+  OUTBOX_WORKER_ENABLED: boolTrue,
+  OUTBOX_POLL_MS: z.coerce.number().int().min(200).max(60_000).default(2000),
+  OUTBOX_BATCH_SIZE: z.coerce.number().int().min(1).max(500).default(100),
+  REVALIDATE_TIMEOUT_MS: z.coerce.number().int().min(200).max(30_000).default(5000),
   SHOP_REVALIDATE_SECONDS: z.coerce.number().int().min(1).default(300),
   ORDER_RETENTION_DAYS: z.coerce.number().int().min(1).default(30),
   MEDIA_DIR: z.string().default("/data/media"),
