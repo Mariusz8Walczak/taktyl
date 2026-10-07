@@ -1,0 +1,99 @@
+/* Strony informacyjne i prawne oraz 404 (F-221, F-247, TAKTYL-32; docs/05 §8). Wylacznie tokeny (regula 2).
+   Sama tresc z Markdownu (.tresc-tekst, .tresc-tabela) stylizuje poradnik.css; tu ramka strony: jedna kolumna do
+   --max-tekst (720 px), baner demo, aktualnosc, spis tresci. */
+
+.info {
+  max-width: var(--max-tekst);
+}
+.info__baner {
+  margin: 0 0 var(--s3);
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-left-width: var(--tk-linia-2);
+  border-left-color: var(--uwaga);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.info__h1 {
+  margin-bottom: var(--s2);
+}
+.info__aktualnosc {
+  margin: 0 0 var(--s3);
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+.info__spis {
+  margin: 0 0 var(--s4);
+  padding: var(--s2) var(--s3);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.info__spis-tytul {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-m);
+  font-weight: var(--w-mocna);
+}
+.info__spis-lista {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+  padding-left: var(--s3);
+  list-style: decimal;
+}
+.info__spis-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
+
+/* ---- 404 (docs/05 §1 "/404", docs/12 S23) ---- */
+.nie-ma {
+  max-width: var(--max-tekst);
+}
+.nie-ma__szukaj {
+  display: grid;
+  gap: var(--s1);
+  margin: var(--s3) 0 var(--s4);
+}
+.nie-ma__wiersz {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.nie-ma__wiersz .tk-pole__kontrolka {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.nie-ma__tytul {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+}
+.nie-ma__kategorie {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+@media (min-width: 576px) {
+  .nie-ma__kategorie {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.nie-ma__kategoria {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-weight: var(--w-mocna);
+  text-decoration: none;
+}
+.nie-ma__kategoria:hover {
+  border-color: var(--akcent-krawedz);
+}
