@@ -56,16 +56,16 @@ function Editor({ product }: { product: AdminProductDetail }) {
           <h3>Odświeżane po zapisie</h3>
           <ul className="adm-lista adm-tekst-xs">
             <li>
-              <code>product:{product.slug}</code>
+              <span>product:{product.slug}</span>
             </li>
             <li>
-              <code>category:{product.category}</code>
+              <span>category:{product.category}</span>
             </li>
             <li>
-              <code>catalog</code>
+              <span>catalog</span>
             </li>
             <li>
-              <code>presets</code> (przy cenie, stanie i statusie)
+              <span>presets</span> (przy cenie, stanie i statusie)
             </li>
           </ul>
           <Link className="tk-link" href={`/produkty/${product.id}/ceny`}>

@@ -229,8 +229,9 @@
   min-height: var(--cel-min);
 }
 .adm-radio input {
-  width: var(--s3);
-  height: var(--s3);
+  flex: none;
+  width: var(--cel-min); /* cel >= 44 px (docs/12 §3) */
+  height: var(--cel-min);
   accent-color: var(--akcent);
 }
 
@@ -312,4 +313,11 @@
 /* przyciski w wierszu z klikalnym pseudoelementem: nad nakladka odnosnika (kolejnosc w DOM, bez z-index) */
 .adm-nad-linkiem {
   position: relative;
+}
+
+/* odnosniki jako cele dotykowe >= 44 px (docs/12 par. 3); poza ciaglym tekstem */
+.adm-tresc a.tk-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
 }
