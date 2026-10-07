@@ -1,0 +1,67 @@
+/* F-009, F-247: stopka jako sekcja ciemna (.sekcja--mod przelacza tokeny na ciemne; docs/06 §2). Tylko tokeny. */
+
+.stopka {
+  margin-top: var(--s5);
+  padding-block: var(--s5);
+}
+.stopka__siatka {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s4);
+}
+.stopka__tytul {
+  margin: 0 0 var(--s2);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  line-height: 1.3;
+}
+.stopka__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  color: var(--tekst);
+  text-decoration: underline;
+  text-decoration-thickness: var(--tk-linia-1);
+  text-underline-offset: 0.2em;
+}
+.stopka__link:hover {
+  text-decoration-thickness: var(--tk-linia-2);
+}
+.stopka__adres {
+  font-style: normal;
+  font-size: var(--t-s);
+  line-height: 1.55;
+}
+.stopka__adres p {
+  margin: 0 0 var(--s1);
+}
+.stopka__dol {
+  display: grid;
+  gap: var(--s1);
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: var(--tk-linia-1) solid var(--linia);
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.stopka__dol p {
+  margin: 0;
+}
+.stopka__demo {
+  font-weight: var(--w-mocna);
+  color: var(--tekst);
+}
+.stopka__etykieta {
+  font-weight: var(--w-mocna);
+}
+
+@media (min-width: 576px) {
+  .stopka__siatka {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 992px) {
+  .stopka__siatka {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

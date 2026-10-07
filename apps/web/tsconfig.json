@@ -8,9 +8,9 @@
     "declaration": false,
     "allowJs": false,
     "incremental": true,
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "plugins": [{ "name": "next" }]
   },
-  "include": ["next-env.d.ts", "src", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "src", "test", "vitest.config.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

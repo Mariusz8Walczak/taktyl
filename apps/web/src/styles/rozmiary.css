@@ -1,0 +1,8 @@
+/* Rozmiary ukladu sklepu (TAKTYL-23). Skladane wylacznie z tokenow (docs/06 §4); zadnych wartosci wpisanych wprost. */
+:root {
+  /* Wysokosc przyklejonego naglowka: cel 44 px + odstep s2 u gory i u dolu. Uzywana tez przez scroll-padding-top
+     (docs/11 pulapka 26: przyklejony naglowek nie zaslania elementu z fokusem). */
+  --naglowek-wys: calc(var(--cel-min) + var(--s2) * 2);
+  /* Licznik na odnosniku koszyka (docs/06 §4: --r-pelny dozwolony dla licznika na ikonie koszyka) */
+  --licznik-rozmiar: var(--s3);
+}

@@ -1,0 +1,145 @@
+/* F-002, F-004: naglowek przyklejony, nawigacja, menu mobilne. Tylko tokeny (regula 2).
+   Telefon (< 992 px): [Menu] taktyl ... [Szukaj] [Koszyk]; Ulubione i Porownaj sa w szufladzie (do 575 px).
+   Komputer (>= 992 px): taktyl, nawigacja, akcje; przycisk Menu znika. */
+
+.naglowek {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-naglowek);
+  background-color: var(--powierzchnia);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.naglowek__wnetrze {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--naglowek-wys);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--tekst);
+  text-decoration: none;
+}
+
+.naglowek__link,
+.naglowek__menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  min-width: var(--cel-min);
+  justify-content: center;
+  padding-inline: var(--s1);
+  border: 0;
+  border-radius: var(--r);
+  background: none;
+  font: inherit;
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  line-height: 1.3;
+  color: var(--tekst);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--d-s) var(--e-wyjscie);
+}
+.naglowek__link:hover,
+.naglowek__menu:hover {
+  background-color: var(--tlo-alt);
+}
+.naglowek__link[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: var(--tk-linia-2);
+  text-underline-offset: 0.3em;
+}
+
+.naglowek__nawigacja {
+  display: none;
+}
+.naglowek__akcje {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  margin-left: auto;
+}
+.naglowek__link--dodatkowy {
+  display: none;
+}
+
+/* Licznik koszyka: pozycja bezwzgledna, wiec zmiana liczby nie przesuwa ukladu (CLS) */
+.naglowek__koszyk {
+  padding-right: var(--s2);
+}
+.licznik {
+  position: absolute;
+  top: var(--s1);
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--licznik-rozmiar);
+  height: var(--licznik-rozmiar);
+  padding-inline: var(--s1);
+  border-radius: var(--r-pelny);
+  background-color: var(--tekst);
+  color: var(--tlo);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transform: translate(25%, -50%);
+}
+
+/* Szuflada menu mobilnego */
+.menu-mobilne__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  border-radius: var(--r);
+  font-size: var(--t-m);
+  font-weight: var(--w-mocna);
+  color: var(--tekst);
+  text-decoration: none;
+}
+.menu-mobilne__link:hover {
+  background-color: var(--tlo-alt);
+}
+.menu-mobilne__link[aria-current="page"] {
+  text-decoration: underline;
+}
+.menu-mobilne__dodatkowe {
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+
+@media (min-width: 576px) {
+  .naglowek__link--dodatkowy {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 992px) {
+  .naglowek__menu {
+    display: none;
+  }
+  .naglowek__nawigacja {
+    display: block;
+    margin-left: var(--s3);
+  }
+  .lista--rzad {
+    display: flex;
+    gap: var(--s1);
+  }
+}

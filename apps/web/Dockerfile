@@ -38,7 +38,8 @@ RUN apk add --no-cache libc6-compat  && rm -rf /usr/local/lib/node_modules/npm /
 WORKDIR /app
 COPY --from=build --chown=node:node /app/apps/web/.next/standalone ./
 COPY --from=build --chown=node:node /app/apps/web/.next/static ./apps/web/.next/static
-# Katalog public/ (zdjecia dostarcza wolumen media przez proxy) dojdzie z zadaniami UI.
+# public/: robots.txt (F-244); zdjecia dostarcza wolumen media przez proxy.
+COPY --from=build --chown=node:node /app/apps/web/public ./apps/web/public
 USER node
 EXPOSE 3000
 HEALTHCHECK --interval=10s --timeout=3s --start-period=20s --retries=5   CMD wget -qO- "http://127.0.0.1:${PORT}/api/health" >/dev/null || exit 1

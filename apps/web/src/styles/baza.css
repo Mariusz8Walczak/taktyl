@@ -1,0 +1,140 @@
+/* Baza ukladu sklepu (TAKTYL-23): kontener, strona, skip link (F-245), pasek demo (F-001), fokus.
+   Wylacznie zmienne z tokens.css i rozmiary.css (regula 2). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4):
+   576 / 768 / 992 / 1200 / 1400. */
+
+/* Font: next/font laduje Archivo lokalnie i udostepnia --font-archivo (app/fonts.ts); reszta stosu z tokens.css. */
+:root {
+  --font: var(--font-archivo), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html {
+  /* docs/11 pulapka 26 */
+  scroll-padding-top: var(--naglowek-wys);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh; /* docs/11 pulapka 27 */
+  margin: 0;
+  font-stretch: var(--szer-tekst);
+}
+
+:focus-visible {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+
+.kontener {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--s2);
+}
+
+.tresc {
+  flex: 1 0 auto;
+}
+.tresc:focus {
+  outline: none; /* cel odnosnika "Przejdz do tresci", nie element interaktywny */
+}
+
+.strona {
+  padding-block: var(--s5);
+}
+
+.naglowek-strony {
+  margin: 0 0 var(--s3);
+  font-size: var(--t-3xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+  letter-spacing: var(--tracking-naglowek);
+  text-wrap: balance;
+}
+
+.wstep {
+  max-width: var(--max-tekst);
+  font-size: var(--t-l);
+  line-height: 1.5;
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.przycisk-tekstowy {
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--akcent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* F-245: odnosnik "Przejdz do tresci", widoczny tylko przy fokusie, pierwszy w kolejnosci Tab */
+.skip-link {
+  position: absolute;
+  top: var(--s1);
+  left: var(--s1);
+  z-index: var(--z-toast);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: 0 var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-weight: var(--w-mocna);
+  box-shadow: var(--cien-2);
+  transform: translateY(calc(-100% - var(--s2)));
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* F-001: pasek demo; zamkniety w tej sesji chowa go atrybut ustawiany skryptem przed malowaniem */
+.pasek-demo {
+  font-size: var(--t-xs);
+}
+html[data-pasek-demo="closed"] .pasek-demo {
+  display: none;
+}
+.pasek-demo__wnetrze {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  min-height: var(--cel-min);
+}
+.pasek-demo__tekst {
+  margin: 0;
+  padding-block: var(--s1);
+  line-height: 1.3;
+}
+.pasek-demo__zamknij {
+  flex: none;
+  min-width: var(--cel-min);
+  min-height: var(--cel-min);
+  padding: 0 var(--s1);
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: var(--w-mocna);
+  color: var(--tekst);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Odnosnik w tekscie wstepu: cel dotykowy >= 44 px (docs/12 §3) */
+.wstep .tk-link,
+.strona p > .tk-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
