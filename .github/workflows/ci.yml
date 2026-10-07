@@ -203,6 +203,9 @@ jobs:
         run: |
           docker run --rm -v "$PWD:/repo" "$GITLEAKS_IMAGE" git /repo \
             --config /repo/.gitleaks.toml --redact --no-banner --verbose
+      # I-007: test negatywny konfiguracji - allowlista kluczy magazynu przegladarki ma pozostac waska.
+      - name: Test negatywny konfiguracji gitleaks
+        run: sh scripts/test-gitleaks-config.sh
 
   audit-deps:
     name: audit-deps

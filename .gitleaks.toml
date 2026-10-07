@@ -24,13 +24,24 @@ paths = [
   '''^apps/api/(src|test)/.*\.test\.ts$''',
 ]
 
-# Nazwy kluczy localStorage ("taktyl.consent.v1", "taktyl.tracked.v1", "taktyl.orders.v1") to nazwy, nie sekrety (F-240, TAKTYL-43).
+# I-007: klucze localStorage/sessionStorage ("taktyl.<nazwa>.v<N>", np. taktyl.cart.v1) to nazwy, nie sekrety.
+# Jedna allowlista zamiast wpisu na kazda nowa nazwe. Waski warunek (AND): regula generic-api-key, CALY sekret ma
+# ksztalt klucza magazynu przegladarki, a plik lezy w kodzie sklepu/panelu/pakietow albo w ich testach.
+# Nie dotyczy innych regul ani innych sciezek (np. scripts/). Test negatywny: scripts/test-gitleaks-config.sh.
 [[allowlists]]
-description = "Nazwy kluczy localStorage warstwy pomiaru"
+description = "Klucze magazynu przegladarki taktyl.<nazwa>.v<N> w kodzie aplikacji i testach"
 targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
 regexes = [
-  '''taktyl\.(consent|tracked|orders)\.v1''',
-  '''taktyl\.checkout\.idem\.v1''',
+  '''^taktyl\.[a-z][a-z0-9.-]*\.v[0-9]+$''',
+]
+paths = [
+  '''^apps/web/src/''',
+  '''^apps/admin/src/''',
+  '''^packages/[^/]+/src/''',
+  '''^apps/(web|admin)/test/''',
+  '''^packages/[^/]+/test/''',
 ]
 
 # I-008 (TAKTYL-63): klucz obrazu "k-kwarc-60_grafit_top" w testach manifestu zdjec to identyfikator, nie sekret.
