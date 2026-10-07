@@ -4,7 +4,7 @@
 // (pierwsze najechanie, fokus albo dotkniecie przycisku "Menu"), wiec Drawer nie wchodzi do bazy JS strony.
 import { Drawer } from "@taktyl/ui";
 import type { RefObject } from "react";
-import { COMPARE_LINK, NAV_MAIN, SEARCH_LINK, WISHLIST_LINK } from "../../lib/nav";
+import { ACCOUNT_LINK, COMPARE_LINK, NAV_MAIN, SEARCH_LINK, WISHLIST_LINK } from "../../lib/nav";
 import { NavLink } from "./nav-link";
 
 export interface MobileMenuDrawerProps {
@@ -29,7 +29,7 @@ export default function MobileMenuDrawer({ open, onClose, returnFocusRef }: Mobi
       </nav>
       <nav aria-label="Narzędzia" className="menu-mobilne__dodatkowe">
         <ul className="lista">
-          {[SEARCH_LINK, WISHLIST_LINK, COMPARE_LINK].map((item) => (
+          {[SEARCH_LINK, WISHLIST_LINK, COMPARE_LINK, ACCOUNT_LINK].map((item) => (
             <li key={item.href}>
               <NavLink href={item.href} className="menu-mobilne__link" onClick={onClose}>
                 {item.label}

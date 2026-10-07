@@ -6,6 +6,7 @@ import { Button, Field } from "@taktyl/ui";
 import { useEffect, useMemo, useRef } from "react";
 import { createModel, type BuilderData } from "../../lib/builder/catalog";
 import { STEPS, STEP_LABEL, STEP_SLOT } from "../../lib/builder/types";
+import { SaveSetButton } from "../account/save-set-button";
 import { BuilderNotices, Kwota, StepsBar, stepCounter } from "./parts";
 import { StepProducts } from "./step-products";
 import { StepProfile } from "./step-profile";
@@ -49,7 +50,15 @@ function StepSummary({ api }: { api: BuilderApi }) {
         <Button variant="secondary" onClick={() => void api.copyLink()}>
           Kopiuj link do setu
         </Button>
-        {/* F-114 (P1): "Zapisz set" - tylko hak, bez przycisku do czasu konta demo (TAKTYL-56) */}
+        {/* F-114: zapis setu w koncie demo (TAKTYL-56) */}
+        <SaveSetButton
+          k={api.state.k}
+          m={api.state.m}
+          p={api.state.p}
+          profile={api.state.profile}
+          handCm={api.state.handCm}
+          totalGr={api.analysis.price.total}
+        />
       </div>
       <p className="kreator__status" role="status">
         {api.message}

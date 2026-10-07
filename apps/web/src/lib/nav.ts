@@ -16,6 +16,7 @@ export const NAV_MAIN: readonly NavItem[] = [
 export const SEARCH_LINK: NavItem = { label: "Szukaj", href: "/szukaj" };
 export const WISHLIST_LINK: NavItem = { label: "Ulubione", href: "/ulubione" };
 export const COMPARE_LINK: NavItem = { label: "Porównaj", href: "/porownaj" };
+export const ACCOUNT_LINK: NavItem = { label: "Konto", href: "/konto" };
 export const CART_LINK: NavItem = { label: "Koszyk", href: "/koszyk" };
 
 export const FOOTER_SHOP: readonly NavItem[] = [

@@ -33,6 +33,7 @@ describe("Header (F-002)", () => {
       ["Szukaj", "/szukaj"],
       ["Ulubione", "/ulubione"],
       ["Porównaj", "/porownaj"],
+      ["Konto", "/konto"],
       ["Koszyk", "/koszyk"],
     ] as const) {
       expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);

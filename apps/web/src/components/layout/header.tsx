@@ -1,7 +1,7 @@
 // F-002, wzorzec: naglowek `home-setup-gear.html` (logotyp, nawigacja, akcje), przyklejony. Wordmark `taktyl`
 // zlozony fontem (docs/06 §5.1), bez grafiki. Akcje jako widoczne etykiety tekstowe (docs/09 §2).
 import Link from "next/link";
-import { COMPARE_LINK, NAV_MAIN, WISHLIST_LINK } from "../../lib/nav";
+import { ACCOUNT_LINK, COMPARE_LINK, NAV_MAIN, WISHLIST_LINK } from "../../lib/nav";
 import { SearchBox } from "../search/search-box";
 import { CartLink } from "./cart-link";
 import { MobileMenu } from "./mobile-menu";
@@ -33,6 +33,9 @@ export function Header() {
           </NavLink>
           <NavLink href={COMPARE_LINK.href} className="naglowek__link naglowek__link--dodatkowy">
             {COMPARE_LINK.label}
+          </NavLink>
+          <NavLink href={ACCOUNT_LINK.href} className="naglowek__link naglowek__link--dodatkowy">
+            {ACCOUNT_LINK.label}
           </NavLink>
           <CartLink />
         </div>

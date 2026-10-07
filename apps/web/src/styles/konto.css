@@ -1,0 +1,260 @@
+/* Konto demo (TAKTYL-56): F-114, F-200, F-201, F-202, F-203. Wylacznie tokeny (regula 2). Punkty przelamania Bootstrapa 5
+   bez zmian (docs/06 §4). Bez animacji. */
+
+:root {
+  /* Najmniejsza szerokosc karty zapisanego setu w siatce. */
+  --konto-set-min: 20rem;
+}
+
+.konto__stan {
+  margin: var(--s2) 0;
+  color: var(--tekst-slaby);
+}
+.konto__podtytul {
+  margin: 0 0 var(--s2);
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+
+/* ---- logowanie demo (F-200) ---- */
+.konto-logowanie {
+  display: grid;
+  gap: var(--s2);
+  justify-items: start;
+  max-width: var(--max-tekst);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.konto-logowanie__tytul {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+}
+.konto-logowanie__tekst {
+  margin: 0;
+}
+
+/* ---- uklad konta ---- */
+.konto {
+  display: grid;
+  gap: var(--s3);
+}
+@media (min-width: 992px) {
+  .konto {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+.konto__nawigacja {
+  display: grid;
+  gap: var(--s2);
+  align-content: start;
+}
+.konto__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+@media (min-width: 992px) {
+  .konto__lista {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}
+.konto__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border-radius: var(--r);
+  color: var(--tekst);
+  text-decoration: none;
+}
+.konto__link:hover {
+  background-color: var(--tlo-alt);
+}
+.konto__link[aria-current="page"] {
+  background-color: var(--akcent-slaby);
+  font-weight: var(--w-mocna);
+}
+.konto__tresc {
+  min-width: 0;
+}
+
+/* ---- przeglad (F-201) ---- */
+.konto-przeglad {
+  display: grid;
+  gap: var(--s3);
+}
+.konto-blok {
+  display: grid;
+  gap: var(--s2);
+  align-content: start;
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.konto-blok p {
+  margin: 0;
+}
+.konto-blok__tytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+
+/* ---- zamowienia (F-202) ---- */
+.konto-zamowienia {
+  display: grid;
+  gap: var(--s2);
+}
+.konto-zamowienie {
+  display: grid;
+  gap: var(--s1);
+  padding: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.konto-zamowienie__glowa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+}
+.konto-zamowienie__numer {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.konto-zamowienie__data,
+.konto-zamowienie__info {
+  margin: 0;
+  color: var(--tekst-slaby);
+}
+.konto-zamowienie__dane {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  margin: 0;
+}
+.konto-zamowienie__dane dt {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.konto-zamowienie__dane dd {
+  margin: 0;
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- szczegoly zamowienia (F-202) ---- */
+.konto-szczegoly {
+  display: grid;
+  gap: var(--s2);
+  max-width: var(--max-tekst);
+}
+.konto-szczegoly__tytul {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+}
+.konto-szczegoly__status,
+.konto-szczegoly__demo {
+  margin: 0;
+}
+.konto-szczegoly__demo {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.konto-szczegoly__podtytul {
+  margin: var(--s2) 0 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.konto-szczegoly__pozycje li,
+.konto-szczegoly__sumy > div,
+.konto-szczegoly__dane > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+  padding: var(--s1) 0;
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.konto-szczegoly__sumy,
+.konto-szczegoly__dane {
+  margin: 0;
+}
+.konto-szczegoly__sumy dd,
+.konto-szczegoly__dane dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.konto-szczegoly__razem {
+  font-weight: var(--w-mocna);
+  font-size: var(--t-l);
+}
+.konto-szczegoly__przebieg li {
+  padding: var(--s1) 0;
+}
+.konto-szczegoly__czas {
+  color: var(--tekst-slaby);
+}
+
+/* ---- zapisane sety (F-203) ---- */
+.konto-sety {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--konto-set-min)), 1fr));
+  gap: var(--s2);
+}
+.konto-set {
+  display: grid;
+  gap: var(--s2);
+  align-content: start;
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.konto-set__nazwa {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  overflow-wrap: anywhere;
+}
+.konto-set__data,
+.konto-set__suma {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.konto-set__typ {
+  color: var(--tekst-slaby);
+}
+.konto-set__pozycje {
+  display: grid;
+  gap: var(--s1);
+}
+.konto-set__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+}
+.konto-set__akcje a.tk-btn {
+  text-decoration: none;
+}
+.konto-set__usun {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
+.konto-set__zmiana {
+  display: grid;
+  gap: var(--s2);
+}
