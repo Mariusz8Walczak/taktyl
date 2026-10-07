@@ -82,6 +82,7 @@ export function mockApi(routes: Record<string, Handler | Response>): Call[] {
 export function renderWithProviders(ui: ReactElement, opts: { auth?: boolean } = {}) {
   setCsrfToken(null);
   const client = makeQueryClient();
+  client.setDefaultOptions({ queries: { ...client.getDefaultOptions().queries, retryDelay: 0 } });
   const tree = (
     <QueryClientProvider client={client}>
       <ToastProvider>{opts.auth === false ? ui : <AuthProvider>{ui}</AuthProvider>}</ToastProvider>
