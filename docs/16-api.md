@@ -50,7 +50,7 @@ Kolumny: **Role** — `—` brak wymagań; **Tagi** — znaczniki `revalidateTag
 | GET | `/v1/categories` | — | kategorie z `categories.json` (id, slug, nazwa, H1, wstęp, liczba modeli, „od X”) | — | F-020, F-002 | |
 | GET | `/v1/products` | — | lista produktów kategorii z filtrami, sortowaniem, kursorem; wymagany `?category=` | 404 `not_found` (kategoria) | F-020…F-026, F-040, F-041 | |
 | GET | `/v1/products/{slug}` | — | pełny produkt: atrybuty, warianty (SKU, cena, stan, `lowest_30d` gdy promocja), zdjęcia (status z manifestu), plakietki, `in_box`, `gpsr`; `?sku=` wybiera wariant | 404 | F-060…F-072, F-078 | |
-| GET | `/v1/products/{slug}/complete-set` | — | propozycja „Dokończ set”: dwie pozostałe kategorie dobrane wg `fit`, cena setu z rabatem | 404 | F-069 | |
+| GET | `/v1/products/{slug}/complete-set` | — | propozycja „Dokończ set”: dwie pozostałe kategorie dobrane wg `fit`, cena setu z rabatem; opcjonalnie `?profile=` i `?sku=` (API-004) | 404 | F-069 | |
 | GET | `/v1/facets` | — | facety kategorii z licznikami przy wartościach, liczonymi z aktywnymi filtrami (te same parametry co `/products`); wartości z zerem wyników oznaczone `disabled: true` | 404 | F-021, F-029 | |
 | GET | `/v1/search` | — | wyszukiwanie (`q`, `limit`): produkty, kategorie, poradniki; normalizacja `ł`; synonimy (F-006) | — | F-005…F-007 | |
 | GET | `/v1/switches` | — | przełączniki (`switches.json`) | — | F-062, F-074 | |

@@ -6,6 +6,11 @@ const bool = z
   .default("false")
   .transform((v) => v === "true");
 
+const boolTrue = z
+  .enum(["true", "false"])
+  .default("true")
+  .transform((v) => v === "true");
+
 const secret = z.string().min(32, "min. 32 znaki (losowy ciag)");
 
 export const envSchema = z.object({
@@ -39,6 +44,9 @@ export const envSchema = z.object({
   MEDIA_DIR: z.string().default("/data/media"),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   METRICS_ENABLED: bool,
+  // B-230/B-231 (TAKTYL-22): limity zadan i dokumentacja OpenAPI (poza produkcja zawsze wlaczona).
+  RATE_LIMIT_ENABLED: boolTrue,
+  OPENAPI_ENABLED: bool,
 });
 
 export type AppConfig = z.infer<typeof envSchema>;
