@@ -20,6 +20,8 @@ Format wpisu (reguła 11 `CLAUDE.md`): data · ID · decyzja · powód.
 | 2026-10-07 | D-003 | Treści (opisy, opinie demo, poradniki, strony prawne wzorcowe, FAQ) pisze model, zgodnie z `docs/04` §7–8, `docs/01` §4 i `docs/11`; człowiek zatwierdza | polecenie „sam wymyśl treści” |
 | 2026-10-07 | D-004 | Tryb deweloperski i testowy też w Dockerze (profile `dev`, `test`) | ADR-0009 |
 | 2026-10-07 | D-005 | Źródłem prawdy tokenów i fontu zostaje `assets/` (`tokens.css`, `fonts/`). `packages/tokens/css/tokens.css` i `packages/tokens/assets/fonts/` to kopie bajtowo identyczne (`pnpm --filter @taktyl/tokens sync`), commitowane, żeby pakiet działał bez kroku budowania i w kontekście Dockera; test vitest i `scripts/sync-tokens.mjs --check` łamią CI przy rozjeździe. Układ `css/` + `assets/fonts/` zachowuje względną ścieżkę `../assets/fonts/...` z `tokens.css` bez edycji pliku. `scripts/audit-tokens.mjs` (`pnpm audit:tokens`, turbo) pomija wyłącznie `packages/tokens/css/tokens.css` | reguła 2 i „kopiuj bez zmian” (`docs/06`); jedna prawda + automatyczna kontrola zgodności (TAKTYL-9) |
+| 2026-10-07 | F-064 F-107 (TAKTYL-11) | `@taktyl/domain` definiuje własne typy wejściowe (katalog, koszyk) i nie importuje `@taktyl/contracts` (jest pusty szkielet); gdy kontrakt API powstanie, typy domeny zostaną z nim uzgodnione, bez zmiany logiki. Importy względne z `.js` (ESM), testy czytają `data/*.json` z roota repo przez `test-utils.ts` (poza buildem) | zależność od pustego pakietu nie ma sensu; ESM w Node wymaga rozszerzeń |
+| 2026-10-07 | F-107 (TAKTYL-11) | Kwoty ze znakiem (`+50,00 zł` w propozycjach) przez `Intl.NumberFormat` z `signDisplay: 'exceptZero'`, bez ręcznego składania znaku | reguła 7 |
 
 ## Pytania otwarte (wymagają odpowiedzi właściciela)
 
