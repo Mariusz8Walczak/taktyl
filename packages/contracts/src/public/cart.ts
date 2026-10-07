@@ -39,6 +39,8 @@ export const quoteProblemSchema = z.object({
   available_qty: z.int().min(0).optional(),
 });
 
+export type QuoteProblem = z.infer<typeof quoteProblemSchema>;
+
 export const quoteResponseSchema = z.object({
   currency: currencySchema,
   lines: z.array(z.discriminatedUnion("type", [quoteSetLineSchema, quoteItemLineSchema])),
