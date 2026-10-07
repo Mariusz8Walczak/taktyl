@@ -52,7 +52,7 @@ export async function bootApp(
     .useValue(() => options.now ?? NOW)
     .compile();
   const app = moduleRef.createNestApplication<NestExpressApplication>();
-  configureApp(app, config, createLogger("silent", false));
+  configureApp(app, config, createLogger("error", Boolean(process.env.TEST_LOG)));
   await app.init();
   return {
     app,

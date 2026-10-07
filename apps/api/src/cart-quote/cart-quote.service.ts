@@ -14,7 +14,7 @@ import {
   type ShopConfig,
   type SkuIndex,
 } from "@taktyl/domain";
-import { CatalogLoader } from "../catalog/catalog.loader.js";
+import { CatalogLoader, type CatalogSnapshot } from "../catalog/catalog.loader.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { respond } from "../common/zod.pipe.js";
 import { ShopConfigService } from "../settings/shop-config.service.js";
@@ -32,6 +32,8 @@ export interface QuoteComputation {
   /** Pozycje, ktore weszly do wyceny (bez linii z nieznanym SKU), z indeksem linii w zadaniu. */
   entries: { entry: CartEntry; sourceIndex: number }[];
   index: SkuIndex;
+  /** Migawka katalogu uzyta do wyceny (etykiety kolorow, przelacznikow, rozmiarow). */
+  snapshot: CatalogSnapshot;
   config: ShopConfig;
   now: Date;
   /** SKU z brakiem towaru: zapotrzebowanie zsumowane po wszystkich liniach przekracza stan. */
@@ -179,6 +181,6 @@ export class CartQuoteService {
           : { code, applied: message.applied, message_code: message.message },
       problems,
     });
-    return { response, quote, entries, index, config, now, shortages, unknown };
+    return { response, quote, entries, index, snapshot: snap, config, now, shortages, unknown };
   }
 }
