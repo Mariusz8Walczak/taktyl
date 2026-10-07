@@ -64,6 +64,16 @@ export const envSchema = z.object({
   DEMO_RESET_CRON: z.string().default("0 4 * * *"),
   REVALIDATE_URL: z.string().url().optional(),
   REVALIDATE_SECRET: secret,
+  // Lista nazw prawdziwych marek do odrzucania w tekstach panelu (regula 5); tylko lokalnie z .env, nigdy w repo.
+  FORBIDDEN_BRANDS: z
+    .string()
+    .default("")
+    .transform((v) =>
+      v
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    ),
   // B-060 (TAKTYL-46): worker outboxa - interwal, rozmiar paczki, limit czasu webhooka.
   OUTBOX_WORKER_ENABLED: boolTrue,
   OUTBOX_POLL_MS: z.coerce.number().int().min(200).max(60_000).default(2000),

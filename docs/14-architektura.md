@@ -179,7 +179,7 @@ Każda mutacja API przy zatwierdzeniu transakcji zapisuje w `outbox` poniższe z
 | Przełącznik, kolor (słowniki) | `catalog`, `facets:klawiatury`, `facets:myszki`, `facets:podkladki`, `rules` | karta, listing, kreator |
 | Reguły dopasowania, profile | `rules` | kreator, karta („Dokończ set”) |
 | Preset (gotowy set) | `presets` | główna, kreator |
-| Ustawienia sklepu: rabat setu, próg dostawy, metody dostawy i płatności, kody, punkty odbioru, etykieta demo | `shop-settings` | stopka, koszyk, kasa, główna, karta (dostawa i zwroty), kreator (rabat) |
+| Ustawienia sklepu: rabat setu, próg dostawy, metody dostawy i płatności, kody, punkty odbioru, etykieta demo, godzina graniczna wysyłki, dane firmy | `shop-settings`; zmiana rabatu setu dodatkowo `presets` i `catalog` (ceny gotowych setów) | stopka, koszyk, kasa, główna, karta (dostawa i zwroty), kreator (rabat) |
 | Strona informacyjna lub artykuł poradnika | `content:{slug}`, `content:guide` | ta strona, lista poradnika, główna (3 karty) |
 | Opinia demo | `reviews:{slug}`, `product:{slug}` | karta produktu |
 | Pytanie FAQ | `content:faq` | strona FAQ |
@@ -257,6 +257,7 @@ Plik `.env` poza repo; w repo `.env.example` z placeholderami (ADR-0008). Walida
 | `DEMO_RESET_CRON` | reset-demo | harmonogram resetu | `0 4 * * *` |
 | `REVALIDATE_URL` | api | adres webhooka sklepu | `http://web:3000/api/revalidate` |
 | `REVALIDATE_SECRET` | api, web | klucz HMAC webhooka | `<losowy-32B>` |
+| `FORBIDDEN_BRANDS` | api | lista nazw prawdziwych marek (po przecinku) odrzucanych przez walidatory treści i ustawień; tylko lokalnie, nigdy w repo (reguła 5) | puste |
 | `OUTBOX_WORKER_ENABLED`, `OUTBOX_POLL_MS`, `OUTBOX_BATCH_SIZE`, `REVALIDATE_TIMEOUT_MS` | api | worker outboxa: włącznik (domyślnie `true`), interwał (2000 ms), paczka wierszy (100), limit czasu webhooka (5000 ms) | `true`, `2000`, `100`, `5000` |
 | `MEDIA_DIR` | api | katalog wolumenu zdjęć | `/data/media` |
 | `MEDIA_PUBLIC_URL` | web, admin | prefiks adresów zdjęć | `http://taktyl.localhost/media` |

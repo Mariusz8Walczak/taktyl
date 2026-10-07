@@ -1,6 +1,8 @@
 // B-231 (docs/16 par. 2): rejestr udokumentowanych endpointow. Schematy to schematy z @taktyl/contracts (zrodlo prawdy);
 // test sprawdza, ze rejestr pokrywa dokladnie trasy zarejestrowane w Nest (w obie strony).
 import {
+  adminSettingsSchema,
+  settingsPatchSchema,
   adminPresetSchema,
   adminPresetsResponseSchema,
   adminProductDetailSchema,
@@ -774,6 +776,42 @@ export const ROUTES: RouteDoc[] = [
     ],
     security: "session",
     role: "editor",
+    noStore: true,
+  },
+
+  // ---- B-400..B-408 (TAKTYL-49): ustawienia sklepu ------------------------------------------------------------------
+  {
+    method: "get",
+    path: "/v1/admin/settings",
+    summary:
+      "Pelne ustawienia sklepu (takze nieaktywne metody, kody, punkty odbioru); ETag = wersja",
+    tag: "admin: ustawienia",
+    ids: ["B-400", "B-401", "B-402", "B-403", "B-404", "B-405", "B-406", "B-407", "B-408"],
+    success: { status: 200, schema: adminSettingsSchema, description: "Ustawienia." },
+    security: "session",
+    role: "viewer",
+    noStore: true,
+  },
+  {
+    method: "patch",
+    path: "/v1/admin/settings",
+    summary:
+      "Zmiana ustawien (tylko owner): prog dostawy, rabat setu, metody dostawy i platnosci, kody, punkty odbioru, etykieta demo, godzina wysylki, dane firmy",
+    tag: "admin: ustawienia",
+    ids: ["B-400", "B-401", "B-402", "B-403", "B-404", "B-405", "B-406", "B-407", "B-408"],
+    body: settingsPatchSchema,
+    headers: [IF_MATCH],
+    success: { status: 200, schema: adminSettingsSchema, description: "Ustawienia po zmianie." },
+    errors: [
+      { status: 412, code: "conflict (If-Match: wersja zasobu zmienila sie)" },
+      { status: 428, code: "validation_failed (brak If-Match)" },
+      {
+        status: 422,
+        code: "validation_failed (zakres, spojnosc, kody, etykieta demo, dane firmy)",
+      },
+    ],
+    security: "session",
+    role: "owner",
     noStore: true,
   },
 ];

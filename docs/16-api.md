@@ -144,8 +144,8 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 
 | Metoda | Ścieżka | Rola | Opis | Kody | ID | Tagi |
 |---|---|---|---|---|---|---|
-| GET | `/v1/admin/settings` | viewer | cały `shop.json` w bazie | — | B-040 | |
-| PATCH | `/v1/admin/settings` | owner | rabat setu (procent, kategorie), próg dostawy, metody dostawy i płatności, kody rabatowe, punkty odbioru, etykieta demo | 422 (np. procent poza 0–50) | B-040 | `shop-settings`, `presets` |
+| GET | `/v1/admin/settings` | viewer | cały `shop.json` w bazie: także nieaktywne metody i punkty, kody z logiką (`type`, `value`, `scope`, daty), `ETag` = wersja | — | B-040, B-400…B-408 | |
+| PATCH | `/v1/admin/settings` | owner | rabat setu (procent 0–50, trzy kategorie), próg dostawy (grosze), metody dostawy i płatności (upsert po `id`), kody rabatowe i punkty odbioru (pełna lista: dopisuje, zmienia, usuwa pominięte), etykieta demo, `dispatch_cutoff_hour` (0–23), `company`; `If-Match`; walidacja spójności całości (np. min. jedna aktywna metoda, adres razem, kody unikalne 4–20 znaków, etykieta demo ze słowem „demo”, dane firmy bez NIP/REGON/KRS/BDO), błąd w jednej sekcji = nic nie zapisane | 412, 428, 422 (np. procent poza 0–50) | B-040, B-400…B-408 | `shop-settings`; przy zmianie rabatu setu także `presets` i `catalog` (API-012) |
 | GET | `/v1/admin/media` | viewer | lista z manifestu: `key`, rodzaj, wymiary, priorytet, status | — | B-050 | |
 | POST | `/v1/admin/media/{key}` | editor | wgranie pliku dla klucza manifestu (multipart); walidacja typu, wymiarów zgodnych z `pixels`, rozmiaru; ustawia `status: gotowe` | 415 (typ), 422 (wymiary niezgodne z manifestem), 413 | B-051 | `product:{slug}`, `category:{k}`, `presets` |
 | DELETE | `/v1/admin/media/{key}` | owner | usunięcie pliku, `status: brak` (wraca placeholder) | — | B-051 | j.w. |
