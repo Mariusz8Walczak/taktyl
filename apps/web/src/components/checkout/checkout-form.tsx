@@ -28,7 +28,12 @@ import {
   getIdempotencyKey,
   saveOrderToken,
 } from "../../lib/cart/order-session";
-import { buildQuoteRequest, hasBlockingProblems, useCartQuote } from "../../lib/cart/quote";
+import {
+  QUOTE_ERROR_TEXT,
+  buildQuoteRequest,
+  hasBlockingProblems,
+  useCartQuote,
+} from "../../lib/cart/quote";
 import { useCart } from "../../lib/cart/store";
 import {
   quoteItems,
@@ -86,7 +91,18 @@ export function CheckoutForm({ settings }: { settings: CheckoutSettings }) {
   const formRef = useRef<HTMLFormElement>(null);
   const pendingFocus = useRef<FieldKey | null>(null);
 
-  const { quote, status, reload } = useCartQuote(cart, { shippingMethod: values.shipping || null });
+  const {
+    quote,
+    status,
+    error: quoteError,
+    reload,
+  } = useCartQuote(cart, {
+    shippingMethod: values.shipping || null,
+  });
+  // F-170 (TAKTYL-80): do czasu wyceny przycisk jest w stanie ladowania z widocznym powodem; blad wyceny = ponow.
+  const hasLines = cart.lines.length > 0;
+  const waitingForQuote = hasLines && (status === "idle" || status === "loading");
+  const quoteFailed = hasLines && status === "error";
   const fields = useMemo(
     () => fieldsOf(settings.shippingMethods, values.shipping),
     [settings.shippingMethods, values.shipping],
@@ -155,19 +171,39 @@ export function CheckoutForm({ settings }: { settings: CheckoutSettings }) {
     [settings.pickupPoints, citySearch],
   );
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
+  // F-170 (TAKTYL-80): klikniecie przed wycena nie jest gubione - zamowienie czeka w kolejce i rusza po wycenie.
+  const [queued, setQueued] = useState(false);
+
+  async function run() {
     if (busy) return;
     setFormError(null);
     const errs = validateAll(values, fields);
     setErrors(errs);
     const first = firstError(errs);
     if (first) {
+      setQueued(false);
       focusField(first);
       return;
     }
     const body = buildQuoteRequest(cart, values.shipping);
-    if (!quote || !body || blocked) return;
+    if (blocked) {
+      setQueued(false);
+      return; // powod jest widoczny w ostrzezeniu "pozycje bez stanu"
+    }
+    if (!quote || !body || status !== "ready") {
+      if (waitingForQuote) {
+        setQueued(true); // wyslemy po powrocie wyceny (efekt ponizej)
+        return;
+      }
+      setQueued(false);
+      setFormError({
+        text: quoteFailed
+          ? "Nie udało się sprawdzić cen. Użyj przycisku „Spróbuj ponownie”."
+          : "Twój koszyk jest pusty. Dodaj produkty, żeby złożyć zamówienie.",
+      });
+      return;
+    }
+    setQueued(false);
     setBusy(true);
     const applied = quote.coupon?.applied ? quote.coupon.code : null;
     const res = await createOrder(
@@ -232,6 +268,19 @@ export function CheckoutForm({ settings }: { settings: CheckoutSettings }) {
       setFormError({ text: "Nie udało się złożyć zamówienia. Spróbuj ponownie." });
     }
   }
+
+  function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    void run();
+  }
+
+  // Wycena wrocila (albo sie nie udala) po kliknieciu: kontynuacja z aktualnymi wartosciami formularza.
+  const runRef = useRef(run);
+  runRef.current = run;
+  useEffect(() => {
+    if (!queued || waitingForQuote) return;
+    void runRef.current();
+  }, [queued, waitingForQuote]);
 
   if (!mounted) {
     return (
@@ -571,9 +620,28 @@ export function CheckoutForm({ settings }: { settings: CheckoutSettings }) {
             <p className="zam__demo" data-testid="zam-etykieta-demo">
               {settings.demoLabel}
             </p>
-            <Button type="submit" loading={busy} disabled={blocked} className="zam__zamow">
+            <Button
+              type="submit"
+              loading={busy || queued}
+              disabled={blocked || quoteFailed}
+              aria-describedby={waitingForQuote || quoteFailed ? "zam-powod-wyceny" : undefined}
+              className="zam__zamow"
+            >
               Zamawiam i płacę
             </Button>
+            {waitingForQuote ? (
+              <p id="zam-powod-wyceny" className="zam__powod" role="status">
+                Czekamy na wycenę koszyka...
+              </p>
+            ) : null}
+            {quoteFailed ? (
+              <p id="zam-powod-wyceny" className="zam__powod" role="alert">
+                {QUOTE_ERROR_TEXT[quoteError?.kind ?? "server"]}{" "}
+                <Button variant="secondary" onClick={reload}>
+                  Spróbuj ponownie
+                </Button>
+              </p>
+            ) : null}
           </div>
         </form>
       </div>

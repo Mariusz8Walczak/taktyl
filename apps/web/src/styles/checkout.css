@@ -102,6 +102,15 @@
   gap: var(--s2);
   justify-items: start;
 }
+.zam__powod {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  align-items: center;
+  margin: 0;
+  max-width: var(--max-tekst);
+  font-size: var(--t-s);
+}
 .zam__demo {
   margin: 0;
   padding: var(--s1) var(--s2);

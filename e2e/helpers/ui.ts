@@ -81,15 +81,12 @@ export const CONTACT = {
 };
 
 /**
- * Wysyla zamowienie i czeka na strone platnosci. Przed pierwsza wycena koszyka (kilkaset ms po wejsciu na /zamowienie)
- * przycisk nic nie robi i nie daje znaku (TAKTYL-80), wiec test klika ponownie, tak jak zrobilby to czlowiek;
- * ponowienie jest bezpieczne (ten sam klucz idempotencji, jedno zamowienie).
+ * Wysyla zamowienie i czeka na strone platnosci. Klikniecie przed pierwsza wycena koszyka ustawia zamowienie w kolejce
+ * (przycisk aria-busy, "Czekamy na wycene koszyka...", TAKTYL-80) i wysyla je po wycenie, wiec wystarczy jeden klik.
  */
 export async function submitOrder(page: Page): Promise<void> {
-  await expect(async () => {
-    await page.getByRole("button", { name: "Zamawiam i płacę" }).click();
-    await expect(page).toHaveURL(/\/zamowienie\/platnosc\?id=/, { timeout: 2_000 });
-  }).toPass({ timeout: 20_000 });
+  await page.getByRole("button", { name: "Zamawiam i płacę" }).click();
+  await expect(page).toHaveURL(/\/zamowienie\/platnosc\?id=/);
 }
 
 /** Wypelnia formularz zamowienia (odbior osobisty: najmniej pol) i wysyla. Zwraca numer zamowienia z adresu platnosci. */
