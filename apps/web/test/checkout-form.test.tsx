@@ -236,12 +236,15 @@ describe("walidacja (F-174, S18)", () => {
     await ready();
     await fillContact(user);
     await user.click(screen.getByRole("radio", { name: /Odbiór osobisty/ }));
-    await user.type(screen.getByLabelText(/Imię i nazwisko/), "Jan Przykładowy");
+    await user.click(screen.getByLabelText(/Imię i nazwisko/));
+    await user.paste("Jan Przykładowy"); // wklejenie zamiast pisania znak po znaku: test nie przekracza 5 s w CI
     await user.click(screen.getByRole("checkbox", { name: /fakturę na firmę/ }));
     const nip = validNip();
     await user.type(screen.getByLabelText("NIP"), invalidNip(nip));
-    await user.type(screen.getByLabelText("Nazwa firmy"), "Firma Przykładowa");
-    await user.type(screen.getByLabelText("Adres firmy"), "ul. Klawiszowa 1, 00-000 Warszawa");
+    await user.click(screen.getByLabelText("Nazwa firmy"));
+    await user.paste("Firma Przykładowa");
+    await user.click(screen.getByLabelText("Adres firmy"));
+    await user.paste("ul. Klawiszowa 1, 00-000 Warszawa");
     await user.click(screen.getByRole("radio", { name: /BLIK/ }));
     await user.click(screen.getByRole("checkbox", { name: /Akceptuję regulamin/ }));
     await user.click(screen.getByRole("button", { name: "Zamawiam i płacę" }));
