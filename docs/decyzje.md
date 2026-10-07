@@ -42,6 +42,8 @@ Format wpisu (reguła 11 `CLAUDE.md`): data · ID · decyzja · powód.
 | 2026-10-07 | WEB-007 (TAKTYL-23) | Uklad bez Bootstrapa: flex i CSS grid z tokenow (`kontener` = `--max`), style w `apps/web/src/styles/*.css`; rozmiary skladane z tokenow w `rozmiary.css` (`--naglowek-wys` = `--cel-min` + 2 x `--s2`, uzywane tez w `scroll-padding-top`). W media queries literalne punkty przelamania Bootstrapa 576 i 992 px (docs/06 §4); `letter-spacing: -0.02em` wordmarka wg docs/06 §5.1 (brak tokenu) | siatka Bootstrapa nie jest potrzebna dla ukladu bazowego; rozmiary bez tokenu wynikaja z docs |
 | 2026-10-07 | WEB-008 (F-009, F-244, TAKTYL-23) | Stopka bierze kontakt z ustawien: adres z metody dostawy z polem `address` (odbior), e-mail `kontakt@` + `demo.email_domain`, telefon `demo.phone`, nazwa z `company.name` albo "Taktyl (podmiot fikcyjny)". `public/robots.txt` (Disallow: /) wymaga linii `COPY public` w `apps/web/Dockerfile` (dodana). `eslint.config.mjs` ignoruje generowany `next-env.d.ts`. Odnosniki nawigacji i stopki do stron jeszcze nie zbudowanych daja na razie 404 (pozniejsze zadania) | nic nie wymyslamy poza danymi z API i docs/11 §1.1 |
 
+| 2026-10-07 | D-010 | Wlasciciel zatwierdzil tresci (opisy produktow, strony prawne P0, w tym "2 lata" i "14 dni na odpowiedz" w reklamacjach) oraz zastapienie ikon etykietami tekstowymi (font ikon Crafto nie jest w repo, docs/09 par. 2: brak ikony w zestawie = sam tekst). Przyciski ikonowe maja widoczna etykiete tekstowa. | decyzja wlasciciela; licencja szablonu |
+
 ## Pytania otwarte (wymagają odpowiedzi właściciela)
 
 | ID | Pytanie | Proponowana odpowiedź domyślna |
