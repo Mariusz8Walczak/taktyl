@@ -319,5 +319,6 @@
 .adm-tresc a.tk-link {
   display: inline-flex;
   align-items: center;
+  min-width: var(--cel-min);
   min-height: var(--cel-min);
 }
