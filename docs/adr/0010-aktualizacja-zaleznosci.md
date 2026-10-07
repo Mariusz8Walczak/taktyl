@@ -1,6 +1,6 @@
 # ADR-0010 · Aktualizacja zależności do aktualnych wersji głównych
 
-- **Status:** faza 1 wykonana (narzędzia i infrastruktura, 2026-10-07, I-008, TAKTYL-75); faza 2 zaplanowana (frameworki aplikacji).
+- **Status:** faza 1 wykonana (narzędzia i infrastruktura, 2026-10-07, I-008, TAKTYL-75); faza 2a wykonana (Next 16.4.0 w `apps/web` i `apps/admin`, 2026-10-07); faza 2b zaplanowana (Nest 12, Prisma 7, pino).
 - **Zasada:** wersję pinujemy dopiero po sprawdzeniu najnowszej stabilnej (`npm view <pkg> version`, `npm view <pkg> dist-tags`, `docker buildx imagetools inspect <obraz>`), nie z pamięci. Wersje `rc`, `beta`, `next`, `dev` ignorujemy.
 
 ## Kontekst
@@ -56,6 +56,13 @@ Stan na 2026-10-07 odbiegał od aktualnych wersji głównych (TypeScript 5.7, ES
 - **critical:** 0 (wszystkie zależności, w tym deweloperskie). W CI blokuje (`audit-deps`).
 - **high (produkcja):** `postcss` (<=8.5.17 i <=8.5.11, wewnętrzna zależność Next 15; ścieżka `apps/web>next>postcss`, `apps/admin>next>postcss`) oraz `deepmerge-ts` <8 (`apps/api>@prisma/client>prisma>@prisma/config`). Znikną w fazie 2 (Next 16, Prisma 7). Nie nadpisujemy ich `overrides`, bo to wnętrze frameworków.
 - **moderate:** `postcss` (Next). **low:** `esbuild` 0.27 w `tsup` (tylko serwer deweloperski Windows).
+
+## Wynik fazy 2a (Next 16)
+
+- `next` 15.5.27 -> **16.4.0** (web, admin); React, React DOM, `@types/react*` bez zmian (19.3.0 jest najnowsze stabilne). Turbopack domyslny (brak konfiguracji webpack), `output: standalone` i sciezki w Dockerfile bez zmian (obrazy zdrowe).
+- Zmiany w kodzie: `revalidateTag(tag, { expire: 0 })` (decyzja WEB-009, ADR-0003 zachowany), usuniete `eslint` z `next.config.mjs`. Brak `middleware`, brak synchronicznych request API, `next lint` nie byl uzywany (ESLint flat config bez zmian).
+- Weryfikacja w Dockerze: lint i typecheck web/admin zielone, testy web 56/56, `next build` bez API, pelny stos + `scripts/smoke-stack.sh` zielone, `X-Robots-Tag: noindex, nofollow`, podpisany `/api/revalidate` 200 / zly podpis 401. JS strony `/`: ok. 143 KB gzip (bez 39 KB `nomodule` polyfill).
+- Audyt: wewnetrzny `postcss` Next znika (do potwierdzenia `pnpm audit` po scaleniu); nadal otwarte: `deepmerge-ts` (Prisma, faza 2b).
 
 ## Skutki
 

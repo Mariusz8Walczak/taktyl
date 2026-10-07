@@ -67,6 +67,6 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const tags = [...new Set(parsed.data.tags)];
-  for (const tag of tags) revalidateTag(tag);
+  for (const tag of tags) revalidateTag(tag, { expire: 0 });
   return Response.json({ revalidated: tags }, { headers: { "cache-control": "no-store" } });
 }

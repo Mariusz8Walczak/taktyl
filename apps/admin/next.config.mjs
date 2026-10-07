@@ -9,7 +9,6 @@ const here = dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
-  eslint: { ignoreDuringBuilds: true }, // lint to osobny job (I-006)
   outputFileTracingRoot: join(here, "../.."),
 };
 
