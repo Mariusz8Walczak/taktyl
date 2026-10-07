@@ -65,13 +65,13 @@ Kolumny: **Role** — `—` brak wymagań; **Tagi** — znaczniki `revalidateTag
 | GET | `/v1/orders/{number}` | `X-Order-Token` | odczyt zamówienia właściciela tokenu | 401, 404 | F-178, F-202 | |
 | POST | `/v1/orders/{number}/payment/simulate` | `X-Order-Token` | symulacja: `{ "outcome": "paid" \| "failed" }`; `paid` zmniejsza stany i ustawia `paid`; `failed` zapisuje `payment_failed` | 404, 409 `invalid_transition`, 409 `out_of_stock` (stan zmienił się w trakcie) | F-177…F-179 | `product:{slug}`, `category:{kategoria}`, `facets:{kategoria}`** |
 | GET | `/v1/orders` | `X-Order-Token` (jeden lub wiele, rozdzielone przecinkami) | lista zamówień dla „konta demo” | 401 | F-201, F-202 | |
-| GET | `/v1/content/pages/{slug}` | — | strona informacyjna lub prawna (z oznaczeniem „wzór”) | 404 | F-221, `docs/05` §8 | |
-| GET | `/v1/content/guides` | — | lista artykułów poradnika | — | F-220 | |
-| GET | `/v1/content/guides/{slug}` | — | artykuł poradnika | 404 | F-220 | |
-| GET | `/v1/content/faq` | — | pytania i odpowiedzi | — | F-221 | |
-| GET | `/v1/products/{slug}/reviews` | — | opinie demo z etykietą i średnią (`avg`, `count`); bez danych strukturalnych | 404 | F-076 | |
-| POST | `/v1/forms/contact` | — | formularz kontaktu (e-mail, temat, wiadomość); w demo nic nie jest wysyłane, wiadomość zapisana do backpanelu | 422 | F-221, `generate_lead` | |
-| POST | `/v1/forms/newsletter` | — | zapis e-maila (jedno pole); zgoda nie jest zaznaczona z góry po stronie UI | 422 | F-223, `generate_lead` | |
+| GET | `/v1/content/pages/{slug}` | — | strona informacyjna lub prawna (tylko `published`, typ `page`; `demo_notice: true` = sklep dokłada nagłówek „Wzór treści…”); `body_md` jest już po sanityzacji z backpanelu. Znacznik w sklepie: `content:{slug}` | 404 (brak, szkic, archiwum, artykuł poradnika), 400 (zły slug) | F-221, `docs/05` §8, B-305 | |
+| GET | `/v1/content/guides` | — | lista opublikowanych artykułów poradnika (`slug`, `title`, `lead`, `guide_profile`), najnowsze pierwsze. Znacznik: `content:guide` | — | F-220 | |
+| GET | `/v1/content/guides/{slug}` | — | artykuł poradnika (jak strona, `guide_profile` do odnośnika kreatora). Znaczniki: `content:{slug}`, `content:guide` | 404, 400 | F-220 | |
+| GET | `/v1/content/faq` | — | opublikowane pytania i odpowiedzi w ustalonej kolejności. Znacznik: `content:faq` | — | F-221 | |
+| GET | `/v1/products/{slug}/reviews` | — | opinie demo aktywnego produktu: `label` („Opinie przykładowe — sklep demonstracyjny”, stała), `avg` (1 miejsce po przecinku, `null` bez opinii), `count`, `items` (najnowsze pierwsze, `demo: true`); **bez danych strukturalnych** `aggregateRating`/`review` (`docs/11`). Znacznik: `reviews:{slug}` | 404 (nieznany lub ukryty produkt) | F-076, B-302, B-303 | |
+| POST | `/v1/forms/contact` | — | formularz kontaktu: `{ email, subject, message }` (`strictObject`: nieznane pola, w tym zgody i pola ukryte, = 422); zapis do `contact_messages` (backpanel B-308), usuwany po 30 dniach. W demo nic nie jest wysyłane, odpowiedź `201 { status: "accepted", demo: true, message }` mówi to wprost („W sklepie demonstracyjnym nie wysyłamy e-maili.”). Limit 5/min/IP. Bez tagów, bez `audit_log`, bez danych osobowych w logach | 422, 429 | F-221, `generate_lead` (po stronie klienta, `docs/10`) | |
+| POST | `/v1/forms/newsletter` | — | zapis e-maila (jedno pole `{ email }`, `strictObject`, bez zgód w kontrakcie: pole zgody nie jest zaznaczone z góry po stronie UI); zapis do `newsletter_signups` (e-mail małymi literami, unikalny), usuwany po 30 dniach. Powtórny zapis tego samego e-maila zwraca tę samą odpowiedź `201` (bez ujawniania, kto jest zapisany). W demo nic nie jest wysyłane; komunikat jak wyżej. Limit 5/min/IP (osobny licznik niż kontakt) | 422, 429 | F-223, `generate_lead` (po stronie klienta, `docs/10`) | |
 | GET | `/health`, `/health/ready` (alias `/ready`) | — | liveness i readiness (poza `/v1`): baza, migracje, kolejka `outbox` poniżej progu 1000 | 503 | B-230 | |
 
 \* `POST /orders` nie zmienia stanów magazynowych (zmniejsza je dopiero płatność `paid`), więc nie rewaliduje tagów; gwiazdka oznacza brak.

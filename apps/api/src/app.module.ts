@@ -20,6 +20,7 @@ import { OrdersModule } from "./orders/orders.module.js";
 import { OutboxModule } from "./outbox/outbox.module.js";
 import { PaymentsSimModule } from "./payments-sim/payments-sim.module.js";
 import { PresetsModule } from "./presets/presets.module.js";
+import { PublicContentModule } from "./public-content/public-content.module.js";
 import { PricingModule } from "./pricing/pricing.module.js";
 import { PrismaModule } from "./prisma/prisma.module.js";
 import { SearchModule } from "./search/search.module.js";
@@ -47,6 +48,7 @@ import { UsersModule } from "./users/users.module.js";
     AdminCatalogModule,
     AdminSettingsModule,
     AdminContentModule,
+    PublicContentModule,
     OpenApiModule,
     ThrottlerModule.forRootAsync({
       inject: [APP_CONFIG],

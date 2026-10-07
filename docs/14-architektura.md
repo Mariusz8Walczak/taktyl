@@ -260,6 +260,7 @@ Plik `.env` poza repo; w repo `.env.example` z placeholderami (ADR-0008). Walida
 | `REVALIDATE_SECRET` | api, web | klucz HMAC webhooka | `<losowy-32B>` |
 | `FORBIDDEN_BRANDS` | api | lista nazw prawdziwych marek (po przecinku) odrzucanych przez walidatory treści i ustawień; tylko lokalnie, nigdy w repo (reguła 5) | puste |
 | `OUTBOX_WORKER_ENABLED`, `OUTBOX_POLL_MS`, `OUTBOX_BATCH_SIZE`, `REVALIDATE_TIMEOUT_MS` | api | worker outboxa: włącznik (domyślnie `true`), interwał (2000 ms), paczka wierszy (100), limit czasu webhooka (5000 ms) | `true`, `2000`, `100`, `5000` |
+| `MESSAGE_RETENTION_DAYS` | api | po ilu dniach usuwane są wiadomości z kontaktu i zapisy newslettera (zadanie co 6 h, `docs/17` §9) | `30` |
 | `MEDIA_DIR` | api | katalog wolumenu zdjęć | `/data/media` |
 | `MEDIA_PUBLIC_URL` | web, admin | prefiks adresów zdjęć | `http://taktyl.localhost/media` |
 | `PUBLIC_GTM_ID` | web | opcjonalny kontener tagów (`docs/10`) | puste |

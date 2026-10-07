@@ -7,7 +7,8 @@ import {
   orderRequestSchema, paymentSimulateRequestSchema, paymentSimulateResponseSchema, problemSchema, quoteRequestSchema,
   quoteResponseSchema, revalidateRequestSchema, setPriceRequestSchema, setStockRequestSchema, settingsPatchSchema,
   skuSchema, listingQuerySchema, productPatchSchema, orderTransitionRequestSchema, orderNoteSchema,
-  orderNoteRequestSchema, adminOrderListQuerySchema,
+  orderNoteRequestSchema, adminOrderListQuerySchema, contactFormSchema, newsletterFormSchema, formAcceptedSchema,
+  reviewsResponseSchema, REVIEWS_LABEL, FORM_DEMO_NOTICE,
 } from "../src";
 
 const quoteRequest = {
@@ -284,5 +285,30 @@ describe("TAKTYL-47: kontrakt katalogu w backpanelu", () => {
     expect(productPatchSchema.safeParse({ slug: "nowy-adres", default_variant_sku: "M-WRB-GRF" }).success).toBe(true);
     expect(productPatchSchema.safeParse({ lowest_30d_gr: 1 }).success).toBe(false);
     expect(setPriceRequestSchema.safeParse({ price_gr: 9900, lowest_30d_gr: 1 }).success).toBe(false);
+  });
+});
+
+// TAKTYL-76 (F-076, F-221, F-223): formularze publiczne i odpowiedz opinii.
+describe("formularze i opinie publiczne (TAKTYL-76)", () => {
+  it("kontakt: e-mail, temat, wiadomosc; nieznane pola (zgoda, honeypot) odpadaja", () => {
+    const ok = { email: "jan@taktyl.example", subject: "Pytanie", message: "Kiedy wysylka?" };
+    expect(contactFormSchema.safeParse(ok).success).toBe(true);
+    expect(contactFormSchema.safeParse({ ...ok, email: "zly" }).success).toBe(false);
+    expect(contactFormSchema.safeParse({ ...ok, website: "x" }).success).toBe(false);
+    expect(contactFormSchema.safeParse({ ...ok, message: "x" }).success).toBe(false);
+  });
+
+  it("newsletter: jedno pole e-mail, zadnej zgody w kontrakcie", () => {
+    expect(newsletterFormSchema.safeParse({ email: "jan@taktyl.example" }).success).toBe(true);
+    expect(newsletterFormSchema.safeParse({ email: "jan@taktyl.example", consent: true }).success).toBe(false);
+    expect(formAcceptedSchema.safeParse({ status: "accepted", demo: true, message: FORM_DEMO_NOTICE }).success).toBe(true);
+    expect(formAcceptedSchema.safeParse({ status: "accepted", demo: false, message: "x" }).success).toBe(false);
+  });
+
+  it("opinie: etykieta demo jest wymagana i stala, srednia moze byc null", () => {
+    const body = { label: REVIEWS_LABEL, avg: null, count: 0, items: [] };
+    expect(reviewsResponseSchema.safeParse(body).success).toBe(true);
+    expect(reviewsResponseSchema.safeParse({ ...body, label: "Opinie klientow" }).success).toBe(false);
+    expect(reviewsResponseSchema.safeParse({ avg: null, count: 0, items: [] }).success).toBe(false);
   });
 });

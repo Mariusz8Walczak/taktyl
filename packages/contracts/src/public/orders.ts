@@ -81,3 +81,9 @@ export const contactFormSchema = z.strictObject({
   email: emailSchema, subject: z.string().trim().min(2).max(120), message: z.string().trim().min(5).max(2000),
 });
 export const newsletterFormSchema = z.strictObject({ email: emailSchema });
+
+/** Komunikat formularzy w demo (F-221, F-223): nic nie jest wysylane, zgloszenie trafia tylko do panelu. */
+export const FORM_DEMO_NOTICE = "W sklepie demonstracyjnym nie wysyłamy e-maili." as const;
+export const formAcceptedSchema = z.object({
+  status: z.literal("accepted"), demo: z.literal(true), message: z.string(),
+});
