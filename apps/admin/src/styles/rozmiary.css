@@ -1,0 +1,13 @@
+/* Rozmiary ukladu backpanelu (TAKTYL-50). Jedyne miejsce w apps/admin, gdzie wolno wpisac wartosc w px/rem/ms,
+   bo tokens.css ich nie definiuje (docs/06 §4, ADM-002). Reszta stylow uzywa wylacznie zmiennych. */
+:root {
+  --naglowek-wys: calc(var(--cel-min) + var(--s2) * 2);
+  --adm-nawigacja-szer: 15rem;
+  --adm-logowanie-szer: 420px; /* docs/15 §6.1: jedna kolumna do 420 px */
+  --adm-pole-min: 14rem; /* minimalna szerokosc pola w siatce formularza */
+  --adm-kolumna-nazwy: 12rem; /* przyklejona kolumna nazwy w tabelach na telefonie */
+  --adm-tabela-min: 44rem; /* tabela przewija sie poziomo ponizej tej szerokosci */
+  --adm-szkielet-wys: 1.25rem;
+  --adm-pasek-prawy: 20rem; /* prawa kolumna edycji produktu */
+  --adm-zakladka-min: 7rem;
+}

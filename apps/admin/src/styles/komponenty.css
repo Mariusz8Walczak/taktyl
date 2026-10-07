@@ -1,0 +1,315 @@
+/* Komponenty backpanelu (TAKTYL-50..53): tabele, formularze, zakladki, karty, szkielet. Tylko tokeny. */
+
+/* ---- karty i sekcje ---- */
+.adm-karta {
+  box-sizing: border-box;
+  padding: var(--s3);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  min-width: 0;
+}
+.adm-karta > h2,
+.adm-karta > h3 {
+  margin-bottom: var(--s2);
+  font-size: var(--t-l);
+}
+.adm-karta--waska {
+  max-width: var(--adm-logowanie-szer);
+  margin-inline: auto;
+}
+.adm-siatka {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--adm-pole-min)), 1fr));
+  gap: var(--s2) var(--s3);
+  align-items: start;
+}
+.adm-siatka--pelna {
+  grid-column: 1 / -1;
+}
+.adm-dwie-kolumny {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s3);
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .adm-dwie-kolumny--prawa {
+    grid-template-columns: minmax(0, 1fr) var(--adm-pasek-prawy);
+  }
+  .adm-dwie-kolumny--rowne {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.adm-dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--s1) var(--s2);
+  margin: 0;
+}
+.adm-dl dt {
+  color: var(--tekst-slaby);
+}
+.adm-dl dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.adm-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+
+/* ---- pasek narzedzi i zetony ---- */
+.adm-narzedzia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--s2);
+}
+.adm-narzedzia .tk-pole {
+  min-width: min(100%, var(--adm-pole-min));
+}
+.adm-zetony {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+
+/* ---- tabele ---- */
+.adm-tabela-okno {
+  overflow-x: auto;
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.adm-tabela {
+  width: 100%;
+  min-width: var(--adm-tabela-min);
+  border-collapse: collapse;
+  font-size: var(--t-s);
+}
+.adm-tabela caption {
+  text-align: left;
+}
+.adm-tabela th,
+.adm-tabela td {
+  padding: var(--s1) var(--s2);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  text-align: left;
+  vertical-align: middle;
+}
+.adm-tabela thead th {
+  background-color: var(--tlo-alt);
+  font-weight: var(--w-mocna);
+  white-space: nowrap;
+}
+.adm-tabela tbody tr:last-child th,
+.adm-tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+.adm-tabela tbody th {
+  font-weight: var(--w-mocna);
+}
+.adm-tabela tbody tr:hover {
+  background-color: var(--tlo);
+}
+.adm-tabela td.adm-liczba,
+.adm-tabela th.adm-liczba {
+  text-align: right;
+}
+/* wiersz klikalny przez pseudoelement jednego odnosnika (docs/15 §7.1) */
+.adm-tabela tr.adm-wiersz-link {
+  position: relative;
+}
+.adm-wiersz-link a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+/* przyklejona kolumna nazwy na telefonie */
+.adm-tabela .adm-kolumna-nazwy {
+  position: sticky;
+  left: 0;
+  min-width: var(--adm-kolumna-nazwy);
+  background-color: var(--powierzchnia);
+}
+.adm-tabela thead .adm-kolumna-nazwy {
+  background-color: var(--tlo-alt);
+}
+.adm-sortuj {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: var(--w-mocna);
+  color: var(--tekst);
+  cursor: pointer;
+}
+.adm-sortuj:hover {
+  text-decoration: underline;
+}
+.adm-stronicowanie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+
+/* ---- formularze ---- */
+.adm-formularz {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.adm-akcje {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+}
+.adm-powod {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.adm-pasek-zapisu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+  font-size: var(--t-s);
+}
+.adm-pasek-zapisu--niezapisane {
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
+.adm-pasek-zapisu--zapisano {
+  background-color: var(--sukces-tlo);
+  color: var(--sukces);
+}
+.adm-pole-zl {
+  position: relative;
+}
+.adm-tylko-odczyt {
+  color: var(--tekst);
+  font-variant-numeric: tabular-nums;
+}
+.adm-ostrzezenie-omnibus {
+  margin: 0;
+  padding: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
+.adm-pole--wiersz {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  align-items: end;
+}
+.adm-pole--wiersz > * {
+  flex: 1 1 var(--adm-pole-min);
+}
+.adm-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+}
+.adm-radio input {
+  width: var(--s3);
+  height: var(--s3);
+  accent-color: var(--akcent);
+}
+
+/* ---- zakladki (Radix Tabs) ---- */
+.adm-zakladki__lista {
+  display: flex;
+  gap: var(--s1);
+  overflow-x: auto;
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  margin-bottom: var(--s3);
+}
+.adm-zakladki__wyzwalacz {
+  flex: none;
+  min-width: var(--adm-zakladka-min);
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border: 0;
+  border-bottom: var(--tk-linia-2) solid transparent;
+  background: none;
+  font: inherit;
+  font-weight: var(--w-mocna);
+  color: var(--tekst-slaby);
+  cursor: pointer;
+}
+.adm-zakladki__wyzwalacz:hover {
+  color: var(--tekst);
+}
+.adm-zakladki__wyzwalacz[data-state="active"] {
+  color: var(--akcent);
+  border-bottom-color: var(--akcent);
+}
+.adm-zakladki__tresc:focus-visible {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+
+/* ---- szkielet ladowania (A-18: opacity, wylaczone przy reduced motion przez tokeny) ---- */
+@keyframes adm-puls {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.45;
+  }
+}
+.adm-szkielet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.adm-szkielet__wiersz {
+  height: var(--adm-szkielet-wys);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+  animation: adm-puls var(--d-scena) var(--e-wyjscie) infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .adm-szkielet__wiersz {
+    animation: none;
+  }
+}
+
+/* ---- logowanie ---- */
+.adm-logowanie {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  max-width: var(--adm-logowanie-szer);
+  margin: var(--s5) auto;
+  padding-inline: var(--s2);
+}
+.adm-pasek-demo {
+  padding: var(--s1) var(--s2);
+  background-color: var(--tlo-alt);
+  font-size: var(--t-xs);
+  text-align: center;
+}
+
+/* przyciski w wierszu z klikalnym pseudoelementem: nad nakladka odnosnika (kolejnosc w DOM, bez z-index) */
+.adm-nad-linkiem {
+  position: relative;
+}

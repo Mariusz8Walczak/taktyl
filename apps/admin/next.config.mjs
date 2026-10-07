@@ -1,5 +1,7 @@
-// I-001: tymczasowy szkielet. output standalone (ADR-0009); outputFileTracingRoot na korzen monorepo,
-// zeby standalone zawieral pakiety workspace. Naglowki bezpieczenstwa i noindex ustawia proxy (I-004).
+// I-001 / TAKTYL-50: output standalone (ADR-0009); outputFileTracingRoot na korzen monorepo, zeby standalone zawieral
+// pakiety workspace. Pakiety workspace (dist bez rozszerzen w importach) kompiluje Next. Backpanel: X-Robots-Tag takze
+// z aplikacji (proxy Caddy ustawia go dodatkowo), brak buforowania stron panelu.
+import process from "node:process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,6 +12,20 @@ const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
   outputFileTracingRoot: join(here, "../.."),
+  transpilePackages: ["@taktyl/ui", "@taktyl/contracts", "@taktyl/domain", "@taktyl/tokens"],
+  // Adres sklepu do odnosnikow "Zobacz w sklepie" (wartosc publiczna, nie sekret) trafia do bundla klienta.
+  env: { PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL ?? "http://taktyl.localhost" },
+  async headers() {
+    return [
+      {
+        source: "/((?!_next/static|_next/image).*)",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          { key: "Cache-Control", value: "no-store" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

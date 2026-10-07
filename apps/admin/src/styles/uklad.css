@@ -1,0 +1,171 @@
+/* Uklad backpanelu (docs/15 §2): naglowek ciemny (.sekcja--mod tylko tu), lewa nawigacja (>= 992 px) lub szuflada,
+   tresc do --max. Tylko tokeny. */
+.adm-powloka {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+}
+.adm-naglowek {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-naglowek);
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--naglowek-wys);
+  padding-inline: var(--s2);
+  background-color: var(--tlo);
+  color: var(--tekst);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.adm-naglowek__logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--tekst);
+  text-decoration: none;
+}
+.adm-naglowek__przestrzen {
+  flex: 1 1 auto;
+}
+.adm-naglowek__uzytkownik {
+  margin: 0;
+  display: none;
+  flex-direction: column;
+  line-height: 1.2;
+  font-size: var(--t-xs);
+  text-align: right;
+}
+.adm-naglowek__uzytkownik strong {
+  font-size: var(--t-s);
+}
+.adm-menu-przycisk {
+  display: inline-flex;
+}
+.adm-boczna {
+  display: none;
+}
+.adm-boczna,
+.adm-szuflada-nawigacja {
+  padding: var(--s2);
+}
+.adm-nawigacja {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.adm-nawigacja__link,
+.adm-nawigacja__wylaczone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border-radius: var(--r);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  color: var(--tekst);
+  text-decoration: none;
+}
+.adm-nawigacja__link:hover {
+  background-color: var(--tlo-alt);
+}
+.adm-nawigacja__link[aria-current="page"] {
+  background-color: var(--akcent-slaby);
+  color: var(--akcent);
+}
+.adm-nawigacja__wylaczone {
+  color: var(--tekst-slaby);
+  font-weight: var(--w-zwykla);
+}
+.adm-nawigacja__wkrotce {
+  font-size: var(--t-xs);
+}
+.adm-tresc {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--s3) var(--s2) var(--s5);
+  min-width: 0;
+}
+.adm-strona {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.adm-strona__naglowek {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+}
+.adm-strona__naglowek h1 {
+  font-size: var(--t-2xl);
+  font-weight: var(--w-mocna);
+}
+.adm-licznik {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.adm-wiersz {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+}
+.adm-stos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+.adm-tekst-slaby {
+  color: var(--tekst-slaby);
+}
+.adm-tekst-xs {
+  font-size: var(--t-xs);
+}
+.adm-wyrownaj-prawo {
+  text-align: right;
+}
+.adm-liczba {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (min-width: 992px) {
+  .adm-powloka {
+    grid-template-columns: var(--adm-nawigacja-szer) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+  .adm-naglowek {
+    grid-column: 1 / -1;
+  }
+  .adm-boczna {
+    display: block;
+    border-right: var(--tk-linia-1) solid var(--linia);
+    background-color: var(--powierzchnia);
+  }
+  .adm-menu-przycisk {
+    display: none;
+  }
+  .adm-naglowek__uzytkownik {
+    display: flex;
+  }
+  .adm-tresc {
+    padding-inline: var(--s3);
+  }
+}

@@ -1,0 +1,55 @@
+/* Baza backpanelu (TAKTYL-50): body, fokus, skip link, kontener tresci. Tylko tokeny (regula 2). */
+:root {
+  --font: var(--font-archivo), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+html {
+  scroll-padding-top: var(--naglowek-wys); /* docs/11 pulapka 26 */
+}
+body {
+  margin: 0;
+  min-height: 100dvh; /* docs/11 pulapka 27 */
+  font-stretch: var(--szer-tekst);
+}
+[hidden] {
+  display: none !important; /* docs/11 pulapka 29 */
+}
+:focus-visible {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+fieldset {
+  min-width: 0; /* docs/11 pulapka 31 */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  top: var(--s1);
+  left: var(--s1);
+  z-index: var(--z-toast);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: 0 var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-weight: var(--w-mocna);
+  box-shadow: var(--cien-2);
+  transform: translateY(calc(-100% - var(--s2)));
+}
+.skip-link:focus {
+  transform: none;
+}
+.tresc:focus {
+  outline: none; /* cel odnosnika "Przejdz do tresci" */
+}
+h1,
+h2,
+h3 {
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+  letter-spacing: var(--tracking-naglowek);
+  margin: 0;
+}
