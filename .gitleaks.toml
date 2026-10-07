@@ -23,3 +23,11 @@ paths = [
   '''^docs/09-grafika-i-zdjecia\.md$''',
   '''^apps/api/(src|test)/.*\.test\.ts$''',
 ]
+
+# Nazwy kluczy localStorage ("taktyl.consent.v1", "taktyl.tracked.v1") to nazwy, nie sekrety (F-240, TAKTYL-43).
+[[allowlists]]
+description = "Nazwy kluczy localStorage warstwy pomiaru"
+targetRules = ["generic-api-key"]
+regexes = [
+  '''taktyl\.(consent|tracked)\.v1''',
+]
