@@ -1,6 +1,6 @@
 # ADR-0010 · Aktualizacja zależności do aktualnych wersji głównych
 
-- **Status:** faza 1 wykonana (narzędzia i infrastruktura, 2026-10-07, I-008, TAKTYL-75); faza 2a wykonana (Next 16.4.0 w `apps/web` i `apps/admin`, 2026-10-07); faza 2b zaplanowana (Nest 12, Prisma 7, pino).
+- **Status:** faza 1 wykonana (narzędzia i infrastruktura, 2026-10-07, I-008, TAKTYL-75); faza 2a wykonana (Next 16.4.0 w `apps/web` i `apps/admin`, 2026-10-07); faza 2b wykonana (Nest 12, Prisma 7, pino 10, `apps/api`, 2026-10-07).
 - **Zasada:** wersję pinujemy dopiero po sprawdzeniu najnowszej stabilnej (`npm view <pkg> version`, `npm view <pkg> dist-tags`, `docker buildx imagetools inspect <obraz>`), nie z pamięci. Wersje `rc`, `beta`, `next`, `dev` ignorujemy.
 
 ## Kontekst
@@ -40,16 +40,16 @@ Stan na 2026-10-07 odbiegał od aktualnych wersji głównych (TypeScript 5.7, ES
 
 ## Faza 2 (zaplanowana, osobne zadania, po zakończeniu równoległej pracy nad `apps/web` i `apps/api`)
 
-| Zależność                                       | Dziś                                            | Docelowo                                                   | Powód / ryzyko                                                                                                                                                                                          |
-| ----------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| next (web, admin)                               | 15.5.27                                         | 16.4.0                                                     | Usuwa wewnętrzny `postcss` 8.4.x (luki high/moderate w `pnpm audit --prod`). Ryzyko: zmiany w `next typegen`, `output: standalone`, middleware, async request APIs; migracja `apps/web` i `apps/admin`. |
-| @nestjs/common, core, platform-express, testing | ^11                                             | 12.1.2                                                     | Major: sprawdzić `@nestjs/throttler` 6.x z Nest 12, `reflect-metadata`, guardy i testy integracyjne. PR #5 (`@nestjs/testing`) zamknąć dopiero razem z tą migracją.                                     |
-| prisma, @prisma/client                          | 6.19.3                                          | 7.10.0 (stabilna; `latest` na npm to 8.0.0-rc, nieużywane) | Usuwa `deepmerge-ts` <8 (high). Ryzyko: Prisma 7 zmienia generator i konfigurację (`prisma.config.ts`), kopiowanie klienta w `apps/api/Dockerfile` (etap `prod-deps`), seed, migracje.                  |
-| pino                                            | ^9.5.0                                          | 10.4.0                                                     | Major w kodzie logowania API.                                                                                                                                                                           |
-| @types/node                                     | ^24                                             | ^26                                                        | Razem z obrazami Node 26 LTS.                                                                                                                                                                           |
-| typescript                                      | ~6.0.3                                          | 7.x                                                        | Warunek wyżej (typescript-eslint).                                                                                                                                                                      |
-| jsdom                                           | ^29.1.1                                         | 30.x                                                       | Warunek wyżej.                                                                                                                                                                                          |
-| audit-deps w CI                                 | critical blokuje (wszystko), high informacyjnie | high+critical blokują                                      | Po Next 16 i Prisma 7 zdjąć `continue-on-error` z kroków high (TODO fazy 2).                                                                                                                            |
+| Zależność                                       | Dziś                                            | Docelowo                                                                 | Powód / ryzyko                                                                                                                                                                                          |
+| ----------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| next (web, admin)                               | 15.5.27                                         | 16.4.0                                                                   | Usuwa wewnętrzny `postcss` 8.4.x (luki high/moderate w `pnpm audit --prod`). Ryzyko: zmiany w `next typegen`, `output: standalone`, middleware, async request APIs; migracja `apps/web` i `apps/admin`. |
+| @nestjs/common, core, platform-express, testing | ^11                                             | **12.1.2 (wykonane, faza 2b)**                                           | Major: sprawdzić `@nestjs/throttler` 6.x z Nest 12, `reflect-metadata`, guardy i testy integracyjne. PR #5 (`@nestjs/testing`) zamknąć dopiero razem z tą migracją.                                     |
+| prisma, @prisma/client                          | 6.19.3                                          | **7.10.0 (wykonane, faza 2b)** (`latest` na npm to 8.0.0-rc, nieużywane) | Usuwa `deepmerge-ts` <8 (high). Ryzyko: Prisma 7 zmienia generator i konfigurację (`prisma.config.ts`), kopiowanie klienta w `apps/api/Dockerfile` (etap `prod-deps`), seed, migracje.                  |
+| pino                                            | ^9.5.0                                          | **10.4.0 (wykonane, faza 2b)**                                           | Major w kodzie logowania API.                                                                                                                                                                           |
+| @types/node                                     | ^24                                             | ^26                                                                      | Razem z obrazami Node 26 LTS.                                                                                                                                                                           |
+| typescript                                      | ~6.0.3                                          | 7.x                                                                      | Warunek wyżej (typescript-eslint).                                                                                                                                                                      |
+| jsdom                                           | ^29.1.1                                         | 30.x                                                                     | Warunek wyżej.                                                                                                                                                                                          |
+| audit-deps w CI                                 | critical blokuje (wszystko), high informacyjnie | high+critical blokują                                                    | Po Next 16 i Prisma 7 zdjąć `continue-on-error` z kroków high (TODO fazy 2). Faza 2b: patrz wynik niżej.                                                                                                |
 
 ## Wynik audytu po fazie 1 (`pnpm audit`, 2026-10-07)
 
@@ -63,6 +63,32 @@ Stan na 2026-10-07 odbiegał od aktualnych wersji głównych (TypeScript 5.7, ES
 - Zmiany w kodzie: `revalidateTag(tag, { expire: 0 })` (decyzja WEB-009, ADR-0003 zachowany), usuniete `eslint` z `next.config.mjs`. Brak `middleware`, brak synchronicznych request API, `next lint` nie byl uzywany (ESLint flat config bez zmian).
 - Weryfikacja w Dockerze: lint i typecheck web/admin zielone, testy web 56/56, `next build` bez API, pelny stos + `scripts/smoke-stack.sh` zielone, `X-Robots-Tag: noindex, nofollow`, podpisany `/api/revalidate` 200 / zly podpis 401. JS strony `/`: ok. 143 KB gzip (bez 39 KB `nomodule` polyfill).
 - Audyt: wewnetrzny `postcss` Next znika (do potwierdzenia `pnpm audit` po scaleniu); nadal otwarte: `deepmerge-ts` (Prisma, faza 2b).
+
+## Wynik fazy 2b (Nest 12, Prisma 7, pino 10, `apps/api`, 2026-10-07)
+
+Wersje sprawdzone z npm: `@nestjs/*` `latest` 12.1.2 (dist-tag `next` to 12.0.0-alpha, nieużywane), `prisma` `latest` to 8.0.0-rc.21 (nieużywane; `prev` 7.10.0), `@prisma/client` i `@prisma/adapter-pg` `latest` 7.10.0.
+
+| Zależność                                                     | Przed        | Po                                    | Uwagi                                                                                                  |
+| ------------------------------------------------------------- | ------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `@nestjs/common`, `core`, `platform-express`, `testing`       | ^11 (11.2.7) | **^12.1.2**                           | ESM-only; `apps/api` już jest ESM. PR #5 zamknięty.                                                    |
+| `@nestjs/throttler`                                           | 6.7.1        | 6.7.1                                 | Peer `^12` zadeklarowany, limity działają w testach.                                                   |
+| `prisma`, `@prisma/client`                                    | 6.19.3       | **^7.10.0**                           | Generator `prisma-client`, `prisma.config.ts`, adapter sterownika, bez silnika Rust (decyzja API-014). |
+| `@prisma/adapter-pg`, `pg`, `@types/pg`                       | nie było     | **^7.10.0**, **^8.23.1**, **^8.23.1** | Wymagane przez Prisma 7 (PostgreSQL).                                                                  |
+| `pino`                                                        | 9.14.0       | **^10.4.0**                           | Bez zmian w kodzie (`pino()`, `stdTimeFunctions`). PR Dependabota #8 zamknięty.                        |
+| `supertest`, `@types/supertest`, `tsup`, `helmet`, `zod`, ... | z fazy 1     | bez zmian                             | Już najnowsze stabilne.                                                                                |
+
+Zmiany łamiące i obsługa (szczegóły: `docs/decyzje.md` API-014):
+
+- Prisma 7: nowy generator z wynikiem w `apps/api/src/generated/prisma` (poza gitem), re-eksport w `src/prisma/client.ts`, fabryka `createPrismaClient` z `PrismaPg`; `datasource.url` przeniesiony do `prisma.config.ts`; Dockerfile bez kopiowania `.prisma`.
+- P2002 z adaptera nie niesie `meta.target`: `orders.service.ts` czyta `driverAdapterError.cause.constraint` (idempotencja zamówień).
+- Migracje SQL (CHECK, wyzwalacze `audit_log`/`price_history`) bez zmian, `migrate deploy`, `db:seed`, `db:reset-demo` działają w kontenerach.
+- Testy: api 323 zielone, domain 91, contracts 30, ui 101, web 56, tokens 8; pełny stos `up --wait` + `scripts/smoke-stack.sh` zielone, 18 produktów w bazie.
+
+Audyt po fazie 2b (`pnpm audit`):
+
+- **high w produkcji:** tylko `postcss` w `next` (do naprawy w fazie 2a). `deepmerge-ts` z listy fazy 1 nie jest już w drzewie produkcyjnym.
+- **high w całym drzewie:** Prisma 7.10 CLI (devDependency) nadal ciągnie `deepmerge-ts` 7.x i `mysql2` <3.22; załatane przez `overrides` w `pnpm-workspace.yaml` (`deepmerge-ts` >=8.0.2, `mysql2` >=3.22.0), `prisma generate` i `migrate deploy` sprawdzone.
+- TODO: po zmergowaniu fazy 2a (Next 16) zdjąć `continue-on-error` z kroków high w `audit-deps` (zaostrzenie high+critical).
 
 ## Skutki
 

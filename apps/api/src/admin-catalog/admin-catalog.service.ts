@@ -3,7 +3,7 @@
 // UPDATE historii), stan z ruchem magazynowym, archiwizacja, twarde usuwanie bez zamowien. Kazda mutacja: wpis audit_log
 // (przed -> po) i wiersz outbox ze znacznikami z docs/14 par. 6 w TEJ SAMEJ transakcji; wspolbieznosc przez If-Match.
 import { Inject, Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../prisma/client.js";
 import type {
   adminProductListQuerySchema,
   CategoryId,
