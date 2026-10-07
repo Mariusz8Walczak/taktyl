@@ -31,3 +31,17 @@ targetRules = ["generic-api-key"]
 regexes = [
   '''taktyl\.(consent|tracked)\.v1''',
 ]
+
+# I-008 (TAKTYL-63): klucz obrazu "k-kwarc-60_grafit_top" w testach manifestu zdjec to identyfikator, nie sekret.
+# Dwa pliki testowe, jedna regula, jedna wartosc (pokrywa tez commit 180f8f6 w historii).
+[[allowlists]]
+description = "Klucz obrazu w tescie media-dashboard (nie sekret)"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = [
+  '''^packages/contracts/test/media-dashboard\.test\.ts$''',
+  '''^apps/admin/test/media-pulpit-dziennik\.test\.tsx$''',
+]
+regexes = [
+  '''k-kwarc-60_grafit_top''',
+]
