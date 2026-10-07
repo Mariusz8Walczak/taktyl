@@ -1,7 +1,7 @@
 "use client";
 // F-044, F-062...F-067 (docs/05 §4 pkt 2-10; wzorzec: kolumna zakupu `product-detail`, docs/08 §3): plakietki, H1,
 // `short`, blok ceny z Omnibusem, wybor wariantu, dostepnosc i termin wysylki, ilosc + "Dodaj do koszyka" (glowny)
-// + "Dodaj do setu" (poboczny), pasek warunkow. Ikony ulubione i porownaj to F-045 (P1, TAKTYL-55): tu ich nie ma.
+// + "Dodaj do setu" (poboczny), pasek warunkow. Ulubione i porownaj (F-045, TAKTYL-55) to ProductTools.
 // Cena i stan pochodza z wybranego wariantu (API); przekreslona jest `lowest_30d`, nie regular_price (docs/04 §5.2).
 import { formatPLN } from "@taktyl/domain";
 import { Badge, Button, Quantity } from "@taktyl/ui";
@@ -14,6 +14,7 @@ import {
   stockView,
   UNAVAILABLE_MESSAGE,
 } from "../../lib/catalog/price";
+import { ProductTools } from "../compare/product-tools";
 import { isBuyable } from "../../lib/catalog/variants";
 import { useRecentlyAdded } from "../../lib/cart/ui";
 import { useProduct } from "./product-context";
@@ -131,6 +132,9 @@ export function BuyColumn({
           rozmiar.
         </p>
       ) : null}
+
+      {/* F-045: ulubione i porownaj (TAKTYL-55) */}
+      <ProductTools />
 
       {conditions}
     </div>

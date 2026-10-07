@@ -25,6 +25,8 @@ export interface CardView {
   href: string;
   /** Wariant, ktorego zdjecie i adres pokazuje karta (dopasowany do filtrow albo domyslny). */
   sku: string;
+  /** Wszystkie SKU modelu (F-132: serce jest wcisniete dla dowolnego wariantu). */
+  skus?: string[];
   variantLabel: string;
   colorName: string;
   image: ImageRef | null;
@@ -89,6 +91,7 @@ export function buildCardView(card: ProductCard, product: Product, ctx: CardCont
     name: product.name,
     href: card.matched_variant_sku ? `${base}?sku=${card.matched_variant_sku}` : base,
     sku: shown.sku,
+    skus: product.variants.map((v) => v.sku),
     variantLabel: colorName,
     colorName,
     image: shots[0] ?? null,

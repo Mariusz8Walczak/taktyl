@@ -1,0 +1,285 @@
+/* Porownywarka i ulubione (TAKTYL-55): F-045, F-130, F-131, F-132, A-10. Wylacznie tokeny (regula 2). Punkty przelamania
+   Bootstrapa 5 bez zmian (docs/06 §4). Ruch tylko transform/opacity/kolor, wylaczony przy prefers-reduced-motion. */
+
+:root {
+  /* Pasek "Porownaj (n)" na dole ekranu: przycisk 44 px + odstep s2 u gory i u dolu. */
+  --pasek-porownaj-wys: calc(var(--cel-min) + var(--s2) * 2);
+  /* Szerokosc kolumny nazw (przyklejonej) i kolumny produktu w tabeli porownania. */
+  --porownaj-nazwy-szer: 9rem;
+  --porownaj-produkt-szer: 12rem;
+  /* A-10: skala serca przy dodaniu. */
+  --serce-skala: 1.3;
+}
+
+/* ---- akcje karty listingu: za odnosnikiem karty w kolejnosci DOM, wiec klikalne ---- */
+.karta__akcje {
+  position: relative;
+  display: grid;
+  gap: var(--s1);
+  margin-top: auto;
+  padding-top: var(--s1);
+  /* miejsce na dwa przyciski (kod doladowywany po hydratacji): bez skoku ukladu */
+  min-height: calc(var(--cel-min) * 2 + var(--s1) * 2);
+}
+.ulubione-przycisk,
+.porownaj-przycisk {
+  width: 100%;
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+}
+.zakup__narzedzia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin-top: var(--s2);
+  min-height: var(--cel-min);
+}
+.zakup__narzedzia .tk-btn {
+  flex: 1 1 12rem;
+}
+
+/* ---- A-10: serce ---- */
+.ulubione-przycisk__serce {
+  display: inline-block;
+  transition: color var(--d-m) var(--e-wyjscie);
+}
+.ulubione-przycisk.is-wcisniete .ulubione-przycisk__serce {
+  color: var(--akcent);
+}
+.porownaj-przycisk.is-wcisniete {
+  border-color: var(--akcent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ulubione-przycisk__serce.is-dodano {
+    animation: serce-dodano var(--d-m) var(--e-osadzenie);
+  }
+}
+@keyframes serce-dodano {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(var(--serce-skala));
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ---- pasek "Porownaj (n)" ---- */
+.pasek-porownaj {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-naglowek);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s2);
+  padding: var(--s2);
+  border-top: var(--tk-linia-1) solid var(--linia);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-2);
+}
+.pasek-porownaj__opis {
+  flex: 1 1 auto;
+  margin: 0;
+  color: var(--tekst-slaby);
+}
+.pasek-porownaj a.tk-btn {
+  text-decoration: none;
+}
+/* Miejsce na pasek: stopka da sie przewinac w calosci, fokus nie chowa sie pod paskiem (docs/11 pulapka 26) */
+html.ma-pasek-porownaj {
+  scroll-padding-bottom: var(--pasek-porownaj-wys);
+}
+html.ma-pasek-porownaj body {
+  padding-bottom: var(--pasek-porownaj-wys);
+}
+/* Na karcie produktu na telefonie wyzej lezy pasek zakupu (F-068): oba paski sie nie nakladaja. */
+@media (max-width: 991.98px) {
+  html.ma-pasek-zakupu .pasek-porownaj {
+    bottom: var(--pasek-zakupu-wys);
+  }
+  html.ma-pasek-zakupu.ma-pasek-porownaj body {
+    padding-bottom: calc(var(--pasek-zakupu-wys) + var(--pasek-porownaj-wys));
+  }
+  html.ma-pasek-zakupu.ma-pasek-porownaj {
+    scroll-padding-bottom: calc(var(--pasek-zakupu-wys) + var(--pasek-porownaj-wys));
+  }
+}
+
+/* ---- stany pomocnicze ---- */
+.porownaj__stan,
+.porownaj__licznik {
+  margin: var(--s2) 0;
+  color: var(--tekst-slaby);
+}
+.pusty-stan {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s4) var(--s3);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.pusty-stan__tekst {
+  max-width: var(--max-tekst);
+  margin: 0;
+}
+.pusty-stan__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.pusty-stan a.tk-btn,
+.porownaj a.tk-btn {
+  text-decoration: none;
+}
+
+/* ---- tabela porownania (F-131) ---- */
+.porownaj__narzedzia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.porownaj__przelacznik {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  cursor: pointer;
+}
+.porownaj__przewijanie {
+  overflow-x: auto;
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.porownaj__przewijanie:focus-visible {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.porownaj__tabela {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--t-s);
+}
+.porownaj__opis-tabeli {
+  position: absolute;
+  width: var(--tk-linia-1);
+  height: var(--tk-linia-1);
+  margin: calc(var(--tk-linia-1) * -1);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.porownaj__tabela th,
+.porownaj__tabela td {
+  padding: var(--s2);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  text-align: left;
+  vertical-align: top;
+}
+.porownaj__tabela tbody th {
+  min-width: var(--porownaj-nazwy-szer);
+  font-weight: var(--w-mocna);
+}
+.porownaj__tabela td,
+.porownaj__produkt {
+  min-width: var(--porownaj-produkt-szer);
+}
+/* Przyklejona kolumna nazw: na telefonie zostaje na miejscu przy przewijaniu poziomym */
+.porownaj__tabela tbody th[scope="row"],
+.porownaj__narozne {
+  position: sticky;
+  left: 0;
+  background-color: var(--powierzchnia);
+}
+.porownaj__tabela tr.is-roznica th,
+.porownaj__tabela tr.is-roznica td {
+  background-color: var(--tlo-alt);
+}
+.porownaj__produkt {
+  display: table-cell;
+  font-weight: var(--w-zwykla);
+}
+.porownaj__produkt > * {
+  display: block;
+}
+.porownaj__produkt > * + * {
+  margin-top: var(--s1);
+}
+.porownaj__zdjecie {
+  aspect-ratio: 1 / 1;
+  background-color: var(--tlo-alt);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.porownaj__nazwa {
+  color: var(--tekst);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.porownaj__cena {
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+.porownaj__usun {
+  min-height: var(--cel-min);
+}
+
+/* ---- /ulubione (F-132) ---- */
+.ulubione__siatka {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s3) var(--s2);
+}
+@media (max-width: 575.98px) {
+  .ulubione__siatka {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  .ulubione__siatka {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.ulubione__link {
+  color: var(--tekst);
+  text-decoration: none;
+}
+.ulubione__wariant,
+.ulubione__niedostepny {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.ulubione__brak {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  margin-bottom: var(--s2);
+  padding: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.ulubione__brak p {
+  margin: 0;
+}
+
+/* ---- dialog zapisu setu w kreatorze (F-114, TAKTYL-56): globalnie, bo kreator nie laduje stylow konta ---- */
+.konto-zapis {
+  display: grid;
+  gap: var(--s2);
+}
+.konto-zapis__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}

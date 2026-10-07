@@ -8,6 +8,7 @@ import { formatPLN } from "@taktyl/domain";
 import { Badge, ProductImage } from "@taktyl/ui";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { CardActions } from "../compare/card-actions";
 import { toManifestEntry, MEDIA_BASE_URL } from "../../lib/catalog/images";
 import type { CardView } from "../../lib/catalog/card-view";
 import { buildItem, type TrackLineSource } from "../../lib/track-items";
@@ -103,6 +104,16 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
             </li>
           ))}
         </ul>
+        {/* F-045, F-130, F-132: ulubione i porownaj (wyspa, za odnosnikiem karty w kolejnosci DOM) */}
+        <CardActions
+          id={view.id}
+          category={view.category}
+          name={view.name}
+          sku={view.sku}
+          skus={view.skus ?? [view.sku]}
+          priceGr={view.priceGr}
+          variantLabel={view.variantLabel}
+        />
       </div>
     </li>
   );

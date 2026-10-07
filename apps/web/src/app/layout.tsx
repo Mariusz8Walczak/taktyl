@@ -9,6 +9,7 @@ import "../styles/naglowek.css";
 import "../styles/stopka.css";
 import "../styles/szukaj.css";
 import "../styles/zgody.css";
+import "../styles/porownaj.css";
 
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";

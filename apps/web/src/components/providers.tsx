@@ -4,12 +4,15 @@
 import { ToastProvider } from "@taktyl/ui";
 import type { ReactNode } from "react";
 import { CartDrawerHost } from "./cart/cart-drawer-host";
+import { CompareBarHost } from "./compare/compare-bar-host";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ToastProvider>
       {children}
       <CartDrawerHost />
+      {/* F-130: pasek porownania */}
+      <CompareBarHost />
     </ToastProvider>
   );
 }
