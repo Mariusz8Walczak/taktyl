@@ -65,3 +65,6 @@ desktop.ini
 
 # Next.js (generowane)
 next-env.d.ts
+
+# worktree agentow Claude Code - nigdy nie publikowac
+.claude/worktrees/
