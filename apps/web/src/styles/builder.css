@@ -1,0 +1,592 @@
+/* Kreator setu /zbuduj-set (TAKTYL-34, TAKTYL-35): F-100...F-113. Wylacznie tokeny (regula 2) i rozmiary z bloku nizej
+   (precedens WEB-010). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4): 576 / 992. Ruch (A-04...A-08, A-16)
+   dodaje TAKTYL-36 na klasach: .kroki__wypelnienie, .scena__*, .wynik, .podsumowanie.is-komplet, [data-kwota]. */
+
+:root {
+  /* Wysokosc dolnego paska na telefonie: przycisk + odstep s2 u gory i u dolu (docs/03 §3: stala, zarezerwowana). */
+  --kreator-pasek-wys: calc(var(--tk-wys-przycisk) + var(--s2) * 2);
+  /* Najmniejsza szerokosc kafla produktu i profilu w siatce (kafle zawijaja sie, na telefonie jedna kolumna). */
+  --kreator-kafel-min: 13rem;
+  --kreator-profil-min: 15rem;
+  /* Zdjecie pozycji w podsumowaniu. */
+  --kreator-miniatura: 4rem;
+  --kreator-wariant-min: 8rem;
+  /* A-08: miejsce na liste wynikow - min. dwa wiersze, wiec komunikat nie przesuwa tresci. */
+  --kreator-wyniki-min: calc(var(--cel-min) * 2 + var(--s2));
+  /* Szerokosc kolumn komputera: krok 60%, podsumowanie 40% (docs/03 §3). */
+  --kreator-kolumna-krok: 3fr;
+  --kreator-kolumna-podsumowanie: 2fr;
+}
+
+.strona--kreator {
+  padding-block: var(--s4);
+}
+.kreator__h1 {
+  font-size: var(--t-2xl);
+}
+
+/* ---- pasek krokow (F-100, A-07) ---- */
+.kreator__naglowek {
+  display: grid;
+  gap: var(--s1);
+  margin-bottom: var(--s3);
+}
+.kroki {
+  position: relative;
+}
+.kroki__tor {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--tk-linia-2);
+  background-color: var(--linia);
+  overflow: hidden;
+}
+.kroki__wypelnienie {
+  width: 100%;
+  height: 100%;
+  background-color: var(--akcent);
+  transform: scaleX(var(--postep, 0));
+  transform-origin: left;
+}
+.kroki__lista {
+  display: flex;
+  gap: var(--s1);
+  overflow-x: auto;
+  padding-bottom: var(--s1);
+}
+.kroki__krok {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.kroki__odnosnik {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--s1);
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: var(--s1);
+  border-radius: var(--r);
+  color: var(--tekst-slaby);
+  text-decoration: none;
+}
+.kroki__odnosnik:hover {
+  background-color: var(--tlo-alt);
+}
+.kroki__numer {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--s3);
+  height: var(--s3);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+}
+.kroki__nazwa {
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.kroki__wybrano {
+  grid-column: 2;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kroki__krok.is-biezacy .kroki__odnosnik {
+  color: var(--tekst);
+}
+.kroki__krok.is-biezacy .kroki__numer {
+  border-color: var(--akcent);
+  background-color: var(--akcent);
+  color: var(--akcent-tekst);
+}
+.kroki__krok.is-gotowy .kroki__numer {
+  border-color: var(--sukces);
+  background-color: var(--sukces-tlo);
+  color: var(--sukces);
+}
+/* Telefon: widoczne tylko numery i nazwa biezacego kroku; "Krok 2 z 4" jako licznik. */
+@media (max-width: 991px) {
+  .kroki__krok:not(.is-biezacy) .kroki__nazwa,
+  .kroki__wybrano {
+    position: absolute;
+    width: var(--tk-linia-1);
+    height: var(--tk-linia-1);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+@media (min-width: 992px) {
+  .kreator__licznik {
+    display: none;
+  }
+}
+.kreator__licznik {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+
+/* ---- komunikaty nad krokami (F-108, F-111) ---- */
+.kreator__komunikaty {
+  display: grid;
+  gap: var(--s1);
+  margin-bottom: var(--s2);
+}
+.kreator__komunikat-tekst {
+  margin: 0;
+}
+.kreator__komunikat-akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin-top: var(--s1);
+}
+
+/* ---- uklad: komputer 60/40 z przyklejona kolumna, telefon jedna kolumna ---- */
+.kreator__uklad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s3);
+}
+@media (max-width: 991px) {
+  .kreator__uklad {
+    /* padding-bottom rezerwuje miejsce na dolny pasek, zeby nie zaslanial ostatniego kafla ani fokusu */
+    padding-bottom: calc(var(--kreator-pasek-wys) + var(--s2));
+  }
+  .kreator__podsumowanie {
+    display: contents;
+  }
+  .kreator__krok {
+    order: 1;
+  }
+  .kreator__podglad {
+    order: 0;
+  }
+  .kreator__lista {
+    order: 2;
+  }
+  /* Lista pozycji i cen na telefonie tylko w kroku "Podsumowanie"; wczesniej cena jest w pasku dolnym. */
+  .kreator[data-krok]:not([data-krok="podsumowanie"]) .kreator__lista {
+    display: none;
+  }
+  .kreator__dodaj {
+    display: none; /* na telefonie przycisk jest w pasku dolnym */
+  }
+  .kreator__scena.tk-scena {
+    width: min(100%, calc(var(--tk-scena-kompakt) * var(--tk-sc-w) / var(--tk-sc-d)));
+    margin-inline: auto;
+  }
+  .kreator__podglad {
+    position: sticky;
+    top: var(--naglowek-wys);
+    z-index: var(--z-naglowek);
+    padding-block: var(--s1);
+    background-color: var(--tlo);
+  }
+  /* Wyniki na telefonie: sama lista wynikow jest zwinieta, gdy nie ma uwag - naglowek zostaje widoczny. */
+  .wyniki__lista {
+    max-height: calc(var(--cel-min) * 3);
+    overflow-y: auto;
+  }
+}
+@media (min-width: 992px) {
+  .kreator__uklad {
+    grid-template-columns: minmax(0, var(--kreator-kolumna-krok)) minmax(
+        0,
+        var(--kreator-kolumna-podsumowanie)
+      );
+    gap: var(--s4);
+    align-items: start;
+  }
+  .kreator__podsumowanie {
+    position: sticky;
+    top: calc(var(--naglowek-wys) + var(--s2));
+    display: grid;
+    gap: var(--s2);
+    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
+    overflow-y: auto;
+    padding: var(--s2);
+    border: var(--tk-linia-1) solid var(--linia);
+    border-radius: var(--r);
+    background-color: var(--powierzchnia);
+  }
+}
+
+/* ---- krok ---- */
+.krok {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.krok__legenda {
+  padding: 0;
+}
+.krok__naglowek {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+}
+.krok__naglowek:focus-visible {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.krok__wstep {
+  max-width: var(--max-tekst);
+  margin: 0 0 var(--s2);
+}
+.krok__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin-top: var(--s2);
+}
+.krok__akcje--profil {
+  margin-top: var(--s2);
+}
+.krok__pusto {
+  margin: var(--s2) 0;
+  color: var(--tekst-slaby);
+}
+
+/* ---- kafle ---- */
+.kafle {
+  display: grid;
+  gap: var(--s2);
+  margin-bottom: var(--s2);
+}
+.kafle--profile {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--kreator-profil-min)), 1fr));
+}
+.kafle--produkty {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--kreator-kafel-min)), 1fr));
+}
+.kafle--typ {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--kreator-profil-min)), 1fr));
+}
+.kafel-produktu {
+  padding: var(--s1);
+}
+.kafel-produktu__tresc {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+  width: 100%;
+  padding-right: 0;
+}
+.kafel-produktu__zdjecie {
+  display: block;
+  margin-bottom: var(--s1);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.kafel-produktu__wybrano {
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  color: var(--akcent);
+}
+.kafel-produktu--brak {
+  color: var(--tekst-slaby);
+}
+.zetony {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin-bottom: var(--s2);
+}
+.przelacznik-typu,
+.wariant-kreatora,
+.wariant {
+  min-width: 0;
+  margin: 0 0 var(--s2);
+  padding: 0;
+  border: 0;
+}
+.przelacznik-typu__legenda,
+.wariant-kreatora__legenda,
+.wariant__nazwa {
+  padding: 0;
+  margin-bottom: var(--s1);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.wariant-kreatora {
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+}
+.wariant__probki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.wariant__kafle {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--kreator-wariant-min)), 1fr));
+  gap: var(--s1);
+}
+.wariant-kreatora__brak {
+  margin: var(--s1) 0 0;
+  font-weight: var(--w-mocna);
+  color: var(--uwaga);
+}
+.kreator__dlon {
+  max-width: var(--max-tekst);
+  margin-top: var(--s2);
+}
+
+/* ---- gotowe sety (F-111) ---- */
+.gotowe {
+  margin-top: var(--s3);
+}
+.gotowe__tytul {
+  margin: 0 0 var(--s2);
+  font-size: var(--t-l);
+}
+.gotowe__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--kreator-profil-min)), 1fr));
+  gap: var(--s2);
+}
+.gotowe__set {
+  display: grid;
+  gap: var(--s1);
+  align-content: start;
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.gotowe__nazwa {
+  margin: 0;
+  font-weight: var(--w-mocna);
+}
+.gotowe__opis,
+.gotowe__cena {
+  margin: 0;
+  font-size: var(--t-s);
+}
+.gotowe__cena {
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- wyniki dopasowania (F-104, A-08) ---- */
+.wyniki__tytul {
+  margin: 0;
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+.wyniki__naglowek {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.wyniki__lista {
+  display: grid;
+  align-content: start;
+  gap: var(--s1);
+  min-height: var(--kreator-wyniki-min);
+}
+.wynik {
+  display: flex;
+  gap: var(--s1);
+  align-items: flex-start;
+  padding: var(--s1);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.wynik__etykieta {
+  flex: none;
+  min-width: calc(var(--s4) + var(--s1));
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  text-transform: uppercase;
+}
+.wynik--uwaga {
+  background-color: var(--uwaga-tlo);
+}
+.wynik--uwaga .wynik__etykieta {
+  color: var(--uwaga);
+}
+.wynik--ok .wynik__etykieta {
+  color: var(--sukces);
+}
+.wynik__tresc {
+  display: grid;
+  gap: var(--s1);
+  min-width: 0;
+  font-size: var(--t-s);
+}
+.wynik__propozycja {
+  justify-self: start;
+}
+.wyniki__profil {
+  margin: var(--s1) 0 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+
+/* ---- podsumowanie: pozycje i ceny (F-107) ---- */
+.kreator__lista {
+  display: grid;
+  gap: var(--s2);
+}
+.kreator__lista-tytul {
+  margin: 0;
+  font-size: var(--t-l);
+}
+.pozycje {
+  display: grid;
+  gap: var(--s1);
+}
+.pozycja {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: var(--s1);
+  align-items: center;
+}
+.pozycja.is-pusta {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.pozycja__zdjecie {
+  width: var(--kreator-miniatura);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.pozycja__nazwa,
+.pozycja__wariant,
+.pozycja__brak,
+.pozycja__cena {
+  margin: 0;
+}
+.pozycja__nazwa {
+  font-weight: var(--w-mocna);
+}
+.pozycja__wariant {
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.pozycja__brak {
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  color: var(--uwaga);
+}
+.pozycja__cena {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pozycja__zmien {
+  min-height: var(--cel-min);
+}
+.ceny__lista {
+  margin: 0;
+}
+.ceny__wiersz {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding-block: calc(var(--s1) / 2);
+  font-variant-numeric: tabular-nums;
+}
+.ceny__wiersz dt,
+.ceny__wiersz dd {
+  margin: 0;
+}
+.ceny__wiersz--rabat {
+  color: var(--sukces);
+}
+.ceny__wiersz--razem {
+  border-top: var(--tk-linia-1) solid var(--linia);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.ceny__oszczedzasz,
+.ceny__podpowiedz {
+  margin: var(--s1) 0 0;
+  font-size: var(--t-s);
+}
+.ceny__oszczedzasz {
+  font-weight: var(--w-mocna);
+  color: var(--sukces);
+}
+.kwota {
+  font-variant-numeric: tabular-nums;
+}
+.kreator__powod {
+  margin: var(--s1) 0 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.kreator__status {
+  min-height: var(--s3);
+  margin: var(--s1) 0 0;
+  font-weight: var(--w-mocna);
+}
+.kreator__link {
+  max-width: var(--max-tekst);
+}
+
+/* ---- pasek akcji: komputer - "Dalej" pod krokiem; telefon - przyklejony do dolu z cena ---- */
+.kreator__pasek {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s2);
+  margin-top: var(--s3);
+}
+.kreator__pasek-cena {
+  display: none;
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.kreator__pasek-etykieta {
+  margin-right: var(--s1);
+  font-size: var(--t-xs);
+  font-weight: var(--w-zwykla);
+  color: var(--tekst-slaby);
+}
+@media (min-width: 992px) {
+  /* Na kroku 4 przycisk dodania jest w kolumnie podsumowania. */
+  .kreator__pasek--ostatni {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  .kreator__pasek {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: var(--z-naglowek);
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: var(--kreator-pasek-wys);
+    margin: 0;
+    padding: var(--s2);
+    border-top: var(--tk-linia-1) solid var(--linia);
+    background-color: var(--powierzchnia);
+    box-shadow: var(--cien-2);
+  }
+  .kreator__pasek-cena {
+    display: block;
+  }
+  .kreator__powod--pasek {
+    position: absolute;
+    width: var(--tk-linia-1);
+    height: var(--tk-linia-1);
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
