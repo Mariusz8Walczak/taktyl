@@ -20,7 +20,8 @@ interface IssueLike {
 export function plError(overrides: Record<string, string> = {}) {
   return (iss: IssueLike): string => {
     const path = (iss.path ?? []).join(".");
-    const own = overrides[path];
+    // klucz moze zawierac * w miejscu indeksu tablicy, np. "methods.*.price"
+    const own = overrides[path] ?? overrides[path.replace(/\.\d+(?=\.|$)/g, ".*")];
     if (own) return own;
     switch (iss.code) {
       case "invalid_type":

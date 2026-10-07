@@ -1,0 +1,482 @@
+/* Listing kategorii (TAKTYL-27): F-020...F-030, F-040, F-044, A-09, A-14. Wylacznie tokeny (regula 2) i rozmiary z bloku
+   ponizej (WEB-010). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4): 576 / 768 / 992 / 1200 / 1400. */
+
+:root {
+  /* Szerokosc kolumny filtrow na komputerze (docs/05 §3 pkt 5). Brak tokenu, wynika z ukladu listingu. */
+  --listing-filtry-szer: 17rem;
+}
+
+a.tk-btn {
+  text-decoration: none;
+}
+
+/* ---- naglowek listingu (F-020) ---- */
+.listing__naglowek {
+  margin-bottom: var(--s3);
+}
+.listing__naglowek .wstep {
+  margin-top: 0;
+}
+
+/* ---- uklad: filtry + wyniki ---- */
+.listing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s3);
+}
+.listing__filtry {
+  display: none; /* telefon: filtry w szufladzie (F-027) */
+}
+.listing__filtry-naglowek {
+  margin: 0 0 var(--s2);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.listing__glowna {
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .listing {
+    grid-template-columns: var(--listing-filtry-szer) minmax(0, 1fr);
+    gap: var(--s4);
+    align-items: start;
+  }
+  .listing__filtry {
+    display: block;
+    position: sticky;
+    top: calc(var(--naglowek-wys) + var(--s2));
+    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
+    overflow-y: auto;
+    padding-right: var(--s1);
+  }
+}
+
+/* ---- pasek narzedzi (F-024, F-025) ---- */
+.pasek-narzedzi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--s2);
+  margin-bottom: var(--s2);
+}
+.pasek-narzedzi__licznik {
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  margin: 0 auto 0 0;
+  font-weight: var(--w-mocna);
+}
+.pasek-narzedzi__sort {
+  min-width: 0;
+}
+.pasek-narzedzi__siatka {
+  display: none; /* przelacznik 3 / 4 kolumn tylko na komputerze (docs/05 §3 pkt 4) */
+  gap: var(--s1);
+}
+.pasek-narzedzi__siatka .tk-btn {
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+}
+.pasek-narzedzi__siatka .tk-btn.is-wybrany {
+  border-color: var(--akcent);
+  background-color: var(--akcent-slaby);
+  color: var(--akcent);
+}
+@media (min-width: 992px) {
+  .pasek-narzedzi__filtry {
+    display: none;
+  }
+  .pasek-narzedzi__siatka {
+    display: flex;
+  }
+}
+
+/* ---- zetony aktywnych filtrow (F-023) ---- */
+.zetony {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+  margin-bottom: var(--s2);
+}
+.zetony__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+
+/* ---- siatka kart (F-040) i widok A-14 ---- */
+.siatka {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s3) var(--s2);
+}
+@media (min-width: 992px) {
+  .siatka[data-kolumny="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .siatka[data-kolumny="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.siatka__wstawka {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.siatka__wstawka-tekst {
+  margin: 0;
+  font-weight: var(--w-mocna);
+}
+
+/* A-14: nazwa przejscia z ID produktu (docs/11 pulapka 23); czas i krzywa z tokenow */
+.karta {
+  view-transition-name: var(--vt);
+}
+::view-transition-group(*) {
+  animation-duration: var(--d-m);
+  animation-timing-function: var(--e-wyjscie);
+}
+
+/* ---- karta produktu (F-040, F-044) ---- */
+.karta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  overflow: hidden;
+}
+.karta:has(.karta__link:focus-visible) {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.karta__zdjecie {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: var(--tlo-alt);
+}
+.karta__obraz {
+  width: 100%;
+}
+.karta__obraz--drugie {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+/* A-09: drugie ujecie tylko przy najechaniu myszka (nigdy na dotyku i z klawiatury) */
+@media (hover: hover) and (pointer: fine) {
+  .karta__obraz--drugie {
+    transition: opacity var(--d-m) var(--e-wyjscie);
+  }
+  .karta:hover .karta__obraz--drugie {
+    opacity: 1;
+  }
+}
+.karta__plakietki {
+  position: absolute;
+  top: var(--s1);
+  left: var(--s1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.karta__tresc {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--s1);
+  padding: var(--s2);
+}
+.karta__nazwa {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  line-height: 1.25;
+}
+/* Jeden odnosnik na nazwie; pseudoelement rozciaga go na cala karte (F-040) */
+.karta__link {
+  color: var(--tekst);
+  text-decoration: none;
+}
+.karta__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.karta__link:focus-visible {
+  outline: none; /* obrys robi cala karta (:has) */
+}
+.karta__param {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+  margin: 0;
+  font-size: var(--t-xs);
+}
+.karta__param-wiersz {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s1);
+}
+.karta__param dt {
+  color: var(--tekst-slaby);
+}
+.karta__param dt::after {
+  content: ":";
+}
+.karta__param dd {
+  margin: 0;
+}
+.karta__cena {
+  margin: auto 0 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.karta__od {
+  font-size: var(--t-xs);
+  font-weight: var(--w-zwykla);
+  color: var(--tekst-slaby);
+}
+.karta__kwota--promocja {
+  color: var(--akcent);
+}
+.karta__przekreslona {
+  font-size: var(--t-s);
+  font-weight: var(--w-zwykla);
+  color: var(--tekst-slaby);
+}
+.karta__omnibus {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.karta__probki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--s1) / 2) var(--s2);
+  font-size: var(--t-xs);
+}
+.karta__probka {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--s1) / 2);
+}
+.karta__probka .tk-probka__kolo {
+  width: var(--s2);
+  height: var(--s2);
+}
+
+/* ---- filtry (F-021) ---- */
+.filtry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.filtr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.filtr__nazwa {
+  padding: 0;
+  margin-bottom: var(--s1);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.filtr__lista {
+  display: flex;
+  flex-direction: column;
+}
+.filtr__opcja {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+  cursor: pointer;
+}
+.filtr__opcja.is-brak {
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+/* Pole wyboru pokrywa caly wiersz (cel >= 44 px), widoczny jest tylko znacznik obok */
+.filtr__pole {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+.filtr__opcja::before {
+  content: "";
+  flex: none;
+  box-sizing: border-box;
+  width: var(--tk-ikona);
+  height: var(--tk-ikona);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: calc(var(--r) / 2);
+  background-color: var(--powierzchnia);
+}
+.filtr__opcja:has(.filtr__pole:checked)::before {
+  content: "✓" / "";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: var(--akcent);
+  background-color: var(--akcent);
+  color: var(--akcent-tekst);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  line-height: 1;
+}
+.filtr__opcja:has(.filtr__pole:focus-visible)::before {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.filtr__opcja.is-brak::before {
+  background-color: var(--tlo-alt);
+}
+.filtr__opcja .tk-probka__kolo {
+  width: var(--s2);
+  height: var(--s2);
+}
+.filtr__licznik {
+  margin-left: auto;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+
+/* ---- zakres ceny (F-021): dwa natywne suwaki w jednym kontenerze ---- */
+.zakres__suwak {
+  position: relative;
+  height: var(--cel-min);
+}
+.zakres__tor {
+  position: absolute;
+  inset-inline: calc(var(--tk-ikona-l) / 2);
+  top: 50%;
+  height: var(--s1);
+  margin-top: calc(var(--s1) / -2);
+  border-radius: var(--r-pelny);
+  background-color: var(--linia);
+}
+.zakres__tor::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--od) * 1%);
+  right: calc((100 - var(--do)) * 1%);
+  border-radius: var(--r-pelny);
+  background-color: var(--akcent);
+}
+.zakres__uchwyt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: none;
+  pointer-events: none; /* klikalne sa tylko uchwyty */
+  appearance: none;
+  -webkit-appearance: none;
+}
+.zakres__uchwyt::-webkit-slider-runnable-track {
+  height: var(--cel-min);
+  background: none;
+}
+.zakres__uchwyt::-moz-range-track {
+  height: var(--cel-min);
+  background: none;
+}
+.zakres__uchwyt::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  width: var(--tk-ikona-l);
+  height: var(--tk-ikona-l);
+  margin-top: calc((var(--cel-min) - var(--tk-ikona-l)) / 2);
+  border: var(--tk-linia-2) solid var(--powierzchnia);
+  border-radius: var(--r-pelny);
+  background-color: var(--akcent);
+  box-shadow: var(--cien-1);
+  pointer-events: auto;
+  cursor: grab;
+}
+.zakres__uchwyt::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--tk-ikona-l);
+  height: var(--tk-ikona-l);
+  border: var(--tk-linia-2) solid var(--powierzchnia);
+  border-radius: var(--r-pelny);
+  background-color: var(--akcent);
+  box-shadow: var(--cien-1);
+  pointer-events: auto;
+  cursor: grab;
+}
+.zakres__uchwyt:focus-visible {
+  outline: none;
+}
+.zakres__uchwyt:focus-visible::-webkit-slider-thumb {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.zakres__uchwyt:focus-visible::-moz-range-thumb {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.zakres__pola {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s2);
+}
+
+/* ---- pokaz wiecej (F-026) ---- */
+.wiecej {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s4);
+}
+.wiecej__stan {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+
+/* ---- pusty wynik (F-029) ---- */
+.pusty {
+  display: grid;
+  gap: var(--s3);
+}
+.pusty__naglowek {
+  margin: var(--s2) 0 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+}
+.pusty p {
+  margin: 0;
+}
+
+/* ---- szuflada filtrow (F-027): tresc szuflady ma wlasne wciecia z @taktyl/ui ---- */
+.listing__szuflada .filtry {
+  padding-bottom: var(--s2);
+}

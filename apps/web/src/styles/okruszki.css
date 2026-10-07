@@ -1,0 +1,28 @@
+/* Okruszki (F-008): wspolne dla listingu i karty produktu; importowane przez komponent Breadcrumbs. Tylko tokeny. */
+
+.okruszki {
+  margin-bottom: var(--s2);
+  font-size: var(--t-xs);
+}
+.okruszki__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s1);
+}
+.okruszki__pozycja {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  color: var(--tekst-slaby);
+}
+.okruszki__pozycja + .okruszki__pozycja::before {
+  content: "/" / "";
+  margin-right: var(--s1);
+}
+.okruszki__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
+
