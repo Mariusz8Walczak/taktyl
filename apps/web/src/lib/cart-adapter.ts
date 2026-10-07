@@ -1,10 +1,11 @@
-// F-066, F-150 (ADR-0007, docs/03 §7): cienki adapter koszyka dla karty produktu. Pelna logike koszyka (szuflada,
-// ilosci, grupy setow, wycena `POST /cart/quote`) robi TAKTYL-39 i ona zastapi cialo `addToCart`; sygnatura zostaje.
-// TODO(TAKTYL-39): zastapic zapis w localStorage wspolnym modulem koszyka i otworzyc szuflade (A-03).
-// Do tego czasu adapter zapisuje MINIMALNY format z docs/03 §7 w `taktyl.cart.v1`: `{ lines: [{ type: "item", sku,
-// qty }], code: null }`. Ceny NIE sa zapisywane (docs/11 pulapka 20). Odczyt i zapis w try/catch z zapasem w pamieci.
-import { CART_CHANGED_EVENT, CART_STORAGE_KEY } from "./cart/count";
-import { readItem, writeItem } from "./storage/safe-storage";
+// F-066, F-110, F-150, A-03 (ADR-0007, docs/03 §7): cienka fasada nad modulem koszyka `lib/cart` (TAKTYL-39).
+// Publiczne API dla karty produktu i kreatora setu: `addToCart` / `addItem` (pozycja), `addSet` (grupa setu).
+// Sygnatury nie zmieniaja sie wzgledem tymczasowego adaptera. Po zapisaniu: szuflada koszyka sie otwiera (A-03)
+// i przycisk pokazuje "Dodano" (hook `useRecentlyAdded`). Zdarzenie `add_to_cart` wysyla WOLAJACY po `ok: true`
+// (docs/10 §1 zasada 2; ma ceny i nazwy z karty lub kreatora), np. przez `buildItem` / `buildSetItems` z track-items.
+import { cartStore } from "./cart/store";
+import { cartUi } from "./cart/ui";
+import { MAX_ITEM_QTY } from "./cart/types";
 
 export interface AddToCartInput {
   sku: string;
@@ -12,47 +13,59 @@ export interface AddToCartInput {
 }
 
 export interface AddToCartResult {
-  /** true dopiero po zapisaniu pozycji; toast "Dodano do koszyka" i zdarzenie `add_to_cart` tylko wtedy. */
+  /** true dopiero po zapisaniu pozycji; toast i zdarzenie `add_to_cart` tylko wtedy. */
   ok: boolean;
 }
 
-/** Maks. ilosc jednej pozycji w koszyku (contracts: qtySchema 1-10). */
-const MAX_QTY = 10;
-
-interface StoredLine {
-  type?: unknown;
-  sku?: unknown;
-  qty?: unknown;
-  [key: string]: unknown;
+export interface AddSetInput {
+  /** Dokladnie 3 SKU: klawiatura, myszka, podkladka. */
+  skus: readonly [string, string, string] | readonly string[];
+  profile?: string | null;
+  presetId?: string | null;
+  name?: string;
+  qty?: number;
+  /** Edycja grupy (`/zbuduj-set?...&edytuj=<id>`): zapis zastepuje te grupe w tym samym miejscu (docs/decyzje WEB-040). */
+  replaceId?: string;
 }
 
-function readLines(): { lines: StoredLine[]; rest: Record<string, unknown> } {
-  try {
-    const parsed: unknown = JSON.parse(readItem("local", CART_STORAGE_KEY) ?? "null");
-    if (Array.isArray(parsed)) return { lines: parsed as StoredLine[], rest: {} };
-    if (parsed && typeof parsed === "object") {
-      const { lines, ...rest } = parsed as Record<string, unknown>;
-      return { lines: Array.isArray(lines) ? (lines as StoredLine[]) : [], rest };
-    }
-  } catch {
-    /* uszkodzony zapis: zaczynamy od pustego koszyka */
-  }
-  return { lines: [], rest: { code: null } };
+export interface AddSetResult extends AddToCartResult {
+  /** Identyfikator grupy w koszyku. */
+  id?: string;
+}
+
+function afterAdd(): void {
+  cartUi.markAdded();
+  cartUi.open();
 }
 
 export async function addToCart({ sku, qty }: AddToCartInput): Promise<AddToCartResult> {
   if (typeof window === "undefined" || !Number.isInteger(qty) || qty < 1) return { ok: false };
   try {
-    const { lines, rest } = readLines();
-    const existing = lines.find((l) => l.type === "item" && l.sku === sku);
-    if (existing) {
-      existing.qty = Math.min(MAX_QTY, (typeof existing.qty === "number" ? existing.qty : 0) + qty);
-    } else {
-      lines.push({ type: "item", sku, qty: Math.min(MAX_QTY, qty) });
-    }
-    writeItem("local", CART_STORAGE_KEY, JSON.stringify({ ...rest, lines }));
-    window.dispatchEvent(new Event(CART_CHANGED_EVENT));
+    cartStore.addItem(sku, Math.min(MAX_ITEM_QTY, qty));
+    afterAdd();
     return { ok: true };
+  } catch {
+    return { ok: false };
+  }
+}
+
+/** Alias `addToCart`: nazwa uzywana przez kreator setu. */
+export const addItem = addToCart;
+
+export async function addSet(input: AddSetInput): Promise<AddSetResult> {
+  if (typeof window === "undefined") return { ok: false };
+  try {
+    const res = cartStore.addSet({
+      skus: input.skus,
+      profile: input.profile,
+      presetId: input.presetId,
+      name: input.name,
+      qty: input.qty,
+      replaceId: input.replaceId,
+    });
+    if (!res) return { ok: false };
+    afterAdd();
+    return { ok: true, id: res.id };
   } catch {
     return { ok: false };
   }

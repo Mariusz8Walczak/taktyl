@@ -4,6 +4,7 @@ import { cleanup } from "@testing-library/react";
 import { createElement } from "react";
 import type { AnchorHTMLAttributes } from "react";
 import { afterEach, expect, vi } from "vitest";
+import { cartUi } from "../src/lib/cart/ui";
 import { resetMemoryStorage } from "../src/lib/storage/safe-storage";
 
 expect.extend(axeMatchers);
@@ -31,6 +32,7 @@ afterEach(() => {
   vi.restoreAllMocks();
   delete (globalThis as { __pathname?: string }).__pathname;
   resetMemoryStorage();
+  cartUi.reset(); // stan szuflady i "Dodano" jest modulowy: nie przecieka miedzy testami
   window.localStorage.clear();
   window.sessionStorage.clear();
   document.documentElement.removeAttribute("data-pasek-demo");

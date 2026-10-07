@@ -15,6 +15,7 @@ import {
   UNAVAILABLE_MESSAGE,
 } from "../../lib/catalog/price";
 import { isBuyable } from "../../lib/catalog/variants";
+import { useRecentlyAdded } from "../../lib/cart/ui";
 import { useProduct } from "./product-context";
 import { VariantPicker } from "./variant-picker";
 
@@ -31,6 +32,8 @@ export function BuyColumn({
   dispatch: DispatchTexts | null;
 }) {
   const { product, variant, qty, setQty, add, busy } = useProduct();
+  // A-03: etykieta "Dodano" przez 1,2 s po dodaniu (stan z modulu koszyka, sygnatura adaptera bez zmian)
+  const justAdded = useRecentlyAdded();
   const price = priceView(variant);
   const stock = stockView(variant.stock, variant.status === "active");
   const buyable = isBuyable(variant);
@@ -116,7 +119,7 @@ export function BuyColumn({
           aria-describedby={buyable ? undefined : "powod-braku"}
           onClick={() => void add()}
         >
-          Dodaj do koszyka
+          {justAdded ? "Dodano" : "Dodaj do koszyka"}
         </Button>
         <a href={setHref} className="tk-btn tk-btn--poboczny zakup__set">
           Dodaj do setu

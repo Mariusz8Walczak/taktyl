@@ -1,0 +1,402 @@
+/* Koszyk i szuflada koszyka (TAKTYL-39, TAKTYL-40): F-150...F-157, A-03, A-11, A-18. Wylacznie tokeny (regula 2) i rozmiary
+   z bloku ponizej (WEB-010). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4): 576 / 768 / 992 / 1200 / 1400.
+   Haki animacji (TAKTYL-36): `.is-odswiezanie` (A-04), `.koszyk-dostawa__wypelnienie` (A-11, transform scaleX). */
+
+:root {
+  /* Kolumna podsumowania koszyka na komputerze. */
+  --koszyk-podsumowanie-szer: 24rem;
+  /* Wysokosc paska do darmowej dostawy (A-11) i wiersza szkieletu (A-18). */
+  --koszyk-pasek-wys: var(--s1);
+  --koszyk-szkielet-wys: calc(var(--cel-min) * 2);
+  /* Najmniejsza szerokosc kolumny z ilosc i cena pozycji. */
+  --koszyk-akcje-min: 11rem;
+}
+
+.koszyk__licznik {
+  margin: 0 0 var(--s3);
+  color: var(--tekst-slaby);
+  font-size: var(--t-m);
+}
+
+.koszyk__uklad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s4);
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .koszyk__uklad {
+    grid-template-columns: minmax(0, 1fr) var(--koszyk-podsumowanie-szer);
+  }
+}
+.koszyk__lista {
+  display: grid;
+  gap: var(--s3);
+  min-width: 0;
+}
+
+/* ---- podsumowanie przyklejone (F-155) ---- */
+.koszyk__podsumowanie {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+@media (min-width: 992px) {
+  .koszyk__podsumowanie {
+    position: sticky;
+    top: calc(var(--naglowek-wys) + var(--s2));
+  }
+}
+.koszyk__podsumowanie-naglowek {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.koszyk__dalej {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+.koszyk__uwaga {
+  margin: var(--s1) 0 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.koszyk-blokada {
+  margin: 0;
+  color: var(--tekst);
+  font-size: var(--t-s);
+}
+
+/* wiersze sum (koszyk, grupa setu, kasa) */
+.koszyk-sumy,
+.koszyk-set__sumy {
+  display: grid;
+  gap: var(--s1);
+  margin: 0;
+  font-size: var(--t-s);
+}
+.koszyk-sumy > div,
+.koszyk-set__sumy > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.koszyk-sumy dt,
+.koszyk-set__sumy dt {
+  color: var(--tekst-slaby);
+}
+.koszyk-sumy dd,
+.koszyk-set__sumy dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.koszyk-sumy__razem,
+.koszyk-set__razem {
+  padding-top: var(--s1);
+  border-top: var(--tk-linia-1) solid var(--linia);
+  font-weight: var(--w-mocna);
+  font-size: var(--t-m);
+}
+.koszyk-sumy__razem dt,
+.koszyk-set__razem dt {
+  color: var(--tekst);
+}
+
+/* ---- pasek do darmowej dostawy (F-152, A-11) ---- */
+.koszyk-dostawa {
+  display: grid;
+  gap: var(--s1);
+}
+.koszyk-dostawa__tekst {
+  margin: 0;
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.koszyk-dostawa__pasek {
+  overflow: hidden;
+  height: var(--koszyk-pasek-wys);
+  border-radius: var(--r-pelny);
+  background-color: var(--tlo-alt);
+}
+.koszyk-dostawa__wypelnienie {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--r-pelny);
+  background-color: var(--akcent);
+  transform: scaleX(var(--postep, 0));
+  transform-origin: left;
+  transition: transform var(--d-l) var(--e-wyjscie);
+}
+
+/* ---- lista pozycji i grupy setow (F-151, F-154) ---- */
+.koszyk-lista {
+  display: grid;
+  gap: var(--s2);
+}
+.koszyk-lista__wiersz {
+  min-width: 0;
+}
+.koszyk-poz {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s2);
+  padding: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+@media (min-width: 576px) {
+  .koszyk-poz {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+}
+.koszyk-lista--ciasna .koszyk-poz {
+  grid-template-columns: minmax(0, 1fr);
+  padding: var(--s1) var(--s2);
+}
+.koszyk-poz__nazwa {
+  margin: 0;
+  font-size: var(--t-m);
+  font-weight: var(--w-mocna);
+  overflow-wrap: anywhere;
+}
+.koszyk-poz__sku {
+  display: block;
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.koszyk-poz__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  min-width: var(--koszyk-akcje-min);
+}
+.koszyk-poz__kod {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.koszyk-poz__usun {
+  min-height: var(--cel-min);
+  min-width: var(--cel-min);
+}
+.koszyk-poz__problem {
+  margin: var(--s1) 0 0;
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  background-color: var(--uwaga-tlo, var(--tlo-alt));
+  color: var(--uwaga);
+  font-size: var(--t-s);
+}
+.koszyk-poz.is-problem,
+.koszyk-set.is-problem {
+  outline: var(--tk-linia-2) solid var(--uwaga);
+}
+.koszyk-cena {
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+  min-width: calc(var(--s5));
+  text-align: right;
+}
+.koszyk-cena--brak {
+  display: inline-block;
+  height: var(--s2);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+/* A-04 (haczyk): cena przygaszona, gdy wycena sie odswieza; zmiana tylko przez opacity */
+.is-odswiezanie {
+  opacity: 0.6;
+  transition: opacity var(--d-s) var(--e-wyjscie);
+}
+
+.koszyk-set {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s2);
+  border: var(--tk-linia-2) solid var(--akcent);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.koszyk-set__naglowek {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+}
+.koszyk-set__tytul {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.koszyk-set__edytuj {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
+.koszyk-set__elementy {
+  display: grid;
+  gap: var(--s1);
+}
+.koszyk-set__element {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+  padding-block: var(--s1);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+.koszyk-set__opis {
+  display: grid;
+  min-width: 0;
+  flex: 1 1 var(--koszyk-akcje-min);
+}
+.koszyk-set__cena {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.koszyk-set__stopka {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.koszyk-set__sumy {
+  min-width: var(--koszyk-akcje-min);
+  flex: 1 1 var(--koszyk-akcje-min);
+}
+
+/* ---- pole kodu (F-153) ---- */
+.koszyk-kod {
+  display: grid;
+  gap: var(--s1);
+}
+.koszyk-kod__stan {
+  display: grid;
+  gap: var(--s1);
+  justify-items: start;
+}
+
+/* ---- pusty koszyk (F-156) ---- */
+.koszyk-pusty {
+  display: grid;
+  gap: var(--s3);
+  justify-items: start;
+}
+.koszyk-pusty__tekst {
+  margin: 0;
+  max-width: var(--max-tekst);
+  font-size: var(--t-l);
+}
+.koszyk-pusty__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.koszyk-pusty__akcje a,
+.koszyk__dalej,
+.koszyk-szuflada__stopka a {
+  text-decoration: none;
+}
+
+/* ---- Dokoncz set ---- */
+.koszyk-dokoncz {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.koszyk-dokoncz__naglowek {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.koszyk-dokoncz__opis {
+  margin: 0;
+  max-width: var(--max-tekst);
+}
+.koszyk-dokoncz__lista {
+  display: grid;
+  gap: var(--s1);
+}
+.koszyk-dokoncz__lista li,
+.koszyk-dokoncz__razem {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.koszyk-dokoncz__razem {
+  margin: 0;
+  font-weight: var(--w-mocna);
+}
+.koszyk-dokoncz__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.koszyk-dokoncz__akcje a {
+  text-decoration: none;
+}
+
+/* ---- szuflada (A-03): stopka z suma i przyciskami ---- */
+.koszyk-szuflada__stopka {
+  display: grid;
+  gap: var(--s1);
+}
+.koszyk-szuflada__suma {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: var(--t-m);
+}
+.koszyk-szuflada__stopka .tk-btn {
+  width: 100%;
+  text-align: center;
+}
+.koszyk-szuflada .koszyk-lista {
+  margin-top: var(--s2);
+}
+.koszyk-szuflada .koszyk-dostawa {
+  margin-bottom: var(--s1);
+}
+
+/* ---- A-18: szkielet z przesuwanym polyskiem, tylko w trakcie ladowania > 300 ms ---- */
+.koszyk-szkielet {
+  display: grid;
+  gap: var(--s2);
+}
+.koszyk-szkielet__wiersz {
+  position: relative;
+  display: block;
+  height: var(--koszyk-szkielet-wys);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.koszyk-szkielet__wiersz::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--powierzchnia), transparent);
+  transform: translateX(-100%);
+  animation: tk-blysk calc(var(--d-l) * 4) var(--e-wyjscie) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .koszyk-szkielet__wiersz::after {
+    animation: none;
+  }
+}

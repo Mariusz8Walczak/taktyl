@@ -22,6 +22,8 @@ export interface ToastOptions {
   /** Etykieta opcjonalnego przycisku, zwykle "Cofnij" (docs/11 pkt 11: zamiast okna systemowego). */
   actionLabel?: string;
   onAction?: () => void;
+  /** Czas wyswietlania w ms dla tego komunikatu (domyslnie czas dostawcy, 4000); "Cofnij" w koszyku: 5000. */
+  duration?: number;
 }
 
 interface ToastEntry extends ToastOptions {
@@ -109,7 +111,7 @@ export function ToastRegion() {
       aria-relevant="additions"
     >
       {ctx.toasts.map((t) => (
-        <ToastItem key={t.id} entry={t} duration={ctx.duration} onRemove={ctx.remove} />
+        <ToastItem key={t.id} entry={t} duration={t.duration ?? ctx.duration} onRemove={ctx.remove} />
       ))}
     </div>
   );
