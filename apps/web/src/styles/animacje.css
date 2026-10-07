@@ -1,0 +1,32 @@
+/* Ruch wspolny dla calego sklepu (TAKTYL-36, docs/07). Tylko transform, opacity i plynna zmiana koloru; czasy i krzywe
+   z tokenow (--d-*, --e-*); zero literalow czasu. Ruch kreatora (A-04...A-08, A-16) jest w builder.css, A-11 w cart.css. */
+
+/* A-03: licznik koszyka w naglowku podskakuje scale(1 -> 1.25 -> 1). Wlasciwosc `scale` sklada sie z istniejacym
+   `transform: translate(...)` licznika, wiec nie trzeba go powtarzac w klatkach kluczowych. */
+.licznik.is-skok {
+  animation: tk-skok-licznika var(--d-m) var(--e-osadzenie) 1;
+}
+@keyframes tk-skok-licznika {
+  50% {
+    scale: 1.25;
+  }
+}
+
+/* A-03: etykieta przycisku zmienia sie na "Dodano" (1,2 s, stan z modulu koszyka) - krotkie przenikniecie napisu */
+.tk-etykieta-dodano {
+  display: inline-block;
+  animation: tk-etykieta-dodano var(--d-s) var(--e-wyjscie) 1 both;
+}
+@keyframes tk-etykieta-dodano {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .licznik.is-skok,
+  .tk-etykieta-dodano {
+    animation: none;
+  }
+}
