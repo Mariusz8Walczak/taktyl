@@ -1,6 +1,6 @@
 # I-006 (ADR-0008, ADR-0009, docs/19 par. 5, TAKTYL-7, TAKTYL-8): CI Taktyla.
 # Wszystko w kontenerach, tak samo jak lokalnie (docker compose). Tylko GITHUB_TOKEN, uprawnienia minimalne.
-# Jobs: lint, typecheck, unit, build-images, e2e-docker, audyt-tokenow, kontrola-sciezek, gitleaks, audit-deps.
+# Jobs: lint, typecheck, unit, build-images, e2e-docker, e2e-demo, actionlint, audyt-tokenow, kontrola-sciezek, gitleaks, audit-deps.
 # a11y i perf-budget (docs/19 par. 5) dojda razem z Playwright i Lighthouse (docs/12), gdy powstana scenariusze.
 name: CI
 
@@ -13,12 +13,15 @@ on:
 permissions:
   contents: read
 
+# I-009 (TAKTYL-65): anulowanie tylko dla PR (nowy push do PR zastepuje stary bieg). Push na main i reczne uruchomienia maja
+# osobna grupe na commit (sha), wiec KAZDY push na main dostaje pelny bieg, a szybkie pushe nie anuluja sie nawzajem.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   NODE_IMAGE: node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+  ACTIONLINT_IMAGE: rhysd/actionlint:1.7.12@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667
   GITLEAKS_IMAGE: ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
 
 jobs:
@@ -127,6 +130,51 @@ jobs:
       - name: Zatrzymanie stosu
         if: always()
         run: docker compose down -v
+
+  # I-009 (B-014, S31, S32, TAKTYL-65): tryb demo na pelnym stosie z profilem demo. Czas od "up" do gotowosci stosu jest
+  # mierzony i wypisany (S31: <= 10 min). Petla reset-demo ma odstep 60 s, wiec test czeka na samoczynny reset.
+  e2e-demo:
+    name: e2e-demo
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: .env z losowymi sekretami jednorazowymi, tryb demo
+        run: |
+          sh scripts/init-env.sh
+          sed -i 's/^DEMO_MODE=.*/DEMO_MODE=true/' .env
+          echo 'DEMO_RESET_INTERVAL_SECONDS=60' >> .env
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - name: Start stosu z profilem demo (czas do gotowosci, S31)
+        run: |
+          start=$(date +%s)
+          docker compose --profile demo up -d --build --wait
+          echo "S31: stos gotowy po $(( $(date +%s) - start )) s (limit 600 s)"
+          test $(( $(date +%s) - start )) -le 600
+      - name: Test dymny stosu
+        run: sh scripts/smoke-stack.sh
+      - name: "Test dymny trybu demo (S32 - reset przywraca seed, petla reset-demo)"
+        run: sh scripts/smoke-demo.sh --cycle
+      - name: Logi stosu przy bledzie
+        if: failure()
+        run: docker compose --profile demo ps -a && docker compose --profile demo logs --tail=200
+      - name: Zatrzymanie stosu
+        if: always()
+        run: docker compose --profile demo down -v
+
+  # I-009 (TAKTYL-65): lint workflowow w kontenerze (bez instalacji na runnerze), obraz przypiety digestem.
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: actionlint
+        run: docker run --rm -v "$PWD:/repo" -w /repo "$ACTIONLINT_IMAGE" -color
 
   kontrola-sciezek:
     name: kontrola-sciezek
