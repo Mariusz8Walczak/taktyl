@@ -1,0 +1,392 @@
+/* Karta produktu (TAKTYL-28): F-060...F-073, F-067, F-068. Wylacznie tokeny (regula 2) i rozmiary z bloku ponizej
+   (WEB-010). Punkty przelamania Bootstrapa 5 bez zmian (docs/06 §4): 576 / 768 / 992 / 1200 / 1400. */
+
+:root {
+  /* Najmniejsza szerokosc kafla wariantu (przelacznik, rozmiar podkladki); kafle zawijaja sie w siatce. */
+  --wariant-kafel-min: 8rem;
+  /* Wysokosc przyklejonego paska zakupu na telefonie: przycisk + odstep s2 u gory i u dolu (F-068). */
+  --pasek-zakupu-wys: calc(var(--tk-wys-przycisk) + var(--s2) * 2);
+}
+
+a.tk-btn {
+  text-decoration: none;
+}
+
+/* ---- uklad: galeria 7/12 + kolumna zakupu 5/12 (docs/05 §4) ---- */
+.produkt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s3);
+}
+@media (min-width: 992px) {
+  .produkt {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--s5);
+    align-items: start;
+  }
+}
+/* Kolumna zakupu przyklejona na czas przewijania galerii, ale tylko gdy miesci sie w oknie: wyzsza od okna
+   zostalaby przyklejona z ucietym dolem (docs/05 §4; docs/11 pulapka 26). */
+@media (min-width: 992px) and (min-height: 900px) {
+  .produkt__zakup {
+    position: sticky;
+    top: calc(var(--naglowek-wys) + var(--s2));
+    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
+    overflow-y: auto;
+  }
+}
+
+/* ---- galeria (F-060) ---- */
+.galeria__slajdy {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.galeria__slajdy::-webkit-scrollbar {
+  display: none;
+}
+.galeria__slajd {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: center;
+}
+@media (min-width: 992px) {
+  .galeria__slajdy {
+    display: block;
+    overflow: visible;
+  }
+  .galeria__slajd:not(.is-aktywny) {
+    display: none;
+  }
+}
+.galeria__miniatury {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s1);
+  margin-top: var(--s1);
+}
+.galeria__miniatura {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  width: 100%;
+  min-height: var(--cel-min);
+  padding: var(--s1);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font: inherit;
+  font-size: var(--t-xs);
+  text-align: left;
+  cursor: pointer;
+}
+.galeria__miniatura[aria-pressed="true"] {
+  border-color: var(--akcent);
+  box-shadow: inset 0 0 0 var(--tk-linia-1) var(--akcent);
+}
+/* Placeholder w miniaturze jest za maly na podpis: zostaje sam kwadrat, opis niesie podpis pod nim */
+.galeria__obraz-miniatury .tk-obraz__linia,
+.galeria__obraz-miniatury .tk-obraz__brak {
+  display: none;
+}
+.galeria__podpis {
+  overflow-wrap: anywhere;
+}
+/* Na wasnym ekranie telefonu miniatury sa za male na podpis; ujecie opisuje aria-label */
+@media (max-width: 575.98px) {
+  .galeria__podpis {
+    display: none;
+  }
+}
+
+/* ---- kolumna zakupu ---- */
+.zakup {
+  display: grid;
+  gap: var(--s2);
+}
+.zakup__plakietki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.zakup__nazwa {
+  margin: 0;
+  font-size: var(--t-2xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+  letter-spacing: var(--tracking-naglowek);
+  text-wrap: balance;
+}
+.zakup__opis {
+  margin: 0;
+  max-width: var(--max-tekst);
+}
+
+/* ---- cena z Omnibusem (F-064) ---- */
+.cena {
+  display: grid;
+  gap: var(--s1);
+}
+.cena__glowna {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s1) var(--s2);
+  margin: 0;
+}
+.cena__kwota {
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.cena__kwota--promocja {
+  color: var(--akcent);
+}
+.cena__przekreslona {
+  font-size: var(--t-l);
+  font-weight: var(--w-zwykla);
+  font-variant-numeric: tabular-nums;
+  color: var(--tekst-slaby);
+}
+.cena__omnibus {
+  margin: 0;
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+
+/* ---- wybor wariantu (F-062, F-063) ---- */
+.warianty {
+  display: grid;
+  gap: var(--s2);
+}
+.wariant {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.wariant__nazwa {
+  padding: 0;
+  margin-bottom: var(--s1);
+  font-size: var(--t-s);
+}
+.wariant__probki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+}
+.wariant__kafle {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--wariant-kafel-min), 1fr));
+  gap: var(--s1);
+}
+/* Kombinacja bez stanu jest wybieralna (S7), wiec kursor nie sugeruje blokady */
+.tk-kafel.is-wybieralny,
+.tk-probka.is-brak:not(:has(:disabled)) {
+  cursor: pointer;
+}
+.wariant__brak {
+  color: var(--tekst-slaby);
+}
+
+/* ---- dostepnosc i termin (F-065) ---- */
+.dostepnosc {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+}
+.dostepnosc p {
+  margin: 0;
+}
+.dostepnosc__stan {
+  font-weight: var(--w-mocna);
+}
+.dostepnosc__stan--ostatnie {
+  color: var(--uwaga);
+}
+.dostepnosc__stan--brak {
+  color: var(--tekst-slaby);
+}
+.dostepnosc__brak {
+  font-weight: var(--w-mocna);
+}
+.dostepnosc__termin {
+  font-size: var(--t-s);
+}
+
+/* ---- ilosc i przyciski (F-066) ---- */
+.zakup__akcje {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s2);
+  align-items: center;
+}
+.zakup__set {
+  grid-column: 1 / -1;
+  text-decoration: none;
+}
+.is-nieaktywna {
+  color: var(--tekst-slaby);
+}
+.zakup__powod {
+  margin: 0;
+  font-size: var(--t-s);
+  color: var(--tekst-slaby);
+}
+
+/* ---- pasek warunkow (F-067) ---- */
+.pasek-warunkow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s1) var(--s2);
+  padding-top: var(--s2);
+  border-top: var(--tk-linia-1) solid var(--linia);
+  font-size: var(--t-s);
+  color: var(--tekst);
+}
+
+/* ---- zakladki / harmonijka (F-070...F-073) ---- */
+.zakladki {
+  margin-top: var(--s5);
+}
+.zakladki__naglowek {
+  margin: 0;
+  font-size: var(--t-l);
+}
+.zakladki__przycisk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  width: 100%;
+  min-height: var(--cel-min);
+  padding: var(--s2) 0;
+  border: 0;
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  background: none;
+  color: var(--tekst);
+  font: inherit;
+  font-weight: var(--w-mocna);
+  text-align: left;
+  cursor: pointer;
+}
+.zakladki__przycisk::after {
+  content: "+" / "";
+}
+.zakladki__przycisk[aria-expanded="true"]::after {
+  content: "−" / "";
+}
+.zakladki__panel {
+  padding: var(--s3) 0;
+}
+.tekst-produktu {
+  max-width: var(--max-tekst);
+}
+.tekst-produktu p {
+  margin: 0 0 var(--s2);
+}
+.dostawa-lista {
+  display: grid;
+  gap: var(--s1);
+  margin-bottom: var(--s2);
+}
+.gpsr {
+  display: grid;
+  gap: var(--s2);
+  max-width: var(--max-tekst);
+  margin: 0;
+}
+.gpsr dt {
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.gpsr dd {
+  margin: 0;
+}
+@media (min-width: 992px) {
+  .zakladki {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--s3);
+    border-bottom: var(--tk-linia-1) solid var(--linia);
+  }
+  .zakladki__sekcja {
+    display: contents;
+  }
+  .zakladki__naglowek {
+    order: 1;
+    font-size: var(--t-m);
+  }
+  .zakladki__przycisk {
+    width: auto;
+    padding: var(--s2) var(--s1);
+    border-bottom: var(--tk-linia-2) solid transparent;
+  }
+  .zakladki__przycisk::after {
+    content: none;
+  }
+  .zakladki__przycisk[aria-expanded="true"] {
+    border-bottom-color: var(--akcent);
+  }
+  .zakladki__panel {
+    order: 2;
+    flex: 0 0 100%;
+  }
+}
+
+/* ---- przyklejony pasek zakupu na telefonie (F-068) ---- */
+.pasek-zakupu {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-naglowek);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2);
+  border-top: var(--tk-linia-1) solid var(--linia);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-2);
+}
+.pasek-zakupu__opis {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.pasek-zakupu__opis p {
+  margin: 0;
+}
+.pasek-zakupu__cena {
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.pasek-zakupu__wariant {
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+  overflow-wrap: anywhere;
+}
+.pasek-zakupu__przycisk {
+  flex: none;
+}
+@media (min-width: 992px) {
+  .pasek-zakupu {
+    display: none;
+  }
+}
+/* Miejsce na pasek: stopka daje sie przewinac w calosci, fokus nie chowa sie pod paskiem (docs/11 pulapka 26) */
+@media (max-width: 991.98px) {
+  html.ma-pasek-zakupu {
+    scroll-padding-bottom: var(--pasek-zakupu-wys);
+  }
+  html.ma-pasek-zakupu body {
+    padding-bottom: var(--pasek-zakupu-wys);
+  }
+}
