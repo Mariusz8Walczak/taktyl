@@ -1,0 +1,4 @@
+/* @taktyl/ui: kolejnosc arkuszy w aplikacji: tokens.css -> taktyl.css -> ui.css (D-007). */
+@import "./rozmiary.css";
+@import "./podstawy.css";
+@import "./wybor-i-pola.css";

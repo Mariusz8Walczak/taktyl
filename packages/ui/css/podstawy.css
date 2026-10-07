@@ -1,0 +1,322 @@
+/* Komponenty podstawowe: przycisk, odnosnik, ikona-przycisk, kbd, plakietka, komunikat, tabela, ilosc.
+   Wylacznie zmienne z tokens.css i rozmiary.css (regula 2). Ruch: A-01, A-18 (docs/07). */
+
+/* Tekst tylko dla czytnika; tez ukryte pola radio (nadal dostepne z klawiatury) */
+.tk-sr-only,
+.tk-probka__input,
+.tk-kafel__input {
+  position: absolute;
+  width: var(--tk-linia-1);
+  height: var(--tk-linia-1);
+  margin: calc(var(--tk-linia-1) * -1);
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Ikony: glify dostarcza font ikon szablonu przez lokalny overlay (ADR-0004); tu tylko rozmiar */
+.tk-icon {
+  display: inline-block;
+  flex: none;
+  width: var(--tk-ikona);
+  height: var(--tk-ikona);
+  line-height: 1;
+  font-size: var(--tk-ikona);
+  text-align: center;
+  color: inherit;
+}
+.tk-icon--l {
+  width: var(--tk-ikona-l);
+  height: var(--tk-ikona-l);
+  font-size: var(--tk-ikona-l);
+}
+
+/* Fokus klawiatury (docs/06 §5) */
+.tk-btn:focus-visible,
+.tk-ikonka:focus-visible,
+.tk-zeton:focus-visible,
+.tk-link:focus-visible,
+.tk-pole__kontrolka:focus-visible,
+.tk-menu__pozycja:focus-visible,
+.tk-toast__akcja:focus-visible,
+.tk-probka__input:focus-visible ~ .tk-probka__kolo {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+
+/* Przycisk (A-01) */
+.tk-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s1);
+  min-width: var(--cel-min);
+  min-height: var(--tk-wys-przycisk);
+  padding: 0 var(--s3);
+  border: 0;
+  border-radius: var(--r);
+  overflow: hidden;
+  font-family: var(--font);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    transform var(--d-klik) var(--e-wyjscie),
+    box-shadow var(--d-klik) var(--e-wyjscie),
+    background-color var(--d-s) var(--e-wyjscie),
+    border-color var(--d-s) var(--e-wyjscie);
+}
+.tk-btn--glowny {
+  background-color: var(--akcent);
+  color: var(--akcent-tekst);
+  box-shadow: var(--krawedz-klawisza);
+}
+.tk-btn--glowny:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--akcent-hover);
+}
+.tk-btn--poboczny {
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  box-shadow: var(--krawedz-klawisza-pob);
+}
+.tk-btn--poboczny:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--tlo-alt);
+}
+.tk-btn--glowny:active:not(:disabled):not([aria-disabled="true"]),
+.tk-btn--glowny.is-wcisniety {
+  transform: translateY(var(--tk-klik));
+  box-shadow: var(--krawedz-klawisza-wcisniety);
+}
+.tk-btn--poboczny:active:not(:disabled):not([aria-disabled="true"]),
+.tk-btn--poboczny.is-wcisniety {
+  transform: translateY(var(--tk-klik));
+  box-shadow: var(--krawedz-klawisza-pob-wcisniety);
+}
+/* Nieaktywny: tlo --linia, tekst --tekst-slaby, bez krawedzi; powod podaje wywolujacy obok przycisku */
+.tk-btn:disabled {
+  background-color: var(--linia);
+  color: var(--tekst-slaby);
+  border-color: var(--linia);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+/* Ladowanie: etykieta zostaje (czytnik), szkielet z polyskiem A-18 tylko w trakcie ladowania */
+.tk-btn.is-ladowanie {
+  cursor: progress;
+}
+.tk-btn.is-ladowanie::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, currentcolor 35%, transparent),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: tk-blysk calc(var(--d-l) * 4) var(--e-wyjscie) infinite;
+  pointer-events: none;
+}
+@keyframes tk-blysk {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Odnosnik i przycisk tekstowy */
+.tk-link {
+  color: var(--akcent);
+  text-decoration: underline;
+  text-decoration-thickness: var(--tk-linia-1);
+  text-underline-offset: 0.2em;
+  border-radius: var(--r);
+  transition: text-decoration-thickness var(--d-s) var(--e-wyjscie);
+}
+.tk-link:hover {
+  text-decoration-thickness: var(--tk-linia-2);
+}
+.tk-link--przycisk {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+.tk-link--przycisk:disabled {
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+
+/* Ikona-przycisk 44 x 44 */
+.tk-ikonka {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--cel-min);
+  height: var(--cel-min);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r);
+  background-color: transparent;
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform var(--d-klik) var(--e-wyjscie),
+    background-color var(--d-s) var(--e-wyjscie);
+}
+.tk-ikonka:hover:not(:disabled) {
+  background-color: var(--tlo-alt);
+}
+.tk-ikonka:active:not(:disabled),
+.tk-ikonka.is-wcisniety {
+  transform: translateY(var(--tk-klik));
+}
+.tk-ikonka[aria-pressed="true"] {
+  background-color: var(--akcent-slaby);
+  color: var(--akcent);
+}
+.tk-ikonka:disabled {
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+
+/* Klawisz kbd (A-17) */
+.tk-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tk-wys-kbd);
+  min-height: var(--tk-wys-kbd);
+  padding: 0 var(--s1);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-bottom-width: var(--tk-linia-2);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: 1;
+  transition: transform var(--d-klik) var(--e-wyjscie);
+}
+.tk-kbd.is-wcisniety {
+  transform: translateY(var(--tk-klik));
+}
+
+/* Plakietka */
+.tk-plakietka {
+  display: inline-flex;
+  align-items: center;
+  padding: calc(var(--s1) / 2) var(--s1);
+  border-radius: var(--r-pelny);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.tk-plakietka--nowosc,
+.tk-plakietka--bestseller {
+  background-color: var(--tekst);
+  color: var(--tlo);
+}
+.tk-plakietka--promocja {
+  background-color: var(--akcent-slaby);
+  color: var(--akcent);
+}
+.tk-plakietka--ostatnie-sztuki {
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
+.tk-plakietka--brak {
+  background-color: var(--tlo-alt);
+  color: var(--tekst-slaby);
+}
+
+/* Komunikat w tresci */
+.tk-komunikat {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+  padding: var(--s2);
+  border-radius: var(--r);
+  font-size: var(--t-s);
+  line-height: 1.3;
+}
+.tk-komunikat__tresc {
+  flex: 1;
+  min-width: 0;
+}
+.tk-komunikat__tytul {
+  display: block;
+  font-weight: var(--w-mocna);
+}
+.tk-komunikat--sukces {
+  background-color: var(--sukces-tlo);
+  color: var(--sukces);
+}
+.tk-komunikat--uwaga {
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
+.tk-komunikat--blad {
+  background-color: var(--blad-tlo);
+  color: var(--blad);
+}
+.tk-komunikat--info {
+  background-color: var(--tlo-alt);
+  color: var(--tekst);
+}
+
+/* Tabela specyfikacji */
+.tk-spec {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-s);
+}
+.tk-spec th,
+.tk-spec td {
+  padding: var(--s1) var(--s2) var(--s1) 0;
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  text-align: left;
+  vertical-align: top;
+}
+.tk-spec th {
+  width: 40%;
+  color: var(--tekst-slaby);
+  font-weight: var(--w-zwykla);
+}
+.tk-spec td {
+  color: var(--tekst);
+}
+
+/* Licznik ilosci */
+.tk-ilosc {
+  display: inline-flex;
+  align-items: center;
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+}
+.tk-ilosc__wartosc {
+  min-width: var(--cel-min);
+  text-align: center;
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,212 @@
+/* Probka koloru, kafel wyboru (A-05), zeton filtra, pole formularza. Tylko tokeny (regula 2). */
+
+/* Probka koloru */
+.tk-probka {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  min-width: var(--cel-min);
+  min-height: var(--cel-min);
+  cursor: pointer;
+  font-size: var(--t-s);
+  color: var(--tekst);
+}
+.tk-probka__kolo {
+  position: relative;
+  flex: none;
+  width: var(--tk-probka);
+  height: var(--tk-probka);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+  background-color: var(--tk-swatch);
+  transition: box-shadow var(--d-s) var(--e-wyjscie);
+}
+.tk-probka__input:checked ~ .tk-probka__kolo {
+  box-shadow:
+    0 0 0 var(--tk-linia-2) var(--powierzchnia),
+    0 0 0 calc(var(--tk-linia-2) * 2) var(--akcent);
+}
+.tk-probka__input:checked ~ .tk-probka__nazwa {
+  font-weight: var(--w-mocna);
+}
+.tk-probka__brak {
+  margin-left: var(--s1);
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+  font-weight: var(--w-zwykla);
+}
+.tk-probka.is-brak {
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+.tk-probka.is-brak .tk-probka__kolo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: var(--tk-linia-2);
+  background-color: var(--tekst-slaby);
+  transform: rotate(-45deg);
+}
+
+/* Kafel wyboru */
+.tk-kafel {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  min-height: var(--cel-min);
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  cursor: pointer;
+  transition:
+    background-color var(--d-s) var(--e-wyjscie),
+    border-color var(--d-s) var(--e-wyjscie),
+    box-shadow var(--d-s) var(--e-wyjscie);
+}
+.tk-kafel:hover:not(.is-brak) {
+  border-color: var(--tekst-slaby);
+}
+.tk-kafel__tresc {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+  min-width: 0;
+  padding-right: var(--s3);
+}
+.tk-kafel__tytul {
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.tk-kafel__opis,
+.tk-kafel__brak {
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.tk-kafel__znacznik {
+  position: absolute;
+  top: var(--s1);
+  right: var(--s1);
+  display: inline-flex;
+  color: var(--akcent);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    transform var(--d-m) var(--e-osadzenie),
+    opacity var(--d-m) var(--e-osadzenie);
+}
+.tk-kafel:has(.tk-kafel__input:checked) {
+  border-color: var(--akcent);
+  background-color: var(--akcent-slaby);
+  box-shadow: inset 0 0 0 var(--tk-linia-1) var(--akcent);
+}
+.tk-kafel__input:checked ~ .tk-kafel__znacznik {
+  opacity: 1;
+  transform: scale(1);
+}
+.tk-kafel:has(.tk-kafel__input:focus-visible) {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-2);
+}
+.tk-kafel.is-brak {
+  background-color: var(--tlo-alt);
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+.tk-kafel.is-brak .tk-kafel__tytul {
+  color: var(--tekst-slaby);
+}
+
+/* Zeton filtra */
+.tk-zeton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: var(--t-s);
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    transform var(--d-klik) var(--e-wyjscie),
+    background-color var(--d-s) var(--e-wyjscie),
+    border-color var(--d-s) var(--e-wyjscie);
+}
+.tk-zeton:hover:not(:disabled):not(.is-aktywny) {
+  background-color: var(--tlo-alt);
+}
+.tk-zeton.is-aktywny {
+  background-color: var(--akcent-slaby);
+  border-color: var(--akcent);
+  color: var(--akcent);
+}
+.tk-zeton:active:not(:disabled),
+.tk-zeton.is-wcisniety {
+  transform: translateY(var(--tk-klik));
+}
+.tk-zeton:disabled {
+  background-color: var(--tlo-alt);
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+
+/* Pole formularza */
+.tk-pole {
+  display: grid;
+  gap: var(--s1);
+  min-width: 0;
+}
+.tk-pole__etykieta {
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  line-height: 1.3;
+}
+.tk-pole__kontrolka {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--tk-wys-pole);
+  padding: 0 var(--s2);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: var(--t-s);
+  transition: border-color var(--d-s) var(--e-wyjscie);
+}
+textarea.tk-pole__kontrolka {
+  padding: var(--s1) var(--s2);
+}
+.tk-pole__kontrolka:hover:not(:disabled) {
+  border-color: var(--tekst-slaby);
+}
+.tk-pole__kontrolka:disabled {
+  background-color: var(--tlo-alt);
+  color: var(--tekst-slaby);
+  cursor: not-allowed;
+}
+.tk-pole__kontrolka[aria-invalid="true"] {
+  border-color: var(--blad);
+  box-shadow: inset 0 0 0 var(--tk-linia-1) var(--blad);
+}
+.tk-pole__podpowiedz {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.tk-pole__blad {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s1);
+  margin: 0;
+  color: var(--blad);
+  font-size: var(--t-s);
+}

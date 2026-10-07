@@ -1,0 +1,20 @@
+/* Rozmiary komponentow (D-007, TAKTYL-24).
+   Wartosci wynikaja z docs/06 §5 i docs/07; tokens.css ich nie definiuje (poza --cel-min = 44 px).
+   To jedyne miejsce w pakiecie, gdzie wolno wpisac px/rem. Zmiana wartosci = decyzja czlowieka (Q-xx). */
+:root {
+  --tk-wys-przycisk: 48px; /* przycisk glowny i poboczny */
+  --tk-wys-pole: 48px; /* pole formularza */
+  --tk-wys-kbd: 28px; /* klawisz kbd */
+  --tk-probka: 28px; /* kolo probki koloru */
+  --tk-ikona: 20px; /* ikona w przyciskach (docs/09 §2) */
+  --tk-ikona-l: 24px; /* ikona w pasku warunkow */
+  --tk-linia-1: 1px; /* obrys */
+  --tk-linia-2: 2px; /* obrys wybranego, dolna krawedz kbd, offset fokusu */
+  --tk-fokus-grub: 3px; /* docs/06 §5: :focus-visible 3 px */
+  --tk-klik: 2px; /* A-01: przesuniecie klawisza o 2 px */
+  --tk-mm: 1px; /* plotno podgladu: 1 px = 1 mm (docs/09 §4.2) */
+  --tk-szuflada-szer: 26rem;
+  --tk-okno-szer: 36rem;
+  --tk-menu-min: 14rem;
+  --tk-toast-szer: 28rem;
+}
