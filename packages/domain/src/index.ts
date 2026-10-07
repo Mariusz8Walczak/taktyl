@@ -9,3 +9,4 @@ export * from "./rules.js";
 export * from "./shipping.js";
 export * from "./nip.js";
 export * from "./search.js";
+export * from "./filters.js";
