@@ -1,3 +1,4 @@
+# I-006 (TAKTYL-7): aktualizacje zaleznosci, obrazow bazowych (tag + digest) i akcji.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -5,10 +6,20 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: docker
+    directories:
+      - /apps/api
+      - /apps/web
+      - /apps/admin
+      - /infra/docker
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker-compose
     directory: /
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
-    directory: /
+    directories:
+      - /
+      - /.github/actions/prepare
     schedule:
       interval: weekly

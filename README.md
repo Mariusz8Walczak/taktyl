@@ -46,7 +46,7 @@ Szczegóły: `docs/14-architektura.md`, `docs/18-przeplywy.md`.
 Wymagania: Docker z Compose v2 i git. Lokalny Node ani PostgreSQL nie są potrzebne.
 
 ```bash
-cp .env.example .env              # uzupełnij wartości CHANGE_ME
+cp .env.example .env              # uzupełnij wartości CHANGE_ME (albo: make env, losowe sekrety lokalne)
 docker compose up --build         # baza, migracje, seed, API, sklep, backpanel, proxy
 ```
 
@@ -54,12 +54,16 @@ docker compose up --build         # baza, migracje, seed, API, sklep, backpanel,
 |---|---|
 | `http://taktyl.localhost` | sklep |
 | `http://admin.taktyl.localhost` | backpanel |
-| `http://api.taktyl.localhost` | API (OpenAPI pod `/docs`) |
+| `http://api.taktyl.localhost` | API (`/health`, OpenAPI pod `/docs`) |
+
+Gdy port 80 jest zajęty, ustaw `PROXY_HTTP_PORT` w `.env` (np. `8080`) i wchodź na `http://taktyl.localhost:8080`.
 
 ```bash
-docker compose --profile dev up                       # hot reload
-docker compose --profile test run --rm test           # testy jednostkowe, e2e (S1–S25), a11y, budżet
+make dev                                              # hot reload (profil dev, kod z hosta)
+docker compose --profile test run --rm test           # testy w kontenerze (Vitest, baza testowa w pamięci)
 ```
+
+Skróty (`make help`): `make up`, `make dev`, `make test`, `make reset` (dane demo z `data/*.json`), `make logs`, `make down`, `make lint`, `make smoke`. CI uruchamia te same kontenery (`.github/workflows/ci.yml`). Włącz hook pre-commit: `git config core.hooksPath .githooks`.
 
 Stan projektu: kod nie powstał jeszcze w całości, więc polecenia opisują stan docelowy (`docs/adr/0009-docker-first.md`).
 

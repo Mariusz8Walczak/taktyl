@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test reset logs build ps lint typecheck audit-tokens clean
+.PHONY: help env up down dev dev-down test reset logs build ps lint typecheck audit-tokens smoke clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -57,6 +57,9 @@ typecheck: env ## TypeScript w kontenerze
 
 audit-tokens: env ## audyt tokenow w kontenerze
 	$(COMPOSE) --profile test run --rm --no-deps test pnpm audit:tokens
+
+smoke: ## test dymny dzialajacego stosu (noindex na hostach, /health, 18 produktow)
+	@sh scripts/smoke-stack.sh
 
 clean: ## zatrzymuje stos i KASUJE wolumeny (baza, media, node_modules dev)
 	$(COMPOSE) --profile dev --profile test --profile demo down -v --remove-orphans
