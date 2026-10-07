@@ -320,6 +320,7 @@ model Order {
   items            OrderItem[]
   statusHistory    OrderStatusHistory[]
   payment          Payment?
+  notes            OrderNote[]
 
   @@index([status, createdAt(sort: Desc)])
   @@index([createdAt(sort: Desc)])
@@ -358,6 +359,20 @@ model OrderStatusHistory {
 
   @@index([orderNumber, at])
   @@map("order_status_history")
+}
+
+// B-204: notatki wewnetrzne do zamowienia (autor, czas); niewidoczne dla klienta.
+model OrderNote {
+  id          BigInt     @id @default(autoincrement())
+  orderNumber String     @map("order_number")
+  authorId    String?    @map("author_id")
+  body        String
+  at          DateTime   @db.Timestamptz(6)
+  order       Order      @relation(fields: [orderNumber], references: [number], onDelete: Cascade)
+  author      AdminUser? @relation(fields: [authorId], references: [id])
+
+  @@index([orderNumber, at])
+  @@map("order_notes")
 }
 
 // Platnosc symulowana. Brak pol na dane kart, kody BLIK i hasla (regula 10).
@@ -466,6 +481,7 @@ model AdminUser {
   auditLogs    AuditLog[]
   priceChanges PriceHistory[]
   revisions    ContentRevision[]
+  orderNotes   OrderNote[]
 
   @@map("admin_users")
 }
@@ -476,6 +492,7 @@ model Session {
   csrfSecret String    @map("csrf_secret")
   expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
   createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastSeenAt DateTime  @default(now()) @map("last_seen_at") @db.Timestamptz(6)
   ipHash     String?   @map("ip_hash")
   userAgent  String?   @map("user_agent")
   user       AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -497,12 +514,26 @@ model AuditLog {
   before    Json?
   after     Json?
   requestId String     @map("request_id")
+  ipHash    String?    @map("ip_hash")
   actor     AdminUser? @relation(fields: [actorId], references: [id])
   outbox    Outbox[]
 
   @@index([entity, entityId, at(sort: Desc)])
   @@index([at(sort: Desc)])
+  @@index([actorId, at(sort: Desc)])
   @@map("audit_log")
+}
+
+// B-004: nieudane proby logowania (klucze zhashowane HMAC); wiersze starsze niz okno sa czyszczone.
+model LoginAttempt {
+  id        BigInt   @id @default(autoincrement())
+  emailHash String   @map("email_hash")
+  ipHash    String   @map("ip_hash")
+  at        DateTime @db.Timestamptz(6)
+
+  @@index([emailHash, at])
+  @@index([ipHash, at])
+  @@map("login_attempts")
 }
 
 model Outbox {

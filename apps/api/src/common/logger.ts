@@ -1,15 +1,28 @@
 // B-213 (docs/14 par. 8): logi strukturalne JSON (pino) z polem service; bez danych osobowych i sekretow.
 import type { LoggerService } from "@nestjs/common";
-import pino, { type Logger } from "pino";
+import pino, { type DestinationStream, type Logger } from "pino";
 
-export function createLogger(level: string, enabled = true): Logger {
-  return pino({
-    level: enabled ? level : "silent",
-    base: { service: "api" },
-    timestamp: pino.stdTimeFunctions.isoTime,
-    formatters: { level: (label) => ({ level: label }) },
-    redact: ["req.headers.authorization", "req.headers.cookie", "req.headers['x-order-token']"],
-  });
+/** `destination` pozwala testom przechwycic logi (domyslnie stdout). */
+export function createLogger(
+  level: string,
+  enabled = true,
+  destination?: DestinationStream,
+): Logger {
+  return pino(
+    {
+      level: enabled ? level : "silent",
+      base: { service: "api" },
+      timestamp: pino.stdTimeFunctions.isoTime,
+      formatters: { level: (label) => ({ level: label }) },
+      redact: [
+        "req.headers.authorization",
+        "req.headers.cookie",
+        "req.headers['x-order-token']",
+        "req.headers['x-csrf-token']",
+      ],
+    },
+    destination,
+  );
 }
 
 /** Adapter Nest -> pino (komunikaty frameworka tez ida jako JSON). */

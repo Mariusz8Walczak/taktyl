@@ -29,4 +29,6 @@ export const updateUserRequestSchema = z
     reset_password: z.literal(true).optional(),
   })
   .refine((v) => Object.keys(v).length > 0, "pusty PATCH");
+/** PATCH /users/{id}: przy reset_password serwer zwraca haslo tymczasowe jednorazowo (nie jest zapisywane w dzienniku). */
+export const updateUserResponseSchema = adminUserSchema.extend({ temporary_password: z.string().min(12).optional() });
 export const usersResponseSchema = z.object({ items: z.array(adminUserSchema) });

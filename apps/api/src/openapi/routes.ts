@@ -1,14 +1,19 @@
 // B-231 (docs/16 par. 2): rejestr udokumentowanych endpointow. Schematy to schematy z @taktyl/contracts (zrodlo prawdy);
 // test sprawdza, ze rejestr pokrywa dokladnie trasy zarejestrowane w Nest (w obie strony).
 import {
+  adminUserSchema,
+  auditListQuerySchema,
+  auditListSchema,
   categoriesResponseSchema,
   colorsResponseSchema,
   completeSetQuerySchema,
   completeSetResponseSchema,
+  createUserRequestSchema,
   facetsQuerySchema,
   facetsResponseSchema,
   listingQuerySchema,
   listingResponseSchema,
+  loginRequestSchema,
   orderCreatedSchema,
   orderDetailSchema,
   orderListSchema,
@@ -26,9 +31,14 @@ import {
   rulesSchema,
   searchQuerySchema,
   searchResponseSchema,
+  sessionResponseSchema,
   shippingEstimateQuerySchema,
   shippingEstimateResponseSchema,
   switchesResponseSchema,
+  updateUserRequestSchema,
+  updateUserResponseSchema,
+  usersResponseSchema,
+  type Role,
 } from "@taktyl/contracts";
 import type { z } from "zod";
 
@@ -39,7 +49,7 @@ export interface HeaderDoc {
 }
 
 export interface RouteDoc {
-  method: "get" | "post";
+  method: "get" | "post" | "put" | "patch" | "delete";
   /** Sciezka w stylu OpenAPI, z prefiksem /v1 (poza health). */
   path: string;
   summary: string;
@@ -55,8 +65,18 @@ export interface RouteDoc {
   /** Dodatkowe kody bledow poza wspolnymi (docs/16 par. 2). */
   errors?: { status: number; code: string }[];
   noStore?: boolean;
-  security?: "orderToken";
+  /** orderToken = X-Order-Token (publiczne zamowienia); session = ciasteczko sesji backpanelu (+ X-CSRF-Token przy mutacji). */
+  security?: "orderToken" | "session";
+  /** Minimalna rola trasy admina (docs/16 par. 1.2). */
+  role?: Role;
 }
+
+/** B-003: naglowek CSRF wymagany przy kazdej mutacji admina (dokladany w builderze). */
+export const CSRF_HEADER: HeaderDoc = {
+  name: "X-CSRF-Token",
+  required: true,
+  description: "Token CSRF zwrocony w csrf_token odpowiedzi logowania lub GET /v1/admin/auth/me.",
+};
 
 const ORDER_TOKEN: HeaderDoc = {
   name: "X-Order-Token",
@@ -294,5 +314,117 @@ export const ROUTES: RouteDoc[] = [
     ],
     noStore: true,
     security: "orderToken",
+  },
+
+  // ---- B-001..B-013 (TAKTYL-45): uwierzytelnianie, uzytkownicy, dziennik zmian --------------------------------------
+  {
+    method: "post",
+    path: "/v1/admin/auth/login",
+    summary: "Logowanie e-mailem i haslem (ustawia ciasteczko sesji)",
+    tag: "admin: sesja",
+    ids: ["B-001", "B-002", "B-004"],
+    body: loginRequestSchema,
+    success: { status: 200, schema: sessionResponseSchema, description: "Sesja i token CSRF." },
+    errors: [
+      { status: 401, code: "unauthorized (jednolity komunikat)" },
+      { status: 429, code: "rate_limited (blokada po 5 probach, Retry-After)" },
+    ],
+    noStore: true,
+  },
+  {
+    method: "post",
+    path: "/v1/admin/auth/demo-viewer",
+    summary: "Sesja roli viewer bez hasla (tylko DEMO_MODE=true)",
+    tag: "admin: sesja",
+    ids: ["B-007"],
+    success: { status: 200, schema: sessionResponseSchema, description: "Sesja viewer." },
+    errors: [{ status: 404, code: "not_found (gdy tryb demo wylaczony)" }],
+    noStore: true,
+  },
+  {
+    method: "post",
+    path: "/v1/admin/auth/logout",
+    summary: "Wylogowanie (uniewaznienie sesji po stronie serwera)",
+    tag: "admin: sesja",
+    ids: ["B-009"],
+    success: { status: 204, description: "Sesja zakonczona." },
+    security: "session",
+    role: "viewer",
+    noStore: true,
+  },
+  {
+    method: "get",
+    path: "/v1/admin/auth/me",
+    summary: "Biezacy uzytkownik, rola i token CSRF",
+    tag: "admin: sesja",
+    ids: ["B-001"],
+    success: { status: 200, schema: sessionResponseSchema, description: "Sesja." },
+    security: "session",
+    role: "viewer",
+    noStore: true,
+  },
+  {
+    method: "get",
+    path: "/v1/admin/auth/session",
+    summary: "Alias GET /v1/admin/auth/me",
+    tag: "admin: sesja",
+    ids: ["B-001"],
+    success: { status: 200, schema: sessionResponseSchema, description: "Sesja." },
+    security: "session",
+    role: "viewer",
+    noStore: true,
+  },
+  {
+    method: "get",
+    path: "/v1/admin/users",
+    summary: "Lista kont backpanelu",
+    tag: "admin: uzytkownicy",
+    ids: ["B-013"],
+    success: { status: 200, schema: usersResponseSchema, description: "Konta." },
+    security: "session",
+    role: "owner",
+    noStore: true,
+  },
+  {
+    method: "post",
+    path: "/v1/admin/users",
+    summary: "Nowe konto (owner, editor lub viewer z haslem poczatkowym)",
+    tag: "admin: uzytkownicy",
+    ids: ["B-013"],
+    body: createUserRequestSchema,
+    success: { status: 201, schema: adminUserSchema, description: "Konto utworzone." },
+    errors: [{ status: 409, code: "conflict (duplikat e-maila)" }],
+    security: "session",
+    role: "owner",
+    noStore: true,
+  },
+  {
+    method: "patch",
+    path: "/v1/admin/users/{id}",
+    summary: "Zmiana roli, dezaktywacja, reset hasla (haslo tymczasowe zwracane raz)",
+    tag: "admin: uzytkownicy",
+    ids: ["B-013"],
+    pathParams: { id: "Identyfikator konta" },
+    body: updateUserRequestSchema,
+    success: { status: 200, schema: updateUserResponseSchema, description: "Konto po zmianie." },
+    errors: [
+      { status: 404, code: "not_found" },
+      { status: 409, code: "conflict (ostatni owner)" },
+    ],
+    security: "session",
+    role: "owner",
+    noStore: true,
+  },
+  {
+    method: "get",
+    path: "/v1/admin/audit",
+    summary: "Dziennik zmian z filtrami (uzytkownik, encja, zakres dat); viewer bez pol osobowych",
+    tag: "admin: dziennik",
+    ids: ["B-011", "B-012"],
+    query: auditListQuerySchema,
+    success: { status: 200, schema: auditListSchema, description: "Strona dziennika." },
+    security: "session",
+    role: "viewer",
+    noStore: true,
   },
 ];

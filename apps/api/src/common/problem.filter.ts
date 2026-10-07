@@ -59,6 +59,9 @@ export class ProblemFilter implements ExceptionFilter {
     const res = http.getResponse<Response>();
     const instance = req.id;
     let problem: Problem;
+    if (exception instanceof AppException && exception.headers) {
+      for (const [k, v] of Object.entries(exception.headers)) res.setHeader(k, v);
+    }
 
     if (exception instanceof AppException) {
       problem = buildProblem(

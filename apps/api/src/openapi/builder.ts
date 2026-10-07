@@ -2,7 +2,7 @@
 // (z.toJSONSchema, draft 2020-12 = JSON Schema OpenAPI 3.1). Zadnych recznie pisanych kopii kształtow.
 import { problemSchema } from "@taktyl/contracts";
 import { z } from "zod";
-import { ROUTES, type RouteDoc } from "./routes.js";
+import { CSRF_HEADER, ROUTES, type RouteDoc } from "./routes.js";
 
 type Json = Record<string, unknown>;
 
@@ -45,7 +45,10 @@ function operation(route: RouteDoc): Json {
       schema: { type: "string" },
     })),
     ...(route.query ? queryParameters(route.query) : []),
-    ...(route.headers ?? []).map((h) => ({
+    ...[
+      ...(route.headers ?? []),
+      ...(route.security === "session" && route.method !== "get" ? [CSRF_HEADER] : []),
+    ].map((h) => ({
       name: h.name,
       in: "header",
       required: h.required,
@@ -72,13 +75,21 @@ function operation(route: RouteDoc): Json {
   for (const e of route.errors ?? []) {
     responses[String(e.status)] = problemResponse(e.code);
   }
+  if (route.security === "session") {
+    responses["401"] = problemResponse("unauthorized (brak lub wygasla sesja)");
+    responses["403"] = problemResponse(
+      route.method === "get"
+        ? "forbidden (rola za niska)"
+        : "forbidden (rola za niska) | csrf_invalid",
+    );
+  }
   if (route.path.startsWith("/v1/"))
     responses["429"] = problemResponse("rate_limited (naglowek Retry-After)");
   responses["500"] = problemResponse("internal_error");
   return {
     tags: [route.tag],
     summary: route.summary,
-    description: `ID: ${route.ids.join(", ")}`,
+    description: `ID: ${route.ids.join(", ")}${route.role ? `. Minimalna rola: ${route.role}.` : ""}`,
     operationId: `${route.method}${route.path.replace(/[^A-Za-z0-9]+(.)?/g, (_, c: string | undefined) => (c ? c.toUpperCase() : ""))}`,
     ...(parameters.length > 0 ? { parameters } : {}),
     ...(route.body
@@ -89,7 +100,8 @@ function operation(route: RouteDoc): Json {
           },
         }
       : {}),
-    ...(route.security ? { security: [{ OrderToken: [] }] } : {}),
+    ...(route.security === "orderToken" ? { security: [{ OrderToken: [] }] } : {}),
+    ...(route.security === "session" ? { security: [{ AdminSession: [] }] } : {}),
     responses,
   };
 }
@@ -113,6 +125,13 @@ export function buildOpenApi(): Json {
     components: {
       schemas: { Problem: jsonSchema(problemSchema, "output") },
       securitySchemes: {
+        AdminSession: {
+          type: "apiKey",
+          in: "cookie",
+          name: "taktyl_session",
+          description:
+            "Sesja backpanelu (HttpOnly; SameSite=Strict); mutacje wymagaja tez X-CSRF-Token (ADR-0006).",
+        },
         OrderToken: {
           type: "apiKey",
           in: "header",

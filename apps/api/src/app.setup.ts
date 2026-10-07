@@ -34,13 +34,17 @@ export function configureApp(app: NestExpressApplication, config: AppConfig, log
   app.useGlobalFilters(new ProblemFilter(logger));
   app.enableCors({
     origin: config.API_CORS_ORIGINS,
-    methods: ["GET", "POST", "HEAD", "OPTIONS"],
+    // B-002, B-003: backpanel (inna domena tej samej witryny) wysyla ciasteczko sesji i naglowek CSRF.
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+    credentials: true,
     allowedHeaders: [
       "Content-Type",
       "Idempotency-Key",
       "X-Order-Token",
       "X-Request-Id",
       "If-None-Match",
+      "If-Match",
+      "X-CSRF-Token",
     ],
     exposedHeaders: ["X-Request-Id", "ETag", "Retry-After"],
     maxAge: 600,

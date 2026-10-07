@@ -40,4 +40,30 @@ describe("B-103 loadEnv", () => {
       loadEnv({ SESSION_SECRET: base.SESSION_SECRET, REVALIDATE_SECRET: base.REVALIDATE_SECRET }),
     ).toThrow(/DATABASE_URL/);
   });
+
+  it("B-002/B-004: domyslne wygasanie sesji (12 h, 30 min) i limity logowania (5 / 15 min)", () => {
+    const c = loadEnv(base);
+    expect([c.SESSION_TTL_HOURS, c.SESSION_IDLE_MINUTES]).toEqual([12, 30]);
+    expect([c.LOGIN_MAX_ATTEMPTS, c.LOGIN_WINDOW_MINUTES]).toEqual([5, 15]);
+    expect(c.SESSION_COOKIE_SECURE).toBeUndefined();
+    expect(loadEnv({ ...base, SESSION_COOKIE_SECURE: "false" }).SESSION_COOKIE_SECURE).toBe(false);
+  });
+
+  it("B-005: puste ADMIN_BOOTSTRAP_* = brak; slabe haslo (<12, placeholder) przerywa start bez ujawniania wartosci", () => {
+    const c = loadEnv({ ...base, ADMIN_BOOTSTRAP_EMAIL: "", ADMIN_BOOTSTRAP_PASSWORD: "" });
+    expect(c.ADMIN_BOOTSTRAP_EMAIL).toBeUndefined();
+    expect(c.ADMIN_BOOTSTRAP_PASSWORD).toBeUndefined();
+    expect(() => loadEnv({ ...base, ADMIN_BOOTSTRAP_PASSWORD: "krotkie" })).toThrow(
+      /ADMIN_BOOTSTRAP_PASSWORD/,
+    );
+    expect(() => loadEnv({ ...base, ADMIN_BOOTSTRAP_PASSWORD: "CHANGE_ME_CHANGE_ME" })).toThrow(
+      /placeholder/,
+    );
+    const ok = loadEnv({
+      ...base,
+      ADMIN_BOOTSTRAP_EMAIL: "start@taktyl.example",
+      ADMIN_BOOTSTRAP_PASSWORD: "x".repeat(8) + "Ab3!",
+    });
+    expect(ok.ADMIN_BOOTSTRAP_EMAIL).toBe("start@taktyl.example");
+  });
 });

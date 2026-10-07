@@ -7,6 +7,8 @@ export class AppException extends Error {
     readonly code: ErrorCode,
     readonly detail?: string,
     readonly errors?: ProblemFieldError[],
+    /** Dodatkowe naglowki odpowiedzi, np. Retry-After przy 429 (B-004). */
+    readonly headers?: Readonly<Record<string, string>>,
   ) {
     super(detail ?? code);
   }

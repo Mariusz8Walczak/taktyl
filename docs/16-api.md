@@ -29,7 +29,7 @@ Powiązania: architektura `docs/14`, model danych `docs/17`, backpanel `docs/15`
 ### 1.1. Uwierzytelnianie
 
 - Endpointy `/v1/*` (publiczne): bez logowania. Koszyk i zamówienia identyfikuje `order_token` (zwracany w odpowiedzi `POST /orders`, klient trzyma w `localStorage`; do odczytu zamówienia wysyłany jako `X-Order-Token`).
-- Endpointy `/v1/admin/*`: sesja w ciasteczku `HttpOnly; Secure; SameSite=Strict` + `X-CSRF-Token` przy mutacjach. Brak sesji = `401`, rola za niska = `403`.
+- Endpointy `/v1/admin/*`: sesja w ciasteczku `taktyl_session` (`HttpOnly; Secure; SameSite=Strict`; `Secure` domyślnie w produkcji) + `X-CSRF-Token` przy mutacjach (token z `csrf_token` odpowiedzi logowania i `GET /auth/me`, powiązany z sesją). Brak lub wygasła sesja = `401` (`errors[0].code` = `no_session` albo `session_expired`), zły lub brakujący CSRF = `403 csrf_invalid`, rola za niska = `403 forbidden`. Sesja wygasa po 12 h od logowania i po 30 min bezczynności. Logowanie: jednolity komunikat `401` „Nieprawidłowy e-mail lub hasło.” (bez wskazania pola, także dla nieistniejącego i wyłączonego konta); po 5 nieudanych próbach na konto w 15 min `429 rate_limited` z `Retry-After`. Decyzje: API-008.
 
 ### 1.2. Role (ADR-0006)
 
@@ -90,10 +90,10 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 | POST | `/v1/admin/auth/login` | — | e-mail + hasło; ustawia ciasteczko sesji; limit prób | 401, 429 | B-001 | |
 | POST | `/v1/admin/auth/demo-viewer` | — | tylko gdy `DEMO_MODE=true`: sesja `viewer` bez hasła | 404 (gdy wyłączone) | B-001 | |
 | POST | `/v1/admin/auth/logout` | viewer | kończy sesję | — | B-001 | |
-| GET | `/v1/admin/auth/me` | viewer | bieżący użytkownik i rola, token CSRF | 401 | B-001 | |
-| GET | `/v1/admin/users` | owner | lista kont | — | B-0xx | |
-| POST | `/v1/admin/users` | owner | nowe konto (e-mail, rola, hasło początkowe) | 409 (duplikat e-maila) | B-0xx | |
-| PATCH | `/v1/admin/users/{id}` | owner | zmiana roli, dezaktywacja, reset hasła | 409 (nie można odebrać roli ostatniemu `owner`) | B-0xx | |
+| GET | `/v1/admin/auth/me` (alias `/v1/admin/auth/session`) | viewer | bieżący użytkownik i rola, token CSRF | 401 | B-001 | |
+| GET | `/v1/admin/users` | owner | lista kont | — | B-013 | |
+| POST | `/v1/admin/users` | owner | nowe konto (e-mail, rola, hasło początkowe ≥ 12 znaków) | 409 (duplikat e-maila, adres konta demo), 422 (słabe hasło) | B-013 | |
+| PATCH | `/v1/admin/users/{id}` | owner | zmiana roli, dezaktywacja, reset hasła (`temporary_password` zwracane jednorazowo, poza dziennikiem); kończy sesje konta | 404, 409 (nie można odebrać roli ani wyłączyć ostatniego `owner`) | B-013 | |
 
 ### 3.2. Katalog: produkty, warianty, ceny, stany
 
@@ -149,7 +149,7 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 | GET | `/v1/admin/media` | viewer | lista z manifestu: `key`, rodzaj, wymiary, priorytet, status | — | B-050 | |
 | POST | `/v1/admin/media/{key}` | editor | wgranie pliku dla klucza manifestu (multipart); walidacja typu, wymiarów zgodnych z `pixels`, rozmiaru; ustawia `status: gotowe` | 415 (typ), 422 (wymiary niezgodne z manifestem), 413 | B-051 | `product:{slug}`, `category:{k}`, `presets` |
 | DELETE | `/v1/admin/media/{key}` | owner | usunięcie pliku, `status: brak` (wraca placeholder) | — | B-051 | j.w. |
-| GET | `/v1/admin/audit` | viewer | dziennik: kto, kiedy, encja, `before`/`after`; filtry | — | B-060 | |
+| GET | `/v1/admin/audit` | viewer | dziennik: kto, kiedy, encja, `before`/`after`; filtry `actor_id`, `entity`, `entity_id`, `from`, `to`; `page`/`per_page`; viewer: pola osobowe zamaskowane | — | B-011, B-012 | |
 | GET | `/v1/admin/dashboard` | viewer | liczby: zamówienia do obsługi, niskie stany, brakujące zdjęcia, nieudane webhooki | — | B-002 | |
 | POST | `/v1/admin/revalidate` | owner | ręczne wysłanie znaczników (diagnostyka); `{ "tags": ["catalog"] }` | 422 | B-061 | podane |
 
