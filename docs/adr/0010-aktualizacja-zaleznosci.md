@@ -49,7 +49,7 @@ Stan na 2026-10-07 odbiegał od aktualnych wersji głównych (TypeScript 5.7, ES
 | @types/node                                     | ^24                                             | ^26                                                                      | Razem z obrazami Node 26 LTS.                                                                                                                                                                           |
 | typescript                                      | ~6.0.3                                          | 7.x                                                                      | Warunek wyżej (typescript-eslint).                                                                                                                                                                      |
 | jsdom                                           | ^29.1.1                                         | 30.x                                                                     | Warunek wyżej.                                                                                                                                                                                          |
-| audit-deps w CI                                 | critical blokuje (wszystko), high informacyjnie | high+critical blokują                                                    | Po Next 16 i Prisma 7 zdjąć `continue-on-error` z kroków high (TODO fazy 2). Faza 2b: patrz wynik niżej.                                                                                                |
+| audit-deps w CI                                 | critical blokuje (wszystko), high informacyjnie | high+critical blokują                                                    | **Wykonane po fazach 2a i 2b** (wynik niżej).                                                                                                                               |
 
 ## Wynik audytu po fazie 1 (`pnpm audit`, 2026-10-07)
 
@@ -84,11 +84,12 @@ Zmiany łamiące i obsługa (szczegóły: `docs/decyzje.md` API-014):
 - Migracje SQL (CHECK, wyzwalacze `audit_log`/`price_history`) bez zmian, `migrate deploy`, `db:seed`, `db:reset-demo` działają w kontenerach.
 - Testy: api 323 zielone, domain 91, contracts 30, ui 101, web 56, tokens 8; pełny stos `up --wait` + `scripts/smoke-stack.sh` zielone, 18 produktów w bazie.
 
-Audyt po fazie 2b (`pnpm audit`):
+Audyt po fazach 2a i 2b (`pnpm audit`, po rebase na `main` z Next 16):
 
-- **high w produkcji:** tylko `postcss` w `next` (do naprawy w fazie 2a). `deepmerge-ts` z listy fazy 1 nie jest już w drzewie produkcyjnym.
-- **high w całym drzewie:** Prisma 7.10 CLI (devDependency) nadal ciągnie `deepmerge-ts` 7.x i `mysql2` <3.22; załatane przez `overrides` w `pnpm-workspace.yaml` (`deepmerge-ts` >=8.0.2, `mysql2` >=3.22.0), `prisma generate` i `migrate deploy` sprawdzone.
-- TODO: po zmergowaniu fazy 2a (Next 16) zdjąć `continue-on-error` z kroków high w `audit-deps` (zaostrzenie high+critical).
+- **high i critical:** 0 w całym drzewie i w produkcji. Wewnętrzny `postcss` Next zniknął z Next 16, `deepmerge-ts` zniknął z drzewa produkcyjnego razem z Prisma 7.
+- **Prisma 7.10 CLI** (devDependency) nadal deklaruje `deepmerge-ts` 7.x i `mysql2` <3.22 (high); załatane przez `overrides` w `pnpm-workspace.yaml` (`deepmerge-ts` >=8.0.2, `mysql2` >=3.22.0), `prisma generate` i `migrate deploy` sprawdzone. Usunąć `overrides`, gdy Prisma podniesie te zależności.
+- **low:** `esbuild` 0.27 w `tsup`.
+- **CI:** `audit-deps` blokuje teraz high i critical (wszystkie zależności i `--prod`), bez `continue-on-error`.
 
 ## Skutki
 
