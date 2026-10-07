@@ -11,6 +11,7 @@ expect.extend(axeMatchers);
 // Biezaca sciezka dla usePathname (testy ustawiaja globalThis.__pathname).
 vi.mock("next/navigation", () => ({
   usePathname: () => (globalThis as { __pathname?: string }).__pathname ?? "/",
+  useRouter: () => ({ push: () => {}, replace: () => {}, back: () => {}, prefetch: () => {} }),
 }));
 // next/link bez kontekstu routera: zwykly odnosnik (nawigacja nie jest tematem tych testow).
 vi.mock("next/link", () => ({

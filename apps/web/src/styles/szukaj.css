@@ -1,0 +1,102 @@
+/* F-005: wyszukiwarka w naglowku (okno z polem i podpowiedziami). Tylko tokeny (regula 2). */
+.naglowek__skrot {
+  display: none;
+  margin-left: var(--s1);
+}
+@media (min-width: 992px) {
+  .naglowek__skrot {
+    display: inline-flex;
+  }
+}
+
+.szukaj {
+  display: grid;
+  gap: var(--s2);
+}
+.szukaj__wyniki {
+  min-height: var(--s5); /* miejsce na wynik: lista nie przesuwa reszty okna */
+}
+.szukaj__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.szukaj__grupa {
+  display: block;
+  padding: var(--s1) var(--s1) 0;
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  color: var(--tekst-slaby);
+}
+.szukaj__opcja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  border-radius: var(--r);
+  font-size: var(--t-s);
+  cursor: pointer;
+}
+.szukaj__opcja:hover {
+  background-color: var(--tlo-alt);
+}
+.szukaj__opcja[aria-selected="true"] {
+  background-color: var(--akcent-slaby);
+  outline: var(--tk-linia-2) solid var(--akcent);
+  outline-offset: calc(var(--tk-linia-2) * -1);
+}
+.szukaj__cena {
+  flex: none;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+  font-variant-numeric: tabular-nums;
+}
+.szukaj__trafienie {
+  background: none;
+  color: inherit;
+  font-weight: var(--w-mocna);
+  text-decoration: underline;
+  text-decoration-thickness: var(--tk-linia-2);
+  text-underline-offset: 0.2em;
+}
+.szukaj__pusto,
+.szukaj__blad {
+  margin: 0;
+  font-size: var(--t-s);
+  line-height: 1.4;
+}
+.szukaj__pusto p {
+  margin: 0 0 var(--s1);
+}
+.szukaj__blad {
+  color: var(--blad);
+}
+
+/* A-18: szkielet z przesuwanym polyskiem (pseudoelement, translateX), tylko w trakcie ladowania */
+.szukaj__szkielet {
+  display: grid;
+  gap: var(--s1);
+}
+.szukaj__wiersz-szkieletu {
+  position: relative;
+  display: block;
+  height: var(--cel-min);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.szukaj__wiersz-szkieletu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--powierzchnia), transparent);
+  transform: translateX(-100%);
+  animation: tk-blysk calc(var(--d-l) * 4) var(--e-wyjscie) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .szukaj__wiersz-szkieletu::after {
+    animation: none;
+  }
+}

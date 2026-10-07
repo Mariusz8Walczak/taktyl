@@ -7,6 +7,7 @@ import "../styles/rozmiary.css";
 import "../styles/baza.css";
 import "../styles/naglowek.css";
 import "../styles/stopka.css";
+import "../styles/szukaj.css";
 import "../styles/zgody.css";
 
 import type { Metadata, Viewport } from "next";
