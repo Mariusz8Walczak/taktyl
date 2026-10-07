@@ -95,3 +95,124 @@
   background-color: var(--uwaga-tlo);
   color: var(--uwaga);
 }
+
+/* ---- Ruch DeskStage (TAKTYL-36): tylko transform i opacity; czasy i krzywe z tokenow ---- */
+
+/* A-02 (docs/07 §3.2): set laduje na biurku. Klase .scena-start dodaje wyspa apps/web raz na sesje; mata, klawiatura
+   i myszka sa widoczne od pierwszej klatki (LCP) i ruszaja sie tylko przesunieciem. Czasy to ulamki --d-scena
+   (w sumie <= --d-scena). will-change pominiete: klasa .scena-start moze zostac na kontenerze po sekwencji; przy prefers-reduced-motion tokeny spadaja do zera, wiec stan koncowy jest od razu. */
+.scena-start .scena__mata {
+  animation: tk-mata-wejscie var(--d-l) var(--e-wyjscie) both;
+}
+.scena-start .scena__klawiatura {
+  animation: tk-opadanie calc(var(--d-scena) * 0.46) var(--e-osadzenie) calc(var(--d-scena) / 8)
+    both;
+}
+.scena-start .scena__myszka {
+  animation: tk-wjazd-z-prawej calc(var(--d-scena) * 0.42) var(--e-osadzenie)
+    calc(var(--d-scena) * 0.3) both;
+}
+/* Strefa i plakietka sa male i nie sa LCP - jedyne elementy pierwszego ekranu z opacity */
+.scena-start .scena__strefa,
+.scena-start .scena__wynik {
+  animation: tk-pojawienie var(--d-m) var(--e-wyjscie) calc(var(--d-scena) * 0.58) both;
+}
+@keyframes tk-mata-wejscie {
+  from {
+    transform: scale(0.985);
+  }
+}
+@keyframes tk-opadanie {
+  from {
+    transform: translateY(-28px);
+  }
+}
+@keyframes tk-wjazd-z-prawej {
+  from {
+    transform: translateX(36px);
+  }
+}
+@keyframes tk-pojawienie {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* A-06: zmiana elementu setu. Stary: opacity 1->0 + translateY(0->6px); nowy po img.decode(): translateY(-12px->0)
+   + opacity 0->1 (klasa .is-czeka trzyma go niewidocznego do momentu zdekodowania). Podkladka: samo przenikanie. */
+.tk-scena__el.is-czeka {
+  opacity: 0;
+}
+.tk-scena__obiekt.is-wejscie {
+  animation: tk-obiekt-we var(--d-m) var(--e-osadzenie) both;
+  will-change: transform, opacity;
+}
+.tk-scena__obiekt.is-wyjscie {
+  animation: tk-obiekt-wy var(--d-s) var(--e-wejscie) both;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.tk-scena__mata.is-wejscie {
+  animation: tk-mata-we var(--d-m) var(--e-wyjscie) both;
+  will-change: opacity;
+}
+.tk-scena__mata.is-wyjscie {
+  animation: tk-mata-wy var(--d-s) var(--e-wejscie) both;
+  pointer-events: none;
+  will-change: opacity;
+}
+@keyframes tk-obiekt-we {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+@keyframes tk-obiekt-wy {
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes tk-mata-we {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes tk-mata-wy {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Plakietka wyniku i strefa przy zmianie wyniku (A-08 dla DeskStage): samo przenikanie koloru */
+.tk-scena__strefa,
+.tk-scena__wynik {
+  transition:
+    color var(--d-s) var(--e-wyjscie),
+    border-color var(--d-s) var(--e-wyjscie),
+    background-color var(--d-s) var(--e-wyjscie);
+}
+
+/* prefers-reduced-motion: stan koncowy od razu, nic nie znika (tokeny czasu spadaja do zera w tokens.css) */
+@media (prefers-reduced-motion: reduce) {
+  .scena-start .scena__mata,
+  .scena-start .scena__klawiatura,
+  .scena-start .scena__myszka,
+  .scena-start .scena__strefa,
+  .scena-start .scena__wynik,
+  .tk-scena__obiekt.is-wejscie,
+  .tk-scena__obiekt.is-wyjscie,
+  .tk-scena__mata.is-wejscie,
+  .tk-scena__mata.is-wyjscie {
+    animation: none;
+    will-change: auto;
+  }
+  .tk-scena__el.is-czeka {
+    opacity: 1;
+  }
+  .tk-scena__strefa,
+  .tk-scena__wynik {
+    transition: none;
+  }
+}

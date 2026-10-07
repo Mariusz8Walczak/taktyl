@@ -13,6 +13,7 @@ import {
 } from "../../lib/cart/messages";
 import { quoteValueGr } from "../../lib/cart/tracking";
 import type { Quote } from "../../lib/cart/types";
+import { Kwota } from "../motion/kwota";
 
 /** Ustawienia sklepu potrzebne w koszyku (z `GET /v1/shop-settings`, przekazane ze strony serwerowej). */
 export interface CartSettings {
@@ -159,7 +160,9 @@ export function SummaryRows({ quote, shippingFromGr }: { quote: Quote; shippingF
       </div>
       <div className="koszyk-sumy__razem">
         <dt>Razem</dt>
-        <dd data-testid="koszyk-razem">{formatPLN(quoteValueGr(quote))}</dd>
+        <dd data-testid="koszyk-razem">
+          <Kwota gr={quoteValueGr(quote)} />
+        </dd>
       </div>
     </dl>
   );

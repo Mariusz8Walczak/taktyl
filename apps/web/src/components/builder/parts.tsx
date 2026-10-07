@@ -2,8 +2,7 @@
 // F-107, F-101, F-100 (docs/03 §2, §6, §9): male elementy kreatora - kwota (hak A-04), pasek krokow (hak A-07),
 // komunikaty nad krokami. Wzorzec: zakladki/kroki szablonu (docs/08 §6), przestylowane tokenami.
 import type { CSSProperties } from "react";
-import { formatPLN } from "@taktyl/domain";
-import { Alert, Button, VisuallyHidden } from "@taktyl/ui";
+import { Alert, Button } from "@taktyl/ui";
 import { cx } from "../../lib/builder/cx";
 import { toSearchParams } from "../../lib/builder/state";
 import {
@@ -16,22 +15,8 @@ import {
 } from "../../lib/builder/types";
 import type { BuilderApi } from "./use-builder";
 
-/** F-107, A-04 (hak): kwota z cyframi tabelarycznymi; czytnik ekranu dostaje tylko wartosc koncowa (ukryty region live). */
-export function Kwota({ gr, className }: { gr: number; className?: string }) {
-  const text = formatPLN(gr);
-  return (
-    <span className={cx("kwota", className)} data-kwota="">
-      <span className="kwota__wartosc" aria-hidden="true">
-        {text}
-      </span>
-      <VisuallyHidden>
-        <span data-kwota-live="" aria-live="polite">
-          {text}
-        </span>
-      </VisuallyHidden>
-    </span>
-  );
-}
+/** F-107, A-04: kwota z animacja (wspolna z koszykiem), patrz components/motion/kwota.tsx. */
+export { Kwota } from "../motion/kwota";
 
 /** Numer kroku "z 4" (krok 0 jest opcjonalny i nie jest liczony). */
 export function stepCounter(step: StepId): string {

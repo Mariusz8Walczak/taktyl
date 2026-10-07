@@ -1,6 +1,7 @@
 // F-106 DeskStage (docs/03 §5), wzorzec "kreator: podglad" - brak odpowiednika w szablonie (docs/08 §6), wlasny
-// komponent z tokenow. Haki animacji A-02 i A-06 (docs/07 §3.2): klasy scena__mata/klawiatura/myszka/strefa/wynik,
-// bez logiki ruchu (TAKTYL-36). Nic nie jest rysowane: zdjecia z manifestu albo placeholdery w wymiarach z danych.
+// komponent z tokenow. A-02 (docs/07 §3.2): klasy scena__mata/klawiatura/myszka/strefa/wynik, klase scena-start
+// dodaje wyspa apps/web (raz na sesje). A-06: zmiana elementu setu przez warstwy (use-swap.ts), ruch w css/scena.css.
+// Nic nie jest rysowane: zdjecia z manifestu albo placeholdery w wymiarach z danych.
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { ProductImage } from "../image/product-image.js";
@@ -8,6 +9,8 @@ import { buildSrcSet } from "../image/manifest.js";
 import type { ManifestEntry } from "../image/manifest.js";
 import { cx } from "../lib/cx.js";
 import { computeDeskGeometry } from "./geometry.js";
+import { useSwapLayers } from "./use-swap.js";
+import type { SwapLayer, SwapSnapshot } from "./use-swap.js";
 import type { PadType, Rect, SizeMm } from "./geometry.js";
 import { composeDeskLabel, resultBadgeText, zoneCaption } from "./labels.js";
 import type { DeskResult } from "./labels.js";
@@ -137,8 +140,19 @@ export function DeskStage({
     "--tk-sc-d": g.canvas.d,
   } as CSSProperties;
   const canvasStyle = (scale === null ? undefined : { "--s": scale }) as CSSProperties | undefined;
-  const padBg =
-    pad && pad.entry.status === "gotowe" ? textureBackground(pad.entry, baseUrl) : undefined;
+  const snap = <T extends { entry: ManifestEntry }>(
+    item: T | null | undefined,
+    rect: Rect | null | undefined,
+    extra = "",
+  ): SwapSnapshot<T, Rect> | null =>
+    item && rect ? { key: `${item.entry.key}${extra}`, item, rect } : null;
+  // A-06: kazdy slot ma wlasne warstwy (wychodzaca + biezaca); pierwszy render i reduced-motion bez ruchu.
+  const padLayers = useSwapLayers(snap(pad, g.pad, pad ? `|${pad.sizeLabel}` : ""));
+  const keyboardLayers = useSwapLayers(snap(keyboard, g.keyboard));
+  const mouseLayers = useSwapLayers(snap(mouse, g.mouse));
+  const phaseClass = (l: SwapLayer<unknown, Rect>) =>
+    l.phase === "idle" ? undefined : `is-${l.phase}`;
+  const hasPadLayer = padLayers.length > 0;
 
   return (
     <div
@@ -156,33 +170,40 @@ export function DeskStage({
       style={style}
     >
       <div className="tk-scena__platno scena__platno" style={canvasStyle}>
-        {g.pad && pad ? (
-          <div
-            className="tk-scena__el tk-scena__mata scena__mata"
-            style={
-              {
-                ...rectVars(g.pad),
-                ...(padBg
-                  ? { backgroundImage: padBg, "--tk-kafel": pad.entry.tile_mm ?? 200 }
-                  : {}),
-              } as CSSProperties
-            }
-            data-pad-type={pad.sizeMm.type}
-          >
-            {padBg ? null : (
-              <ProductImage
-                entry={pad.entry}
-                baseUrl={baseUrl}
-                productName={pad.name}
-                colorName={pad.colorName}
-                swatch={pad.swatch}
-                matMm={{ w: pad.sizeMm.w, d: pad.sizeMm.d }}
-                decorative
-              />
-            )}
-          </div>
-        ) : null}
-        {g.pad && !pad ? (
+        {padLayers.map((l) => {
+          const padBg =
+            l.item.entry.status === "gotowe" ? textureBackground(l.item.entry, baseUrl) : undefined;
+          return (
+            <div
+              key={l.reactKey}
+              ref={l.ref}
+              onAnimationEnd={l.onAnimationEnd}
+              className={cx("tk-scena__el tk-scena__mata scena__mata", phaseClass(l))}
+              style={
+                {
+                  ...rectVars(l.rect),
+                  ...(padBg
+                    ? { backgroundImage: padBg, "--tk-kafel": l.item.entry.tile_mm ?? 200 }
+                    : {}),
+                } as CSSProperties
+              }
+              data-pad-type={l.item.sizeMm.type}
+            >
+              {padBg ? null : (
+                <ProductImage
+                  entry={l.item.entry}
+                  baseUrl={baseUrl}
+                  productName={l.item.name}
+                  colorName={l.item.colorName}
+                  swatch={l.item.swatch}
+                  matMm={{ w: l.item.sizeMm.w, d: l.item.sizeMm.d }}
+                  decorative
+                />
+              )}
+            </div>
+          );
+        })}
+        {g.pad && !hasPadLayer ? (
           <div
             className="tk-scena__el tk-scena__mata tk-scena__mata--brak scena__mata"
             style={rectVars(g.pad)}
@@ -205,35 +226,44 @@ export function DeskStage({
             data-testid="desk-zone-outside"
           />
         ) : null}
-        {keyboard && g.keyboard ? (
+        {keyboardLayers.map((l) => (
           <div
-            className="tk-scena__el tk-scena__obiekt scena__klawiatura"
-            style={rectVars(g.keyboard)}
+            key={l.reactKey}
+            ref={l.ref}
+            onAnimationEnd={l.onAnimationEnd}
+            className={cx("tk-scena__el tk-scena__obiekt scena__klawiatura", phaseClass(l))}
+            style={rectVars(l.rect)}
           >
             <ProductImage
-              entry={keyboard.entry}
+              entry={l.item.entry}
               baseUrl={baseUrl}
-              productName={keyboard.name}
-              colorName={keyboard.colorName}
+              productName={l.item.name}
+              colorName={l.item.colorName}
               decorative
               priority={priority}
-              showCaption={fits(g.keyboard)}
+              showCaption={fits(l.rect)}
             />
           </div>
-        ) : null}
-        {mouse && g.mouse ? (
-          <div className="tk-scena__el tk-scena__obiekt scena__myszka" style={rectVars(g.mouse)}>
+        ))}
+        {mouseLayers.map((l) => (
+          <div
+            key={l.reactKey}
+            ref={l.ref}
+            onAnimationEnd={l.onAnimationEnd}
+            className={cx("tk-scena__el tk-scena__obiekt scena__myszka", phaseClass(l))}
+            style={rectVars(l.rect)}
+          >
             <ProductImage
-              entry={mouse.entry}
+              entry={l.item.entry}
               baseUrl={baseUrl}
-              productName={mouse.name}
-              colorName={mouse.colorName}
+              productName={l.item.name}
+              colorName={l.item.colorName}
               decorative
               priority={priority}
-              showCaption={fits(g.mouse)}
+              showCaption={fits(l.rect)}
             />
           </div>
-        ) : null}
+        ))}
       </div>
       {result ? (
         <span className={cx("tk-scena__wynik scena__wynik", uwaga && "is-uwaga")}>

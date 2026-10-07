@@ -47,6 +47,8 @@
   background-color: var(--akcent);
   transform: scaleX(var(--postep, 0));
   transform-origin: left;
+  /* A-07: wypelnienie rosnie od lewej przy przejsciu kroku */
+  transition: transform var(--d-l) var(--e-wyjscie);
 }
 .kroki__lista {
   display: flex;
@@ -396,6 +398,10 @@
   min-height: var(--kreator-wyniki-min);
 }
 .wynik {
+  /* A-08: zmiana ikony/stanu wyniku tylko przez przenikanie koloru */
+  transition:
+    background-color var(--d-s) var(--e-wyjscie),
+    color var(--d-s) var(--e-wyjscie);
   display: flex;
   gap: var(--s1);
   align-items: flex-start;
@@ -588,5 +594,101 @@
     height: var(--tk-linia-1);
     overflow: hidden;
     clip-path: inset(50%);
+  }
+}
+
+/* ---- ruch kreatora (TAKTYL-36): tylko transform i opacity, czasy i krzywe z tokenow ---- */
+
+/* A-08: nowy komunikat wchodzi opacity 0->1 + translateY(4px->0) w zarezerwowanym miejscu (min-height listy).
+   Klase .is-nowy dostaja tylko wiersze dodane po zaladowaniu, wiec pierwszy ekran nie startuje od opacity 0. */
+.wynik.is-nowy {
+  animation: tk-wynik-we var(--d-s) var(--e-wyjscie) both;
+}
+@keyframes tk-wynik-we {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* A-16: set kompletny - jednorazowy obieg pierscienia w kolorze --akcent wokol karty podsumowania (conic-gradient z
+   animowanym katem @property) i wjazd linii rabatu. Klasa .is-komplet tylko przy zmianie 2 -> 3 kategorie; zdejmuje ja
+   onAnimationEnd po animationName === "obieg". Przegladarka bez @property: brak pierscienia, nic sie nie psuje. */
+@property --kat {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.podsumowanie.is-komplet::before,
+.podsumowanie.is-komplet .kreator__lista::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: var(--tk-linia-2);
+  border-radius: var(--r);
+  background: conic-gradient(
+    from var(--kat),
+    transparent 0 70%,
+    var(--akcent) 85%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(var(--tlo) 0 0) content-box,
+    linear-gradient(var(--tlo) 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(var(--tlo) 0 0) content-box,
+    linear-gradient(var(--tlo) 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: obieg var(--d-scena) var(--e-wyjscie) 1 forwards;
+}
+.podsumowanie.is-komplet .ceny__wiersz--rabat {
+  animation: tk-rabat-we var(--d-m) var(--e-wyjscie) both;
+}
+@keyframes obieg {
+  from {
+    --kat: 0deg;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  to {
+    --kat: 360deg;
+    opacity: 0;
+  }
+}
+@keyframes tk-rabat-we {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+/* Komputer: pierscien na calej karcie (aside). Telefon: aside to display: contents, pierscien na karcie "Twoj set". */
+@media (min-width: 992px) {
+  .podsumowanie.is-komplet .kreator__lista::before {
+    content: none;
+  }
+}
+@media (max-width: 991px) {
+  .podsumowanie.is-komplet::before {
+    content: none;
+  }
+  .kreator__lista {
+    position: relative;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kroki__wypelnienie,
+  .wynik,
+  .wynik.is-nowy,
+  .podsumowanie.is-komplet::before,
+  .podsumowanie.is-komplet .kreator__lista::before,
+  .podsumowanie.is-komplet .ceny__wiersz--rabat {
+    animation: none;
+    transition: none;
   }
 }

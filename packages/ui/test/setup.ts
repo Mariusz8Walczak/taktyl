@@ -1,3 +1,4 @@
+import "./animation-event-stub"; // przed react-dom (TAKTYL-36)
 import "@testing-library/jest-dom/vitest";
 import * as axeMatchers from "vitest-axe/matchers";
 import { cleanup } from "@testing-library/react";

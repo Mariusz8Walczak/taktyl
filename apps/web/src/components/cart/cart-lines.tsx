@@ -23,6 +23,7 @@ import {
   type CategoryId,
   type Quote,
 } from "../../lib/cart/types";
+import { Kwota } from "../motion/kwota";
 import type { useCartActions } from "./use-cart-actions";
 
 type Actions = ReturnType<typeof useCartActions>;
@@ -298,7 +299,7 @@ function SetGroup({
           </div>
           <div className="koszyk-set__razem">
             <dt>Razem</dt>
-            <dd>{quoted ? formatPLN(quoted.total_gr) : ""}</dd>
+            <dd>{quoted ? <Kwota gr={quoted.total_gr} /> : ""}</dd>
           </div>
         </dl>
       </footer>

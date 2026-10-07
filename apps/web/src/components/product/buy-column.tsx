@@ -120,7 +120,7 @@ export function BuyColumn({
           aria-describedby={buyable ? undefined : "powod-braku"}
           onClick={() => void add()}
         >
-          {justAdded ? "Dodano" : "Dodaj do koszyka"}
+          {justAdded ? <span className="tk-etykieta-dodano">Dodano</span> : "Dodaj do koszyka"}
         </Button>
         <a href={setHref} className="tk-btn tk-btn--poboczny zakup__set">
           Dodaj do setu

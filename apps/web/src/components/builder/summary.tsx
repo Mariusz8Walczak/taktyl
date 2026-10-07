@@ -2,6 +2,8 @@
 // F-104, F-105, F-106, F-107, F-110, A-06 (hak), A-08 (hak), A-16 (hak) (docs/03 §3-§6): prawa kolumna kreatora -
 // podglad biurka (DeskStage), wyniki dopasowania, trzy pozycje, ceny i przycisk dodania. Wzorzec: przyklejone
 // podsumowanie (`checkout.html`, kolumna zamowienia) i suma (`product-frequently-bought-together.html`), docs/08 §6.
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { formatPLN, mouseZoneMm } from "@taktyl/domain";
 import { Button, DeskStage, ProductImage, TextButton } from "@taktyl/ui";
 import { MEDIA_BASE_URL } from "../../lib/catalog/images";
@@ -16,15 +18,33 @@ import {
 } from "../../lib/builder/catalog";
 import { cx } from "../../lib/builder/cx";
 import { SLOT_LABEL, SLOT_STEP, SLOTS, type SlotKey } from "../../lib/builder/types";
+import { useCompleteRing } from "../../lib/motion/set-complete";
 import { Kwota } from "./parts";
 import type { BuilderApi } from "./use-builder";
 
 const LEVEL_LABEL = { uwaga: "Uwaga", ok: "OK", info: "Info" } as const;
 
+/** Wiersz wyniku dopasowania; A-08: wchodzi (opacity + translateY) tylko, gdy zostal dodany po zaladowaniu strony. */
+function FitResult({
+  level,
+  animate,
+  children,
+}: {
+  level: keyof typeof LEVEL_LABEL;
+  animate: boolean;
+  children: ReactNode;
+}) {
+  const [isNew] = useState(animate); // zatrzask: stan z chwili montowania wiersza
+  return <li className={cx("wynik", `wynik--${level}`, isNew && "is-nowy")}>{children}</li>;
+}
+
 /** F-104 (docs/03 §4.5): lista wynikow; naglowek w regionie aria-live, miejsce na 2 wiersze zarezerwowane (A-08). */
 export function FitResults({ api }: { api: BuilderApi }) {
   const { analysis } = api;
   const { report } = analysis;
+  // A-08: animacje dostaja tylko wiersze dodane po zaladowaniu (pierwszy ekran bez opacity 0)
+  const [armed, setArmed] = useState(false);
+  useEffect(() => setArmed(true), []);
   const hasResults = report.results.length > 0;
   return (
     <section className="wyniki" aria-labelledby="wyniki-tytul">
@@ -39,7 +59,7 @@ export function FitResults({ api }: { api: BuilderApi }) {
       {/* A-08: min. wysokosc dwoch wierszy - pojawienie sie komunikatu nie przesuwa tresci */}
       <ul className="lista wyniki__lista">
         {report.results.map((r) => (
-          <li key={r.id} className={cx("wynik", `wynik--${r.level}`)}>
+          <FitResult key={r.id} level={r.level} animate={armed}>
             <span className="wynik__etykieta">{LEVEL_LABEL[r.level]}</span>
             <span className="wynik__tresc">
               <span className="wynik__tekst">{r.message}</span>
@@ -55,7 +75,7 @@ export function FitResults({ api }: { api: BuilderApi }) {
                 </Button>
               ) : null}
             </span>
-          </li>
+          </FitResult>
         ))}
       </ul>
       {report.noProfileNotice ? <p className="wyniki__profil">{report.noProfileNotice}</p> : null}
@@ -241,15 +261,14 @@ export function PriceBlock({ api }: { api: BuilderApi }) {
 /** Prawa kolumna na komputerze, na telefonie: podglad u gory, a lista pozycji i cen na kroku "Podsumowanie". */
 export function Summary({ api }: { api: BuilderApi }) {
   const blocker = addBlocker(api);
+  // A-16: klasa znika po animacji pierscienia (animationName "obieg", nie po animacjach potomkow) albo po czasie zapasowym
+  const onAnimationEnd = useCompleteRing(api.justCompleted, api.clearCompleted);
   return (
     <aside
       aria-label="Podsumowanie setu"
       className={cx("kreator__podsumowanie", "podsumowanie", api.justCompleted && "is-komplet")}
       data-krok={api.state.step}
-      onAnimationEnd={(e) => {
-        // A-16: klasa znika po animacji pierscienia (animationName "obieg"), nie po animacjach potomkow
-        if (e.animationName === "obieg") api.clearCompleted();
-      }}
+      onAnimationEnd={onAnimationEnd}
     >
       <div className="kreator__podglad">
         <DeskView api={api} />

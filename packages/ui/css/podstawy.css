@@ -193,6 +193,16 @@
   color: var(--tekst-slaby);
   cursor: not-allowed;
 }
+/* A-10: serce "ulubione" - skok scale(1 -> 1.3 -> 1) tylko przy dodaniu (klase .is-skok ustawia IconButton) */
+.tk-ikonka.is-skok {
+  animation: tk-serce var(--d-m) var(--e-osadzenie) 1;
+  will-change: transform;
+}
+@keyframes tk-serce {
+  50% {
+    transform: scale(1.3);
+  }
+}
 
 /* Klawisz kbd (A-17) */
 .tk-kbd {
