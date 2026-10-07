@@ -8,3 +8,5 @@ html
 vendor
 assets
 data
+packages/tokens/css/tokens.css
+packages/tokens/assets

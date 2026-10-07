@@ -19,6 +19,7 @@ Format wpisu (reguła 11 `CLAUDE.md`): data · ID · decyzja · powód.
 | 2026-10-07 | D-002 | Backpanel nie ma odpowiednika w szablonie. Komponenty: Radix UI (bez stylu) + tokeny z `docs/06`; ikony tylko z fontu ikon szablonu; bez własnej grafiki | reguła 3: szablon nie ma panelu admina, więc to wyjątek „nie ma w szablonie” |
 | 2026-10-07 | D-003 | Treści (opisy, opinie demo, poradniki, strony prawne wzorcowe, FAQ) pisze model, zgodnie z `docs/04` §7–8, `docs/01` §4 i `docs/11`; człowiek zatwierdza | polecenie „sam wymyśl treści” |
 | 2026-10-07 | D-004 | Tryb deweloperski i testowy też w Dockerze (profile `dev`, `test`) | ADR-0009 |
+| 2026-10-07 | D-005 | Źródłem prawdy tokenów i fontu zostaje `assets/` (`tokens.css`, `fonts/`). `packages/tokens/css/tokens.css` i `packages/tokens/assets/fonts/` to kopie bajtowo identyczne (`pnpm --filter @taktyl/tokens sync`), commitowane, żeby pakiet działał bez kroku budowania i w kontekście Dockera; test vitest i `scripts/sync-tokens.mjs --check` łamią CI przy rozjeździe. Układ `css/` + `assets/fonts/` zachowuje względną ścieżkę `../assets/fonts/...` z `tokens.css` bez edycji pliku. `scripts/audit-tokens.mjs` (`pnpm audit:tokens`, turbo) pomija wyłącznie `packages/tokens/css/tokens.css` | reguła 2 i „kopiuj bez zmian” (`docs/06`); jedna prawda + automatyczna kontrola zgodności (TAKTYL-9) |
 
 ## Pytania otwarte (wymagają odpowiedzi właściciela)
 

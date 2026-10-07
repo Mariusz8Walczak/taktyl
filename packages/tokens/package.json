@@ -2,15 +2,31 @@
   "name": "@taktyl/tokens",
   "version": "0.0.0",
   "private": true,
-  "description": "Tokeny i nadpisania wygladu (szkielet)",
+  "description": "Tokeny, font Archivo (OFL) i nadpisania wygladu (TAKTYL-9)",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens.css": "./css/tokens.css",
+    "./taktyl.css": "./css/taktyl.css",
+    "./fonts/*": "./assets/fonts/*"
+  },
+  "files": [
+    "dist",
+    "css",
+    "assets"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "sync": "node ../../scripts/sync-tokens.mjs",
+    "audit:tokens": "node ../../scripts/audit-tokens.mjs"
   }
 }

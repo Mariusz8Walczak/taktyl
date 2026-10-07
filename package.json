@@ -12,6 +12,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "audit:tokens": "turbo run audit:tokens",
     "test": "turbo run test",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

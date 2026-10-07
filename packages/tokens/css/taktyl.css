@@ -1,0 +1,17 @@
+/* Taktyl - nadpisania wygladu (docs/06 §6). Kolejnosc arkuszy: CSS szablonu -> tokens.css -> taktyl.css.
+   Wylacznie zmienne z tokens.css; zadnych wartosci wpisanych wprost (regula 2). Komponenty dodaja kolejne zadania. */
+
+/* Reset bazowy (docs/06 §6 pkt 2) */
+body{
+  font-family:var(--font);
+  font-size:var(--t-m);
+  line-height:var(--lh-tekst);
+  color:var(--tekst);
+  background:var(--tlo);
+}
+
+/* docs/11 pkt 29: atrybut hidden nie moze przegrywac z display komponentu (jedyne dozwolone !important) */
+[hidden]{ display:none !important; }
+
+/* docs/11 pkt 31: fieldset nie rozpycha ukladu na telefonie */
+fieldset{ min-width:0; }
