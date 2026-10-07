@@ -81,6 +81,8 @@ export const envSchema = z.object({
   REVALIDATE_TIMEOUT_MS: z.coerce.number().int().min(200).max(30_000).default(5000),
   SHOP_REVALIDATE_SECONDS: z.coerce.number().int().min(1).default(300),
   ORDER_RETENTION_DAYS: z.coerce.number().int().min(1).default(30),
+  // F-221, F-223 (docs/17 par. 9): retencja wiadomosci z kontaktu i zapisow newslettera (usuwanie po N dniach).
+  MESSAGE_RETENTION_DAYS: z.coerce.number().int().min(1).default(30),
   MEDIA_DIR: z.string().default("/data/media"),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   METRICS_ENABLED: bool,

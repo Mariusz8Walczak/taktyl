@@ -3,7 +3,7 @@ import { z } from "zod";
 import { profileIdSchema } from "../shared/enums";
 import { pageOf, pageQuerySchema } from "../shared/pagination";
 import { dateTimeSchema, productIdSchema, slugSchema, versionSchema } from "../shared/primitives";
-import { reviewSchema } from "../public/content";
+import { REVIEWS_LABEL, reviewSchema } from "../public/content";
 import { adminWarningSchema } from "./catalog";
 
 export const contentTypeSchema = z.enum(["page", "guide", "faq"]);
@@ -87,7 +87,7 @@ export const descriptionResponseSchema = z.object({
 });
 
 /** B-302, B-303: opinie demo pogrupowane po produkcie; etykieta jest stala i nieusuwalna. */
-export const REVIEWS_LABEL = "Opinie przykładowe — sklep demonstracyjny" as const;
+
 export const adminProductReviewsSchema = z.object({
   product_id: productIdSchema,
   slug: slugSchema,

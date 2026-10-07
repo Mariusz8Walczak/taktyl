@@ -17,6 +17,9 @@ export const faqSchema = z.object({ items: z.array(z.object({ question: z.string
 export const reviewSchema = z.object({
   author: z.string(), date: dateSchema, rating: z.int().min(1).max(5), variant_label: z.string(), text: z.string(), demo: z.literal(true),
 });
+/** B-303, F-076: etykieta sekcji opinii jest stala i nieusuwalna (docs/04 par. 8). */
+export const REVIEWS_LABEL = "Opinie przykładowe — sklep demonstracyjny" as const;
 export const reviewsResponseSchema = z.object({
-  avg: z.number().min(1).max(5).nullable(), count: z.int().min(0), items: z.array(reviewSchema),
+  label: z.literal(REVIEWS_LABEL), avg: z.number().min(1).max(5).nullable(), count: z.int().min(0),
+  items: z.array(reviewSchema),
 });

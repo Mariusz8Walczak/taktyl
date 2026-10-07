@@ -12,6 +12,8 @@ export const LIMITS = {
   quote: { limit: 60, ttl: RATE_WINDOW_MS },
   /** B-004: POST /admin/auth/login i demo-viewer: 10/min/IP (dodatkowo licznik prob na konto i IP w bazie). */
   login: { limit: 10, ttl: RATE_WINDOW_MS },
+  /** F-221, F-223: POST /forms/contact i /forms/newsletter: 5/min/IP na endpoint (docs/14 par. 7). */
+  form: { limit: 5, ttl: RATE_WINDOW_MS },
   /** Odczyt zamowien po tokenie (zgadywanie tokenow): 30/min/IP. */
   orderRead: { limit: 30, ttl: RATE_WINDOW_MS },
 } as const;
