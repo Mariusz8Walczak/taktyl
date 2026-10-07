@@ -1,17 +1,20 @@
 "use client";
-// F-004, wzorzec: menu mobilne = szuflada z lewej (koszyk wyskakujacy / okna szablonu, docs/08), modul nakladek
-// @taktyl/ui (A-12): pulapka fokusu, Esc, tlo, powrot fokusu na przycisk menu, 100dvh.
-import { Drawer } from "@taktyl/ui";
+// F-004, wzorzec: menu mobilne = szuflada z lewej (docs/08), modul nakladek @taktyl/ui (A-12). TAKTYL-77: tu zostaje
+// przycisk "Menu"; szuflada (Drawer + lista) to leniwy modul mobile-menu-drawer.tsx, ladowany przy pierwszym
+// najechaniu, fokusie lub dotknieciu przycisku.
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { COMPARE_LINK, NAV_MAIN, SEARCH_LINK, WISHLIST_LINK } from "../../lib/nav";
-import { NavLink } from "./nav-link";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
+
+const loadDrawer = () => import("./mobile-menu-drawer");
+const MobileMenuDrawer = lazy(loadDrawer);
 
 /** Punkt przelamania Bootstrapa 5 (docs/06 §4): od 992 px nawigacja jest w naglowku, menu mobilne znika. */
 const DESKTOP_QUERY = "(min-width: 992px)";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
+  // szuflada zostaje zamontowana po pierwszym uzyciu (animacja zamkniecia, powrot fokusu)
+  const [used, setUsed] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
@@ -39,34 +42,20 @@ export function MobileMenu() {
         className="naglowek__link naglowek__menu"
         aria-expanded={open}
         aria-haspopup="dialog"
-        onClick={() => setOpen(true)}
+        onPointerEnter={() => void loadDrawer()}
+        onFocus={() => void loadDrawer()}
+        onClick={() => {
+          setUsed(true);
+          setOpen(true);
+        }}
       >
         Menu
       </button>
-      <Drawer side="left" open={open} onClose={close} title="Menu" returnFocusRef={buttonRef}>
-        <nav aria-label="Menu główne">
-          <ul className="lista">
-            {NAV_MAIN.map((item) => (
-              <li key={item.href}>
-                <NavLink href={item.href} className="menu-mobilne__link" onClick={close}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav aria-label="Narzędzia" className="menu-mobilne__dodatkowe">
-          <ul className="lista">
-            {[SEARCH_LINK, WISHLIST_LINK, COMPARE_LINK].map((item) => (
-              <li key={item.href}>
-                <NavLink href={item.href} className="menu-mobilne__link" onClick={close}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Drawer>
+      {used ? (
+        <Suspense fallback={null}>
+          <MobileMenuDrawer open={open} onClose={close} returnFocusRef={buttonRef} />
+        </Suspense>
+      ) : null}
     </>
   );
 }

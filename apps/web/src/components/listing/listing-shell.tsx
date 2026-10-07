@@ -16,9 +16,11 @@ import {
   type SortKey,
 } from "@taktyl/domain";
 import type { TrackItem } from "../../lib/track-events";
-import { Alert, Button, Drawer, Field, FilterChip, TextButton } from "@taktyl/ui";
+import { Alert, Button, Field, FilterChip, TextButton } from "@taktyl/ui";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  Suspense,
+  lazy,
   useEffect,
   useOptimistic,
   useRef,
@@ -59,6 +61,9 @@ export interface ListingShellProps {
   /** `items[]` do view_item_list. */
   trackItems: readonly TrackItem[];
 }
+
+const loadDrawer = () => import("./listing-drawer");
+const ListingDrawer = lazy(loadDrawer);
 
 const NO_CTX = { switches: [], colors: {} } as const;
 
@@ -104,6 +109,8 @@ export function ListingShell(props: ListingShellProps) {
   const [optState, setOptState] = useOptimistic<FilterState, FilterState>(state, (_c, n) => n);
   const [optSort, setOptSort] = useOptimistic<SortKey, SortKey>(sort, (_c, n) => n);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // szuflada zostaje zamontowana po pierwszym uzyciu (animacja zamkniecia, powrot fokusu)
+  const [drawerUsed, setDrawerUsed] = useState(false);
   const [cols, setCols] = useState<3 | 4>(3);
   const vtResolve = useRef<(() => void) | null>(null);
 
@@ -224,7 +231,12 @@ export function ListingShell(props: ListingShellProps) {
             variant="secondary"
             className="pasek-narzedzi__filtry"
             aria-haspopup="dialog"
-            onClick={() => setDrawerOpen(true)}
+            onPointerEnter={() => void loadDrawer()}
+            onFocus={() => void loadDrawer()}
+            onClick={() => {
+              setDrawerUsed(true);
+              setDrawerOpen(true);
+            }}
           >
             {filterCount > 0 ? `Filtry (${filterCount})` : "Filtry"}
           </Button>
@@ -293,16 +305,17 @@ export function ListingShell(props: ListingShellProps) {
         </div>
       </div>
 
-      <Drawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        title="Filtry"
-        side="left"
-        className="listing__szuflada"
-        footer={<Button onClick={() => setDrawerOpen(false)}>{`Pokaż ${countLabel}`}</Button>}
-      >
-        {panel}
-      </Drawer>
+      {drawerUsed ? (
+        <Suspense fallback={null}>
+          <ListingDrawer
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            footer={<Button onClick={() => setDrawerOpen(false)}>{`Pokaż ${countLabel}`}</Button>}
+          >
+            {panel}
+          </ListingDrawer>
+        </Suspense>
+      ) : null}
     </div>
   );
 }
