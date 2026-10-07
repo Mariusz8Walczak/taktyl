@@ -3,10 +3,20 @@
 // tylko fikcyjne, w domenie z ustawien (taktyl.example).
 import type { PublicShopSettings } from "@taktyl/contracts";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { FOOTER_HELP, FOOTER_LEGAL, FOOTER_SHOP } from "../../lib/nav";
 import type { NavItem } from "../../lib/nav";
+import { CookieSettingsButton } from "../consent/cookie-settings-button";
 
-function LinkColumn({ title, items }: { title: string; items: readonly NavItem[] }) {
+function LinkColumn({
+  title,
+  items,
+  extra,
+}: {
+  title: string;
+  items: readonly NavItem[];
+  extra?: ReactNode;
+}) {
   return (
     <div className="stopka__kolumna">
       <h2 className="stopka__tytul">{title}</h2>
@@ -18,6 +28,7 @@ function LinkColumn({ title, items }: { title: string; items: readonly NavItem[]
             </Link>
           </li>
         ))}
+        {extra ? <li>{extra}</li> : null}
       </ul>
     </div>
   );
@@ -34,7 +45,11 @@ export function Footer({ settings }: { settings: PublicShopSettings }) {
         <div className="stopka__siatka">
           <LinkColumn title="Sklep" items={FOOTER_SHOP} />
           <LinkColumn title="Pomoc" items={FOOTER_HELP} />
-          <LinkColumn title="Informacje prawne" items={FOOTER_LEGAL} />
+          <LinkColumn
+            title="Informacje prawne"
+            items={FOOTER_LEGAL}
+            extra={<CookieSettingsButton />}
+          />
           <div className="stopka__kolumna">
             <h2 className="stopka__tytul">Kontakt</h2>
             <address className="stopka__adres">

@@ -1,0 +1,100 @@
+/* F-240: baner zgod (dolny pasek) i ustawienia. Tylko tokeny (regula 2).
+   Pasek <= 40% wysokosci okna (--zgody-maks), nie modalny. Warstwa --z-menu: nad naglowkiem, pod nakladkami. */
+:root {
+  --zgody-maks: 40dvh;
+}
+
+.zgody {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: var(--z-menu);
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--s1);
+  max-height: var(--zgody-maks);
+  overflow-y: auto;
+  padding: var(--s2);
+  background-color: var(--powierzchnia);
+  border-top: var(--tk-linia-1) solid var(--linia-pola);
+  box-shadow: var(--cien-2);
+}
+.zgody__tekst {
+  margin: 0;
+  font-size: var(--t-s);
+  line-height: 1.4;
+}
+.zgody__przyciski {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s1);
+}
+.zgody__przyciski .tk-btn {
+  width: 100%;
+}
+.zgody__ustawienia {
+  justify-self: start;
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+}
+
+/* Rezerwacja miejsca: fokus i koniec strony nie chowaja sie pod paskiem (docs/11 pulapka 26) */
+html[data-zgody="otwarte"] {
+  scroll-padding-bottom: var(--zgody-wys);
+}
+html[data-zgody="otwarte"] body {
+  padding-bottom: var(--zgody-wys);
+}
+
+@media (min-width: 768px) {
+  .zgody {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: var(--s3);
+    padding-inline: max(var(--s2), calc((100% - var(--max)) / 2 + var(--s2)));
+  }
+  .zgody__przyciski {
+    /* rowne kolumny: oba przyciski tej samej szerokosci (rownorzedne wizualnie) */
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+}
+
+/* Kategorie w oknie ustawien */
+.zgody__kategoria {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s2);
+  padding-block: var(--s2);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.zgody__pole {
+  flex: none;
+  width: var(--s3);
+  height: var(--s3);
+  margin: var(--s1) 0 0;
+  accent-color: var(--akcent);
+}
+.zgody__etykieta {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.zgody__opis {
+  margin: 0;
+  font-size: var(--t-xs);
+  line-height: 1.4;
+  color: var(--tekst-slaby);
+}
+
+/* Przycisk w stopce wyglada jak jej linki */
+.stopka__link--przycisk {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
