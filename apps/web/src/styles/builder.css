@@ -13,6 +13,9 @@
   --kreator-wariant-min: 8rem;
   /* A-08: miejsce na liste wynikow - min. dwa wiersze, wiec komunikat nie przesuwa tresci. */
   --kreator-wyniki-min: calc(var(--cel-min) * 2 + var(--s2));
+  /* Telefon (docs/03 §3): scena <= 30% ekranu; 20dvh + linia wynikow zostawia trescia >= 50% okna 360x740. */
+  --kreator-scena-telefon: 20dvh;
+  --kreator-podglad-wys: calc(var(--kreator-scena-telefon) + var(--cel-min) + var(--s1) * 2);
   /* Szerokosc kolumn komputera: krok 60%, podsumowanie 40% (docs/03 §3). */
   --kreator-kolumna-krok: 3fr;
   --kreator-kolumna-podsumowanie: 2fr;
@@ -28,6 +31,8 @@
 /* ---- pasek krokow (F-100, A-07) ---- */
 .kreator__naglowek {
   display: grid;
+  /* minmax(0, 1fr): pasek krokow przewija sie w sobie i nie poszerza strony na 360 px (TAKTYL-79) */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s1);
   margin-bottom: var(--s3);
 }
@@ -178,21 +183,88 @@
   .kreator__dodaj {
     display: none; /* na telefonie przycisk jest w pasku dolnym */
   }
+  .kreator__podglad {
+    --tk-scena-kompakt: var(--kreator-scena-telefon);
+    padding-block: var(--s1);
+    background-color: var(--tlo);
+  }
   .kreator__scena.tk-scena {
     width: min(100%, calc(var(--tk-scena-kompakt) * var(--tk-sc-w) / var(--tk-sc-d)));
     margin-inline: auto;
   }
+  /* Wyniki na telefonie: jedna zwinieta linia (button + aria-expanded); tytul i naglowek zostaja dla czytnika. */
+  .wyniki__tytul,
+  .wyniki__naglowek {
+    position: absolute;
+    width: var(--tk-linia-1);
+    height: var(--tk-linia-1);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .wyniki {
+    position: relative;
+  }
+  .wyniki__przelacznik {
+    display: flex;
+    gap: var(--s1);
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: var(--cel-min);
+    margin: 0;
+    padding: 0 var(--s1);
+    border: var(--tk-linia-1) solid var(--linia);
+    border-radius: var(--r);
+    background-color: var(--powierzchnia);
+    color: inherit;
+    font: inherit;
+    font-size: var(--t-s);
+    text-align: left;
+    cursor: pointer;
+  }
+  .wyniki__przelacznik-akcja {
+    flex: none;
+    font-weight: var(--w-mocna);
+    color: var(--akcent);
+  }
+  .wyniki:not(.is-rozwiniete) .wyniki__lista,
+  .wyniki:not(.is-rozwiniete) .wyniki__profil {
+    display: none;
+  }
+  .wyniki__lista {
+    min-height: 0;
+    max-height: calc(var(--cel-min) * 3);
+    margin-top: var(--s1);
+    overflow-y: auto;
+  }
+  /* Przewijanie do elementu z fokusem uwzglednia przyklejony podglad u gory i pasek na dole (docs/03 §9). */
+  html:has(.kreator) {
+    scroll-padding-top: calc(var(--naglowek-wys) + var(--kreator-podglad-wys));
+    scroll-padding-bottom: calc(var(--kreator-pasek-wys) + var(--s2));
+  }
+}
+/* Podglad przyklejony tylko na wysokich ekranach (>= 740 px): tresc kroku dostaje >= 50% okna. Nizej przewija sie z trescia. */
+@media (max-width: 991px) and (min-height: 740px) {
   .kreator__podglad {
     position: sticky;
     top: var(--naglowek-wys);
     z-index: var(--z-naglowek);
-    padding-block: var(--s1);
-    background-color: var(--tlo);
   }
-  /* Wyniki na telefonie: sama lista wynikow jest zwinieta, gdy nie ma uwag - naglowek zostaje widoczny. */
-  .wyniki__lista {
-    max-height: calc(var(--cel-min) * 3);
-    overflow-y: auto;
+  /* Rozwinieta lista wynikow zajelaby tresc: podglad przestaje byc przyklejony do czasu zwiniecia. */
+  .kreator__podglad:has(.wyniki.is-rozwiniete) {
+    position: static;
+  }
+}
+@media (max-width: 991px) and (max-height: 739px) {
+  html:has(.kreator) {
+    scroll-padding-top: var(--naglowek-wys);
+  }
+}
+@media (min-width: 992px) {
+  .wyniki__przelacznik {
+    display: none;
   }
 }
 @media (min-width: 992px) {

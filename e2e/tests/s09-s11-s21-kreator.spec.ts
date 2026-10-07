@@ -14,12 +14,7 @@ async function openStep(page: Page, label: RegExp) {
 test.describe("Kreator setu (S9-S11)", () => {
   test("S9: gotowy set Programista: razem 1203,30 zł, „Oszczędzasz 133,70 zł”, „Pasuje”, „Zapas: 28,3 cm” @mobile", async ({
     page,
-    isMobile,
   }) => {
-    test.fixme(
-      isMobile,
-      "TAKTYL-79: na 360 px przyklejony podglad zaslania przyciski gotowych setow",
-    );
     // Strona glowna (sekcja "Gotowe sety") jest w budowie: wejscie do kreatora jest z listy "Albo zacznij od gotowego setu".
     await loadPreset(page, "Programista");
 

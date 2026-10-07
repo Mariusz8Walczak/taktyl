@@ -27,12 +27,7 @@ async function addProgramistaSet(page: Page) {
 test.describe("Koszyk (S12-S16)", () => {
   test("S12: „Dodaj set do koszyka”: szuflada, grupa „Twój set · −10%”, licznik +1, dostawa darmowa @mobile", async ({
     page,
-    isMobile,
   }) => {
-    test.fixme(
-      isMobile,
-      "TAKTYL-79: na 360 px przyklejony podglad kreatora zaslania przyciski gotowych setow",
-    );
     await loadPreset(page, "Programista");
     const before = await counterValue(page);
 

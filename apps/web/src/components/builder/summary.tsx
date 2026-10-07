@@ -46,8 +46,14 @@ export function FitResults({ api }: { api: BuilderApi }) {
   const [armed, setArmed] = useState(false);
   useEffect(() => setArmed(true), []);
   const hasResults = report.results.length > 0;
+  // F-104 (docs/03 §3): na telefonie lista wynikow jest zwinieta; przelacznik to button z aria-expanded.
+  const [open, setOpen] = useState(false);
   return (
-    <section className="wyniki" aria-labelledby="wyniki-tytul">
+    <section
+      className={cx("wyniki", open && "is-rozwiniete")}
+      aria-labelledby="wyniki-tytul"
+      data-rozwiniete={open ? "true" : "false"}
+    >
       <h3 id="wyniki-tytul" className="wyniki__tytul">
         Dopasowanie
       </h3>
@@ -56,8 +62,21 @@ export function FitResults({ api }: { api: BuilderApi }) {
           ? report.headline
           : "Sprawdzimy dopasowanie, gdy wybierzesz klawiaturę, myszkę i podkładkę."}
       </p>
+      {/* Tylko telefon (CSS): zwinieta linia "Wyniki: ..." rozwijajaca liste. */}
+      <button
+        type="button"
+        className="wyniki__przelacznik"
+        aria-expanded={open}
+        aria-controls="wyniki-lista"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="wyniki__przelacznik-tekst">
+          Wyniki: {hasResults ? report.headline.toLowerCase() : "po wyborze setu"}
+        </span>
+        <span className="wyniki__przelacznik-akcja">{open ? "ukryj" : "pokaż"}</span>
+      </button>
       {/* A-08: min. wysokosc dwoch wierszy - pojawienie sie komunikatu nie przesuwa tresci */}
-      <ul className="lista wyniki__lista">
+      <ul id="wyniki-lista" className="lista wyniki__lista">
         {report.results.map((r) => (
           <FitResult key={r.id} level={r.level} animate={armed}>
             <span className="wynik__etykieta">{LEVEL_LABEL[r.level]}</span>

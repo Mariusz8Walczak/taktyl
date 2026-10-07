@@ -45,7 +45,11 @@ export default defineConfig({
     {
       name: "mobile",
       grep: /@mobile/,
-      use: { ...devices["Pixel 7"], viewport: { width: 360, height: 740 }, launchOptions },
+      use: {
+        ...devices["Pixel 7"],
+        viewport: { width: 360, height: Number(process.env.E2E_MOBILE_HEIGHT ?? 740) },
+        launchOptions,
+      },
     },
   ],
 });
