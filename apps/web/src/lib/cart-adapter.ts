@@ -3,9 +3,12 @@
 // Sygnatury nie zmieniaja sie wzgledem tymczasowego adaptera. Po zapisaniu: szuflada koszyka sie otwiera (A-03)
 // i przycisk pokazuje "Dodano" (hook `useRecentlyAdded`). Zdarzenie `add_to_cart` wysyla WOLAJACY po `ok: true`
 // (docs/10 §1 zasada 2; ma ceny i nazwy z karty lub kreatora), np. przez `buildItem` / `buildSetItems` z track-items.
-import { cartStore } from "./cart/store";
 import { cartUi } from "./cart/ui";
 import { MAX_ITEM_QTY } from "./cart/types";
+
+// Magazyn koszyka (state.ts + store.ts) ladujemy dopiero przy pierwszym dodaniu: karta produktu i kreator nie niosa go w
+// paczce strony (budzet JS, docs/12 §4); sam zapis jest asynchroniczny od poczatku (`Promise`).
+const loadStore = () => import("./cart/store").then((m) => m.cartStore);
 
 export interface AddToCartInput {
   sku: string;
@@ -41,7 +44,7 @@ function afterAdd(): void {
 export async function addToCart({ sku, qty }: AddToCartInput): Promise<AddToCartResult> {
   if (typeof window === "undefined" || !Number.isInteger(qty) || qty < 1) return { ok: false };
   try {
-    cartStore.addItem(sku, Math.min(MAX_ITEM_QTY, qty));
+    (await loadStore()).addItem(sku, Math.min(MAX_ITEM_QTY, qty));
     afterAdd();
     return { ok: true };
   } catch {
@@ -55,7 +58,7 @@ export const addItem = addToCart;
 export async function addSet(input: AddSetInput): Promise<AddSetResult> {
   if (typeof window === "undefined") return { ok: false };
   try {
-    const res = cartStore.addSet({
+    const res = (await loadStore()).addSet({
       skus: input.skus,
       profile: input.profile,
       presetId: input.presetId,
