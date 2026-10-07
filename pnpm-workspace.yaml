@@ -27,3 +27,6 @@ minimumReleaseAgeExclude:
 overrides:
   deepmerge-ts: ">=8.0.2"
   mysql2: ">=3.22.0"
+  # ADM-006: opcjonalny peer effect z @hookform/resolvers rozwiazywal sie do 3.21.0 (blokowane przez minimumReleaseAge), czego
+  # nie zna wpis w lockfile po turbo prune; przypinamy wersje juz uzywana przez Prisma.
+  effect: "3.20.0"
