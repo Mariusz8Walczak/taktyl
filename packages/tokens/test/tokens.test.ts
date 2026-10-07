@@ -64,4 +64,9 @@ describe("audit-tokens", () => {
     writeFileSync(join(d, "apps/web/node_modules/p/i.css"), `a{color:${hex}}`);
     expect(run("audit-tokens.mjs", d).status).toBe(0);
   });
+  it("encja HTML &#106; nie jest trafieniem, a kolor hex w apps/** nadal tak (I-007)", () => {
+    const entity = "&#" + "106;avascript";
+    expect(run("audit-tokens.mjs", fixture("apps/api/e.ts", `const s = '${entity}';`)).status).toBe(0);
+    expect(run("audit-tokens.mjs", fixture("apps/web/f.css", `a{color:#${"fff"}}`)).status).toBe(1);
+  });
 });

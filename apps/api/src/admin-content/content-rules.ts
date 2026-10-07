@@ -85,7 +85,7 @@ export function guideWarnings(bodyMd: string): RuleWarning[] {
 const lineOf = (text: string, index: number): number => text.slice(0, index).split("\n").length;
 
 const ODR = /ec\.europa\.eu\/consumers\/odr|\bplatform\p{L}*\s+ODR\b|\bODR\b/giu;
-const ID_WITH_NUMBER = /\b(NIP|REGON|KRS|BDO)\b\s*[:\-]?\s*\d[\d \-]{5,}/gi;
+const ID_WITH_NUMBER = /\b(NIP|REGON|KRS|BDO)\b\s*[:-]?\s*\d[\d -]{5,}/gi;
 const NIP_LIKE = /\b\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2}\b|\b\d{10}\b/g;
 const EMAIL = /[^\s@<>"()[\]]+@([^\s@<>"()[\],;]+)/g;
 /** Numer telefonu PL: 3-3-3 albo 2-3-2-2 cyfr (z opcjonalnym +48); daty i godziny nie pasuja. */

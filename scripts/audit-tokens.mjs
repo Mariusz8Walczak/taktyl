@@ -10,7 +10,8 @@ const root = resolve(process.argv[2] ?? join(dirname(fileURLToPath(import.meta.u
 const SKIP_DIRS = new Set(["node_modules", "dist", ".next", ".turbo", "coverage", ".git"]);
 const EXT = /\.(css|scss|sass|less|ts|tsx|mts|cts|js|jsx|mjs|cjs|html|svg|json|md|mdx)$/i;
 const ALLOWED = join("packages", "tokens", "css", "tokens.css");
-const PATTERNS = [/#[0-9a-fA-F]{3,8}\b/, /rgb\(/i];
+// Hex: '#' nie moze byc czescia encji HTML (&#106;) ani wnetrzem tokenu (a#fff) - I-007.
+const PATTERNS = [/(?<![&\w])#[0-9a-fA-F]{3,8}\b/, /rgb\(/i];
 
 const hits = [];
 function walk(dir) {

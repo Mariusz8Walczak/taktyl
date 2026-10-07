@@ -46,7 +46,6 @@ import { AdminPresetsService } from "./admin-presets.service.js";
 
 const idPipe = new ZodPipe(productIdSchema);
 const skuPipe = new ZodPipe(skuSchema);
-const presetIdPipe = new ZodPipe(slugSchema);
 
 function withEtag<T extends { version: number }>(res: Response, body: T): T {
   res.setHeader("ETag", etagOf(body.version));
@@ -215,7 +214,7 @@ export class AdminCatalogController {
   @Put("presets/:id")
   @Roles("editor")
   async updatePreset(
-    @Param("id", presetIdPipe) id: string,
+    @Param("id", new ZodPipe(slugSchema)) id: string,
     @Headers("if-match") ifMatch: string | undefined,
     @Body(new ZodPipe(presetUpdateSchema)) body: z.output<typeof presetUpdateSchema>,
     @Actor() ctx: AuditContext,

@@ -310,7 +310,7 @@ export class AdminCatalogService {
 
   /** B-102, B-109, B-110: edycja produktu pod blokada wiersza i kontrola wersji (If-Match). */
   async patchProduct(id: string, body: ProductPatch, version: number, ctx: AuditContext) {
-    let warnings: Warning[] = [];
+    let warnings: Warning[];
     try {
       warnings = await this.audit.withAudit(ctx, async (tx, audit) => {
         const locked = await tx.$queryRaw<{ version: number }[]>`
@@ -520,7 +520,7 @@ export class AdminCatalogService {
 
   /** B-111, B-103: nowy wariant (SKU wg wzoru kategorii i kodow); pierwszy wariant staje sie domyslnym. */
   async createVariant(productId: string, body: VariantCreate, ctx: AuditContext) {
-    let warnings: Warning[] = [];
+    let warnings: Warning[];
     try {
       warnings = await this.audit.withAudit(ctx, async (tx, audit) => {
         const p = await tx.product.findUnique({ where: { id: productId } });
