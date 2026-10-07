@@ -1,0 +1,78 @@
+/* "Szybko dodaj" (TAKTYL-59, F-043, A-18): panel wyboru wariantu w nakladce. Wylacznie tokeny (regula 2). */
+.szybko__warianty {
+  display: grid;
+  gap: var(--s3);
+}
+.szybko__grupa {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.szybko__nazwa {
+  padding: 0;
+  margin-bottom: var(--s1);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.szybko__probki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+}
+.szybko__kafle {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--s5) * 2), 1fr));
+  gap: var(--s1);
+}
+.szybko__brak,
+.szybko__stan {
+  color: var(--tekst-slaby);
+}
+.szybko__stan {
+  margin: 0;
+  font-size: var(--t-s);
+}
+.szybko__stopka {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.szybko__cena {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+.tk-kafel.is-wybieralny,
+.szybko .tk-probka.is-brak:not(:has(:disabled)) {
+  cursor: pointer;
+}
+
+/* A-18: szkielet z przesuwanym polyskiem (pseudoelement, translateX), tylko w trakcie ladowania > 300 ms */
+.szybko__szkielet {
+  display: grid;
+  gap: var(--s1);
+}
+.szybko__wiersz-szkieletu {
+  position: relative;
+  display: block;
+  height: var(--cel-min);
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.szybko__wiersz-szkieletu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--powierzchnia), transparent);
+  transform: translateX(-100%);
+  animation: tk-blysk calc(var(--d-l) * 4) var(--e-wyjscie) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .szybko__wiersz-szkieletu::after {
+    animation: none;
+  }
+}

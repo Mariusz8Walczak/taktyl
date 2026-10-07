@@ -5,6 +5,7 @@
 import { Drawer } from "@taktyl/ui";
 import type { RefObject } from "react";
 import { ACCOUNT_LINK, COMPARE_LINK, NAV_MAIN, SEARCH_LINK, WISHLIST_LINK } from "../../lib/nav";
+import { CATEGORY_SHORTCUTS } from "../../lib/category-shortcuts";
 import { NavLink } from "./nav-link";
 
 export interface MobileMenuDrawerProps {
@@ -23,6 +24,18 @@ export default function MobileMenuDrawer({ open, onClose, returnFocusRef }: Mobi
               <NavLink href={item.href} className="menu-mobilne__link" onClick={onClose}>
                 {item.label}
               </NavLink>
+              {/* F-003: skroty filtrow kategorii tez w szufladzie telefonu */}
+              {CATEGORY_SHORTCUTS[item.href] ? (
+                <ul className="lista menu-mobilne__skroty" aria-label={`Skróty: ${item.label}`}>
+                  {(CATEGORY_SHORTCUTS[item.href] ?? []).map((s) => (
+                    <li key={s.href}>
+                      <NavLink href={s.href} className="menu-mobilne__link" onClick={onClose}>
+                        {s.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </li>
           ))}
         </ul>

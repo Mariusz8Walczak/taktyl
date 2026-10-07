@@ -17,7 +17,10 @@ describe("Header (F-002)", () => {
       "/",
     );
     const nav = screen.getByRole("navigation", { name: "Główna" });
-    const links = within(nav).getAllByRole("link");
+    // skroty filtrow (F-003) sa w panelach menu kategorii; tu sprawdzamy glowne pozycje
+    const links = within(nav)
+      .getAllByRole("link")
+      .filter((l) => !l.closest(".menu-kat__panel"));
     expect(links.map((l) => [l.textContent, l.getAttribute("href")])).toEqual([
       ["Klawiatury", "/klawiatury"],
       ["Myszki", "/myszki"],

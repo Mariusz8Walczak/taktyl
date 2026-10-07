@@ -14,7 +14,7 @@ import { ProductProvider } from "../../../components/product/product-context";
 import { buildSections } from "../../../components/product/product-sections";
 import { ProductTabs } from "../../../components/product/product-tabs";
 import { ReviewsSection } from "../../../components/reviews/reviews-section";
-import { StickyBar } from "../../../components/product/sticky-bar";
+import { StickyBarLazy } from "../../../components/product/sticky-bar-lazy";
 import {
   getCategoryBySlug,
   getColors,
@@ -126,7 +126,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
         />
 
         <ProductTabs sections={buildSections(product, settings, switches)} />
-        <StickyBar />
+        <StickyBarLazy />
       </ProductProvider>
 
       {/* F-076, TAKTYL-58: opinie demo (tag reviews:{slug}), kotwica #opinie, bez danych strukturalnych */}

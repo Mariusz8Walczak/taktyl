@@ -2,8 +2,9 @@
 // Komponent serwerowy: cala karta klikalna przez JEDEN odnosnik na nazwie (pseudoelement ::after), zdjecie 1:1 przez
 // ProductImage z manifestu, 3 parametry kluczowe z atrybutow, cena "od X zl" z Omnibusem przy promocji, plakietki,
 // probki kolorow z nazwa. Drugie ujecie (A-09) tylko gdy manifest ma gotowe zdjecie i tylko dla pointer:fine (CSS).
-// HAK na F-042/F-043 (TAKTYL-59): "Szybko dodaj" wejdzie do `.karta__zdjecie` jako element `position: relative`
-// (powyzej pseudoelementu odnosnika), dostepny bez najechania (docs/11 pulapka 13). Tu go jeszcze nie ma.
+// F-042, F-043 (TAKTYL-59): pasek "Szybko dodaj" u dolu zdjecia (A-09: translateY tylko przy hover: hover + pointer: fine;
+// na dotyku i z klawiatury ZAWSZE widoczny, docs/11 pulapka 13). To zwykly <button> z danymi; panel wariantu otwiera
+// globalny QuickAddHost (delegacja klikniec, kod panelu laduje sie dopiero po kliknieciu), wiec karta nie niesie JS.
 import { formatPLN } from "@taktyl/domain";
 import { Badge, ProductImage } from "@taktyl/ui";
 import Link from "next/link";
@@ -114,6 +115,19 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
           priceGr={view.priceGr}
           variantLabel={view.variantLabel}
         />
+      </div>
+      <div className="karta__szybko">
+        <button
+          type="button"
+          className="tk-btn tk-btn--poboczny karta__szybko-przycisk"
+          data-szybko-dodaj=""
+          data-slug={view.slug}
+          data-category={view.category}
+          data-sku={view.sku}
+          aria-label={`Szybko dodaj: ${view.name}`}
+        >
+          Szybko dodaj
+        </button>
       </div>
     </li>
   );

@@ -1,0 +1,41 @@
+/* Skroty klawiszowe (TAKTYL-59, F-010, A-17): lista w oknie i przelacznik "Wyłącz skróty". Wylacznie tokeny. */
+.skroty__lista {
+  display: grid;
+  gap: var(--s2);
+  margin: 0 0 var(--s3);
+}
+.skroty__wiersz {
+  display: grid;
+  grid-template-columns: var(--s5) 1fr;
+  align-items: center;
+  gap: var(--s2);
+}
+.skroty__wiersz dt,
+.skroty__wiersz dd {
+  margin: 0;
+}
+.skroty__przelacznik {
+  display: flex;
+  gap: var(--s2);
+  padding-top: var(--s2);
+  border-top: var(--tk-linia-1) solid var(--linia);
+}
+.skroty__pole {
+  flex: none;
+  width: var(--s3);
+  height: var(--s3);
+  margin: var(--s1) 0 0;
+  accent-color: var(--akcent);
+}
+.skroty__etykieta {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.skroty__opis {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}

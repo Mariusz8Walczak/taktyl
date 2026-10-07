@@ -16,8 +16,9 @@ function LinkColumn({
 }: {
   title: string;
   items: readonly NavItem[];
-  extra?: ReactNode;
+  extra?: ReactNode | ReactNode[];
 }) {
+  const extras = Array.isArray(extra) ? extra : extra ? [extra] : [];
   return (
     <div className="stopka__kolumna">
       <h2 className="stopka__tytul">{title}</h2>
@@ -29,7 +30,9 @@ function LinkColumn({
             </Link>
           </li>
         ))}
-        {extra ? <li>{extra}</li> : null}
+        {extras.map((node, i) => (
+          <li key={i}>{node}</li>
+        ))}
       </ul>
     </div>
   );
@@ -49,7 +52,18 @@ export function Footer({ settings }: { settings: PublicShopSettings }) {
           <LinkColumn
             title="Informacje prawne"
             items={FOOTER_LEGAL}
-            extra={<CookieSettingsButton />}
+            extra={[
+              <CookieSettingsButton key="cookies" />,
+              // F-010: otwiera liste skrotow (delegacja w ShortcutsHost), takze po ich wylaczeniu (WCAG 2.1.4)
+              <button
+                key="skroty"
+                type="button"
+                className="stopka__link stopka__link--przycisk"
+                data-otworz-skroty=""
+              >
+                Skróty klawiszowe
+              </button>,
+            ]}
           />
           <div className="stopka__kolumna">
             <h2 className="stopka__tytul">Kontakt</h2>

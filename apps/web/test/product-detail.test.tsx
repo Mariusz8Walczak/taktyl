@@ -1,7 +1,7 @@
 // F-060...F-073, F-068 (TAKTYL-28): karta produktu - wybor wariantu i adres ?sku=, cena z Omnibusem, dostepnosc,
 // ilosc, dodanie do koszyka przez adapter, zakladki, galeria, pasek zakupu; S5, S6, S7, S8.
 import { ToastProvider } from "@taktyl/ui";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -164,6 +164,8 @@ describe("dodanie do koszyka (F-066, adapter z TAKTYL-39 w przyszlosci)", () => 
     render(<Page slug="bazalt-75" />);
     await user.click(screen.getByRole("button", { name: "Zwiększ ilość" }));
     await user.click(screen.getByRole("button", { name: "Dodaj do koszyka" }));
+    // magazyn koszyka laduje sie dynamicznym importem (TAKTYL-39): zapis jest asynchroniczny
+    await waitFor(() => expect(window.localStorage.getItem(CART_STORAGE_KEY)).not.toBeNull());
     const stored = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY)!);
     expect(stored.lines).toEqual([{ type: "item", sku: "K-BZL75-GRF-SLZ", qty: 2 }]);
     expect(window.localStorage.getItem(CART_STORAGE_KEY)).not.toMatch(/price|cena/i);

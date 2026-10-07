@@ -1,5 +1,6 @@
 // F-040, F-041, F-044, A-09 (TAKTYL-27): karta produktu na listingu - jeden odnosnik, parametry, cena z Omnibusem,
-// plakietki, probki kolorow z nazwa, zdjecie z manifestu (placeholder), brak "Szybko dodaj" do czasu TAKTYL-59.
+// plakietki, probki kolorow z nazwa, zdjecie z manifestu (placeholder), przycisk "Szybko dodaj" (TAKTYL-59, szczegoly w quick-add.test.tsx).
+import { ToastProvider } from "@taktyl/ui";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
@@ -14,10 +15,13 @@ function renderCard(
 ) {
   const p = productFixture(slug, status);
   const view = buildCardView(cardFixture(p, matched), p, { colors: COLORS, switches: SWITCHES });
+  // ToastProvider: przyciski ulubionych i porownania na karcie (F-130, F-132) pokazuja toast
   return render(
-    <ul>
-      <ProductCard view={view} track={cardTrackSource(view, "Klawiatury", 0)} />
-    </ul>,
+    <ToastProvider>
+      <ul>
+        <ProductCard view={view} track={cardTrackSource(view, "Klawiatury", 0)} />
+      </ul>
+    </ToastProvider>,
   );
 }
 
@@ -96,9 +100,11 @@ describe("ProductCard", () => {
     expect(imgs[0]?.getAttribute("src")).toContain("/media/img/produkty/");
   });
 
-  it("dostepnosc: karta z jednym przyciskiem Szybko dodaj jeszcze nie istnieje (TAKTYL-59)", () => {
+  it("dostepnosc: 'Szybko dodaj' jest zwyklym przyciskiem bez najechania (F-042, pulapka 13)", () => {
     renderCard("bazalt-75");
-    expect(screen.queryByRole("button")).toBeNull();
+    const btn = screen.getByRole("button", { name: "Szybko dodaj: Bazalt 75" });
+    expect(btn).toBeVisible();
+    expect(btn).not.toHaveAttribute("tabindex", "-1");
   });
 
   it("ma atrybut pomiaru z items[] i unikalna nazwe przejscia (A-14)", () => {

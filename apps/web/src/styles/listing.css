@@ -480,3 +480,39 @@ a.tk-btn {
 .listing__szuflada .filtry {
   padding-bottom: var(--s2);
 }
+
+/* ---- "Szybko dodaj" (F-042, F-043, A-09, TAKTYL-59) ----
+   Warstwa nad zdjeciem, WYZEJ niz pseudoelement odnosnika karty (jest pozniej w DOM, bez z-index). Pasek zajmuje obszar
+   zdjecia 1:1; kliknieciom przepuszcza wszystko poza samym przyciskiem. Dotyk i klawiatura: ZAWSZE widoczny. */
+.karta__szybko {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.karta__szybko-przycisk {
+  width: 100%;
+  border-radius: 0;
+  pointer-events: auto;
+}
+/* A-09: pasek wsuwa sie od dolu tylko przy najechaniu myszka; fokus (karta, odnosnik, przycisk) tez go pokazuje */
+@media (hover: hover) and (pointer: fine) {
+  .karta__szybko-przycisk {
+    transform: translateY(100%);
+    transition: transform var(--d-s) var(--e-wyjscie);
+  }
+  .karta:hover .karta__szybko-przycisk,
+  .karta:focus-within .karta__szybko-przycisk {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .karta__szybko-przycisk {
+    transition: none;
+  }
+}

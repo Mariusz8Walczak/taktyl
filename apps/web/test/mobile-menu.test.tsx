@@ -22,8 +22,14 @@ describe("MobileMenu (F-004)", () => {
     expect(
       within(nav)
         .getAllByRole("link")
+        .filter((l) => !l.closest(".menu-mobilne__skroty"))
         .map((l) => l.textContent),
     ).toEqual(["Klawiatury", "Myszki", "Podkładki", "Zbuduj set", "Poradnik"]);
+    // F-003: skroty filtrow kategorii tez w szufladzie
+    expect(within(nav).getByRole("link", { name: "Ciche" })).toHaveAttribute(
+      "href",
+      "/klawiatury?przelacznik=cichy",
+    );
     expect(within(dialog).getByRole("link", { name: "Ulubione" })).toBeInTheDocument();
   });
 

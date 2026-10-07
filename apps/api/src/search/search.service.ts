@@ -2,34 +2,16 @@
 // Normalizacja i dopasowanie slow z @taktyl/domain (ta sama funkcja co w sklepie; "lupek" znajduje "Lupek").
 import { Inject, Injectable } from "@nestjs/common";
 import { searchResponseSchema } from "@taktyl/contracts";
-import { matchesSearch, normalizeSearchText, searchTokens, type Product } from "@taktyl/domain";
+import {
+  matchesProductSearch,
+  matchesSearch,
+  normalizeSearchText,
+  type Product,
+} from "@taktyl/domain";
 import { toCard } from "../catalog/card.js";
 import { CatalogLoader, type CatalogSnapshot } from "../catalog/catalog.loader.js";
 import { respond } from "../common/zod.pipe.js";
 import { PrismaService } from "../prisma/prisma.service.js";
-
-/** F-006: synonimy mapowane na dane (nie na tekst): slowo -> predykat produktu. */
-const SYNONYMS: Record<string, (p: Product) => boolean> = {
-  bezprzewodowa: (p) => hasConnectivity(p, ["bt", "2.4ghz"]),
-  bezprzewodowy: (p) => hasConnectivity(p, ["bt", "2.4ghz"]),
-  cicha: (p) => (p.fit.cisza ?? 0) >= 2,
-  cichy: (p) => (p.fit.cisza ?? 0) >= 2,
-  lekka: (p) =>
-    p.category === "myszki" &&
-    typeof p.attributes.weight_g === "number" &&
-    p.attributes.weight_g <= 60,
-  lekki: (p) =>
-    p.category === "myszki" &&
-    typeof p.attributes.weight_g === "number" &&
-    p.attributes.weight_g <= 60,
-  mata: (p) => p.category === "podkladki",
-  pionowa: (p) => String(p.attributes.shape ?? "").includes("pionow"),
-};
-
-function hasConnectivity(p: Product, wanted: string[]): boolean {
-  const c = p.attributes.connectivity;
-  return Array.isArray(c) && c.some((x) => wanted.includes(x));
-}
 
 function haystack(p: Product, snap: CatalogSnapshot): string {
   const switchNames = p.variants.flatMap((v) =>
@@ -57,14 +39,7 @@ export class SearchService {
 
   async search(q: string, limit: number) {
     const snap = await this.loader.load();
-    const tokens = searchTokens(q);
-    const matches = (p: Product): boolean => {
-      const text = haystack(p, snap);
-      return tokens.every((t) => {
-        const synonym = SYNONYMS[t];
-        return matchesSearch(text, t) || (synonym?.(p) ?? false);
-      });
-    };
+    const matches = (p: Product): boolean => matchesProductSearch(p, haystack(p, snap), q);
     const normalizedQuery = normalizeSearchText(q.trim());
     // Trafnosc: nazwa zaczyna sie od zapytania, potem nazwa zawiera, potem reszta; remis: kolejnosc katalogu.
     const rank = (p: Product): number => {

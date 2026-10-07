@@ -7,9 +7,10 @@ import { Kbd } from "@taktyl/ui";
 import Link from "next/link";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { SEARCH_LINK } from "../../lib/nav";
+import { OPEN_SEARCH_EVENT } from "../../lib/shortcuts/events";
 
 /** Hak dla skrotu "/" (TAKTYL-59): `window.dispatchEvent(new Event(OPEN_SEARCH_EVENT))` otwiera wyszukiwarke. */
-export const OPEN_SEARCH_EVENT = "taktyl:open-search";
+export { OPEN_SEARCH_EVENT };
 
 const loadDialog = () => import("./search-dialog");
 const SearchDialog = lazy(loadDialog);
