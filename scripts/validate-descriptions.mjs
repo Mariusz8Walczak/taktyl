@@ -1,5 +1,5 @@
 // TAKTYL-30: walidacja data/descriptions.json (docs/04 §7, docs/11 §2 poz. 24-25, CLAUDE.md reguła 4-5).
-// Uruchomienie w Dockerze: docker run --rm -v "$PWD":/app -w /app node:22-alpine node scripts/validate-descriptions.mjs
+// Uruchomienie w Dockerze: docker run --rm -v "$PWD":/app -w /app node:24-alpine node scripts/validate-descriptions.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

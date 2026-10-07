@@ -14,6 +14,7 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "noUncheckedSideEffectImports": false,
     "declaration": true,
     "sourceMap": true
   }

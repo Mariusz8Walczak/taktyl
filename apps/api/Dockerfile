@@ -3,7 +3,7 @@
 #   docker build -f apps/api/Dockerfile --target api .
 # Cele: api (produkcyjny, domyslny), migrate (prisma migrate deploy, narzedzia migracji), seed uzywa celu api.
 # Obraz bazowy: tag z konkretna wersja + digest (aktualizuje Dependabot, ADR-0009).
-ARG NODE_IMAGE=node:22.23.3-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+ARG NODE_IMAGE=node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 
 FROM ${NODE_IMAGE} AS base
 ENV PNPM_HOME=/pnpm \
@@ -13,7 +13,7 @@ ENV PATH=$PNPM_HOME:$PATH
 # Prisma (silnik zapytan) wymaga OpenSSL na Alpine.
 RUN apk add --no-cache openssl \
  && corepack enable \
- && corepack prepare pnpm@9.15.4 --activate
+ && corepack prepare pnpm@12.10.1 --activate
 WORKDIR /app
 
 # 1) Przycinamy monorepo do @taktyl/api i jego zaleznosci workspace.

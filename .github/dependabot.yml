@@ -1,10 +1,34 @@
-# I-006 (TAKTYL-7): aktualizacje zaleznosci, obrazow bazowych (tag + digest) i akcji.
+# I-006 (TAKTYL-7), I-008 (TAKTYL-75): aktualizacje zaleznosci, obrazow bazowych (tag + digest) i akcji.
+# Zasady: minor + patch w jednej grupie na ekosystem (jeden PR tygodniowo), kazdy major osobnym PR-em.
+# Piny z ADR-0010 sa ignorowane tak dlugo, jak trwa ich warunek; usuwaj wpis razem ze zmiana ADR-u.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Framework aplikacji: major tylko swiadomie (faza 2 ADR-0010: Next 16, NestJS 12, Prisma 7).
+      - dependency-name: next
+        update-types: [version-update:semver-major]
+      - dependency-name: "@nestjs/*"
+        update-types: [version-update:semver-major]
+      - dependency-name: prisma
+        update-types: [version-update:semver-major]
+      - dependency-name: "@prisma/*"
+        update-types: [version-update:semver-major]
+      # typescript-eslint deklaruje typescript <6.1; TypeScript 7 i 6.1+ dopiero po jego wsparciu (ADR-0010).
+      - dependency-name: typescript
+        versions: [">=6.1.0"]
+      # jsdom 30 psuje dom-accessibility-api (testy ui), ADR-0010.
+      - dependency-name: jsdom
+        versions: [">=30.0.0"]
+      # @types/node trzymamy na wersji glownej Node z obrazow (24 LTS).
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
   - package-ecosystem: docker
     directories:
       - /apps/api
@@ -13,13 +37,30 @@ updates:
       - /infra/docker
     schedule:
       interval: weekly
+    groups:
+      docker-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Node: tylko wersje LTS (parzyste); przejscie na nowy LTS to decyzja w ADR-0010.
+      - dependency-name: node
+        update-types: [version-update:semver-major]
   - package-ecosystem: docker-compose
     directory: /
     schedule:
       interval: weekly
+    groups:
+      compose-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Postgres 16 (wsparcie do listopada 2028, ADR-0005, ADR-0010): zmiana glownej to migracja danych, nie bump.
+      - dependency-name: postgres
+        update-types: [version-update:semver-major]
   - package-ecosystem: github-actions
     directories:
       - /
       - /.github/actions/prepare
     schedule:
       interval: weekly
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]

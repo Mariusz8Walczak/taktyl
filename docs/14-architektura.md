@@ -285,7 +285,7 @@ Zasada: logika domenowa testowana raz w `domain`; e2e sprawdza przepływ i integ
 | Obszar | Technologia (wersja główna) | Uzasadnienie |
 |---|---|---|
 | Język | TypeScript 5 (strict) | wspólne typy, mniej błędów |
-| Runtime | Node.js 22 LTS | LTS, obraz `node:22-alpine` |
+| Runtime | Node.js 24 LTS | LTS, obraz `node:24-alpine` |
 | Menedżer | pnpm 9, Turborepo 2 | workspaces, cache zadań |
 | API | NestJS 11 | moduły, DI, guardy, pipes |
 | ORM | Prisma 6 | migracje, typy, seed |
