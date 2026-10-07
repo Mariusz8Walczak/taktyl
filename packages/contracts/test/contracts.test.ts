@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
-  attributesSchemaByCategory, auditEntrySchema, ifMatchSchema, loginRequestSchema, orderCreatedSchema,
+  adminProductDetailSchema, attributesSchemaByCategory, auditEntrySchema, ifMatchSchema, loginRequestSchema, orderCreatedSchema,
   orderRequestSchema, paymentSimulateRequestSchema, paymentSimulateResponseSchema, problemSchema, quoteRequestSchema,
   quoteResponseSchema, revalidateRequestSchema, setPriceRequestSchema, setStockRequestSchema, settingsPatchSchema,
   skuSchema, listingQuerySchema, productPatchSchema, orderTransitionRequestSchema, orderNoteSchema,
@@ -259,5 +259,30 @@ describe("zamowienia w backpanelu (TAKTYL-48)", () => {
     expect(adminOrderListQuerySchema.parse({}).page).toBe(1);
     expect(adminOrderListQuerySchema.parse({ shipping_method: "kurier" }).shipping_method).toBe("kurier");
     expect(adminOrderListQuerySchema.safeParse({ shipping_method: "zly" }).success).toBe(false);
+  });
+});
+
+describe("TAKTYL-47: kontrakt katalogu w backpanelu", () => {
+  const detail = {
+    id: "m-sikora", slug: "sikora", category: "myszki", name: "Sikora", brand: "Taktyl", short: "Lekka mysz symetryczna.",
+    description: null, options: ["color"], default_variant_sku: null, badges: [], fit: { fps: 1, gry: 1, programowanie: 1, biuro: 1, cisza: 1 },
+    in_box: [], gpsr: { manufacturer: "Taktyl", address: "adres", contact: "a@taktyl.example", warnings: "-" },
+    attributes: {
+      shape: "symetryczna", hand: "obureczna", size: "M", hand_cm: [17, 20], grips: ["palm"], weight_g: 70,
+      dims_mm: { w: 62, d: 120, h: 38 }, connectivity: ["usb-c"], dpi_max: 26000, polling_hz: 1000, battery: null, sensor: "optyczny",
+    },
+    status: "archived", version: 1, updated_at: "2026-10-07T12:00:00+02:00", variants: [], images: [], warnings: [],
+  };
+
+  it("nowy produkt bez wariantow jest poprawnym szczegolem (status archived, brak domyslnego wariantu)", () => {
+    expect(adminProductDetailSchema.safeParse(detail).success).toBe(true);
+    expect(adminProductDetailSchema.safeParse({ ...detail, brand: "Inna" }).success).toBe(false);
+    expect(adminProductDetailSchema.safeParse({ ...detail, attributes: { shape: "x" } }).success).toBe(false);
+  });
+
+  it("PATCH produktu dopuszcza slug i domyslny wariant, odrzuca nieznane pola; cena nie przyjmuje recznego lowest_30d", () => {
+    expect(productPatchSchema.safeParse({ slug: "nowy-adres", default_variant_sku: "M-WRB-GRF" }).success).toBe(true);
+    expect(productPatchSchema.safeParse({ lowest_30d_gr: 1 }).success).toBe(false);
+    expect(setPriceRequestSchema.safeParse({ price_gr: 9900, lowest_30d_gr: 1 }).success).toBe(false);
   });
 });

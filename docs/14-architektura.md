@@ -170,6 +170,8 @@ Każda mutacja API przy zatwierdzeniu transakcji zapisuje w `outbox` poniższe z
 |---|---|---|
 | Produkt: nazwa, `short`, atrybuty, plakietki, `fit`, status | `product:{slug}`, `category:{kategoria}`, `catalog`, `facets:{kategoria}`, `presets` | karta, listing, strona główna, kreator, wyszukiwanie |
 | Wariant: dodanie, usunięcie, kolor, przełącznik | jak wyżej | jak wyżej |
+| Nowy produkt (bez wariantów, ukryty) | `catalog`, `category:{kategoria}`, `facets:{kategoria}` | lista w backpanelu; sklep jeszcze nic nie pokazuje |
+| Produkt: usunięcie (tylko bez zamówień), zmiana `slug` | jak wiersz „Produkt” + `reviews:{slug}`; przy zmianie `slug` także znaczniki starego adresu | karta (stary i nowy adres), listing, kreator |
 | Cena wariantu (nowy wpis w `price_history`) | `product:{slug}`, `category:{kategoria}`, `catalog`, `presets` | karta, listing, główna (presety z ceną setu), kreator |
 | Stan magazynowy wariantu | `product:{slug}`, `category:{kategoria}`, `facets:{kategoria}` | karta, listing (dostępność, liczniki filtrów) |
 | Zdjęcie (status `gotowe`/`brak`, nowy plik) | `product:{slug}`, `category:{kategoria}`, `presets` | karta, listing, kreator (DeskStage), główna |

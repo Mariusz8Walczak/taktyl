@@ -2,6 +2,7 @@
 import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+import { AdminCatalogModule } from "./admin-catalog/admin-catalog.module.js";
 import { AdminOrdersModule } from "./admin-orders/admin-orders.module.js";
 import { AuditModule } from "./audit/audit.module.js";
 import { AuthModule } from "./auth/auth.module.js";
@@ -41,6 +42,7 @@ import { UsersModule } from "./users/users.module.js";
     OrdersModule,
     PaymentsSimModule,
     AdminOrdersModule,
+    AdminCatalogModule,
     OpenApiModule,
     ThrottlerModule.forRootAsync({
       inject: [APP_CONFIG],

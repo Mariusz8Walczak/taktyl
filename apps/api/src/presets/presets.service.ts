@@ -11,7 +11,17 @@ const CATEGORY_ORDER = ["klawiatury", "myszki", "podkladki"];
 export class PresetsService {
   constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
-  async list() {
+  /** B-110: set z zarchiwizowanym produktem lub wylaczonym wariantem znika z oferty (docs/15 B-110). */
+  list() {
+    return this.build(false);
+  }
+
+  /** B-114: wszystkie sety (takze ukryte przed klientem) - dla backpanelu. */
+  listAll() {
+    return this.build(true);
+  }
+
+  private async build(includeHidden: boolean) {
     const [shop, presets] = await Promise.all([
       this.prisma.shopSettings.findFirstOrThrow(),
       this.prisma.preset.findMany({
@@ -20,29 +30,37 @@ export class PresetsService {
       }),
     ]);
     return respond(presetsResponseSchema, {
-      items: presets.map((p) => {
-        const items = [...p.items].sort(
-          (a, b) => CATEGORY_ORDER.indexOf(a.categoryId) - CATEGORY_ORDER.indexOf(b.categoryId),
-        );
-        const price = priceSet(
-          items.map((i) => ({ sku: i.sku, category: i.categoryId, price: i.variant.priceGr })),
-          { percent: shop.setDiscountPercent, requiresCategories: shop.setDiscountCategories },
-        );
-        return {
-          id: p.id,
-          name: p.name,
-          profile: p.profile,
-          note: p.note,
-          items: items.map((i) => ({
-            sku: i.sku,
-            name: i.variant.product.name,
-            price_gr: i.variant.priceGr,
-          })),
-          sum_gr: price.sum,
-          set_discount_gr: price.discount,
-          total_gr: price.total,
-        };
-      }),
+      items: presets
+        .filter(
+          (p) =>
+            includeHidden ||
+            p.items.every(
+              (i) => i.variant.status === "active" && i.variant.product.status === "active",
+            ),
+        )
+        .map((p) => {
+          const items = [...p.items].sort(
+            (a, b) => CATEGORY_ORDER.indexOf(a.categoryId) - CATEGORY_ORDER.indexOf(b.categoryId),
+          );
+          const price = priceSet(
+            items.map((i) => ({ sku: i.sku, category: i.categoryId, price: i.variant.priceGr })),
+            { percent: shop.setDiscountPercent, requiresCategories: shop.setDiscountCategories },
+          );
+          return {
+            id: p.id,
+            name: p.name,
+            profile: p.profile,
+            note: p.note,
+            items: items.map((i) => ({
+              sku: i.sku,
+              name: i.variant.product.name,
+              price_gr: i.variant.priceGr,
+            })),
+            sum_gr: price.sum,
+            set_discount_gr: price.discount,
+            total_gr: price.total,
+          };
+        }),
     });
   }
 }

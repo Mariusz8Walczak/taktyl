@@ -6,7 +6,7 @@ import type { auditListQuerySchema, Role } from "@taktyl/contracts";
 import type { z } from "zod";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { PrismaService } from "../prisma/prisma.service.js";
-import { maskAuditValueForViewer, sanitizeForAudit } from "./sanitize.js";
+import { maskAuditValueForViewer, NON_PERSONAL_ENTITIES, sanitizeForAudit } from "./sanitize.js";
 
 type AuditListQuery = z.output<typeof auditListQuerySchema>;
 
@@ -31,8 +31,10 @@ export type RecordAudit = (entry: AuditEntry) => Promise<bigint>;
 
 const ACTION = /^[a-z_]+(?:\.[a-z_]+)+$/;
 
-const toJson = (v: unknown): Prisma.InputJsonValue | typeof Prisma.DbNull =>
-  v === undefined || v === null ? Prisma.DbNull : (sanitizeForAudit(v) as Prisma.InputJsonValue);
+const toJson = (v: unknown, entity: string): Prisma.InputJsonValue | typeof Prisma.DbNull =>
+  v === undefined || v === null
+    ? Prisma.DbNull
+    : (sanitizeForAudit(v, 0, NON_PERSONAL_ENTITIES.has(entity)) as Prisma.InputJsonValue);
 
 /** Kontekst systemowy (zadania cykliczne, bez uzytkownika). */
 export const systemAudit = (requestId: string): AuditContext => ({
@@ -65,8 +67,8 @@ export class AuditService {
         action: entry.action,
         entity: entry.entity,
         entityId: entry.entityId,
-        before: toJson(entry.before),
-        after: toJson(entry.after),
+        before: toJson(entry.before, entry.entity),
+        after: toJson(entry.after, entry.entity),
         requestId: ctx.requestId,
         ipHash: ctx.ipHash,
       },
@@ -123,8 +125,12 @@ export class AuditService {
         action: r.action,
         entity: r.entity,
         entity_id: r.entityId,
-        before: mask ? maskAuditValueForViewer(r.before) : r.before,
-        after: mask ? maskAuditValueForViewer(r.after) : r.after,
+        before:
+          mask && !NON_PERSONAL_ENTITIES.has(r.entity)
+            ? maskAuditValueForViewer(r.before)
+            : r.before,
+        after:
+          mask && !NON_PERSONAL_ENTITIES.has(r.entity) ? maskAuditValueForViewer(r.after) : r.after,
         request_id: r.requestId,
       })),
       page: query.page,

@@ -21,7 +21,7 @@ Powiązania: architektura `docs/14`, model danych `docs/17`, backpanel `docs/15`
 | Filtrowanie | parametry jak w adresie sklepu (`docs/04` §6, F-022): `?rozmiar=75,tkl&lacznosc=bt&cena=30000-70000&hotswap=1&waga=do-60&dlon=19.5`. **Uwaga:** zakres `cena` w API jest w groszach (`cena=30000-70000`); sklep przelicza zł → grosze |
 | Wyszukiwanie | `?q=` normalizowane po stronie serwera: małe litery, NFD bez znaków łączących, `ł → l` (`docs/04` §9) — to ta sama funkcja z `packages/domain` |
 | Idempotencja | `POST /orders` wymaga nagłówka `Idempotency-Key` (UUID); ten sam klucz + to samo ciało = ta sama odpowiedź (24 h); ten sam klucz + inne ciało = `409 idempotency_conflict`. Mutacje admina: `PUT`/`PATCH`/`DELETE` idempotentne z natury |
-| Współbieżność admina | edytowalne zasoby mają `version` (liczba); `PATCH` wymaga `If-Match: "<version>"`; niezgodność = `409 conflict` |
+| Współbieżność admina | edytowalne zasoby mają `version` (liczba); `PATCH` (i `PUT /presets/{id}`) wymaga `If-Match: "<version>"`, a `PUT` ceny i stanu przyjmuje go opcjonalnie; odpowiedzi niosą `ETag: "<version>"`. Niezgodność = **`412`** z `code: conflict` (zamiast `409`, które zostaje dla naruszeń unikalności i reguł biznesowych), brak nagłówka = `428`, zły format = `422` (API-011) |
 | Nagłówki | `X-Request-Id` (zwracany zawsze), `X-CSRF-Token` (mutacje admina), `Idempotency-Key`, `Cache-Control` (odpowiedzi publiczne katalogu: `public, max-age=0, must-revalidate` + `ETag`; wycena, zamówienia: `no-store`) |
 | Limity | `rate_limited` (429) z `Retry-After`; wartości w `docs/14` §7 |
 | Język | bez negocjacji; tylko `pl-PL` |
@@ -101,19 +101,19 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 |---|---|---|---|---|---|---|
 | GET | `/v1/admin/products` | viewer | lista (filtry: kategoria, status, brak zdjęcia, niski stan; wyszukiwanie) | — | B-010 | |
 | GET | `/v1/admin/products/{id}` | viewer | produkt z wariantami, stanami, historią cen, zdjęciami | — | B-011 | |
-| POST | `/v1/admin/products` | editor | nowy produkt (atrybuty zgodne ze schematem kategorii) | 409 (zajęty `slug`) | B-012 | `catalog`, `category:{k}`, `facets:{k}` |
-| PATCH | `/v1/admin/products/{id}` | editor | nazwa, `short`, atrybuty, plakietki, `fit`, `in_box`, `gpsr`, status (`active` / `archived`) | 409 | B-011 | `product:{slug}`, `category:{k}`, `catalog`, `facets:{k}`, `presets` |
+| POST | `/v1/admin/products` | editor | nowy produkt (atrybuty zgodne ze schematem kategorii, `options` i prefiks `id` zgodne z kategorią); bez wariantów zostaje `archived` (ukryty) do czasu dodania pierwszego wariantu | 409 (zajęty `slug` lub `id`), 422 | B-012 | `catalog`, `category:{k}`, `facets:{k}` |
+| PATCH | `/v1/admin/products/{id}` | editor | nazwa, `slug`, `short`, atrybuty (scalane płytko, walidowane schematem kategorii), plakietki, `fit`, `in_box`, `gpsr` (kontakt `@taktyl.example`), `default_variant_sku`, status (`active` / `archived`); `If-Match`; odpowiedź = szczegóły produktu z `warnings[]` (np. `in_presets`) | 412, 428, 409 (zajęty `slug`), 422 | B-011 | `product:{slug}`, `category:{k}`, `catalog`, `facets:{k}`, `presets` |
 | DELETE | `/v1/admin/products/{id}` | owner | twarde usunięcie tylko bez zamówień; inaczej `409` (użyj archiwizacji) | 409 | B-012 | j.w. |
 | POST | `/v1/admin/products/{id}/variants` | editor | nowy wariant (SKU wg wzoru `docs/04` §3.1, kolor, przełącznik lub rozmiar, cena, stan) | 409 (zajęty SKU), 422 (SKU niezgodny ze wzorem) | B-013 | `product:{slug}`, `category:{k}`, `facets:{k}`, `presets` |
-| PATCH | `/v1/admin/variants/{sku}` | editor | kolor, przełącznik, rozmiar, `images`, dostępność | 409 | B-013 | j.w. |
+| PATCH | `/v1/admin/variants/{sku}` | editor | kolor, przełącznik, rozmiar, `images_key`, dostępność (`active`/`disabled`); `If-Match` = wersja **wariantu**; nie da się wyłączyć ostatniego aktywnego wariantu aktywnego produktu | 409 (kombinacja zajęta), 412, 428, 422 | B-013 | j.w. |
 | DELETE | `/v1/admin/variants/{sku}` | owner | usunięcie (tylko bez zamówień), inaczej wyłączenie | 409 | B-013 | j.w. |
-| PUT | `/v1/admin/variants/{sku}/price` | editor | ustawia nową cenę: `{ "price_gr": 74900, "regular_price_gr": null }`; **dopisuje wpis do `price_history`**; `lowest_30d` wylicza serwer (brak pola ręcznego) | 422 (`price_gr` ≤ 0 lub nie całkowita) | B-014 | `product:{slug}`, `category:{k}`, `catalog`, `presets` |
+| PUT | `/v1/admin/variants/{sku}/price` | editor | ustawia nową cenę: `{ "price_gr": 74900, "regular_price_gr": null, "reason": "…" }`; **zamyka bieżący wiersz i dopisuje nowy w `price_history`** (ta sama cena = bez wpisu, sama `regular_price_gr` = bez wpisu i bez znaczników); `lowest_30d_gr` w odpowiedzi wylicza serwer, pole ręczne jest odrzucane (422); odpowiedź = szczegóły produktu | 422 (`price_gr` ≤ 0, nie całkowita lub nieznane pole), 412 | B-014 | `product:{slug}`, `category:{k}`, `catalog`, `presets` |
 | GET | `/v1/admin/variants/{sku}/price-history` | viewer | historia cen, wyliczone `lowest_30d` i okno obliczenia | — | B-014 | |
-| PUT | `/v1/admin/variants/{sku}/stock` | editor | `{ "stock": 12, "reason": "korekta" }`; zapis ruchu magazynowego | 422 (ujemny stan) | B-015 | `product:{slug}`, `category:{k}`, `facets:{k}` |
+| PUT | `/v1/admin/variants/{sku}/stock` | editor | `{ "stock": 12, "reason": "korekta" }`; zapis ruchu magazynowego `adjustment` (delta, stan po, powód, autor), ta sama wartość = bez ruchu | 422 (ujemny stan), 412 | B-015 | `product:{slug}`, `category:{k}`, `facets:{k}` |
 | GET | `/v1/admin/variants/{sku}/stock-movements` | viewer | historia ruchów (korekta, sprzedaż, anulowanie) | — | B-015 | |
 | GET | `/v1/admin/presets` | viewer | gotowe sety | — | B-016 | |
-| PUT | `/v1/admin/presets/{id}` | editor | skład (3 SKU), nazwa, notatka, profil; cena liczona, nie edytowalna | 422 (skład spoza trzech kategorii) | B-016 | `presets` |
-| GET | `/v1/admin/categories` | viewer | kategorie | — | B-017 | |
+| PUT | `/v1/admin/presets/{id}` | editor | skład (3 SKU), nazwa, notatka, profil; cena liczona, nie edytowalna; `If-Match` | 422 (skład spoza trzech kategorii), 412, 428 | B-016 | `presets` |
+| GET | `/v1/admin/categories` | viewer | kategorie (**nie zaimplementowane**: `docs/15` §7 nie wymaga edycji kategorii, słowników ani reguł; wiersze zostają jako plan, API-011) | — | B-017 | |
 | PATCH | `/v1/admin/categories/{id}` | editor | nazwa, H1, wstęp, kolejność | — | B-017 | `category:{slug}`, `catalog` |
 | PATCH | `/v1/admin/switches/{id}`, `/v1/admin/colors/{id}` | editor | edycja słownika (etykieta, opis, `swatch`) | 422 | B-017 | `catalog`, `facets:*`, `rules` |
 | PATCH | `/v1/admin/rules` | owner | profile i parametry reguł dopasowania (`rules.json`) | 422 (nieznana reguła) | B-018 | `rules` |
