@@ -131,14 +131,19 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 
 | Metoda | Ścieżka | Rola | Opis | Kody | ID | Tagi |
 |---|---|---|---|---|---|---|
-| GET | `/v1/admin/content` | viewer | strony, artykuły, FAQ (filtr typu) | — | B-030 | |
-| GET | `/v1/admin/content/{id}` | viewer | pojedyncza treść | — | B-030 | |
-| POST | `/v1/admin/content` | editor | nowa strona/artykuł (Markdown ograniczony, `slug`, typ, status) | 409 (zajęty slug) | B-031 | `content:{slug}`, `content:guide` |
-| PATCH | `/v1/admin/content/{id}` | editor | edycja, publikacja, cofnięcie do szkicu | 409 | B-031 | `content:{slug}`, `content:guide` |
-| DELETE | `/v1/admin/content/{id}` | owner | usunięcie (strony prawne tylko archiwizacja) | 409 | B-031 | j.w. |
-| GET | `/v1/admin/reviews` | viewer | opinie demo | — | B-032 | |
-| PUT | `/v1/admin/products/{id}/reviews` | editor | zestaw opinii demo produktu (3–6, oceny 3–5, `demo: true` wymuszone) | 422 | B-032 | `reviews:{slug}`, `product:{slug}` |
-| GET | `/v1/admin/messages` | viewer | wiadomości z formularza kontaktu i zapisy newslettera | — | B-033 | |
+| GET | `/v1/admin/content` | viewer | strony informacyjne i prawne (`page`) oraz artykuły poradnika (`guide`), filtr `?type=`; FAQ ma osobny zasób `/v1/admin/faq` (API-013) | — | B-030, B-304, B-305 | |
+| GET | `/v1/admin/content/{id}` | viewer | pojedyncza treść, `ETag` = wersja | 404 | B-030 | |
+| POST | `/v1/admin/content` | editor | nowa strona/artykuł (Markdown ograniczony i sanityzowany allowlistą, `slug`, typ `page`/`guide`, status); odpowiedź niesie `warnings[]` (`content_sanitized`, `guide_length`) | 409 (zajęty slug), 422 (treść prawna, marka, brak profilu opublikowanego artykułu, typ `faq`) | B-031, B-304, B-306 | `content:{slug}` (+ `content:guide` dla artykułu) |
+| PATCH | `/v1/admin/content/{id}` | editor | edycja, publikacja, cofnięcie do szkicu; `If-Match`; ostatnie 20 wersji treści w `content_revisions`; nagłówek „Wzór treści…” (`demo_notice`) jest nieusuwalny | 404, 412, 428, 422 | B-031, B-305 | `content:{slug}` (+ `content:guide` dla artykułu) |
+| DELETE | `/v1/admin/content/{id}` | owner | usunięcie artykułu; strony informacyjne i prawne (`page`) tylko archiwizacja | 404, 409 (`system_page`) | B-031, B-305 | j.w. |
+| GET | `/v1/admin/faq` | viewer | FAQ w kolejności (także szkice) | — | B-307 | |
+| PUT | `/v1/admin/faq` | editor | cała uporządkowana lista (kolejność = kolejność tablicy; dodaje, zmienia, usuwa pominięte); odpowiedzi sanityzowane | 422 | B-307 | `content:faq` |
+| PUT | `/v1/admin/products/{id}/description` | editor | opis produktu (tekst, akapity przez pustą linię; tagi HTML usuwane); `If-Match` = wersja produktu; zakazane słowa, długość poza 60–120 słów i liczba akapitów poza 2–3 to **ostrzeżenia** w `warnings[]`, nie blokada; nazwa marki z `FORBIDDEN_BRANDS` = 422 | 404, 412, 428, 422 | B-300, B-301 | `product:{slug}` |
+| GET | `/v1/admin/reviews` | viewer | opinie demo pogrupowane po produkcie (`?product_id=`), z liczbą i średnią oraz stałą etykietą „Opinie przykładowe — sklep demonstracyjny” | 404 | B-032, B-302, B-303 | |
+| PUT | `/v1/admin/products/{id}/reviews` | editor | zestaw opinii demo produktu (3–6, oceny 3–5, `demo: true` wymuszone; autor „imię + inicjał”, data do 6 miesięcy wstecz, wariant istniejący, 1–4 zdania, bez twierdzeń o autentyczności, bez marek i obcych e-maili) | 404, 422 | B-032, B-302 | `reviews:{slug}`, `product:{slug}` |
+| GET | `/v1/admin/messages` | viewer | wiadomości z formularza kontaktu i zapisy newslettera (`?kind=`, `page`/`per_page`); viewer widzi e-mail zamaskowany i treść ukrytą | — | B-033, B-308 | |
+| PATCH | `/v1/admin/messages/{id}` | editor | `{ "handled": true }` — oznaczenie wiadomości kontaktowej jako obsłużonej (zapis newslettera nie ma statusu) | 404, 422 | B-308 | — (bez tagów) |
+| DELETE | `/v1/admin/messages/{id}` | owner | usunięcie zgłoszenia (RODO w demo); w audycie tylko rodzaj, id i data | 404 | B-309 | — (bez tagów) |
 
 ### 3.5. Ustawienia, media, audyt
 
