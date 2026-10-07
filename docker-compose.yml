@@ -290,9 +290,13 @@ services:
     env_file: *env-file
     environment: *db-env
     entrypoint: ["sh", "-c"]
-    # obraz api ma HEALTHCHECK na porcie 4000; ta usluga nie nasluchuje, wiec zdrowie = dziala proces petli
+    # obraz api ma HEALTHCHECK na porcie 4000; ta usluga nie nasluchuje, wiec zdrowie = zyje petla (sleep albo trwajacy reset)
     healthcheck:
-      disable: true
+      test: ["CMD-SHELL", "pidof sleep >/dev/null || pidof node >/dev/null"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
     command:
       - |
         if [ "$${DEMO_MODE:-false}" != "true" ]; then echo "reset-demo: DEMO_MODE nie jest true, koncze"; exit 1; fi
