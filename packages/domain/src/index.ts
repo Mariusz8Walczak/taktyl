@@ -5,3 +5,4 @@ export * from "./typography.js";
 export * from "./catalog.js";
 export * from "./shop.js";
 export * from "./pricing.js";
+export * from "./rules.js";
