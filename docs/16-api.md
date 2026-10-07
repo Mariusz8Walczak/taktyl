@@ -122,10 +122,10 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 
 | Metoda | Ścieżka | Rola | Opis | Kody | ID | Tagi |
 |---|---|---|---|---|---|---|
-| GET | `/v1/admin/orders` | viewer | lista z filtrami (status, data, numer, metoda płatności); dane osobowe maskowane dla `viewer` | — | B-020 | |
-| GET | `/v1/admin/orders/{number}` | viewer | szczegóły: pozycje, rabaty, dostawa, płatność, historia statusów | 404 | B-021 | |
-| POST | `/v1/admin/orders/{number}/transition` | editor | `{ "to": "shipped", "note": "…" }`; dozwolone przejścia wg §5 | 409 `invalid_transition` | B-022 | `product:{slug}`, `category:{k}`, `facets:{k}` (tylko przy anulowaniu zwracającym stan) |
-| POST | `/v1/admin/orders/{number}/note` | editor | notatka wewnętrzna | — | B-022 | |
+| GET | `/v1/admin/orders` | viewer | lista z filtrami (`status`, `from`, `to` w `Europe/Warsaw`, `number`, `payment_type`, `shipping_method`), `sort`, `page`/`per_page`; `contact_email` zawsze zamaskowany (`j***@taktyl.example`), `items_count` | 400 (zły filtr/sortowanie) | B-200, B-201 | |
+| GET | `/v1/admin/orders/{number}` | viewer | szczegóły: pozycje, rabaty, dostawa, płatność, historia statusów, notatki, `allowed_transitions`; dane osobowe (kontakt, adres, faktura) maskowane w odpowiedzi dla `viewer` | 404 | B-202, B-208 | |
+| POST | `/v1/admin/orders/{number}/transition` | editor | `{ "to": "shipped", "note": "…" }` (`to`: `processing`, `shipped`, `delivered`, `cancelled`); dozwolone przejścia wg §5; anulowanie wymaga `note` ≥ 5 znaków i zwraca stany (`sale_reverted`) | 404, 409 `invalid_transition`, 422 | B-203, B-205 | `product:{slug}`, `category:{k}`, `facets:{k}`, `catalog` (tylko przy anulowaniu zwracającym stan) |
+| POST | `/v1/admin/orders/{number}/note` | editor | notatka wewnętrzna (autor, czas; treść poza dziennikiem); zwraca szczegóły zamówienia, 201 | 404, 422 | B-204 | |
 
 ### 3.4. Treści
 

@@ -6,7 +6,8 @@ import {
   attributesSchemaByCategory, auditEntrySchema, ifMatchSchema, loginRequestSchema, orderCreatedSchema,
   orderRequestSchema, paymentSimulateRequestSchema, paymentSimulateResponseSchema, problemSchema, quoteRequestSchema,
   quoteResponseSchema, revalidateRequestSchema, setPriceRequestSchema, setStockRequestSchema, settingsPatchSchema,
-  skuSchema, listingQuerySchema, productPatchSchema,
+  skuSchema, listingQuerySchema, productPatchSchema, orderTransitionRequestSchema, orderNoteSchema,
+  orderNoteRequestSchema, adminOrderListQuerySchema,
 } from "../src";
 
 const quoteRequest = {
@@ -234,5 +235,29 @@ describe.skipIf(!existsSync(dataFile))("data/products.json", () => {
       .filter((x) => !x.r.success)
       .map((x) => JSON.stringify(x.r.error?.issues.slice(0, 2)));
     expect(bad).toEqual([]);
+  });
+});
+
+describe("zamowienia w backpanelu (TAKTYL-48)", () => {
+  it("przejscie reczne: anulowanie wymaga powodu min. 5 znakow, reszta bez powodu; statusy systemowe odrzucone", () => {
+    expect(orderTransitionRequestSchema.safeParse({ to: "processing" }).success).toBe(true);
+    expect(orderTransitionRequestSchema.safeParse({ to: "cancelled" }).success).toBe(false);
+    expect(orderTransitionRequestSchema.safeParse({ to: "cancelled", note: " abc " }).success).toBe(false);
+    expect(orderTransitionRequestSchema.safeParse({ to: "cancelled", note: "Klient zrezygnowal" }).success).toBe(true);
+    expect(orderTransitionRequestSchema.safeParse({ to: "paid" }).success).toBe(false);
+    expect(orderTransitionRequestSchema.safeParse({ to: "shipped", extra: 1 }).success).toBe(false);
+  });
+
+  it("notatka: id to cyfry (BigInt jako tekst), tresc 1-1000 znakow", () => {
+    expect(orderNoteSchema.safeParse({ id: "12", author: null, body: "x", at: "2026-10-07T12:00:00+02:00" }).success).toBe(true);
+    expect(orderNoteSchema.safeParse({ id: "abc", author: null, body: "x", at: "2026-10-07T12:00:00+02:00" }).success).toBe(false);
+    expect(orderNoteRequestSchema.safeParse({ note: "" }).success).toBe(false);
+    expect(orderNoteRequestSchema.safeParse({ note: "x".repeat(1001) }).success).toBe(false);
+  });
+
+  it("wiersz listy ma liczbe pozycji, filtr metody dostawy jest opcjonalny", () => {
+    expect(adminOrderListQuerySchema.parse({}).page).toBe(1);
+    expect(adminOrderListQuerySchema.parse({ shipping_method: "kurier" }).shipping_method).toBe("kurier");
+    expect(adminOrderListQuerySchema.safeParse({ shipping_method: "zly" }).success).toBe(false);
   });
 });

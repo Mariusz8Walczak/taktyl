@@ -4,7 +4,6 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import {
   orderCreatedSchema,
-  orderDetailSchema,
   orderListSchema,
   type OrderCreated,
   type OrderDetail,
@@ -23,6 +22,7 @@ import { CartQuoteService, type QuoteComputation } from "../cart-quote/cart-quot
 import { PrismaService } from "../prisma/prisma.service.js";
 import { generateOrderNumber } from "../common/order-number.js";
 import { OrderAccessService } from "./order-access.service.js";
+import { type OrderWithItems, toOrderDetail } from "./order-detail.js";
 
 const IDEMPOTENCY_TTL_MS = 24 * 60 * 60 * 1000;
 const NUMBER_RETRIES = 5;
@@ -380,41 +380,7 @@ export class OrdersService {
     return respond(orderListSchema, { items: orders.map((o) => this.detail(o)) });
   }
 
-  private detail(
-    o: Prisma.OrderGetPayload<{ include: { items: true; payment: true } }>,
-  ): OrderDetail {
-    const date = (d: Date | null): string | null => (d ? d.toISOString().slice(0, 10) : null);
-    return respond(orderDetailSchema, {
-      number: o.number,
-      status: o.status,
-      currency: "PLN",
-      created_at: o.createdAt.toISOString(),
-      items: o.items.map((i) => ({
-        group_id: i.groupId,
-        sku: i.sku,
-        name: i.name,
-        variant_label: i.variantLabel,
-        qty: i.qty,
-        unit_price_gr: i.unitPriceGr,
-        set_discount_gr: i.setDiscountGr,
-        coupon_discount_gr: i.couponDiscountGr,
-      })),
-      items_gr: o.itemsGr,
-      set_discount_gr: o.setDiscountGr,
-      coupon_discount_gr: o.couponDiscountGr,
-      shipping_gr: o.shippingGr,
-      total_gr: o.totalGr,
-      coupon_code: o.couponCode,
-      shipping_method: o.shippingMethodId,
-      payment: {
-        type: o.paymentType,
-        status: o.payment?.status ?? "created",
-        attempts: o.payment?.attempts ?? 0,
-      },
-      eta:
-        o.dispatchDate && o.deliveryDate
-          ? { dispatch_date: date(o.dispatchDate), delivery_date: date(o.deliveryDate) }
-          : null,
-    });
+  private detail(o: OrderWithItems): OrderDetail {
+    return toOrderDetail(o);
   }
 }

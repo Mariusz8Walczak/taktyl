@@ -181,9 +181,9 @@ Każda mutacja API przy zatwierdzeniu transakcji zapisuje w `outbox` poniższe z
 | Strona informacyjna lub artykuł poradnika | `content:{slug}`, `content:guide` | ta strona, lista poradnika, główna (3 karty) |
 | Opinia demo | `reviews:{slug}`, `product:{slug}` | karta produktu |
 | Pytanie FAQ | `content:faq` | strona FAQ |
-| Ruch magazynowy (`stock_movements`), historia statusów zamówienia, płatność, pozycje zamówienia | — (stan wariantu: patrz wiersz „Stan magazynowy wariantu”) | tylko backpanel |
+| Ruch magazynowy (`stock_movements`), historia statusów zamówienia, notatka wewnętrzna (`order_notes`), płatność, pozycje zamówienia | — (stan wariantu: patrz wiersz „Stan magazynowy wariantu”) | tylko backpanel |
 | Wiadomość z formularza, zapis newslettera, sesja, klucz idempotencji | — (bez tagów) | tylko backpanel |
-| Zamówienie, status zamówienia | — (bez tagów) | tylko backpanel i `konto` (no-store) |
+| Zamówienie, status zamówienia | — (bez tagów); wyjątek: anulowanie z `paid`/`processing` zwraca stany, więc zapisuje `product:{slug}`, `category:{k}`, `facets:{k}`, `catalog` dotkniętych wariantów (B-205) | tylko backpanel i `konto` (no-store); po zwrocie stanu karta i listing |
 | Użytkownik backpanelu, audyt | — | tylko backpanel |
 
 `{kategoria}` to slug kategorii produktu (`klawiatury`, `myszki`, `podkladki`).
