@@ -47,6 +47,17 @@ Zmiana jest skończona, gdy:
 
 Zmiany dotykające resetu danych, limitów lub kont demo testuj na osobnym projekcie Compose, bez ruszania cudzych stosów: `docker compose -p moj-test --profile demo up --build --wait` (unikalny `PROXY_HTTP_PORT` w `.env`), potem `sh scripts/smoke-demo.sh` i `docker compose -p moj-test --profile demo down -v` (tylko własny projekt). `DEMO_MODE=true` wolno ustawiać wyłącznie w środowisku bez prawdziwych danych (opis zmiennych w `README.md`, sekcja „Tryb demo”). CI uruchamia ten sam test w jobie `e2e-demo`, a workflowy lintuje job `actionlint` (lokalnie: `docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:1.7.12`).
 
+## Testy e2e
+
+Scenariusze odbioru S1-S24 (`docs/12` §1) to Playwright w kontenerze `e2e` (katalog `e2e/`, osobny projekt pnpm), uruchamiany na pełnym stosie produkcyjnym z Compose. Każdy przebieg zaczyna od `db:reset-demo` (usługa `e2e-reset`). Lokalnie wystarczy Docker:
+
+```sh
+make e2e                                   # stos + reset demo + testy (ARGS="tests/pomiar.spec.ts" zawęża zakres)
+docker compose up -d --build --wait && docker compose --profile e2e run --rm --build e2e
+```
+
+Na własnym projekcie Compose (bez ruszania cudzych stosów): `PROXY_HTTP_PORT=18044 docker compose -p moj-e2e up -d --build --wait`, potem to samo polecenie `run` z `-p moj-e2e` i `docker compose -p moj-e2e --profile e2e down -v` na końcu. Raport HTML: `e2e/playwright-report/index.html`, ślady i zrzuty błędów: `e2e/test-results` (oba poza repozytorium). Zasady pisania testów: selektory przez rolę i etykietę (`getByRole`), wartości oczekiwane z `docs/12` i `data/`, NIP-y generowane w teście (`e2e/helpers/nip.ts`), brak `sleep` (czekamy na stan), testy nie zależą od kolejności. Limit `POST /v1/orders` to 10 na minutę na IP, więc nie mnóż w testach zamówień ponad potrzebę. CI uruchamia to w jobie `e2e-docker` i zapisuje raport jako artefakt.
+
 ## Zgłaszanie błędów i bezpieczeństwa
 
 Błędy: issue z szablonu `blad`. Podatności: wyłącznie prywatnie, zgodnie z `SECURITY.md`.

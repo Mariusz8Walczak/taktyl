@@ -277,6 +277,45 @@ services:
     depends_on:
       db-test: { condition: service_healthy }
 
+  # ------------------------------------------------------------------ profil e2e
+  # I-010 (TAKTYL-44, docs/12 par. 1): Playwright przeciw pelnemu stosowi (proxy -> web, admin, api).
+  #   docker compose up -d --build --wait && docker compose --profile e2e run --rm e2e      (albo: make e2e)
+  # `e2e-reset` przywraca dane demo (db:reset-demo) przed KAZDYM przebiegiem; DEMO_MODE=true tylko w tym kontenerze jednorazowym.
+  # Raport HTML i slady trafiaja do e2e/playwright-report i e2e/test-results (poza repo, .gitignore).
+  e2e-reset:
+    build: *api-build
+    image: taktyl-api:local
+    profiles: [e2e]
+    restart: "no"
+    env_file: *env-file
+    environment:
+      <<: *db-env
+      DEMO_MODE: "true"
+    command: ["node", "dist/seed.js", "--reset"]
+    depends_on:
+      api: { condition: service_healthy }
+
+  e2e:
+    build:
+      context: ./e2e
+    image: taktyl-e2e:local
+    profiles: [e2e]
+    restart: "no"
+    # Chromium w kontenerze potrzebuje wspolnej pamieci IPC (zalecenie Playwrighta) i init (sprzatanie procesow).
+    ipc: host
+    init: true
+    environment:
+      # Chromium mapuje taktyl.localhost, admin.taktyl.localhost i api.taktyl.localhost na te usluge (playwright.config.ts).
+      E2E_PROXY: proxy:8080
+      E2E_WORKERS: ${E2E_WORKERS:-3}
+      E2E_RETRIES: ${E2E_RETRIES:-1}
+    volumes:
+      - ./e2e/playwright-report:/work/playwright-report
+      - ./e2e/test-results:/work/test-results
+    depends_on:
+      proxy: { condition: service_healthy }
+      e2e-reset: { condition: service_completed_successfully }
+
   # ------------------------------------------------------------------ profil demo
   # I-009 (B-014, TAKTYL-65): cykliczny reset danych demo, tylko gdy DEMO_MODE=true (inaczej usluga konczy sie bledem).
   # Odstep: DEMO_RESET_INTERVAL_MINUTES (domyslnie 60); DEMO_RESET_INTERVAL_SECONDS (jesli ustawione) ma pierwszenstwo, do testow.

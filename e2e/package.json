@@ -1,0 +1,18 @@
+{
+  "name": "@taktyl/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Playwright: scenariusze odbioru S1-S24 (docs/12), uruchamiane w kontenerze e2e (I-010, TAKTYL-44)",
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "scripts": {
+    "e2e": "playwright test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.19.1",
+    "typescript": "~6.0.3"
+  }
+}

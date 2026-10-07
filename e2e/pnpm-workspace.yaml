@@ -1,0 +1,4 @@
+# I-010 (TAKTYL-44): e2e jest osobnym projektem pnpm (wlasny lockfile), poza workspace'em aplikacji.
+# Powod: @playwright/test jako opcjonalny peer Next.js zmienilby wpisy next w glownym lockfile, a obrazy web/admin
+# buduja sie z przycietego (turbo prune) lockfile. Dzieki temu obrazy aplikacji sie nie zmieniaja.
+packages: []

@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test reset logs build ps lint typecheck audit-tokens smoke demo smoke-demo clean
+.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens smoke demo smoke-demo clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -22,7 +22,7 @@ up: env ## buduje i uruchamia pelny stos (tryb produkcyjny lokalnie), czeka na h
 	@echo "API:       http://api.taktyl.localhost$(SITE_PORT)/health"
 
 down: ## zatrzymuje stos (dane w wolumenach zostaja)
-	$(COMPOSE) --profile dev --profile test --profile demo down --remove-orphans
+	$(COMPOSE) --profile dev --profile test --profile demo --profile e2e down --remove-orphans
 
 dev: env ## hot reload (profil dev, kod montowany z hosta)
 	$(COMPOSE) --profile dev up --build -d --wait $(DEV_SERVICES)
@@ -36,6 +36,12 @@ dev-down: ## zatrzymuje stos dev
 test: env ## Vitest w kontenerze test (baza testowa w tmpfs)
 	$(COMPOSE) --profile test run --rm test
 	$(COMPOSE) --profile test down --remove-orphans
+
+# I-010 (TAKTYL-44): Playwright S1-S24 (docs/12) w kontenerze e2e na pelnym stosie; kazdy przebieg zaczyna od db:reset-demo.
+# Raport HTML: e2e/playwright-report/index.html, slady i zrzuty bledow: e2e/test-results. Pojedynczy plik: make e2e ARGS="tests/pomiar.spec.ts".
+e2e: env ## Playwright S1-S24 w kontenerze e2e (stos, reset demo, testy); ARGS="..." przekazuje argumenty do playwright test
+	$(COMPOSE) up -d --build --wait
+	$(COMPOSE) --profile e2e run --rm --build e2e pnpm exec playwright test $(ARGS)
 
 reset: env ## przywraca dane demo z data/*.json (kasuje zmiany w bazie roboczej)
 	$(COMPOSE) run --rm -e DEMO_MODE=true seed node dist/seed.js --reset
@@ -72,4 +78,4 @@ smoke-demo: ## test dymny trybu demo (reset przywraca seed); wymaga make demo
 	@sh scripts/smoke-demo.sh
 
 clean: ## zatrzymuje stos i KASUJE wolumeny (baza, media, node_modules dev)
-	$(COMPOSE) --profile dev --profile test --profile demo down -v --remove-orphans
+	$(COMPOSE) --profile dev --profile test --profile demo --profile e2e down -v --remove-orphans

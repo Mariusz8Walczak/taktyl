@@ -111,7 +111,7 @@ jobs:
   e2e-docker:
     name: e2e-docker
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -123,13 +123,34 @@ jobs:
         run: docker compose up -d --build --wait
       - name: Test dymny stosu (noindex na kazdym hoscie, /health, 18 produktow)
         run: sh scripts/smoke-stack.sh
-      # TODO(TAKTYL-27+): Playwright S1-S25, axe, Lighthouse jako kolejne kroki (docs/12), na tym samym stosie.
+      # I-010 (TAKTYL-44): Playwright S1-S24 w kontenerze e2e na tym samym stosie. Usluga e2e-reset przywraca dane demo
+      # (db:reset-demo) przed przebiegiem; raport HTML i slady bledow trafiaja do artefaktow. axe, Lighthouse: kolejne kroki (docs/12).
+      - name: TypeScript testow e2e (strict)
+        run: docker compose --profile e2e run --rm --build --no-deps e2e pnpm run typecheck
+      - name: Playwright S1-S24 (kontener e2e, start od reset demo)
+        run: docker compose --profile e2e run --rm --build e2e
+      - name: Raport Playwright (HTML) jako artefakt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-raport
+          path: e2e/playwright-report
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Slady i zrzuty bledow Playwright jako artefakt
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-slady
+          path: e2e/test-results
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Logi stosu przy bledzie
         if: failure()
         run: docker compose ps -a && docker compose logs --tail=200
       - name: Zatrzymanie stosu
         if: always()
-        run: docker compose down -v
+        run: docker compose --profile e2e down -v
 
   # I-009 (B-014, S31, S32, TAKTYL-65): tryb demo na pelnym stosie z profilem demo. Czas od "up" do gotowosci stosu jest
   # mierzony i wypisany (S31: <= 10 min). Petla reset-demo ma odstep 60 s, wiec test czeka na samoczynny reset.
