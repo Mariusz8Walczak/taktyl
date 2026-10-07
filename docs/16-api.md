@@ -2,6 +2,8 @@
 
 Kontrakt dla `apps/api` (NestJS). Kształty danych są zdefiniowane schematami Zod w `packages/contracts`; OpenAPI 3.1 jest z nich generowane i serwowane pod `/v1/openapi.json` (tylko poza produkcją lub dla roli `owner`). Ten dokument jest opisem zamiarów; w razie rozbieżności wygrywa `contracts`, a rozbieżność zgłasza się jako błąd dokumentacji.
 
+Implementacja schematów: `packages/contracts/src/{shared,public,admin}` (Zod 4, C-001 w `docs/decyzje.md`). Testy kontraktowe z przykładami §6 w `packages/contracts/test`.
+
 Powiązania: architektura `docs/14`, model danych `docs/17`, backpanel `docs/15`, funkcje `docs/02`, tagi cache `docs/14` §6, ADR-0003, ADR-0005, ADR-0006, ADR-0007.
 
 ## 1. Konwencje

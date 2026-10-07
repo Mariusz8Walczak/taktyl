@@ -2,15 +2,23 @@
   "name": "@taktyl/contracts",
   "version": "0.0.0",
   "private": true,
-  "description": "Schematy Zod i typy DTO (szkielet)",
+  "description": "Schematy Zod i typy DTO kontraktu API (docs/16)",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./public": { "types": "./dist/public/index.d.ts", "default": "./dist/public/index.js" },
+    "./admin": { "types": "./dist/admin/index.d.ts", "default": "./dist/admin/index.js" }
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "zod": "^4.1.0"
   }
 }
