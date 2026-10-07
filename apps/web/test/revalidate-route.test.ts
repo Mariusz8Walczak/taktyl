@@ -54,6 +54,10 @@ describe("POST /api/revalidate", () => {
       "category:myszki",
       "catalog",
     ]);
+    // Next 16 (WEB-009): drugi argument = profil; { expire: 0 } zachowuje natychmiastowe uniewaznienie z ADR-0003.
+    expect(
+      vi.mocked(revalidateTag).mock.calls.every((c) => (c[1] as { expire: number }).expire === 0),
+    ).toBe(true);
   });
 
   it("deduplikuje powtorzone znaczniki", async () => {
