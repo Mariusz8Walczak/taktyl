@@ -1,22 +1,34 @@
 // B-001, B-100..B-115, B-200..B-205, B-400..B-408: typowane wywolania API admina (docs/16 §3). Kazde wywolanie
 // ma schemat odpowiedzi z @taktyl/contracts; mutacje niosa X-CSRF-Token (client.ts) i If-Match tam, gdzie wymaga tego API.
 import {
+  adminContentListSchema,
+  adminContentResponseSchema,
+  adminFaqSchema,
+  adminMessageListSchema,
   adminOrderDetailSchema,
   adminOrderListSchema,
   adminProductDetailSchema,
   adminProductListSchema,
+  adminProductReviewsSchema,
+  adminReviewListSchema,
   adminSettingsSchema,
+  descriptionResponseSchema,
   priceHistoryResponseSchema,
   sessionResponseSchema,
   stockMovementsResponseSchema,
+  type adminMessageListQuerySchema,
   type adminOrderListQuerySchema,
   type adminProductListQuerySchema,
+  type contentPatchSchema,
+  type descriptionPutSchema,
+  type faqPutSchema,
   type orderNoteRequestSchema,
   type orderTransitionRequestSchema,
   type productCreateSchema,
   type productPatchSchema,
   type setPriceRequestSchema,
   type setStockRequestSchema,
+  type reviewsPutSchema,
   type settingsPatchSchema,
   type variantCreateSchema,
   type variantPatchSchema,
@@ -163,4 +175,75 @@ export const settingsApi = {
       ifMatch: version,
       schema: adminSettingsSchema,
     }).then((r) => r.data),
+};
+
+/** B-304, B-305: strony informacyjne i artykuly poradnika. PATCH wymaga If-Match (wersja tresci), 412 przy konflikcie. */
+export const contentApi = {
+  list: (type: "page" | "guide") =>
+    apiRequest({ path: `${A}/content`, query: { type }, schema: adminContentListSchema }).then(
+      (r) => r.data,
+    ),
+  patch: (id: string, version: number, body: Input<typeof contentPatchSchema>) =>
+    apiRequest({
+      method: "PATCH",
+      path: `${A}/content/${encodeURIComponent(id)}`,
+      body,
+      ifMatch: version,
+      schema: adminContentResponseSchema,
+    }).then((r) => r.data),
+};
+
+/** B-307: FAQ jako cala uporzadkowana lista (PUT zastepuje liste; kolejnosc = kolejnosc tablicy). */
+export const faqApi = {
+  get: () => apiRequest({ path: `${A}/faq`, schema: adminFaqSchema }).then((r) => r.data),
+  put: (body: Input<typeof faqPutSchema>) =>
+    apiRequest({ method: "PUT", path: `${A}/faq`, body, schema: adminFaqSchema }).then(
+      (r) => r.data,
+    ),
+};
+
+/** B-300, B-301: opis produktu; If-Match = wersja produktu. Ostrzezenia w odpowiedzi nie blokuja zapisu. */
+export const descriptionApi = {
+  put: (productId: string, version: number, body: Input<typeof descriptionPutSchema>) =>
+    apiRequest({
+      method: "PUT",
+      path: `${A}/products/${encodeURIComponent(productId)}/description`,
+      body,
+      ifMatch: version,
+      schema: descriptionResponseSchema,
+    }).then((r) => r.data),
+};
+
+/** B-302, B-303: opinie demo (zestaw 3-6 opinii na produkt, PUT zastepuje zestaw). */
+export const reviewsApi = {
+  list: () =>
+    apiRequest({ path: `${A}/reviews`, schema: adminReviewListSchema }).then((r) => r.data),
+  put: (productId: string, body: Input<typeof reviewsPutSchema>) =>
+    apiRequest({
+      method: "PUT",
+      path: `${A}/products/${encodeURIComponent(productId)}/reviews`,
+      body,
+      schema: adminProductReviewsSchema,
+    }).then((r) => r.data),
+};
+
+/** B-308, B-309: zgloszenia z formularzy. Viewer dostaje dane zamaskowane juz z API. */
+export const messagesApi = {
+  list: (query: Partial<z.output<typeof adminMessageListQuerySchema>>) =>
+    apiRequest({ path: `${A}/messages`, query, schema: adminMessageListSchema }).then(
+      (r) => r.data,
+    ),
+  setHandled: (id: string, handled: boolean) =>
+    apiRequest({
+      method: "PATCH",
+      path: `${A}/messages/${encodeURIComponent(id)}`,
+      body: { handled },
+      schema: null,
+    }).then(() => undefined),
+  remove: (id: string) =>
+    apiRequest({
+      method: "DELETE",
+      path: `${A}/messages/${encodeURIComponent(id)}`,
+      schema: null,
+    }).then(() => undefined),
 };

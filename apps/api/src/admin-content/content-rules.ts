@@ -1,6 +1,14 @@
 // B-301, B-302, B-304, B-306 (docs/04 par. 7-8, docs/15 par. 9, docs/11): walidatory tresci - czyste funkcje bez I/O.
 // Opisy: zakazane slowa i dlugosc to OSTRZEZENIA (nie blokada). Tresci prawne, opinie: bledy 422 z wskazaniem miejsca.
 import type { ProblemFieldError } from "@taktyl/contracts";
+import {
+  countWords,
+  DESCRIPTION_PARAGRAPHS,
+  DESCRIPTION_WORDS,
+  forbiddenWords,
+  GUIDE_WORDS,
+  splitParagraphs,
+} from "@taktyl/domain";
 
 export interface RuleWarning {
   code:
@@ -12,26 +20,16 @@ export interface RuleWarning {
   details?: string[];
 }
 
-/** docs/04 par. 7 i scripts/validate-descriptions.mjs: odmiana przez \p{L}*, "ultra-" jako przedrostek. */
-export const FORBIDDEN_WORDS =
-  /(najlepsz\p{L}*|rewolucyjn\p{L}*|profesjonaln\p{L}*|premium|idealn\p{L}*|niesamowit\p{L}*|ultra-)/giu;
-
-export const countWords = (text: string): number => text.split(/\s+/).filter(Boolean).length;
-
-export const splitParagraphs = (text: string): string[] =>
-  text
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-
-export const DESCRIPTION_WORDS = { min: 60, max: 120 } as const;
-export const DESCRIPTION_PARAGRAPHS = { min: 2, max: 3 } as const;
-export const GUIDE_WORDS = { min: 600, max: 900 } as const;
-
-/** Zakazane slowa z docs/04 par. 7 (unikalne, w kolejnosci wystapienia). */
-export function forbiddenWords(text: string): string[] {
-  return [...new Set([...text.matchAll(FORBIDDEN_WORDS)].map((m) => m[0].toLowerCase()))];
-}
+// Reguly liczenia i zakazane slowa mieszkaja w @taktyl/domain (wspolne z panelem, ADM-010); tu re-eksport dla serwisow i testow.
+export {
+  countWords,
+  DESCRIPTION_PARAGRAPHS,
+  DESCRIPTION_WORDS,
+  FORBIDDEN_WORDS,
+  forbiddenWords,
+  GUIDE_WORDS,
+  splitParagraphs,
+} from "@taktyl/domain";
 
 /** B-301: ostrzezenia o opisie produktu (60-120 slow, 2-3 akapity, zakazane slowa). Nigdy nie blokuje zapisu. */
 export function describeDescription(text: string): {

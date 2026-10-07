@@ -129,3 +129,10 @@ export const faqPutSchema = z.strictObject({
 
 /** B-308: oznaczenie zgloszenia jako obsluzone (tylko wiadomosci kontaktowe). */
 export const messagePatchSchema = z.strictObject({ handled: z.boolean() });
+
+export type AdminContent = z.infer<typeof adminContentSchema>;
+export type AdminContentResponse = z.infer<typeof adminContentResponseSchema>;
+export type AdminFaq = z.infer<typeof adminFaqSchema>;
+export type AdminFaqItem = z.infer<typeof adminFaqItemSchema>;
+export type AdminProductReviews = z.infer<typeof adminProductReviewsSchema>;
+export type AdminMessage = z.infer<typeof adminMessageSchema>;

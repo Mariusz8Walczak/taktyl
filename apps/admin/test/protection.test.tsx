@@ -110,9 +110,10 @@ describe("powloka panelu", () => {
     expect(screen.getByRole("link", { name: "Zamówienia" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Ustawienia" })).toBeInTheDocument();
     // przyszle ekrany: tekst z etykieta "wkrotce", nie odnosnik
-    expect(screen.queryByRole("link", { name: /Treści/ })).toBeNull();
+    expect(screen.getAllByRole("link", { name: /Treści/ }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /Zgłoszenia/ }).length).toBeGreaterThan(0);
     expect(screen.queryByRole("link", { name: /Dziennik zmian/ })).toBeNull();
-    expect(screen.getAllByText("wkrótce").length).toBe(2);
+    expect(screen.getAllByText("wkrótce").length).toBe(1);
     expect(screen.getByText(/Rola: Viewer/)).toBeInTheDocument();
     expect(await axe(container)).toHaveNoViolations();
   });

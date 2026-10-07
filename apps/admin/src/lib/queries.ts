@@ -1,13 +1,27 @@
 "use client";
 // TanStack Query: klucze i hooki odczytu (stan serwera). Mutacje wstawiaja odpowiedz API do cache (jeden obiekt
 // produktu po kazdym zapisie, API-011), wiec ekran odswieza sie bez dodatkowego zapytania.
-import type { adminOrderListQuerySchema, adminProductListQuerySchema } from "@taktyl/contracts";
+import type {
+  adminMessageListQuerySchema,
+  adminOrderListQuerySchema,
+  adminProductListQuerySchema,
+} from "@taktyl/contracts";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { z } from "zod";
-import { catalogApi, ordersApi, settingsApi } from "./api/endpoints";
+import {
+  catalogApi,
+  contentApi,
+  faqApi,
+  messagesApi,
+  ordersApi,
+  reviewsApi,
+  settingsApi,
+} from "./api/endpoints";
 
 export type ProductListParams = Partial<z.output<typeof adminProductListQuerySchema>>;
 export type OrderListParams = Partial<z.output<typeof adminOrderListQuerySchema>>;
+
+export type MessageListParams = Partial<z.output<typeof adminMessageListQuerySchema>>;
 
 export const keys = {
   products: (p: ProductListParams) => ["products", p] as const,
@@ -18,6 +32,10 @@ export const keys = {
   orders: (p: OrderListParams) => ["orders", p] as const,
   order: (n: string) => ["order", n] as const,
   settings: ["settings"] as const,
+  content: (type: string) => ["content", type] as const,
+  faq: ["faq"] as const,
+  reviews: ["reviews"] as const,
+  messages: (p: MessageListParams) => ["messages", p] as const,
 };
 
 export const useProducts = (params: ProductListParams) =>
@@ -44,3 +62,14 @@ export const useOrder = (number: string) =>
   useQuery({ queryKey: keys.order(number), queryFn: () => ordersApi.get(number) });
 export const useSettings = () =>
   useQuery({ queryKey: keys.settings, queryFn: () => settingsApi.get() });
+export const useContent = (type: "page" | "guide") =>
+  useQuery({ queryKey: keys.content(type), queryFn: () => contentApi.list(type) });
+export const useFaq = () => useQuery({ queryKey: keys.faq, queryFn: () => faqApi.get() });
+export const useReviews = () =>
+  useQuery({ queryKey: keys.reviews, queryFn: () => reviewsApi.list() });
+export const useMessages = (params: MessageListParams) =>
+  useQuery({
+    queryKey: keys.messages(params),
+    queryFn: () => messagesApi.list(params),
+    placeholderData: keepPreviousData,
+  });

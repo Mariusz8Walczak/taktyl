@@ -322,3 +322,33 @@
   min-width: var(--cel-min);
   min-height: var(--cel-min);
 }
+
+/* ---- tresci: podglad Markdownu i podswietlenie zakazanych slow (B-301, B-310) ---- */
+.adm-podglad {
+  max-width: var(--max-tekst);
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--tlo);
+  overflow-wrap: anywhere;
+}
+.adm-podglad > :first-child {
+  margin-top: 0;
+}
+.adm-podglad > :last-child {
+  margin-bottom: 0;
+}
+.adm-podglad blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--s2);
+  border-inline-start: var(--tk-linia-1) solid var(--linia-pola);
+  color: var(--tekst-slaby);
+}
+.adm-zakazane {
+  padding-inline: var(--s1);
+  border-radius: var(--r);
+  background-color: var(--uwaga-tlo);
+  color: var(--tekst);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+}

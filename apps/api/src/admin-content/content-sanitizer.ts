@@ -1,6 +1,7 @@
 // B-300, B-304, B-305, B-307 (docs/14 par. 7 A03, docs/17 par. 3.5): sanityzacja tresci wpisywanych w panelu. Zapisujemy Markdown
 // ograniczony do listy dozwolonych znacznikow HTML i adresow (allowlista, nie czarna lista): bez skryptow, ramek, obrazow,
 // atrybutow zdarzen (on*), stylow i adresow javascript:/data:. Funkcje czyste, bez I/O.
+import { isSafeContentUrl } from "@taktyl/domain";
 
 /** Dozwolone znaczniki HTML w Markdownie (bez atrybutow poza href w <a>). */
 export const ALLOWED_TAGS: ReadonlySet<string> = new Set([
@@ -34,11 +35,8 @@ const DROP_WITH_CONTENT =
   "script|style|iframe|frame|frameset|object|embed|applet|noscript|template|svg|math|form|textarea|select|option|button|title|head|link|meta|base|audio|video|canvas|map|dialog|xmp|plaintext|noembed|noframes";
 const DROP_BLOCK = new RegExp(`<(${DROP_WITH_CONTENT})\\b[\\s\\S]*?<\\/\\1\\s*>`, "gi");
 
-/** Adres dozwolony w odnosniku: wzgledny, kotwica, https w domenie taktyl.example albo mailto na taktyl.example. */
-const SAFE_URL =
-  /^(?:\/(?![/\\])[^\s<>"']*|#[A-Za-z0-9_-]*|https:\/\/(?:[a-z0-9-]+\.)*taktyl\.example(?:[/?#][^\s<>"']*)?|mailto:[^@\s<>"']+@taktyl\.example)$/i;
-
-export const isSafeUrl = (url: string): boolean => SAFE_URL.test(url.trim());
+/** Adres dozwolony w odnosniku (wspolny z panelem: @taktyl/domain, ADM-010). */
+export const isSafeUrl = (url: string): boolean => isSafeContentUrl(url);
 
 // eslint-disable-next-line no-control-regex
 const CONTROL_CHARS = /[\u0000-\u001f\u007f]/;

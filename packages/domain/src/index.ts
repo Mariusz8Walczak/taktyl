@@ -12,3 +12,4 @@ export * from "./search.js";
 export * from "./filters.js";
 export * from "./money-input.js";
 export * from "./promotion.js";
+export * from "./content-rules.js";
