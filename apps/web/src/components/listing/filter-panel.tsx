@@ -136,12 +136,10 @@ export function FilterPanel({ facets, state, swatches, onChange }: FilterPanelPr
           case "range": {
             const v = state[facet.id];
             const range = v && typeof v === "object" && !Array.isArray(v) ? v : undefined;
-            const key = `${range?.min ?? ""}-${range?.max ?? ""}`;
             return (
               <fieldset key={facet.id} className="filtr">
                 {legend}
                 <PriceRange
-                  key={key}
                   label={facet.label}
                   minGr={facet.min_gr}
                   maxGr={facet.max_gr}

@@ -5,7 +5,7 @@
 // pola, Enter), nie przy kazdym pikselu - jeden wpis w historii przegladarki na zmiane. Wzorzec: suwak ceny listingu
 // `shop-filter-sidebar` (docs/08 §3; noUiSlider z szablonu zastapiony natywnymi polami, bez zewnetrznych skryptow).
 import { Field } from "@taktyl/ui";
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import { parseDecimal } from "../../lib/catalog/filter-actions";
 
@@ -26,17 +26,43 @@ export function PriceRange({ label, minGr, maxGr, value, onCommit }: PriceRangeP
   const id = useId();
   const lowBound = Math.floor(minGr / 100);
   const highBound = Math.ceil(maxGr / 100);
-  const [lowText, setLowText] = useState(
-    String(value?.min != null ? Math.round(value.min / 100) : lowBound),
-  );
-  const [highText, setHighText] = useState(
-    String(value?.max != null ? Math.round(value.max / 100) : highBound),
-  );
+  const fromValue = (gr: number | null | undefined, fallback: number) =>
+    String(gr != null ? Math.round(gr / 100) : fallback);
+  // TAKTYL-81: lokalny stan pol jest zrodlem prawdy, dopoki uzytkownik edytuje; adres go nie nadpisuje i komponent
+  // nie jest przemontowywany po zatwierdzeniu (wczesniej `key` z adresu gubil wpisane "Do" i fokus).
+  const [texts, setTexts] = useState({
+    low: fromValue(value?.min, lowBound),
+    high: fromValue(value?.max, highBound),
+  });
+  const textsRef = useRef(texts);
+  textsRef.current = texts;
+  const editing = useRef(false);
+  const lowText = texts.low;
+  const highText = texts.high;
+  const setLowText = (low: string) => {
+    editing.current = true;
+    setTexts((t) => ({ ...t, low }));
+  };
+  const setHighText = (high: string) => {
+    editing.current = true;
+    setTexts((t) => ({ ...t, high }));
+  };
 
-  const lowNum = clamp(parseDecimal(lowText) ?? lowBound, lowBound, highBound);
-  const highNum = clamp(parseDecimal(highText) ?? highBound, lowBound, highBound);
-  const lo = Math.min(lowNum, highNum);
-  const hi = Math.max(lowNum, highNum);
+  // Zmiana zakresu z zewnatrz (czyszczenie filtra, wstecz w historii) odswieza pola, gdy nikt ich nie edytuje.
+  const extMin = value?.min ?? null;
+  const extMax = value?.max ?? null;
+  useEffect(() => {
+    if (editing.current) return;
+    const next = { low: fromValue(extMin, lowBound), high: fromValue(extMax, highBound) };
+    setTexts((t) => (t.low === next.low && t.high === next.high ? t : next));
+  }, [extMin, extMax, lowBound, highBound]);
+
+  const normalize = (t: { low: string; high: string }) => {
+    const l = clamp(parseDecimal(t.low) ?? lowBound, lowBound, highBound);
+    const h = clamp(parseDecimal(t.high) ?? highBound, lowBound, highBound);
+    return { lo: Math.min(l, h), hi: Math.max(l, h) };
+  };
+  const { lo, hi } = normalize(texts);
 
   const span = Math.max(1, highBound - lowBound);
   const style = {
@@ -44,10 +70,12 @@ export function PriceRange({ label, minGr, maxGr, value, onCommit }: PriceRangeP
     "--do": ((hi - lowBound) / span) * 100,
   } as CSSProperties;
 
+  // Zatwierdza caly zakres z NAJNOWSZYCH wartosci obu pol (ref), nie z domkniecia sprzed ostatniego wpisu.
   function commit() {
-    setLowText(String(lo));
-    setHighText(String(hi));
-    onCommit(lo * 100, hi * 100);
+    const { lo: l, hi: h } = normalize(textsRef.current);
+    editing.current = false;
+    setTexts({ low: String(l), high: String(h) });
+    onCommit(l * 100, h * 100);
   }
   const onEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {

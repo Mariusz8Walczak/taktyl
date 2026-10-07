@@ -39,13 +39,12 @@ test.describe("Listing: filtry w adresie (S1-S4)", () => {
     await page.goto("/klawiatury");
     const from = page.getByRole("spinbutton", { name: "Od (zł)" });
     const to = page.getByRole("spinbutton", { name: "Do (zł)" });
+    // Oba pola pod rzad, bez czekania na adres miedzy nimi (TAKTYL-81: druga wartosc nie moze zginac).
     await from.fill("300");
-    await from.blur();
-    // Czlowiek wpisuje drugie pole dopiero po zmianie widoku; szybki wpis w oba pola naraz gubi druga wartosc (TAKTYL-81).
-    await expect(page).toHaveURL(/300/);
     await to.fill("700");
     await to.blur();
-    await expect(page).toHaveURL(/700/);
+    await expect(page).toHaveURL(/\?cena=300-700$/);
+    await expect(to).toHaveValue("700");
 
     await expect(resultCount(page)).toHaveText("4 produkty");
     for (const name of ["Łupek 65", "Kreda 98", "Granit TKL", "Marmur 100"]) {
