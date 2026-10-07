@@ -8,13 +8,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { addSet } from "../../lib/cart-adapter";
 import { readItem, writeItem } from "../../lib/storage/safe-storage";
 import { track } from "../../lib/track";
-import { buildSetItems, grToZl, itemsDiscount, itemsValue } from "../../lib/track-items";
-import {
-  entryOf,
-  variantText,
-  type BuilderModel,
-  type BuilderProduct,
-} from "../../lib/builder/catalog";
+import { grToZl } from "../../lib/track-items";
+import { trackSetAdded } from "../../lib/builder/events";
+import { entryOf, type BuilderModel, type BuilderProduct } from "../../lib/builder/catalog";
 import { analyze, type Analysis, type PadKind } from "../../lib/builder/fit";
 import { pickVariant, retargetSwitch } from "../../lib/builder/select";
 import {
@@ -354,32 +350,15 @@ export function useBuilder(model: BuilderModel, initialSearch: string): BuilderA
         return;
       }
       toast({ message: "Dodano set do koszyka" });
-      const lines = [k, m, p].map((e, i) => {
-        const bp = model.byId.get(e.product.id) as BuilderProduct;
-        const bv = bp.variants.find((v) => v.sku === e.variant.sku) ?? bp.variants[0];
-        return {
-          sku: e.variant.sku,
-          name: e.product.name,
-          category: e.product.category,
-          ...(bv ? { variant: variantText(model, bp, bv) } : {}),
-          priceGr: e.variant.price,
-          listId: "kreator-setu",
-          listName: "Kreator setu",
-          index: i,
-        };
-      });
-      const items = buildSetItems(
-        lines,
-        a.price.discount,
-        `Rabat za set ${model.setDiscount.percent}%`,
-      );
-      track("add_to_cart", { items, currency: "PLN", value: itemsValue(items) });
-      track("set_add_to_cart", {
-        value: itemsValue(items),
-        discount: itemsDiscount(items),
-        profile: s.profile ?? "no_profile",
-        ...(presetId ? { preset_id: presetId } : {}),
+      trackSetAdded({
+        model,
+        entries: [k, m, p],
+        discountGr: a.price.discount,
+        profile: s.profile,
+        presetId,
         warnings: a.report.warnings,
+        listId: "kreator-setu",
+        listName: "Kreator setu",
       });
     } finally {
       setBusy(false);

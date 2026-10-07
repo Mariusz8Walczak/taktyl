@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import "../../../styles/produkt.css";
 import { Breadcrumbs } from "../../../components/breadcrumbs";
 import { ConditionsBar } from "../../../components/conditions-bar";
+import { CompleteSet } from "../../../components/product/complete-set";
 import { BuyColumn } from "../../../components/product/buy-column";
 import { Gallery } from "../../../components/product/gallery";
 import { ProductProvider } from "../../../components/product/product-context";
@@ -102,9 +103,26 @@ export default async function ProductPage({ params, searchParams }: Props) {
           </div>
         </div>
 
-        {/* F-069, TAKTYL-38: sekcja "Dokończ set" (ciemna, 3 elementy, cena setu z rabatem, "Otwórz w kreatorze"
-            i "Dodaj set do koszyka") - dane z GET /v1/products/{slug}/complete-set. Tu tylko miejsce w ukladzie. */}
-        <section id="dokoncz-set" aria-label="Dokończ set" hidden />
+        {/* F-069, TAKTYL-38: "Dokończ set" - dane z GET /v1/products/{slug}/complete-set; ukryty bez kompletu */}
+        <CompleteSet
+          product={product}
+          sku={initialSku ?? product.default_variant_sku}
+          colors={colors.map((c) => ({
+            id: c.id,
+            label: c.label,
+            swatch: c.swatch,
+            harmony: c.harmony,
+            code: c.code,
+          }))}
+          switches={switches.map((s) => ({
+            id: s.id,
+            name: s.name,
+            type_label: s.type_label,
+            force_g: s.force_g,
+            sound: s.sound,
+          }))}
+          settings={settings}
+        />
 
         <ProductTabs sections={buildSections(product, settings, switches)} />
         <StickyBar />

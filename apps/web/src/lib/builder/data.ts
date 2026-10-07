@@ -4,10 +4,17 @@
 import { presetsResponseSchema, rulesSchema } from "@taktyl/contracts";
 import type { CategoryId } from "@taktyl/contracts";
 import type { RulesConfig } from "@taktyl/domain";
+import { cache } from "react";
 import { apiGet } from "../api/client";
 import { getColors, getListing, getProduct, getShopSettings, getSwitches } from "../api";
 import { TAG } from "../api/tags";
 import { toBuilderProduct, type BuilderData, type BuilderProduct } from "./catalog";
+
+/** Reguly dopasowania (profile, strefy myszki, komunikaty) - jedno wywolanie na zadanie. */
+export const getRules = cache(
+  async (): Promise<RulesConfig> =>
+    (await apiGet("/v1/rules", rulesSchema, { tags: [TAG.rules] })) as unknown as RulesConfig,
+);
 
 const CATEGORIES: readonly CategoryId[] = ["klawiatury", "myszki", "podkladki"];
 
@@ -31,7 +38,7 @@ export async function loadBuilderData(): Promise<BuilderData> {
     loadProducts(),
     getColors(),
     getSwitches(),
-    apiGet("/v1/rules", rulesSchema, { tags: [TAG.rules] }),
+    getRules(),
     apiGet("/v1/presets", presetsResponseSchema, { tags: [TAG.presets] }),
     getShopSettings(),
   ]);
@@ -51,7 +58,7 @@ export async function loadBuilderData(): Promise<BuilderData> {
       force_g: s.force_g,
       sound: s.sound,
     })),
-    rules: rules as unknown as RulesConfig,
+    rules,
     presets: presets.items.map((p) => ({
       id: p.id,
       name: p.name,

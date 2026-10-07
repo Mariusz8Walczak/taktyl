@@ -1,0 +1,121 @@
+/* Blok "Dokoncz set" na karcie produktu (F-069, TAKTYL-38): sekcja ciemna .sekcja--mod. Wylacznie tokeny (regula 2).
+   Osobny arkusz, zeby karta produktu nie ladowala CSS kreatora. */
+
+/* ---- blok "Dokoncz set" na karcie produktu (F-069, TAKTYL-38); sekcja ciemna .sekcja--mod ---- */
+.dokoncz {
+  margin-block: var(--s5);
+  padding-block: var(--s4);
+  background-color: var(--tlo);
+  color: var(--tekst);
+}
+.dokoncz__wnetrze {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--s2);
+}
+.dokoncz__tytul {
+  margin: 0 0 var(--s1);
+  font-size: var(--t-xl);
+  font-stretch: var(--szer-naglowek);
+}
+.dokoncz__wstep {
+  max-width: var(--max-tekst);
+  margin: 0 0 var(--s3);
+}
+.dokoncz__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s2);
+}
+@media (min-width: 768px) {
+  .dokoncz__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.dokoncz__pozycja {
+  display: grid;
+  gap: var(--s1);
+  align-content: start;
+  padding: var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.dokoncz__zdjecie {
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.dokoncz__nazwa,
+.dokoncz__wariant,
+.dokoncz__cena,
+.dokoncz__ten,
+.dokoncz__brak {
+  margin: 0;
+}
+.dokoncz__nazwa {
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.dokoncz__wariant,
+.dokoncz__ten {
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.dokoncz__cena {
+  font-weight: var(--w-mocna);
+  font-variant-numeric: tabular-nums;
+}
+.dokoncz__brak {
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  color: var(--uwaga);
+}
+.dokoncz__podsumowanie {
+  display: grid;
+  gap: var(--s1);
+  max-width: var(--max-tekst);
+  margin-top: var(--s3);
+}
+.dokoncz__ceny {
+  margin: 0;
+}
+.dokoncz__dopasowanie {
+  margin: 0;
+}
+.dokoncz__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-top: var(--s1);
+}
+.dokoncz__akcje a.tk-btn {
+  text-decoration: none;
+}
+.dokoncz__wiersz {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding-block: calc(var(--s1) / 2);
+  font-variant-numeric: tabular-nums;
+}
+.dokoncz__wiersz dt,
+.dokoncz__wiersz dd {
+  margin: 0;
+}
+.dokoncz__wiersz--rabat {
+  color: var(--sukces);
+}
+.dokoncz__wiersz--razem {
+  border-top: var(--tk-linia-1) solid var(--linia);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+}
+.dokoncz__powod {
+  margin: var(--s1) 0 0;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
