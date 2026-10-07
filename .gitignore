@@ -62,3 +62,6 @@ desktop.ini
 
 # lokalna lista zakazanych marek (skill taktyl-audyt-tresci) - nie publikować
 .claude/marki-zakazane.local.txt
+
+# Next.js (generowane)
+next-env.d.ts
