@@ -385,7 +385,7 @@ export class OrdersService {
   async list(tokenHeader: string | undefined) {
     const hashes = this.access.hashes(tokenHeader);
     const orders = await this.prisma.order.findMany({
-      where: { orderTokenHash: { in: hashes } },
+      where: { orderTokenHash: { in: hashes }, createdAt: { gte: this.access.tokenCutoff() } },
       include: { items: { orderBy: { id: "asc" } }, payment: true },
       orderBy: { createdAt: "desc" },
       take: 100,

@@ -7,7 +7,7 @@ import {
   problemSchema,
 } from "@taktyl/contracts";
 import { beforeEach, afterAll, beforeAll, describe, expect, it } from "vitest";
-import { bootApp, hasDb, reseed, type TestEnv } from "./helpers.js";
+import { bootApp, hasDb, NOW, reseed, type TestEnv } from "./helpers.js";
 
 const SET = {
   type: "set",
@@ -131,6 +131,17 @@ describe.skipIf(!hasDb)("B-219/B-220 zamowienia i platnosci (PostgreSQL)", () =>
       .expect(200);
     expect((list.body as { items: unknown[] }).items).toHaveLength(1);
     await t.http().get("/v1/orders").expect(401);
+  });
+
+  it("TAKTYL-70: token wygasa po ORDER_RETENTION_DAYS (odczyt i lista dla starego zamowienia = 404 / pusto)", async () => {
+    const o = await createOk(orderBody());
+    await t.prisma.order.update({
+      where: { number: o.number },
+      data: { createdAt: new Date(NOW.getTime() - 31 * 86_400_000) },
+    });
+    await t.http().get(`/v1/orders/${o.number}`).set("X-Order-Token", o.order_token).expect(404);
+    const list = await t.http().get("/v1/orders").set("X-Order-Token", o.order_token).expect(200);
+    expect((list.body as { items: unknown[] }).items).toHaveLength(0);
   });
 
   it("idempotencja: ten sam klucz i cialo = to samo zamowienie i token; inne cialo = 409", async () => {
