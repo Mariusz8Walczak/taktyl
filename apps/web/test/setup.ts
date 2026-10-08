@@ -1,7 +1,7 @@
 import "./animation-event-stub"; // przed react-dom (TAKTYL-36)
 import "@testing-library/jest-dom/vitest";
 import * as axeMatchers from "vitest-axe/matchers";
-import { cleanup } from "@testing-library/react";
+import { cleanup, configure } from "@testing-library/react";
 import { createElement } from "react";
 import type { AnchorHTMLAttributes } from "react";
 import { afterEach, expect, vi } from "vitest";
@@ -9,6 +9,10 @@ import { cartUi } from "../src/lib/cart/ui";
 import { resetMemoryStorage } from "../src/lib/storage/safe-storage";
 
 expect.extend(axeMatchers);
+
+// TAKTYL-68: findBy*/waitFor domyslnie czekaja 1 s; pod obciazeniem (rownolegle pakiety turbo, kontener test) lazy-wyspy
+// (baner zgod, okna) potrafia sie zamontowac pozniej, co dawalo sporadyczny timeout S24. 5 s to zapas, nie zmiana asercji.
+configure({ asyncUtilTimeout: 5000 });
 
 // Biezaca sciezka dla usePathname (testy ustawiaja globalThis.__pathname).
 vi.mock("next/navigation", () => ({

@@ -5,6 +5,7 @@ export default defineConfig({
   oxc: { jsx: { runtime: "automatic" } },
   test: {
     environment: "jsdom",
+    testTimeout: 20_000, // TAKTYL-68: axe w jsdom pod obciazeniem potrafi przekroczyc domyslne 5 s
     globals: true,
     setupFiles: ["./test/setup.ts"],
     include: ["test/**/*.test.{ts,tsx}"],
