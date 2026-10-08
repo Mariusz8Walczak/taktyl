@@ -462,6 +462,10 @@ describe.skipIf(!hasDb)("B-300..B-309 tresci w backpanelu (PostgreSQL)", () => {
     expect(html.status).toBe(200);
     expect(html.body.description).toBe("Tekst bez znacznikow.");
     expect((await put(`Mysz ${BRAND} jest lekka.`, 4)).status).toBe(422);
+    // Q-07: obietnica medyczna blokuje zapis (422 pod polem description), wersja bez zmian
+    const medical = await put("Ta mysz leczy nadgarstek i zapobiega kontuzjom.", 4);
+    expect(medical.status).toBe(422);
+    expect(JSON.stringify(medical.body)).toContain("medical_claim");
     const cleared = await put(null, 4);
     expect(cleared.status).toBe(200);
     expect(cleared.body.description).toBeNull();

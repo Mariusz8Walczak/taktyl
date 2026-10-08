@@ -64,7 +64,11 @@ function commonChecks(where, text, { allowStraightQuotes = false } = {}) {
     if (m[1].replace(/[.)]+$/, "").toLowerCase() !== "taktyl.example")
       err(where, `adres e-mail spoza domeny taktyl.example: ${m[0]}`);
   }
-  if (/ec\.europa\.eu\/consumers\/odr|\bplatform\p{L}*\s+ODR\b|\bODR\b/iu.test(text))
+  if (
+    /ec\.europa\.eu\/consumers\/odr|(?<![\p{L}\p{N}_])platform\p{L}*\s+ODR(?![\p{L}\p{N}_])|(?<![\p{L}\p{N}_])ODR(?![\p{L}\p{N}_])/iu.test(
+      text,
+    )
+  )
     err(where, "odnośnik do platformy ODR");
   if (/\b(NIP|REGON|KRS|BDO)\b\s*[:-]?\s*\d/i.test(text)) err(where, "numer NIP/REGON/KRS/BDO");
   if (/\b\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2}\b/.test(text)) err(where, "ciąg przypominający NIP");

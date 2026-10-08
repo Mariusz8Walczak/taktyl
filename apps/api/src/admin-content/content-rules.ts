@@ -1,5 +1,5 @@
 // B-301, B-302, B-304, B-306 (docs/04 par. 7-8, docs/15 par. 9, docs/11): walidatory tresci - czyste funkcje bez I/O.
-// Opisy: zakazane slowa i dlugosc to OSTRZEZENIA (nie blokada). Tresci prawne, opinie: bledy 422 z wskazaniem miejsca.
+// Opisy: zakazane slowa i dlugosc to OSTRZEZENIA (nie blokada); marki i obietnice medyczne blokuja zapis (Q-07). Tresci prawne, opinie: bledy 422 z wskazaniem miejsca.
 import type { ProblemFieldError } from "@taktyl/contracts";
 import {
   countWords,
@@ -28,6 +28,8 @@ export {
   FORBIDDEN_WORDS,
   forbiddenWords,
   GUIDE_WORDS,
+  medicalClaims,
+  MEDICAL_CLAIMS,
   splitParagraphs,
 } from "@taktyl/domain";
 
@@ -82,7 +84,9 @@ export function guideWarnings(bodyMd: string): RuleWarning[] {
 
 const lineOf = (text: string, index: number): number => text.slice(0, index).split("\n").length;
 
-const ODR = /ec\.europa\.eu\/consumers\/odr|\bplatform\p{L}*\s+ODR\b|\bODR\b/giu;
+// Granice slow przez \p{L}: \b w trybie u nie widzi liter spoza ASCII i lapalo „odróżnieniu”, „odręczny” (D-011).
+const ODR =
+  /ec\.europa\.eu\/consumers\/odr|(?<![\p{L}\p{N}_])platform\p{L}*\s+ODR(?![\p{L}\p{N}_])|(?<![\p{L}\p{N}_])ODR(?![\p{L}\p{N}_])/giu;
 const ID_WITH_NUMBER = /\b(NIP|REGON|KRS|BDO)\b\s*[:-]?\s*\d[\d -]{5,}/gi;
 const NIP_LIKE = /\b\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2}\b|\b\d{10}\b/g;
 const EMAIL = /[^\s@<>"()[\]]+@([^\s@<>"()[\],;]+)/g;

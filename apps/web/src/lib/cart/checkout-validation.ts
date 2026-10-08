@@ -101,7 +101,7 @@ export function validateField(
   const t = (s: string) => s.trim();
   switch (key) {
     case "email":
-      return EMAIL_RE.test(t(v.email)) ? null : "Podaj adres e-mail w formacie nazwa@domena.pl.";
+      return EMAIL_RE.test(t(v.email)) ? null : "Podaj adres e-mail w formacie nazwa@taktyl.example.";
     case "phone":
       return normalizePhone(t(v.phone))
         ? null

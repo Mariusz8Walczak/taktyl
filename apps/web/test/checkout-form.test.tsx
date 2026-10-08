@@ -194,7 +194,7 @@ describe("walidacja (F-174, S18)", () => {
     await user.type(email, "to-nie-email");
     await user.tab();
     expect(email).toHaveAttribute("aria-invalid", "true");
-    const msg = screen.getByText("Podaj adres e-mail w formacie nazwa@domena.pl.");
+    const msg = screen.getByText("Podaj adres e-mail w formacie nazwa@taktyl.example.");
     expect(email.getAttribute("aria-describedby")).toContain(msg.closest("p")!.id);
     await user.clear(email);
     await user.type(email, "jan@taktyl.example");

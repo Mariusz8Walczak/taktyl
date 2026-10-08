@@ -26,7 +26,7 @@ export function validateEmail(value: string): string | null {
   const v = value.trim();
   if (v === "") return "Wpisz adres e-mail.";
   if (v.length > LIMITS.emailMax || !EMAIL.test(v)) {
-    return "Sprawdź adres e-mail. Powinien mieć postać nazwa@domena.pl.";
+    return "Sprawdź adres e-mail. Powinien mieć postać nazwa@taktyl.example.";
   }
   return null;
 }

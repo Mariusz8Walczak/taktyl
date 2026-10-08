@@ -9,6 +9,7 @@ import {
   forbiddenWords,
   guideWarnings,
   legalContentErrors,
+  medicalClaims,
   reviewErrors,
   variantLabels,
 } from "./content-rules.js";
@@ -201,6 +202,22 @@ describe("B-301 walidator opisu produktu (ostrzezenia, nie blokada)", () => {
     expect(countWords("raz  dwa\ntrzy")).toBe(3);
   });
 
+  it("Q-07: obietnice medyczne wykrywane w odmianie, bez falszywych trafien; opisy z seeda czyste", () => {
+    expect(
+      medicalClaims(
+        "Leczy nadgarstek, ma działanie terapeutyczne i chroni przed kontuzją. RSI, cieśń nadgarstka.",
+      ),
+    ).toEqual(["leczy", "terapeutyczne", "chroni przed kontuzją", "rsi", "cieśń nadgarstka"]);
+    expect(medicalClaims("Odciąża nadgarstek, waży 63 g. Lecz klik jest głośny.")).toEqual([]);
+    const seed = JSON.parse(
+      readFileSync(
+        fileURLToPath(new URL("../../../../data/descriptions.json", import.meta.url)),
+        "utf8",
+      ),
+    ) as Record<string, string>;
+    for (const [id, text] of Object.entries(seed)) expect(medicalClaims(text), id).toEqual([]);
+  });
+
   it("artykul poradnika 600-900 slow", () => {
     const body = (n: number) => `## Tytul\n\n${words(n)}`;
     expect(guideWarnings(body(700))).toEqual([]);
@@ -237,6 +254,14 @@ describe("B-306 walidator tresci prawnych (z numerem linii)", () => {
     expect(errors.find((e) => e.code === "invalid_domain")?.message).toContain("linia 5");
     expect(errors.find((e) => e.code === "real_phone")?.message).toContain("linia 6");
     expect(errors.every((e) => e.path === "body_md")).toBe(true);
+  });
+
+  it("ODR: slowa „odróżnieniu”, „odręczny”, „odrzucona” nie sa odnosnikiem do platformy (D-011)", () => {
+    expect(
+      codes("W odróżnieniu od sklepu stacjonarnego. Odręczny podpis. Reklamacja odrzucona."),
+    ).toEqual([]);
+    expect(codes("Platforma ODR")).toEqual(["odr_link"]);
+    expect(codes("Spor rozwiaze ODR.")).toEqual(["odr_link"]);
   });
 
   it("strony z seeda (content/pages) przechodza walidator i sanityzacje bez zmian", () => {
