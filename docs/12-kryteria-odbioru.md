@@ -187,7 +187,7 @@ Pliki w `e2e/tests/backpanel/`; projekt `backpanel` startuje po S1-S24 (zmienia 
 | S27 | `s27-stan-brak.spec.ts` (też B-S3) | automatyczny z odstępstwem od brzmienia (Q-08): kafel Mgła nieaktywny z „Brak”, koszyk blokuje, API 409 |
 | S28 | `s28-s29-role-i-dziennik.spec.ts` (też B-S5) | automatyczny; viewer to konto z setupu (stos e2e ma `DEMO_MODE=false`) |
 | S29 | `s28-s29-role-i-dziennik.spec.ts` | automatyczny (cena, stan, status zamówienia; ustawienia w B-S4) |
-| S30 | `s30-s34-s35-webhook-i-api.spec.ts` | błędny i poprawny podpis: automatyczny; część „wyłącz sklep, zmień cenę, włącz sklep”: `test.fixme` (kontener e2e nie steruje Dockerem), należy do job-a CI `e2e-demo` (TAKTYL-71) |
+| S30 | `s30-s34-s35-webhook-i-api.spec.ts` | błędny i poprawny podpis: automatyczny; część „wyłącz sklep, zmień cenę, włącz sklep”: `scripts/smoke-outbox.sh` na hoście (`make smoke-outbox`, job CI `e2e-docker`), bo kontener e2e nie steruje Dockerem (TAKTYL-71) |
 | S31 | CI `e2e-demo` | poza e2e |
 | S32 | `smoke-demo` / CI `e2e-demo` | w e2e tylko negatyw: bez `DEMO_MODE` brak przycisku resetu i viewer |
 | S33 | CI (gitleaks, kontrola ścieżek) | poza e2e |

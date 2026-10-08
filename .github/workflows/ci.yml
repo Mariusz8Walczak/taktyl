@@ -131,6 +131,9 @@ jobs:
         run: docker compose --profile e2e run --rm --build --no-deps e2e pnpm run typecheck
       - name: Playwright S1-S24 (kontener e2e, start od reset demo)
         run: docker compose --profile e2e run --rm --build e2e
+      # I-011 (S30, TAKTYL-71): tu, nie w e2e-demo (petla reset-demo czyscilaby outbox w trakcie). Na koncu przywraca dane demo.
+      - name: "Test S30 (wylacz sklep, zmien cene, wlacz sklep; outbox dostarcza po powrocie)"
+        run: sh scripts/smoke-outbox.sh
       - name: Raport Playwright (HTML) jako artefakt
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
