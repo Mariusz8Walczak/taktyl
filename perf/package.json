@@ -1,0 +1,14 @@
+{
+  "name": "@taktyl/perf",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pomiar Lighthouse wg docs/12 par. 4 (I-012, TAKTYL-83), uruchamiany w kontenerze perf",
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "scripts": {
+    "perf": "node lighthouse.mjs"
+  },
+  "dependencies": {
+    "lighthouse": "13.5.0"
+  }
+}

@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-design smoke smoke-outbox demo smoke-demo clean
+.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-design smoke smoke-outbox demo smoke-demo perf clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -22,7 +22,7 @@ up: env ## buduje i uruchamia pelny stos (tryb produkcyjny lokalnie), czeka na h
 	@echo "API:       http://api.taktyl.localhost$(SITE_PORT)/health"
 
 down: ## zatrzymuje stos (dane w wolumenach zostaja)
-	$(COMPOSE) --profile dev --profile test --profile demo --profile e2e down --remove-orphans
+	$(COMPOSE) --profile dev --profile test --profile demo --profile e2e --profile perf down --remove-orphans
 
 dev: env ## hot reload (profil dev, kod montowany z hosta)
 	$(COMPOSE) --profile dev up --build -d --wait $(DEV_SERVICES)
@@ -42,6 +42,11 @@ test: env ## Vitest w kontenerze test (baza testowa w tmpfs)
 e2e: env ## Playwright S1-S36 w kontenerze e2e (stos, reset demo, testy); ARGS="..." przekazuje argumenty do playwright test
 	$(COMPOSE) up -d --build --wait
 	$(COMPOSE) --profile e2e run --rm --build e2e pnpm exec playwright test $(ARGS)
+
+# I-012 (TAKTYL-83): Lighthouse (docs/12 par. 4, S36) w kontenerze perf na pelnym stosie; wyniki w perf/reports. PERF_ENFORCE=0 = tylko raport.
+perf: env ## Lighthouse: LCP, CLS, TBT, waga i liczba zadan pierwszego widoku (5 stron, mediana z 3), progi docs/12
+	$(COMPOSE) up -d --build --wait
+	$(COMPOSE) --profile perf run --rm --build perf
 
 reset: env ## przywraca dane demo z data/*.json (kasuje zmiany w bazie roboczej)
 	$(COMPOSE) run --rm -e DEMO_MODE=true seed node dist/seed.js --reset

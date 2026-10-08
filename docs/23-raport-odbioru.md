@@ -35,7 +35,21 @@ Dowody to wyjścia poleceń z przebiegu `tk71` (log Playwright, log Vitest, wyj�
 | S33 | PASS (część lokalna) | `check-forbidden-paths.sh` i `--self-test` OK; gitleaks na całej historii tylko w CI (kontener nie widzi `.git` worktree) |
 | S34 | PASS | `s30-s34-s35-webhook-i-api.spec.ts` + `smoke-stack.sh` (noindex na 3 hostach, w 404, meta, `robots.txt`) |
 | S35 | PASS | `s30-s34-s35-webhook-i-api.spec.ts` (422 z listą SKU, 409 `price_changed`, idempotencja) |
-| S36 | SKIP (część) | PASS: axe sklepu (`a11y-wcag.spec.ts`) i 7 ekranów panelu + logowanie, audyt designu §3 (sklep 17 stron × 2 szerokości, panel 14 ekranów), 0 obcych domen (S24 + audyt), budżet JS. **Brak Lighthouse CI**: LCP, CLS, INP i waga pierwszego widoku nie są mierzone w repo (CI ma to „do dodania”, `docs/12` §4). Zadanie TAKTYL-83 |
+| S36 | FAIL (LCP) | PASS: axe sklepu (`a11y-wcag.spec.ts`) i 7 ekranów panelu + logowanie, audyt designu §3 (sklep 17 stron × 2 szerokości, panel 14 ekranów), 0 obcych domen (S24 + audyt, Lighthouse: 0), budżet JS, Lighthouse (TAKTYL-83, tabela niżej): waga, żądania, CLS, TBT w limitach. **FAIL: LCP** na wszystkich 5 stronach (TAKTYL-84) |
+
+### S36: Lighthouse (TAKTYL-83, `make perf`)
+
+Lighthouse 13.5.0, tryb „Komórka” (symulowane 4G, CPU x4), mediana z 3 przebiegów, stos produkcyjny `tk83`, 2026-10-08. INP: Lighthouse go nie mierzy, limit 200 ms stosowany do TBT. Prefetch `?_rsc=` pominięty (`docs/decyzje.md` I-012).
+
+| Strona | Waga KB (limit) | Żądania (limit) | LCP ms (limit) | CLS (limit) | TBT ms (200) | Wynik |
+|---|---|---|---|---|---|---|
+| główna | 267 (800) | 23 (30) | **2797** (2000) | 0,000 (0,05) | 14 | FAIL LCP |
+| listing | 264 (800) | 23 (30) | **2568** (2000) | 0,000 (0,05) | 15 | FAIL LCP |
+| karta Bazalt 75 | 284 (800) | 27 (30) | **3450** (2000) | 0,000 (0,05) | 34 | FAIL LCP |
+| kreator | 284 (1500) | 23 (45) | **2865** (2500) | 0,000 (0,1) | 19 | FAIL LCP |
+| koszyk | 258 (1500) | 21 (45) | **3135** (2500) | 0,066 (0,1) | 33 | FAIL LCP |
+
+Naprawione przy okazji: font Archivo pobierał się dwa razy (kolizja nazw rodzin tokens.css i next/font), −64 KB na stronę (przedtem np. główna 331 KB, 31 żądań z prefetchem). Zmierzony (niesymulowany) LCP to 0,5–0,7 s; przekroczenie wynika z modelu Lighthouse (cały JS ok. 165 KB i 6 plików CSS w grafie), a na karcie i koszyku LCP to baner zgód renderowany po hydracji. Zgłoszone jako TAKTYL-84; w CI LCP jest informacyjny do czasu naprawy.
 
 ## S30: „wyłącz sklep”, rozwiązanie
 
@@ -43,7 +57,7 @@ Kontener `e2e` nie ma gniazda Dockera, więc `test.fixme` nie mógł być zamkni
 
 ## Usterki i uwagi
 
-- **Lighthouse (S36, `docs/12` §4)**: brak narzędzia w repo; zgłoszone jako TAKTYL-83 (projekt `taktyl`), nie zaokrąglane do PASS.
+- **Lighthouse (S36, `docs/12` §4)**: pomiar dodany (TAKTYL-83); LCP poza budżetem na 5 stronach, nie zaokrąglane do PASS: TAKTYL-84.
 - Mała poprawka: w `Makefile` `.PHONY` zawierał sklejone `audit-designsmoke` (brakujące cele `audit-design` i `smoke` jako phony); poprawione.
 - S31 zmierzono z ciepłym cache warstw Dockera (80 s); zimny pomiar z I-009 to 197 s. Oba w limicie 600 s.
 - README mówi o `make e2e` / `make test`; oba działają w opisanych krokach (tu wykonane jako `docker compose -p tk71 --profile e2e run --rm --build e2e pnpm exec playwright test` i `--profile test run --rm test`).
