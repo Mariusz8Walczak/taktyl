@@ -2,7 +2,12 @@
 import { describe, expect, it } from "vitest";
 import { stockTags } from "../outbox/outbox.service.js";
 import { canonicalJson, sha256Hex } from "./canonical-json.js";
-import { deriveOrderToken, hashOrderToken, tokenMatchesHash } from "./order-token.js";
+import {
+  deriveOrderToken,
+  hashOrderToken,
+  orderTokenExpired,
+  tokenMatchesHash,
+} from "./order-token.js";
 
 const SECRET = "s".repeat(40);
 
@@ -23,6 +28,16 @@ describe("B-220 order token", () => {
     expect(hash).not.toContain(token);
     expect(tokenMatchesHash(token, hash)).toBe(true);
     expect(tokenMatchesHash(`${token}x`, hash)).toBe(false);
+  });
+});
+
+describe("TAKTYL-70 wygasanie tokenu zamowienia", () => {
+  const now = new Date("2026-10-08T10:00:00Z");
+  it("dziala w oknie retencji, po nim nie", () => {
+    expect(orderTokenExpired(new Date("2026-09-10T10:00:00Z"), now, 30)).toBe(false);
+    expect(orderTokenExpired(new Date("2026-09-08T10:00:00Z"), now, 30)).toBe(false);
+    expect(orderTokenExpired(new Date("2026-09-07T09:59:59Z"), now, 30)).toBe(true);
+    expect(orderTokenExpired(new Date("2026-09-07T09:59:59Z"), now, 60)).toBe(false);
   });
 });
 

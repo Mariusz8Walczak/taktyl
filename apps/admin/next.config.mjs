@@ -4,6 +4,7 @@
 import process from "node:process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildCsp } from "./csp.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -22,6 +23,17 @@ const nextConfig = {
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
           { key: "Cache-Control", value: "no-store" },
+          // TAKTYL-70 (SEC-04): CSP tylko w produkcji (dev: HMR wymaga eval i websocketow).
+          ...(process.env.NODE_ENV === "production"
+            ? [
+                {
+                  key: "Content-Security-Policy",
+                  value: buildCsp({
+                    siteUrl: process.env.PUBLIC_SITE_URL ?? "http://taktyl.localhost",
+                  }),
+                },
+              ]
+            : []),
         ],
       },
     ];

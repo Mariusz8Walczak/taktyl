@@ -18,3 +18,11 @@ export function tokenMatchesHash(token: string, hash: string): boolean {
   const b = Buffer.from(hash, "hex");
   return a.length === b.length && timingSafeEqual(a, b);
 }
+
+/**
+ * TAKTYL-70 (SEC-03): token zamowienia wygasa razem z danymi osobowymi (ORDER_RETENTION_DAYS od utworzenia zamowienia,
+ * B-209). Po tym terminie token nie otwiera juz zamowienia, takze gdy skrot wciaz jest w bazie.
+ */
+export function orderTokenExpired(createdAt: Date, now: Date, retentionDays: number): boolean {
+  return createdAt.getTime() < now.getTime() - retentionDays * 86_400_000;
+}
