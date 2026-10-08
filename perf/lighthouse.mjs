@@ -17,6 +17,10 @@ const ENFORCE = process.env.PERF_ENFORCE !== "0";
 const INFO = new Set((process.env.PERF_INFO_METRICS ?? "").split(",").filter(Boolean));
 const OUT = process.env.PERF_OUT ?? "reports";
 const PORT = 9222;
+// Diagnostyka (TAKTYL-84): PERF_ONLY=glowna,karta ogranicza strony, PERF_SAVE_ALL=1 zapisuje raport kazdego przebiegu.
+const ONLY = new Set((process.env.PERF_ONLY ?? "").split(",").filter(Boolean));
+const SAVE_ALL = process.env.PERF_SAVE_ALL === "1" || process.env.PERF_SAVE_ALL === "2";
+const SAVE_ALL2 = process.env.PERF_SAVE_ALL === "2";
 
 // Progi z docs/12 par. 4. Waga w KB (1 KB = 1024 B), czas w ms. TBT 200 ms to zastepnik INP <= 200 ms.
 const LIMITS = {
@@ -77,7 +81,17 @@ try {
   const siteHost = new URL(SITE).hostname;
   const results = [];
   for (const page of PAGES) {
+    if (ONLY.size && !ONLY.has(page.name)) continue;
     const runs = [];
+    // Diagnostyka: PERF_SAVE_ALL=2 zapisuje artefakty (slad, log sieci) dodatkowego przebiegu strony (tylko zbieranie).
+    if (SAVE_ALL2) {
+      await lighthouse(`${SITE}${page.path}`, {
+        port: PORT,
+        logLevel: "error",
+        onlyCategories: ["performance"],
+        gatherMode: `${OUT}/art-${page.name}`,
+      });
+    }
     for (let i = 0; i < RUNS; i += 1) {
       const url = `${SITE}${page.path}`;
       const r = await lighthouse(url, {
@@ -101,6 +115,7 @@ try {
         perf: r.lhr.categories.performance.score,
       });
       if (i === 0) writeFileSync(`${OUT}/lhr-${page.name}.json`, r.report);
+      if (SAVE_ALL) writeFileSync(`${OUT}/lhr-${page.name}-${i}.json`, r.report);
     }
     const lim = LIMITS[page.kind];
     const row = { strona: page.name, sciezka: page.path, rodzaj: page.kind, przebiegow: RUNS };

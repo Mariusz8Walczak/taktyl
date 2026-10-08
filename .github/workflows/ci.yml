@@ -159,8 +159,10 @@ jobs:
 
   # I-012 (S36, docs/12 par. 4, TAKTYL-83): Lighthouse (tryb Komorka, mediana z 3) na stosie produkcyjnym: waga i liczba zadan
   # pierwszego widoku, LCP, CLS, TBT (zastepnik INP), obce domeny. Waga, zadania, CLS, TBT i obce domeny blokuja job;
-  # LCP jest INFORMACYJNY (PERF_INFO_METRICS=lcp_ms): na dzien TAKTYL-83 przekracza budzet (BUG-i w zadaniu), a pomiar
-  # na wspolnym runnerze (symulowane lacze, ale realny czas serwera) ma szum. Po naprawie LCP zdejmij PERF_INFO_METRICS.
+  # LCP jest INFORMACYJNY (PERF_INFO_METRICS=lcp_ms). TAKTYL-84: po poprawkach (baner zgod z serwera, mniej JS i plikow,
+  # jeden arkusz ukladu) karta i koszyk spadly o 0,5-1 s, ale content (limit 2000 ms) nadal wynosi 2,1-2,7 s, a wynik
+  # jest skwantowany co ok. 150 ms i skacze miedzy przebiegami, wiec nie jest stabilny z marginesem (docs/23, S36).
+  # Zdejmij PERF_INFO_METRICS dopiero po zmianie zakresu (rozmiar fontu, framework, HTTP/2 w pomiarze).
   # Job nie blokuje PR (nie jest w wymaganych), dopoki nie ma kilku zielonych przebiegow z rzedu.
   perf:
     name: perf

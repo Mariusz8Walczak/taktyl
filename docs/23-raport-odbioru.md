@@ -51,13 +51,34 @@ Lighthouse 13.5.0, tryb „Komórka” (symulowane 4G, CPU x4), mediana z 3 prze
 
 Naprawione przy okazji: font Archivo pobierał się dwa razy (kolizja nazw rodzin tokens.css i next/font), −64 KB na stronę (przedtem np. główna 331 KB, 31 żądań z prefetchem). Zmierzony (niesymulowany) LCP to 0,5–0,7 s; przekroczenie wynika z modelu Lighthouse (cały JS ok. 165 KB i 6 plików CSS w grafie), a na karcie i koszyku LCP to baner zgód renderowany po hydracji. Zgłoszone jako TAKTYL-84; w CI LCP jest informacyjny do czasu naprawy.
 
+#### Po TAKTYL-84 (2026-10-08, stos `tk84`, trzy kolejne przebiegi `make perf`)
+
+Zmiany: (1) baner zgód renderowany na serwerze (stan domyślny w HTML; powracającego użytkownika chowa skrypt w `<head>` przed pierwszym malowaniem; ustawienia dalej leniwie), (2) hosty globalne (szuflada koszyka, „Szybko dodaj”, skróty, pasek porównania) jednym leniwym modułem po hydracji, (3) `turbopackChunking` zbija JS pierwszego widoku z 11 do 7 plików (−3,5 kB gzip), (4) jeden arkusz układu `globalne.css`. Wszystko bez nowych wartości poza tokenami.
+
+| Strona | LCP przed (mediana z 3) | LCP po (trzy przebiegi) | Limit | TBT po | Waga KB przed → po | Żądania przed → po |
+|---|---|---|---|---|---|---|
+| główna | 2797 | 2664 / 2666 / 2666 | 2000 | 23–29 | 267 → 259 | 23 → 19 |
+| listing | 2568 | 2656 / 2269 / 2667 | 2000 | 23–24 | 264 → 256 | 23 → 19 |
+| karta Bazalt 75 | 3450 | 2268 / 2668 / 2272 | 2000 | 24–29 | 284 → 277 | 27 → 23 |
+| kreator | 2865 | 2793 / 2816 / 2809 | 2500 | 46–52 | 284 → 274 | 23 → 18 |
+| koszyk | 3135 | 2514 / 2115 / 2116 | 2500 | 41–46 | 258 → 249 | 21 → 17 |
+
+Budżet JS: treść 139,0–146,6 kB gzip (przedtem 141,8–149,5), `/zbuduj-set` 163,0, `/koszyk` 149,4 kB. Playwright 150 passed (S24 dostał test „baner w HTML z serwera”), Vitest web 582, lint, typecheck, `audit:tokens` zielone.
+
+**LCP nadal powyżej limitu na większości stron; w CI zostaje informacyjny.** Karta i koszyk poprawione (baner przestał być elementem LCP po hydracji), pozostałe strony bez zmiany w granicach szumu. Przyczyny, z pomiarów:
+
+- Wynik symulowany jest skwantowany: kolejne wartości różnią się o jedno opóźnienie łącza (ok. 150 ms), a przebiegi tej samej strony skaczą między „trybami” (np. listing 2269 albo 2656, karta 2268 albo 2668). Różnicę ok. 390 ms daje to, czy font Archivo (64 KB) kończy się ładować przed pierwszym malowaniem w niesymulowanym przebiegu (wtedy wchodzi do grafu), o kilkanaście milisekund wyścigu.
+- Do grafu wchodzi cały JS ładowany przed pierwszym malowaniem: stała część to react-dom (ok. 64 kB gzip) i klient Next (ok. 48 kB), razem ok. 112 kB, której nie da się zdjąć bez zmiany frameworka; kod aplikacji w układzie to już tylko kilka kB. Model HTTP/1.1 (6 połączeń na host) dokłada falę żądań.
+- Próba inline CSS (`experimental.inlineCss`) dawała lepszy LCP na części stron (listing 2115, kreator 2259), ale podwajała CSS w dokumencie i podnosiła TBT do 150–190 ms (limit 200, wynik zależy od tego, czy pierwsze zadanie parse+layout+eval wypada przed FCP), więc ryzykowała czerwony job CI. Odrzucona; opis w `docs/decyzje.md` I-012/TAKTYL-84.
+- Dalsze zejście poniżej 2000 ms wymaga zmiany zakresu: mniejszy font (osie fontu to decyzja `docs/06`), mniej JS (zmiana frameworka) albo pomiar po HTTP/2. Do decyzji właściciela.
+
 ## S30: „wyłącz sklep”, rozwiązanie
 
 Kontener `e2e` nie ma gniazda Dockera, więc `test.fixme` nie mógł być zamknięty testem Playwright. Wybrano skrypt na hoście, który na tym samym stosie robi dokładnie kroki z `docs/12` §7: `docker compose stop web` → zmiana ceny Wróbla przez API admina (owner) → sprawdzenie, że wiersz `outbox` nie jest `sent` i ma próby (wynik: 1 zdarzenie, 3 próby po 15 s) → `docker compose start web` → oczekiwanie na `sent` (wynik: 5 s po starcie sklepu) → HTML `/myszki/wrobel` zawiera nową cenę (196,00 zł) → `seed --reset`. Wynik 2026-10-08: wszystko ok. Skrypt: `scripts/smoke-outbox.sh` (+ `.mjs` w kontenerze `api`, jak `smoke-demo`), `make smoke-outbox`, krok w jobie CI `e2e-docker` (nie w `e2e-demo`, bo pętla `reset-demo` czyściłaby `outbox` w trakcie). `test.fixme` usunięty z Playwright (zastąpiony komentarzem z odwołaniem).
 
 ## Usterki i uwagi
 
-- **Lighthouse (S36, `docs/12` §4)**: pomiar dodany (TAKTYL-83); LCP poza budżetem na 5 stronach, nie zaokrąglane do PASS: TAKTYL-84.
+- **Lighthouse (S36, `docs/12` §4)**: pomiar dodany (TAKTYL-83); LCP poza budżetem na 5 stronach, nie zaokrąglane do PASS. TAKTYL-84: karta i koszyk poprawione, koszyk w limicie w 2 z 3 przebiegów, reszta powyżej limitu (patrz „Po TAKTYL-84”); LCP zostaje informacyjny w CI.
 - Mała poprawka: w `Makefile` `.PHONY` zawierał sklejone `audit-designsmoke` (brakujące cele `audit-design` i `smoke` jako phony); poprawione.
 - S31 zmierzono z ciepłym cache warstw Dockera (80 s); zimny pomiar z I-009 to 197 s. Oba w limicie 600 s.
 - README mówi o `make e2e` / `make test`; oba działają w opisanych krokach (tu wykonane jako `docker compose -p tk71 --profile e2e run --rm --build e2e pnpm exec playwright test` i `--profile test run --rm test`).
