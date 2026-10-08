@@ -97,7 +97,7 @@
   font-weight: var(--w-mocna);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  transform: translate(25%, -50%);
+  transform: translate(0, -50%); /* TAKTYL-68: bez przesuniecia w prawo, na 320 px wychodzilo poza okno */
 }
 
 /* Szuflada menu mobilnego */
