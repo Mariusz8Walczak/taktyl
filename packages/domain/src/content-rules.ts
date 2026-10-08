@@ -11,7 +11,7 @@ export const FORBIDDEN_WORDS =
  * liter spoza ASCII.
  */
 export const MEDICAL_CLAIMS =
-  /(?<!\p{L})(?:uleczy\p{L}*|leczy\p{L}*|leczeni\p{L}*|lecznicz\p{L}*|terapeutyczn\p{L}*|terapi\p{L}*|medyczn\p{L}*|kliniczn\p{L}*|przeciwbólow\p{L}*|rehabilitacyjn\p{L}*)(?!\p{L})|(?<!\p{L})(?:zapobiega|zapobiegają|chroni|chronią|łagodzi|łagodzą|likwiduje|eliminuje)\s+(?:przed\s+)?(?:kontuzj\p{L}*|chorob\p{L}*|schorzeni\p{L}*|bólo\p{L}*|ból\p{L}*|zmęczeni\p{L}*)|(?<!\p{L})cieśni\p{L}*\s+nadgarstka|(?<!\p{L})RSI(?!\p{L})/giu;
+  /(?<!\p{L})(?:uleczy\p{L}*|leczy\p{L}*|leczeni\p{L}*|lecznicz\p{L}*|terapeutyczn\p{L}*|terapi\p{L}*|medyczn\p{L}*|kliniczn\p{L}*|przeciwbólow\p{L}*|rehabilitacyjn\p{L}*)(?!\p{L})|(?<!\p{L})(?:zapobiega|zapobiegają|chroni|chronią|łagodzi|łagodzą|likwiduje|eliminuje)\s+(?:przed\s+)?(?:kontuzj\p{L}*|chorob\p{L}*|schorzeni\p{L}*|bólo\p{L}*|ból\p{L}*|zmęczeni\p{L}*)|(?<!\p{L})cieś(?:ń|ni\p{L}*)\s+nadgarstka|(?<!\p{L})RSI(?!\p{L})/giu;
 
 export const DESCRIPTION_WORDS = { min: 60, max: 120 } as const;
 export const DESCRIPTION_PARAGRAPHS = { min: 2, max: 3 } as const;

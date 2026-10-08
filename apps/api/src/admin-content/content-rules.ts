@@ -7,7 +7,6 @@ import {
   DESCRIPTION_WORDS,
   forbiddenWords,
   GUIDE_WORDS,
-  medicalClaims,
   splitParagraphs,
 } from "@taktyl/domain";
 
