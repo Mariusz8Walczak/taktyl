@@ -57,6 +57,7 @@
   font-stretch: var(--szer-naglowek);
 }
 .koszyk__dalej {
+  box-sizing: border-box; /* TAKTYL-68: padding przycisku nie wypycha go poza karte podsumowania (320 px) */
   width: 100%;
   text-align: center;
   text-decoration: none;
