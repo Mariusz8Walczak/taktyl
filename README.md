@@ -137,6 +137,7 @@ Kolejność czytania: `CLAUDE.md` → ten plik → `docs/01`–`docs/12` → `do
 | `docs/19-repozytorium-i-publikacja.md` | higiena publicznego repo, CI, wydania |
 | `docs/20-zespol-agentow-i-skille.md` | agenci, skille, praca z task-managerem |
 | `docs/21-plan-wdrozenia.md` | etapy i kamienie milowe |
+| `docs/22-przeglad-bezpieczenstwa.md` | przegląd bezpieczeństwa: ustalenia z wagą, naprawy |
 | `docs/adr/` | ADR-0001…0009 |
 | `docs/decyzje.md` | dziennik decyzji i pytania otwarte |
 

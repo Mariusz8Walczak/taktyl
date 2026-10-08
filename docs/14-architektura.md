@@ -199,7 +199,7 @@ Każda mutacja API przy zatwierdzeniu transakcji zapisuje w `outbox` poniższe z
 | A02 Cryptographic Failures | hasła argon2id; ciasteczka `HttpOnly; Secure; SameSite=Strict`; HTTPS na `proxy` poza `localhost`; sekretów brak w obrazach |
 | A03 Injection | Prisma (zapytania parametryzowane); walidacja każdego wejścia schematem Zod (`contracts`), brak surowego SQL poza wyjątkami z przeglądem; sanityzacja Markdown w treściach (lista dozwolonych znaczników) |
 | A04 Insecure Design | wycena i zamówienie wyłącznie po stronie serwera (ADR-0007); idempotencja; transakcje z blokadą wiersza |
-| A05 Security Misconfiguration | `helmet`, CSP bez `unsafe-inline` (nonce), CORS z listą źródeł z env, `X-Robots-Tag: noindex`, wyłączony Swagger poza `NODE_ENV!=production` lub za rolą `owner` |
+| A05 Security Misconfiguration | `helmet`, CSP w `next.config.mjs` (sklep, backpanel) i `helmet` (API); w skryptach nadal `unsafe-inline`, nonce czeka na decyzję Q-09 (`docs/22`), CORS z listą źródeł z env, `X-Robots-Tag: noindex`, wyłączony Swagger poza `NODE_ENV!=production` lub za rolą `owner` |
 | A06 Vulnerable Components | Dependabot, `pnpm audit` w CI, przypięte obrazy bazowe, użytkownik nie-root |
 | A07 Identification Failures | limit prób logowania (`@nestjs/throttler`: 5/min/IP+konto), sesja z odświeżaniem i unieważnianiem, brak domyślnych poświadczeń |
 | A08 Integrity Failures | webhook rewalidacji podpisany HMAC-SHA256 (`X-Taktyl-Signature`, znacznik czasu ≤ 5 min, porównanie stałoczasowe); migracje tylko z repo |
