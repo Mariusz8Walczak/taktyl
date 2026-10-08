@@ -130,7 +130,7 @@ Wszystkie mierzalne w CI lub jednym poleceniem; żadnych założonych liczb uży
 
 | # | Ryzyko | Prawdop. | Skutek | Mitygacja |
 |---|---|---|---|---|
-| R-1 | Publikacja plików Crafto narusza licencję | średnie | wysoki | `html/`, `vendor/` w `.gitignore`, kontrola ścieżek w CI, publiczny kod bazuje na Bootstrapie i tokenach, README z informacją (ADR-0004, Q-01) |
+| R-1 | Publikacja plików Crafto narusza licencję | średnie | wysoki | `html/`, `vendor/` w `.gitignore`, kontrola ścieżek w CI, publiczny kod bazuje na własnych komponentach i tokenach (bez Bootstrapa), README z informacją (ADR-0004, Q-01) |
 | R-2 | Sekret lub dane osobowe w historii git | niskie | wysoki | gitleaks w pre-commit i CI, skan całej historii przed pierwszym pushem, `.env.example`, e-mail `noreply`, skill `taktyl-straznik-repo` |
 | R-3 | Publiczne demo zostaje zepsute przez obcych | średnie | średni | `DEMO_MODE`: rola viewer bez zapisu, limity żądań, cykliczny `db:reset-demo`, demo tylko lokalnie na start (ADR-0006, Q-05) |
 | R-4 | Rozjazd logiki sklep ↔ API | średnie | wysoki | wspólny pakiet `domain`, API przelicza wszystko po swojej stronie, testy z `docs/12` §2 uruchamiane po obu stronach |

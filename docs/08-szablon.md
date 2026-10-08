@@ -2,6 +2,8 @@
 
 ## 1. Decyzja: Ecomus HTML zamiast Crafto
 
+> **Nota (TAKTYL-73, DOC-073): §1-§5 są historyczne.** Procedura Astro/Ecomus (kopiowanie CSS i JS szablonu, Bootstrap, jQuery) nie jest realizowana. Zgodnie z ADR-0001 i ADR-0004 sklep to Next.js z własnymi komponentami na tokenach (`packages/ui`, `apps/*`), układ we flex i CSS grid (WEB-007), bez Bootstrapa i bez plików szablonu w repo.
+
 > **Nota (ADR-0004):** wybrano wariant **Crafto** wg §6 tego dokumentu (paczka leży w `html/`). Werdykt poniżej zostaje jako uzasadnienie pierwotnej rekomendacji. Pliki Crafto nie trafiają do publicznego repozytorium (`vendor/crafto/`, `.gitignore`).
 
 Kryterium: **szablon ma dać modelowi gotowe komponenty sklepu**, żeby model nie projektował ich sam. Wygląd i ruch i tak definiują tokeny (`docs/06`) i katalog animacji (`docs/07`), więc „ładniejsze demo” waży mniej niż kompletność stron sklepowych.
@@ -81,7 +83,7 @@ Dane z kart produktów na ThemeForest i z dem, stan na 7 października 2026. Naz
 | Wszystkie teksty dema: „Ecomus” w tytułach, meta i stopce, angielskie etykiety, ceny w USD, lorem ipsum | `docs/12` §5 |
 | Zdjęcia dema | licencja |
 
-## 5. Jak przenosić szablon do Astro
+## 5. Jak przenosić szablon do Astro (historyczne, zastąpione: ADR-0001, ADR-0004)
 
 1. Do `public/vendor/ecomus/` kopiujesz tylko: CSS (po kompilacji SCSS ze zmiennymi ustawionymi na tokeny), potrzebne JS (Bootstrap, jQuery jeśli konieczne, noUiSlider, Swiper tylko dla galerii produktu na telefonie, skrypt koszyka wyskakującego i okien), font ikon.
 2. Dla każdej strony z tabeli §3 otwierasz plik szablonu, kopiujesz potrzebne sekcje do komponentu Astro, a treść zastępujesz danymi z `data/`.
@@ -93,7 +95,7 @@ Dane z kart produktów na ThemeForest i z dem, stan na 7 października 2026. Naz
 
 Gdybyś został przy Crafto — tokeny, dane, kreator i animacje zostają bez zmian. Zmienia się tylko źródło komponentów:
 
-| Nasza strona | Plik Crafto | Czego brakuje (do zbudowania z komponentów Bootstrapa) |
+| Nasza strona | Plik Crafto (wzorzec układu, nie źródło plików) | Czego brakuje (do zbudowania z tokenów, własne komponenty) |
 |---|---|---|
 | Listing | `demo-fashion-store-shop.html` | suwak ceny, żetony aktywnych filtrów, „pokaż więcej” |
 | Kategorie / kolekcje | `demo-decor-store-collections.html` | — |
