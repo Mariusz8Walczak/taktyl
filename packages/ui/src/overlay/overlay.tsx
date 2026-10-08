@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode, RefObject } from "react";
 import { createPortal } from "react-dom";
-import { IconButton } from "../components/icon-button.js";
 import { cx } from "../lib/cx.js";
 import { trapTab } from "./focus.js";
 import { useOverlayBehavior } from "./use-overlay-behavior.js";
@@ -102,7 +101,15 @@ export function Overlay({
           <h2 id={titleId} className="tk-overlay__tytul">
             {title}
           </h2>
-          <IconButton icon="close" aria-label={closeLabel} onClick={onClose} />
+          {/* D-010 (TAKTYL-68): widoczna etykieta tekstowa zamiast ikony (font ikon nie jest w repo); nazwa dostepna zawiera ten tekst (WCAG 2.5.3). */}
+          <button
+            type="button"
+            className="tk-ikonka tk-overlay__zamknij"
+            aria-label={closeLabel}
+            onClick={onClose}
+          >
+            Zamknij
+          </button>
         </div>
         <div className="tk-overlay__tresc">{children}</div>
         {footer ? <div className="tk-overlay__stopka">{footer}</div> : null}
