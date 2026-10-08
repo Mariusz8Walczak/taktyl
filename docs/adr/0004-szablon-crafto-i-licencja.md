@@ -1,6 +1,6 @@
 # ADR-0004 · Szablon: Crafto (wariant z `docs/08` §6) i licencja w publicznym repo
 
-- **Status:** przyjęta; punkt „ryzyko licencyjne” wymaga potwierdzenia właściciela (patrz `docs/decyzje.md`, pytanie Q-01)
+- **Status:** przyjęta; punkt „ryzyko licencyjne” potwierdzony przez właściciela 2026-10-08 (docs/decyzje.md, Q-01, OWNER-001)
 
 ## Kontekst
 
