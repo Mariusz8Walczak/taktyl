@@ -46,6 +46,8 @@ paths = [
 
 # I-008 (TAKTYL-63): klucz obrazu "k-kwarc-60_grafit_top" w testach manifestu zdjec to identyfikator, nie sekret.
 # Dwa pliki testowe, jedna regula, jedna wartosc (pokrywa tez commit 180f8f6 w historii).
+# I-007 (TAKTYL-54): doszedl trzeci plik, e2e/tests/backpanel/b-s-panel.spec.ts (const KEY = klucz wpisu manifestu;
+# fingerprint 6d98e6c:e2e/tests/backpanel/b-s-panel.spec.ts:generic-api-key:82). Ta sama jedna wartosc.
 [[allowlists]]
 description = "Klucz obrazu w tescie media-dashboard (nie sekret)"
 targetRules = ["generic-api-key"]
@@ -53,6 +55,7 @@ condition = "AND"
 paths = [
   '''^packages/contracts/test/media-dashboard\.test\.ts$''',
   '''^apps/admin/test/media-pulpit-dziennik\.test\.tsx$''',
+  '''^e2e/tests/backpanel/b-s-panel\.spec\.ts$''',
 ]
 regexes = [
   '''k-kwarc-60_grafit_top''',
