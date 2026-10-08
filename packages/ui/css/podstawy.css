@@ -11,6 +11,8 @@
   margin: calc(var(--tk-linia-1) * -1);
   padding: 0;
   border: 0;
+  /* TAKTYL-66: ukryty naglowek (h2) nie wnosi do audytu rozmiaru spoza skali */
+  font-size: var(--t-s);
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
