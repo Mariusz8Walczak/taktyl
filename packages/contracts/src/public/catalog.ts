@@ -241,8 +241,14 @@ export const searchQuerySchema = z.object({
   q: z.string().trim().min(1).max(80),
   limit: z.coerce.number().int().min(1).max(20).default(8),
 });
+// Podpowiedz produktu: karta + miniatura (plik 400 px z manifestu, sciezka wzgledem /media/, null gdy brak gotowego
+// zdjecia) i nazwa kategorii, zeby bylo widac, czy to klawiatura, myszka czy podkladka.
+export const searchProductSchema = productCardSchema.extend({
+  thumb: z.string().nullable(),
+  category_name: z.string(),
+});
 export const searchResponseSchema = z.object({
-  products: z.array(productCardSchema),
+  products: z.array(searchProductSchema),
   categories: z.array(z.object({ id: categoryIdSchema, slug: slugSchema, name: z.string() })),
   guides: z.array(z.object({ slug: slugSchema, title: z.string(), lead: z.string().nullable() })),
 });
