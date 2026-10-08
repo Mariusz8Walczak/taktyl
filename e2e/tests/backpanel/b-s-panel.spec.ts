@@ -231,7 +231,6 @@ test.describe("S36 (axe): ekrany backpanelu P0", () => {
 test("B-105: okno wariantu pokazuje w „Historia cen (ostatnie wpisy)” NAJNOWSZE zmiany ceny", async ({
   page,
 }) => {
-  test.fixme(true, "TAKTYL-82: okno wariantu pokazuje 5 najstarszych wpisow historii cen");
   const owner = await AdminApi.as("owner");
   const SKU = "P-LEN-M-GRF";
   for (let zl = 60; zl <= 66; zl++) {

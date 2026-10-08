@@ -234,3 +234,24 @@ describe("role", () => {
     expect(await axe(container)).toHaveNoViolations();
   });
 });
+
+describe("B-105 kolejnosc historii cen (TAKTYL-82)", () => {
+  it("okno wariantu pokazuje 5 najnowszych wpisow, najnowszy pierwszy", async () => {
+    const entries = Array.from({ length: 7 }, (_, i) => ({
+      price_gr: (66 - i) * 100,
+      valid_from: `2026-10-0${7 - i}T10:00:00+02:00`,
+      valid_to: null,
+      changed_by: "owner@taktyl.example",
+      reason: null,
+    }));
+    routes("editor", {
+      [`GET /v1/admin/variants/${SKU}/price-history`]: json({ ...priceHistory, entries }),
+    });
+    await renderForm();
+    const region = screen.getByRole("region", { name: "Historia cen (ostatnie wpisy)" });
+    const rows = within(region).getAllByRole("row");
+    expect(rows).toHaveLength(6);
+    expect(rows[1]).toHaveTextContent("66,00");
+    expect(rows[5]).toHaveTextContent("62,00");
+  });
+});

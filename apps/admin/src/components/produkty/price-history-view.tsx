@@ -100,7 +100,7 @@ function Prices({ product }: { product: AdminProductDetail }) {
         <DataTable
           caption={`Historia cen wariantu ${sku}`}
           columns={columns}
-          data={[...history.data.entries].reverse()}
+          data={history.data.entries} // B-105: najnowsze pierwsze (TAKTYL-82)
         />
       )}
       <section className="adm-karta" aria-labelledby="omnibus">
