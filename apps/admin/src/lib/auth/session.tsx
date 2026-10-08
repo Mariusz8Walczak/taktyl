@@ -20,6 +20,10 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 /** Bezpieczny adres powrotu: tylko sciezka wewnetrzna (bez //, bez schematu). */
 export function safeNext(next: string | null | undefined): string {
+  // TAKTYL-70 (SEC-02): przegladarki traktuja backslash jak "/", wiec "/\host" to adres zewnetrzny; odrzucamy tez znaki
+  // sterujace i spacje, ktore parser URL usuwa albo zamienia.
+  const unsafeChar = (c: string) => c === "\\" || c.charCodeAt(0) <= 32 || c.charCodeAt(0) === 127;
+  if ([...(next ?? "")].some(unsafeChar)) return "/";
   if (!next || !next.startsWith("/") || next.startsWith("//") || next.startsWith("/logowanie"))
     return "/";
   return next;

@@ -118,3 +118,22 @@ describe("powloka panelu", () => {
     expect(await axe(container)).toHaveNoViolations();
   });
 });
+
+describe("TAKTYL-70 safeNext (otwarte przekierowanie)", () => {
+  it("przepuszcza tylko sciezki wewnetrzne", async () => {
+    const { safeNext } = await import("../src/lib/auth/session");
+    expect(safeNext("/zamowienia?strona=2")).toBe("/zamowienia?strona=2");
+    const bad = [
+      "//evil.example",
+      "/\\evil.example",
+      "/\t/evil.example",
+      "/ /evil.example",
+      "https://evil.example",
+      "javascript:alert(1)",
+      "/logowanie",
+      "",
+      null,
+    ];
+    for (const b of bad) expect(safeNext(b)).toBe("/");
+  });
+});
