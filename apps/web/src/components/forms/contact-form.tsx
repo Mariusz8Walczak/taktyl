@@ -76,9 +76,9 @@ export function ContactForm() {
       className="formularz"
       onSubmit={onSubmit}
       noValidate
-      aria-labelledby="formularz-kontaktowy"
+      aria-labelledby="formularz-kontaktowy-tytul"
     >
-      <h2 id="formularz-kontaktowy" className="formularz__tytul">
+      <h2 id="formularz-kontaktowy-tytul" className="formularz__tytul">
         Napisz do nas
       </h2>
       {done ? (

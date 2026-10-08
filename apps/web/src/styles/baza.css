@@ -20,6 +20,14 @@ body {
   font-stretch: var(--szer-tekst);
 }
 
+/* TAKTYL-66: pola formularzy dziedzicza rodzine fontu (domyslnie przegladarka daje im Arial = druga rodzina w audycie) */
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+}
+
 :focus-visible {
   outline: var(--tk-fokus-grub) solid var(--fokus);
   outline-offset: var(--tk-linia-2);
