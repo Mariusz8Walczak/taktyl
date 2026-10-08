@@ -1,7 +1,7 @@
 // F-006 (TAKTYL-59): synonimy wyszukiwarki na prawdziwych danych z data/products.json.
 import { describe, expect, it } from "vitest";
 import { loadCatalog } from "./test-utils.js";
-import { matchesProductSearch } from "./search.js";
+import { isQuietProduct, matchesProductSearch } from "./search.js";
 
 const { products } = loadCatalog();
 
@@ -24,6 +24,15 @@ describe("synonimy F-006", () => {
     }
     expect(got).not.toContain("kwarc-60"); // cisza 1
     expect(got).toContain("kreda-98"); // cisza 3
+  });
+
+  it("isQuietProduct (zeton Ciche w kreatorze) zaweza klawiatury (TAKTYL-67)", () => {
+    const kb = products.filter((p) => p.category === "klawiatury");
+    const quiet = kb.filter(isQuietProduct).map((p) => p.slug);
+    expect(quiet.length).toBeGreaterThan(0);
+    expect(quiet.length).toBeLessThan(kb.length);
+    expect(quiet).toContain("kreda-98");
+    expect(quiet).not.toContain("kwarc-60");
   });
 
   it("'tkl' znajduje klawiature TKL (rozmiar z atrybutow)", () => {

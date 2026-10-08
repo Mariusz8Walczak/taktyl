@@ -343,7 +343,13 @@ describe("Toast (A-15)", () => {
         <Wyzwalacz {...props} />
       </ToastProvider>,
     );
-    return () => act(() => void fireEvent.click(screen.getByRole("button", { name: "Dodaj" })));
+    // ToastItem to leniwy modul (TAKTYL-67): po kliknieciu czekamy na jego zaladowanie
+    return async () => {
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Dodaj" }));
+        await import("../src/overlay/toast-item");
+      });
+    };
   }
 
   it("region role=status istnieje przed pierwsza trescia", () => {
@@ -352,9 +358,9 @@ describe("Toast (A-15)", () => {
     expect(screen.getByRole("status")).toBeEmptyDOMElement();
   });
 
-  it("toast pojawia sie w regionie i znika po 4 s", () => {
+  it("toast pojawia sie w regionie i znika po 4 s", async () => {
     const dodaj = setup();
-    dodaj();
+    await dodaj();
     expect(within(screen.getByRole("status")).getByText("Dodano 1")).toBeInTheDocument();
     expect(TOAST_MS).toBe(4000);
     act(() => void vi.advanceTimersByTime(TOAST_MS - 100));
@@ -363,9 +369,9 @@ describe("Toast (A-15)", () => {
     expect(screen.queryByText("Dodano 1")).toBeNull();
   });
 
-  it("maksymalnie 3 toasty naraz, najstarszy znika", () => {
+  it("maksymalnie 3 toasty naraz, najstarszy znika", async () => {
     const dodaj = setup({ liczba: 4 });
-    dodaj();
+    await dodaj();
     expect(TOAST_MAX).toBe(3);
     expect(screen.queryByText("Dodano 1")).toBeNull();
     expect(screen.getByText("Dodano 2")).toBeInTheDocument();
@@ -373,9 +379,9 @@ describe("Toast (A-15)", () => {
     expect(screen.getByText("Dodano 4")).toBeInTheDocument();
   });
 
-  it("pauza na najechanie: czas stoi, po zjechaniu dokancza sie reszta", () => {
+  it("pauza na najechanie: czas stoi, po zjechaniu dokancza sie reszta", async () => {
     const dodaj = setup();
-    dodaj();
+    await dodaj();
     const toast = screen.getByText("Dodano 1").closest(".tk-toast") as HTMLElement;
     act(() => void vi.advanceTimersByTime(3000));
     fireEvent.mouseEnter(toast);
@@ -388,9 +394,9 @@ describe("Toast (A-15)", () => {
     expect(screen.queryByText("Dodano 1")).toBeNull();
   });
 
-  it("pauza na fokus w toascie", () => {
+  it("pauza na fokus w toascie", async () => {
     const dodaj = setup({ cofnij: () => undefined });
-    dodaj();
+    await dodaj();
     const przycisk = screen.getAllByRole("button", { name: "Cofnij" })[0]!;
     act(() => przycisk.focus());
     act(() => void vi.advanceTimersByTime(10000));
@@ -400,24 +406,24 @@ describe("Toast (A-15)", () => {
     expect(screen.queryByText("Dodano 1")).toBeNull();
   });
 
-  it("Cofnij wywoluje akcje i zamyka toast", () => {
+  it("Cofnij wywoluje akcje i zamyka toast", async () => {
     const cofnij = vi.fn();
     const dodaj = setup({ cofnij });
-    dodaj();
+    await dodaj();
     fireEvent.click(screen.getAllByRole("button", { name: "Cofnij" })[0]!);
     expect(cofnij).toHaveBeenCalledTimes(1);
     expect(screen.queryByText("Dodano 1")).toBeNull();
   });
 
-  it("toast nie ma przycisku Cofnij, gdy nie podano akcji", () => {
+  it("toast nie ma przycisku Cofnij, gdy nie podano akcji", async () => {
     const dodaj = setup();
-    dodaj();
+    await dodaj();
     expect(screen.queryByRole("button", { name: "Cofnij" })).toBeNull();
   });
 
   it("axe: region z toastem bez naruszen", async () => {
     const dodaj = setup({ cofnij: () => undefined });
-    dodaj();
+    await dodaj();
     vi.useRealTimers();
     expect(await axe(document.body)).toHaveNoViolations();
   });

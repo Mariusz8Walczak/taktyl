@@ -63,7 +63,7 @@ describe("FavoriteButton (F-045, A-10)", () => {
     const btn = list.getByRole("button", { name: /Dodaj do ulubionych: Bazalt 75/ });
     expect(btn).toHaveAttribute("aria-pressed", "false");
     await user.click(btn);
-    expect(screen.getByText("Dodano do ulubionych")).toBeInTheDocument();
+    expect(await screen.findByText("Dodano do ulubionych")).toBeInTheDocument();
     expect(list.getByRole("button", { name: /Usuń z ulubionych/ })).toHaveAttribute(
       "aria-pressed",
       "true",

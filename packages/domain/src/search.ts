@@ -46,7 +46,12 @@ const lightMouse = (p: Product): boolean =>
   typeof p.attributes.weight_g === "number" &&
   p.attributes.weight_g <= LIGHT_MOUSE_MAX_G;
 
-const quiet = (p: Product): boolean => (p.fit.cisza ?? 0) >= QUIET_MIN_FIT;
+/** "Cichy" produkt: profil `cisza` >= 2. Wspolne dla synonimu "cicha" (F-006) i zetonu "Ciche" w kreatorze (docs/03 par. 2). */
+export function isQuietProduct(p: { fit: Readonly<Record<string, number | undefined>> }): boolean {
+  return (p.fit.cisza ?? 0) >= QUIET_MIN_FIT;
+}
+
+const quiet = (p: Product): boolean => isQuietProduct(p);
 
 /** F-006: slowo (znormalizowane) -> predykat produktu. */
 export const SEARCH_SYNONYMS: Readonly<Record<string, (p: Product) => boolean>> = {

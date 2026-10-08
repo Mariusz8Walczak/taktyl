@@ -232,8 +232,13 @@ describe("kroki: klawiatura, fokus, adres", () => {
     );
     expect(names().length).toBeGreaterThan(0);
     expect(names().length).toBeLessThan(6);
+    await user.click(screen.getByRole("button", { name: "Bezprzewodowe" })); // zdejmuje zeton
+    const wszystkie = names().length;
     await user.click(screen.getByRole("button", { name: "Ciche" }));
     expect(screen.getByRole("button", { name: "Ciche" })).toHaveAttribute("aria-pressed", "true");
+    // TAKTYL-67: "Ciche" = fit.cisza >= 2 (4 z 6 klawiatur), wiec zeton naprawde zaweza liste
+    expect(names().length).toBeGreaterThan(0);
+    expect(names().length).toBeLessThan(wszystkie);
   });
 
   it("krok podkladki: wynik reguly szerokosci na kaflu przed wyborem", () => {

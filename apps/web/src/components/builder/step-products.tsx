@@ -2,7 +2,7 @@
 // F-102, F-103, F-105, F-115 (docs/03 §2 kroki 1-3): lista produktow jako kafle radio, zetony szybkiego filtra,
 // wybor wariantu po wyborze kafla (kolor, przelacznik z domyslnym profilu, rozmiar podkladki z wymiarami i cena).
 // Wzorce: kafle `product-swatch-image` i probki `product-color-swatch` (docs/08 §3), przestylowane tokenami.
-import { formatPLN, formatRangeWithUnit, formatWithUnit } from "@taktyl/domain";
+import { formatPLN, formatRangeWithUnit, formatWithUnit, isQuietProduct } from "@taktyl/domain";
 import { ChoiceTile, FilterChip, ProductImage, Swatch } from "@taktyl/ui";
 import { useState } from "react";
 import { connectivityText, padSizeDescription } from "../../lib/catalog/attributes";
@@ -75,11 +75,7 @@ function chipsFor(api: BuilderApi, slot: SlotKey): Chip[] {
       id: "ciche",
       label: "Ciche",
       group: "dzwiek",
-      test: (x) =>
-        x.variants.some(
-          (v) =>
-            v.switch !== null && model.switches.find((s) => s.id === v.switch)?.sound === "cichy",
-        ),
+      test: (x) => x.category === "klawiatury" && isQuietProduct(x),
     });
   } else if (slot === "m") {
     chips.push({
