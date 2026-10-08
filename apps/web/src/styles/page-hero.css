@@ -1,0 +1,57 @@
+/* Hero podstron (docs/09 §7). Tylko tokeny (regula 2). Telefon: tekst, pod nim zdjecie 4:5; od 576 px zdjecie 12:5 pod tekstem; od 1200 px: zdjecie 12:5
+   z panelem tekstu przy lewej krawedzi. Brak animacji. */
+.page-hero {
+  display: grid;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+.page-hero__zdjecie {
+  order: 2;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.page-hero__zdjecie img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1080 / 1350;
+  object-fit: cover;
+}
+.page-hero__tekst {
+  order: 1;
+}
+.page-hero__tekst > :last-child {
+  margin-bottom: 0;
+}
+.page-hero__tekst .wstep {
+  margin-top: 0;
+}
+
+@media (min-width: 576px) {
+  .page-hero__zdjecie img {
+    aspect-ratio: 12 / 5;
+  }
+}
+@media (min-width: 1200px) {
+  .page-hero {
+    position: relative;
+    display: block;
+  }
+  .page-hero__tekst {
+    position: absolute;
+    inset-block: var(--s3);
+    inset-inline-start: var(--s3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: min(26rem, 31%);
+    padding: var(--s3);
+    border-radius: var(--r);
+    background-color: color-mix(in srgb, var(--powierzchnia) 90%, transparent);
+  }
+  .page-hero__h1 {
+    font-size: var(--t-2xl);
+  }
+}

@@ -42,6 +42,7 @@ export default async function GuidePage({ params }: Props) {
         ]}
       />
       <GuideArticle
+        slug={guide.slug}
         title={guide.title}
         lead={guide.lead}
         body={guide.body_md}

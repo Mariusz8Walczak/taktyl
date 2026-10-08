@@ -4,6 +4,7 @@
 // Wzorzec ukladu: zakladki szablonu + przyklejone podsumowanie (docs/08 §6). Stan i adres: wyspa `Builder`.
 import type { Metadata } from "next";
 import "../../styles/builder.css";
+import { PageHero } from "../../components/page-hero";
 import { Builder } from "../../components/builder/builder";
 import { loadBuilderData } from "../../lib/builder/data";
 
@@ -30,11 +31,12 @@ export default async function BuilderPage({ searchParams }: Props) {
   const [sp, data] = await Promise.all([searchParams, loadBuilderData()]);
   return (
     <div className="kontener strona strona--kreator">
-      <h1 className="naglowek-strony kreator__h1">Zbuduj set</h1>
-      <p className="wstep kreator__wstep">
-        Wybierz klawiaturę, myszkę i podkładkę. Pokażemy je w skali na biurku i sprawdzimy, czy się
-        mieszczą. Rabat za set obejmuje komplet.
-      </p>
+      <PageHero slug="zbuduj-set" title="Zbuduj set">
+        <p className="wstep kreator__wstep">
+          Wybierz klawiaturę, myszkę i podkładkę. Pokażemy je w skali na biurku i sprawdzimy, czy
+          się mieszczą. Rabat za set obejmuje komplet.
+        </p>
+      </PageHero>
       <Builder data={data} initialSearch={toQuery(sp)} />
     </div>
   );

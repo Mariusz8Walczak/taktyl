@@ -26,6 +26,8 @@ export const metadata: Metadata = {
     "Taktyl: klawiatury, myszki i podkładki. Złóż set, który pasuje do biurka i dłoni. Sklep demonstracyjny.",
   // F-244: noindex w meta (nagłówek X-Robots-Tag ustawia next.config i proxy)
   robots: { index: false, follow: false },
+  // docs/09 §7: kadr setu z gory, 1200 x 630
+  openGraph: { images: [{ url: "/og.jpg", width: 1200, height: 630 }] },
 };
 
 // Bez maximum-scale i user-scalable (docs/12 §4)
