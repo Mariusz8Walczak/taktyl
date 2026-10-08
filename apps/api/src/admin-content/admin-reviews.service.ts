@@ -22,6 +22,7 @@ import {
   describeDescription,
   earliestReviewDate,
   legalContentErrors,
+  medicalClaims,
   reviewErrors,
   variantLabels,
 } from "./content-rules.js";
@@ -56,7 +57,7 @@ export class AdminReviewsService {
 
   // ------------------------------------------------------------------ opisy (B-300, B-301)
 
-  /** B-300, B-301: zapis opisu pod If-Match (wersja produktu); ostrzezenia nie blokuja zapisu, marka z listy tak (regula 5). */
+  /** B-300, B-301: zapis opisu pod If-Match (wersja produktu); stylistyka (zakazane slowa, dlugosc, akapity) to ostrzezenia, a marka z listy (regula 5) i obietnica medyczna (Q-07) blokuja zapis (422). */
   async putDescription(id: string, body: DescriptionPut, version: number, ctx: AuditContext) {
     const normalized =
       body.description === null
@@ -68,6 +69,14 @@ export class AdminReviewsService {
             .trim() || null;
     const errors: ProblemFieldError[] = [];
     if (normalized !== null) {
+      const claims = medicalClaims(normalized);
+      if (claims.length > 0) {
+        errors.push({
+          path: "description",
+          code: "medical_claim",
+          message: `Opis nie moze zawierac obietnic medycznych: ${claims.join(", ")}. Opisz cechy produktu liczbami.`,
+        });
+      }
       errors.push(
         ...this.brandError("description", normalized),
         ...legalContentErrors(normalized, "description").filter((e) => e.code === "invalid_domain"),

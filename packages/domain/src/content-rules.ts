@@ -5,6 +5,14 @@
 export const FORBIDDEN_WORDS =
   /(najlepsz\p{L}*|rewolucyjn\p{L}*|profesjonaln\p{L}*|premium|idealn\p{L}*|niesamowit\p{L}*|ultra-)/giu;
 
+/**
+ * Q-07 (docs/decyzje.md): obietnice medyczne BLOKUJA zapis opisu (sklep sprzedaje akcesoria, nie wyroby medyczne).
+ * Stylistyka (FORBIDDEN_WORDS, dlugosc, akapity) zostaje ostrzezeniem. Granice slow przez \p{L}: \b w trybie u nie widzi
+ * liter spoza ASCII.
+ */
+export const MEDICAL_CLAIMS =
+  /(?<!\p{L})(?:uleczy\p{L}*|leczy\p{L}*|leczeni\p{L}*|lecznicz\p{L}*|terapeutyczn\p{L}*|terapi\p{L}*|medyczn\p{L}*|kliniczn\p{L}*|przeciwbólow\p{L}*|rehabilitacyjn\p{L}*)(?!\p{L})|(?<!\p{L})(?:zapobiega|zapobiegają|chroni|chronią|łagodzi|łagodzą|likwiduje|eliminuje)\s+(?:przed\s+)?(?:kontuzj\p{L}*|chorob\p{L}*|schorzeni\p{L}*|bólo\p{L}*|ból\p{L}*|zmęczeni\p{L}*)|(?<!\p{L})cieśni\p{L}*\s+nadgarstka|(?<!\p{L})RSI(?!\p{L})/giu;
+
 export const DESCRIPTION_WORDS = { min: 60, max: 120 } as const;
 export const DESCRIPTION_PARAGRAPHS = { min: 2, max: 3 } as const;
 export const GUIDE_WORDS = { min: 600, max: 900 } as const;
@@ -20,6 +28,11 @@ export const splitParagraphs = (text: string): string[] =>
 /** Zakazane slowa (unikalne, male litery, w kolejnosci wystapienia). */
 export function forbiddenWords(text: string): string[] {
   return [...new Set([...text.matchAll(FORBIDDEN_WORDS)].map((m) => m[0].toLowerCase()))];
+}
+
+/** Obietnice medyczne (unikalne, male litery, w kolejnosci wystapienia). */
+export function medicalClaims(text: string): string[] {
+  return [...new Set([...text.matchAll(MEDICAL_CLAIMS)].map((m) => m[0].toLowerCase()))];
 }
 
 export interface TextSegment {

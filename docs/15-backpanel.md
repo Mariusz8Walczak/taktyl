@@ -206,7 +206,7 @@ Treści pisze model według `docs/04` §7–8, `docs/01` §4 i `docs/11`, człow
 | ID | Funkcja | P | Kryterium odbioru |
 |---|---|---|---|
 | B-300 | Opisy produktów: edytor tekstu (akapity, bez obrazów), status `szkic` / `zatwierdzony`; w sklepie widoczne tylko zatwierdzone | P1 | produkt bez zatwierdzonego opisu: zakładka „Opis” w sklepie ukryta, nie pusta |
-| B-301 | Walidator opisu: 60–120 słów, 2–3 akapity; zakazane słowa („najlepszy”, „rewolucyjny”, „profesjonalny”, „premium”, „idealny”, „niesamowity”, „ultra-”); brak nazw marek spoza Taktyl; ostrzeżenie o liczbach niewystępujących w atrybutach | P1 | zapis zatwierdzonego opisu z zakazanym słowem odrzucony z listą słów; szkic zapisuje się z ostrzeżeniami |
+| B-301 | Walidator opisu: 60–120 słów, 2–3 akapity; zakazane słowa („najlepszy”, „rewolucyjny”, „profesjonalny”, „premium”, „idealny”, „niesamowity”, „ultra-”); brak nazw marek spoza Taktyl; ostrzeżenie o liczbach niewystępujących w atrybutach | P1 | zakazane słowo, długość i akapity: ostrzeżenia z listą słów, zapis przechodzi; marka i obietnica medyczna: 422 (Q-07) |
 | B-302 | Opinie demonstracyjne: autor (imię + inicjał), data (do 6 miesięcy wstecz), ocena 3–5, wariant, tekst 1–4 zdania; flaga `demo = true` nieusuwalna | P1 | 3–6 opinii na produkt; walidacja odrzuca ocenę poza 3–5 |
 | B-303 | Etykieta „Opinie przykładowe — sklep demonstracyjny” i średnia z liczbą opinii wyliczane przez sklep, bez możliwości wyłączenia | P1 | brak kontrolki usuwającej etykietę; średnia „4,6 · 5 opinii” |
 | B-304 | Poradniki (4 artykuły z F-220): tytuł, slug, treść, ustawiony profil kreatora (`profil` do końcowego odnośnika), status | P1 | artykuł 600–900 słów (walidator liczby słów), kończy się wejściem do kreatora z ustawionym profilem |
@@ -328,4 +328,4 @@ Pulpit pokazuje **wyłącznie liczby i listy z danych**. Żadnych wykresów, ża
 | B-S5 | Wejdź jako `viewer`, spróbuj zapisać cenę (UI i bezpośrednie żądanie do API) | UI: kontrolki nieaktywne z objaśnieniem; API: 403 |
 | B-S6 | Złóż zamówienie w sklepie (S19), otwórz je w backpanelu | numer `TK-RRMMDD-XXXX`, kwoty zgodne z koszykiem; `viewer` widzi dane zamaskowane |
 | B-S7 | Wgraj do wpisu `topdown` plik o złych wymiarach | odrzucenie z komunikatem o wymiarach (B-503) |
-| B-S8 | Zapisz opis z słowem „idealny” | zatwierdzenie odrzucone, lista słów w komunikacie |
+| B-S8 | Zapisz opis z słowem „idealny” | zapis przechodzi z ostrzeżeniem i listą słów (Q-07); opis z obietnicą medyczną lub marką: 422, zapis zablokowany |
