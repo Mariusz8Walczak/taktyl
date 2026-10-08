@@ -2,8 +2,8 @@
 // lista (numer TK-RRMMDD-XXXX, status po symulacji platnosci, zamaskowany e-mail), szczegoly (pozycje i kwoty co do grosza
 // zgodne z tym, co zaplacil klient), owner widzi dane w calosci, viewer zamaskowane (maskowanie robi API).
 import { expect, test } from "../../helpers/fixtures";
-import { ADMIN_URL, authFile } from "../../helpers/admin";
-import { addProductToCart, CONTACT, norm, placeOrder } from "../../helpers/ui";
+import { ADMIN_URL, authFile, createOrder, payOrder } from "../../helpers/admin";
+import { CONTACT, norm } from "../../helpers/ui";
 
 test.use({ storageState: authFile("owner") });
 
@@ -11,24 +11,25 @@ test("S26: zamowienie ze sklepu (Jerzyk, odbior osobisty, BLIK) na liscie i w sz
   page,
   browser,
 }) => {
-  // --- sklep: pelna sciezka klienta az do udanej platnosci
-  await addProductToCart(page, "/myszki/jerzyk");
-  await page
-    .getByRole("dialog", { name: "Koszyk" })
-    .getByRole("link", { name: "Przejdź do zamówienia" })
-    .click();
-  await expect(page).toHaveURL(/\/zamowienie$/);
-  const number = await placeOrder(page);
-  const paid = norm((await page.getByTestId("platnosc-kwota").textContent()) ?? "");
-  expect(paid).toMatch(/^449,00 zł$/);
-  await page.getByRole("button", { name: "Symuluj udaną płatność" }).click();
-  await expect(page).toHaveURL(/\/zamowienie\/potwierdzenie\?id=/);
+  // --- sklep: to samo zamowienie, ktore sklep wysyla z kasy (POST /v1/orders z SKU, kwota z wyceny serwera) i udana
+  // platnosc. Sciezke interfejsu kasy pokrywaja S17-S20; tu przez API (z ponowieniem po 429: limit 10/min/IP dzielony
+  // z rownolegle dzialajacymi testami), zeby test panelu nie zalezal od obciazenia limitu zamowien (TAKTYL-68).
+  const created = await createOrder("M-JRZ-GRF", crypto.randomUUID());
+  expect(created.status, JSON.stringify(created.body)).toBe(201);
+  const number = created.body.number as string;
+  expect(number).toMatch(/^TK-\d{6}-[A-Z0-9]{4}$/);
+  await payOrder(number, created.body.order_token as string);
+  expect(JSON.stringify(created.body)).toMatch(/44900/); // kwota z odpowiedzi API: 449,00 zl w groszach
+  const paid = "449,00 zł";
 
-  // --- panel (owner): lista z filtrem po numerze
-  await page.goto(`${ADMIN_URL}/zamowienia`);
-  await page.getByRole("textbox", { name: "Numer zamówienia" }).fill(number);
+  // --- panel (owner): lista otwarta od razu z filtrem po numerze w adresie (bez wpisywania w pole przed hydracja
+  // i bez czekania na debounce); wiersz moze pojawic sie z opoznieniem, wiec ponawiamy z odswiezeniem.
   const row = page.getByRole("row").filter({ hasText: number });
-  await expect(row).toHaveCount(1);
+  await expect(async () => {
+    await page.goto(`${ADMIN_URL}/zamowienia?number=${number}`);
+    await expect(page.getByRole("textbox", { name: "Numer zamówienia" })).toHaveValue(number);
+    await expect(row).toHaveCount(1, { timeout: 4000 });
+  }).toPass({ timeout: 30_000 });
   await expect(row).toContainText("Opłacone");
   await expect(row).toContainText("449,00 zł");
   // lista zawsze pokazuje e-mail zamaskowany (pelne dane dopiero w szczegolach)

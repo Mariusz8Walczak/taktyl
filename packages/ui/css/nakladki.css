@@ -47,6 +47,13 @@
   font-weight: var(--w-mocna);
   line-height: 1.25;
 }
+/* TAKTYL-68, D-010: przycisk zamkniecia z widocznym tekstem (nie sama ikona), cel dotyku min. 44 px */
+.tk-overlay__zamknij {
+  width: auto;
+  min-width: var(--cel-min);
+  padding-inline: var(--s2);
+  font-size: var(--t-s);
+}
 .tk-overlay__tresc {
   flex: 1;
   min-height: 0;
