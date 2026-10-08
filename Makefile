@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens smoke demo smoke-demo clean
+.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-designsmoke demo smoke-demo clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -63,6 +63,9 @@ typecheck: env ## TypeScript w kontenerze
 
 audit-tokens: env ## audyt tokenow w kontenerze
 	$(COMPOSE) --profile test run --rm --no-deps test pnpm audit:tokens
+
+audit-design: env ## audyt designu docs/12 par. 3 w przegladarce (strony P0 sklepu i ekrany backpanelu; wymaga dzialajacego stosu)
+	$(COMPOSE) --profile e2e run --rm --build e2e sh -c "pnpm exec playwright test --project=setup && pnpm exec playwright test tests/audyt-designu.spec.ts tests/backpanel/audyt-designu-panel.spec.ts --no-deps --project=desktop --project=mobile --project=backpanel"
 
 smoke: ## test dymny dzialajacego stosu (noindex na hostach, /health, 18 produktow)
 	@sh scripts/smoke-stack.sh
