@@ -2,12 +2,12 @@
 import { describe, expect, it } from "vitest";
 import {
   buildItem,
-  buildSetItems,
   grToZl,
   itemsDiscount,
   itemsValue,
   vatIncludedGr,
 } from "../src/lib/track-items";
+import { buildSetItems } from "../src/lib/track-set-items";
 
 const programista = [
   {

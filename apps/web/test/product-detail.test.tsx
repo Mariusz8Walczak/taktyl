@@ -170,6 +170,9 @@ describe("dodanie do koszyka (F-066, adapter z TAKTYL-39 w przyszlosci)", () => 
     expect(stored.lines).toEqual([{ type: "item", sku: "K-BZL75-GRF-SLZ", qty: 2 }]);
     expect(window.localStorage.getItem(CART_STORAGE_KEY)).not.toMatch(/price|cena/i);
     expect(await screen.findByText("Dodano do koszyka")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(window.dataLayer?.some((e) => e.event === "add_to_cart")).toBe(true),
+    );
     const ev = window.dataLayer?.find((e) => e.event === "add_to_cart") as
       { ecommerce: { currency: string; value: number; items: { quantity: number }[] } } | undefined;
     expect(ev?.ecommerce).toMatchObject({ currency: "PLN", value: 1498 });
@@ -202,8 +205,10 @@ describe("dodanie do koszyka (F-066, adapter z TAKTYL-39 w przyszlosci)", () => 
     const user = userEvent.setup();
     render(<Page slug="bazalt-75" />);
     await user.click(screen.getByRole("radio", { name: /Kobalt/ }));
-    const events = (window.dataLayer ?? []).filter((e) => e.event === "view_item");
-    expect(events).toHaveLength(2);
+    // tracking ladowany dynamicznie (TAKTYL-67): zdarzenia pojawiaja sie po zaladowaniu modulu
+    await waitFor(() =>
+      expect((window.dataLayer ?? []).filter((e) => e.event === "view_item")).toHaveLength(2),
+    );
   });
 });
 

@@ -12,7 +12,6 @@ import "../styles/zgody.css";
 import "../styles/porownaj.css";
 
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import { ConsentManager } from "../components/consent/consent-manager";
 import { DemoBar } from "../components/layout/demo-bar";
@@ -46,13 +45,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const gtmId = process.env.PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GTM_ID || undefined;
   return (
     <html lang="pl" className={archivo.variable} suppressHydrationWarning>
+      <head>
+        {/* F-240/F-242 (docs/10 §2): tryb zgody (default denied) jako pierwszy tag w <head>, przed paczkami Next */}
+        <script id="tryb-zgody" dangerouslySetInnerHTML={{ __html: CONSENT_BOOTSTRAP_SCRIPT }} />
+      </head>
       <body>
-        {/* F-240/F-242 (docs/10 §2): tryb zgody (default denied) jako pierwszy skrypt w <head>, przed paczkami Next */}
-        <Script
-          id="tryb-zgody"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: CONSENT_BOOTSTRAP_SCRIPT }}
-        />
         <DemoBarScript />
         <SkipLink />
         <ConsentManager gtmId={gtmId} />

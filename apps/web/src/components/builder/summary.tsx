@@ -4,19 +4,12 @@
 // podsumowanie (`checkout.html`, kolumna zamowienia) i suma (`product-frequently-bought-together.html`), docs/08 §6.
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { formatPLN, mouseZoneMm } from "@taktyl/domain";
+import { formatPLN } from "@taktyl/domain";
 import { Button, DeskStage, ProductImage, TextButton } from "@taktyl/ui";
 import { MEDIA_BASE_URL } from "../../lib/catalog/images";
-import {
-  attrs,
-  colorLabel,
-  packshotEntry,
-  textureEntry,
-  topdownEntry,
-  variantText,
-  type BuilderProduct,
-} from "../../lib/builder/catalog";
+import { colorLabel, packshotEntry, variantText } from "../../lib/builder/catalog";
 import { cx } from "../../lib/builder/cx";
+import { deskStageData } from "../../lib/builder/desk-props";
 import { SLOT_LABEL, SLOT_STEP, SLOTS, type SlotKey } from "../../lib/builder/types";
 import { useCompleteRing } from "../../lib/motion/set-complete";
 import { Kwota } from "./parts";
@@ -105,60 +98,11 @@ export function FitResults({ api }: { api: BuilderApi }) {
 /** F-106: podglad biurka zasilany stanem kreatora; elementy z manifestu albo placeholdery w wymiarach z danych. */
 export function DeskView({ api }: { api: BuilderApi }) {
   const { model, state, analysis } = api;
-  const { k, m, p } = analysis.entries;
-  const bp = (e: { product: { id: string } } | null): BuilderProduct | null =>
-    e ? (model.byId.get(e.product.id) ?? null) : null;
-  const kp = bp(k);
-  const mp = bp(m);
-  const pp = bp(p);
-  const swatch = (color: string) => model.colors.find((c) => c.id === color)?.swatch ?? "";
-  const padSize = p && pp ? attrs(pp).sizes?.[p.variant.size ?? ""] : undefined;
   return (
     <DeskStage
       className="kreator__scena"
       baseUrl={MEDIA_BASE_URL}
-      zoneMm={mouseZoneMm(state.profile, model.rules)}
-      gapMm={model.rules.gap_keyboard_mouse_mm}
-      marginMm={model.rules.edge_margin_mm}
-      result={analysis.deskResult}
-      keyboard={
-        k && kp
-          ? {
-              name: kp.name,
-              colorName: colorLabel(model, k.variant.color),
-              dimsMm: {
-                w: k.product.attributes.dims_mm?.w ?? 0,
-                d: k.product.attributes.dims_mm?.d ?? 0,
-              },
-              entry: topdownEntry(kp, k.variant.color),
-            }
-          : null
-      }
-      mouse={
-        m && mp
-          ? {
-              name: mp.name,
-              colorName: colorLabel(model, m.variant.color),
-              dimsMm: {
-                w: m.product.attributes.dims_mm?.w ?? 0,
-                d: m.product.attributes.dims_mm?.d ?? 0,
-              },
-              entry: topdownEntry(mp, m.variant.color),
-            }
-          : null
-      }
-      pad={
-        p && pp && padSize
-          ? {
-              name: pp.name,
-              sizeLabel: padSize.label,
-              colorName: colorLabel(model, p.variant.color),
-              sizeMm: { w: padSize.w, d: padSize.d, type: padSize.type },
-              entry: textureEntry(pp, p.variant.color),
-              swatch: swatch(p.variant.color),
-            }
-          : null
-      }
+      {...deskStageData(model, state.profile, analysis)}
     />
   );
 }

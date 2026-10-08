@@ -154,7 +154,7 @@ describe("usuwanie z Cofnij 5 s (F-151, F-154, S15) bez confirm()", () => {
     await user.click(await screen.findByRole("button", { name: "Usuń z koszyka: Tafla" }));
     expect(getCart().lines).toHaveLength(0);
     const status = screen.getAllByRole("status").find((n) => n.className.includes("toasty"))!;
-    expect(within(status).getByText("Usunięto z koszyka: Tafla.")).toBeInTheDocument();
+    expect(await within(status).findByText("Usunięto z koszyka: Tafla.")).toBeInTheDocument();
     await user.click(within(status).getByRole("button", { name: "Cofnij" }));
     expect(getCart().lines).toEqual([{ type: "item", sku: "P-TFL-M-GRF", qty: 2 }]);
     expect(confirm).not.toHaveBeenCalled();
@@ -169,7 +169,7 @@ describe("usuwanie z Cofnij 5 s (F-151, F-154, S15) bez confirm()", () => {
     expect(getCart().lines.map((l) => l.type)).toEqual(["item", "item"]);
     expect(screen.queryByRole("heading", { name: /Twój set/ })).toBeNull();
     await waitFor(() => expect(screen.queryByText("Rabat za set", { selector: "dt" })).toBeNull());
-    await user.click(screen.getByRole("button", { name: "Cofnij" }));
+    await user.click(await screen.findByRole("button", { name: "Cofnij" }));
     expect(getCart().lines).toHaveLength(1);
     expect(await screen.findByRole("heading", { name: "Twój set · −10%" })).toBeInTheDocument();
     await waitFor(() => expect(screen.getByTestId("koszyk-razem")).toHaveTextContent("1203,30 zł"));

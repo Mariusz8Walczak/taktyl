@@ -3,7 +3,6 @@
 // Jeden dostawca dla galerii, kolumny zakupu, paska zakupu na telefonie i wiersza specyfikacji zaleznego od wariantu.
 // Wybor zmienia SKU, cene, stan, zdjecia i adres `?sku=` (history.replaceState, adres kanoniczny bez parametru).
 import type { Variant } from "@taktyl/contracts";
-import { buildItem, grToZl } from "../../lib/track-items";
 import { useToast } from "@taktyl/ui";
 import {
   createContext,
@@ -25,7 +24,6 @@ import {
   type Dim,
   type Selection,
 } from "../../lib/catalog/variants";
-import { track } from "../../lib/track";
 
 export interface ColorInfo {
   id: string;
@@ -130,20 +128,10 @@ export function ProductProvider({
   useEffect(() => {
     if (viewed.current === variant.sku) return;
     viewed.current = variant.sku;
-    track("view_item", {
-      items: [
-        buildItem({
-          sku: variant.sku,
-          name: product.name,
-          category: product.category,
-          variant: variantLabel,
-          priceGr: variant.price_gr,
-        }),
-      ],
-      currency: "PLN",
-      value: grToZl(variant.price_gr),
-    });
-  }, [variant.sku, variant.price_gr, product.name, product.category, variantLabel]);
+    void import("./product-tracking").then((m) =>
+      m.trackViewItem({ product, variant, variantLabel }),
+    );
+  }, [product, variant, variantLabel]);
 
   const add = useCallback(async () => {
     if (busy) return;
@@ -152,39 +140,15 @@ export function ProductProvider({
       const result = await addToCart({ sku: variant.sku, qty });
       if (result.ok) {
         toast({ message: "Dodano do koszyka" });
-        track("add_to_cart", {
-          items: [
-            buildItem({
-              sku: variant.sku,
-              name: product.name,
-              category: product.category,
-              variant: variantLabel,
-              priceGr: variant.price_gr,
-              quantity: qty,
-              listId: product.category,
-              listName: categoryName,
-            }),
-          ],
-          currency: "PLN",
-          value: grToZl(variant.price_gr * qty),
-        });
+        const m = await import("./product-tracking");
+        m.trackAddToCart({ product, variant, variantLabel, qty, categoryName });
       } else {
         toast({ message: "Nie udało się dodać do koszyka. Spróbuj ponownie." });
       }
     } finally {
       setBusy(false);
     }
-  }, [
-    busy,
-    variant.sku,
-    variant.price_gr,
-    qty,
-    product.name,
-    product.category,
-    variantLabel,
-    categoryName,
-    toast,
-  ]);
+  }, [busy, variant, qty, product, variantLabel, categoryName, toast]);
 
   const value = useMemo<ProductContextValue>(
     () => ({

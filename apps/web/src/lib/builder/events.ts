@@ -2,7 +2,8 @@
 // rozbitym przez domene, suma discount = rabat setu) i `set_add_to_cart`. Uzywaja go kreator i blok "Dokoncz set".
 import type { SkuEntry } from "@taktyl/domain";
 import { track } from "../track";
-import { buildSetItems, itemsDiscount, itemsValue } from "../track-items";
+import { buildSetItems } from "../track-set-items";
+import { itemsDiscount, itemsValue } from "../track-items";
 import { variantText, type BuilderModel, type BuilderProduct } from "./catalog";
 
 export interface SetAddedInput {

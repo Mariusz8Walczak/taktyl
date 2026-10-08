@@ -1,6 +1,5 @@
 // F-242 (docs/10 §3): czyste buildery `items[]`. Kwoty wejsciowe w groszach (calkowite), wyjsciowe w zlotych jako
 // liczby; rabat setu na sztuke z rozbicia `allocateDiscount` z @taktyl/domain (docs/03 §6; suma = rabat setu).
-import { allocateDiscount } from "@taktyl/domain";
 import type { TrackItem } from "./track-events";
 
 /** Zlote jako liczba z groszy (calkowitych): 74990 -> 749.9. Dzielenie calkowitej przez 100 jest dokladne do double. */
@@ -48,22 +47,6 @@ export function buildItem(
   if (src.listName) item.item_list_name = src.listName;
   if (src.index !== undefined) item.index = src.index;
   return item;
-}
-
-/**
- * Pozycje setu: rabat setu (grosze) rozbity na pozycje (po jednej sztuce, reszta na ostatnia),
- * `promotion_name` np. "Rabat za set 10%".
- */
-export function buildSetItems(
-  lines: readonly TrackLineSource[],
-  setDiscountGr: number,
-  promotionName: string,
-): TrackItem[] {
-  const shares = allocateDiscount(
-    lines.map((l) => l.priceGr),
-    setDiscountGr,
-  );
-  return lines.map((l, i) => buildItem({ ...l, quantity: 1 }, shares[i] ?? 0, promotionName));
 }
 
 /** Wartosc pozycji po rabatach w zlotych (liczona w groszach, bez bledu zmiennoprzecinkowego). */

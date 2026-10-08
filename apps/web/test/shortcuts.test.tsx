@@ -1,11 +1,12 @@
 // F-010, A-17 (TAKTYL-59): skroty klawiszowe - "/" otwiera wyszukiwarke, "?" liste skrotow, Esc (pomiar), brak dzialania
 // w polach tekstowych, przelacznik "Wyłącz skróty" zapamietany w taktyl.prefs.v1 (WCAG 2.1.4), shortcut_use w pomiarze.
 import { ToastProvider } from "@taktyl/ui";
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import { ShortcutsHost } from "../src/components/shortcuts/shortcuts-host";
+import ShortcutsHost from "../src/components/shortcuts/shortcuts-controller";
+import { ShortcutsHost as LazyShortcutsHost } from "../src/components/shortcuts/shortcuts-host";
 import { OPEN_SEARCH_EVENT } from "../src/lib/shortcuts/events";
 import { isEditableTarget, matchShortcut } from "../src/lib/shortcuts/keys";
 import { PREFS_KEY, readPrefs, writePrefs } from "../src/lib/shortcuts/prefs";
@@ -52,6 +53,19 @@ describe("logika klawiszy", () => {
     expect(matchShortcut({ key: "/", ...base, metaKey: true })).toBeNull();
     expect(matchShortcut({ key: "?", ...base, altKey: true })).toBeNull();
     expect(matchShortcut({ key: "/", ...base, isComposing: true })).toBeNull();
+  });
+});
+
+describe("host (TAKTYL-67)", () => {
+  it("laduje kontroler po hydracji: dopiero potem '/' otwiera wyszukiwarke", async () => {
+    const heard = vi.fn();
+    window.addEventListener(OPEN_SEARCH_EVENT, heard);
+    render(<LazyShortcutsHost />);
+    await waitFor(() => {
+      fireEvent.keyDown(document.body, { key: "/" });
+      expect(heard).toHaveBeenCalled();
+    });
+    window.removeEventListener(OPEN_SEARCH_EVENT, heard);
   });
 });
 

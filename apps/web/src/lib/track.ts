@@ -3,8 +3,6 @@
 // Zdarzenia trafiaja do window.dataLayer w obu trybach zgody; narzedzia zewnetrzne (GTM) laduje dopiero
 // lib/consent/consent.ts po zgodzie analitycznej, wiec bez zgody nic nie wychodzi poza przegladarke.
 import { readItem, writeItem } from "./storage/safe-storage";
-import { buildItem } from "./track-items";
-import type { TrackLineSource } from "./track-items";
 import type { TrackEventMap, TrackEventName } from "./track-events";
 
 export type TrackParams = Record<string, unknown>;
@@ -90,13 +88,6 @@ export function trackPurchaseOnce(params: TrackEventMap["purchase"]): boolean {
   );
   track("purchase", params);
   return true;
-}
-
-/** Obiekt produktu w `items[]` (docs/10 §3), wersja ze stubu: pozycja poza setem (discount 0). */
-export type TrackItemInput = TrackLineSource;
-
-export function trackItem(i: TrackItemInput): Record<string, unknown> {
-  return { ...buildItem(i) };
 }
 
 export type { TrackEventMap, TrackEventName } from "./track-events";
