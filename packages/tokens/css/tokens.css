@@ -3,7 +3,7 @@
    Kopiuj bez zmian do src/styles/tokens.css. Zmiana palety = zmiana tylko tego pliku. */
 
 @font-face{
-  font-family:"Archivo";
+  font-family:"Archivo Taktyl";
   src:url("../assets/fonts/archivo-pl-400-700-w100-125.woff2") format("woff2");
   /* W projekcie Astro zmień ścieżkę na "/fonts/archivo-pl-400-700-w100-125.woff2" */
   font-weight:400 700;
@@ -44,7 +44,7 @@
   --nakladka:       rgb(26 33 43 / .48);
 
   /* TYPOGRAFIA — jedna rodzina, dwie szerokości, dwie grubości */
-  --font: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font: "Archivo Taktyl", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --szer-tekst: 100%;   /* font-stretch tekstu */
   --szer-naglowek: 125%;/* font-stretch nagłówków, cen, logotypu, klawiszy */
   --w-zwykla: 400;

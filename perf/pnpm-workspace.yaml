@@ -1,0 +1,2 @@
+# I-012 (TAKTYL-83): perf jest osobnym projektem pnpm (wlasny lockfile), poza workspace'em aplikacji, jak e2e (I-010).
+packages: []

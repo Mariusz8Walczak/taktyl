@@ -320,6 +320,28 @@ services:
       proxy: { condition: service_healthy }
       e2e-reset: { condition: service_completed_successfully }
 
+  # ------------------------------------------------------------------ profil perf
+  # I-012 (TAKTYL-83, docs/12 par. 4, S36): Lighthouse (LCP, CLS, TBT, waga i liczba zadan pierwszego widoku) na stosie produkcyjnym.
+  #   docker compose up -d --build --wait && docker compose --profile perf run --rm --build perf      (albo: make perf)
+  # Stos nie jest resetowany (pomiar nic nie zapisuje). Wyniki: perf/reports (poza repo, .gitignore).
+  perf:
+    build:
+      context: ./perf
+    image: taktyl-perf:local
+    profiles: [perf]
+    restart: "no"
+    ipc: host
+    init: true
+    environment:
+      PERF_PROXY: proxy:8080
+      PERF_RUNS: ${PERF_RUNS:-3}
+      PERF_ENFORCE: ${PERF_ENFORCE:-1}
+      PERF_INFO_METRICS: ${PERF_INFO_METRICS:-}
+    volumes:
+      - ./perf/reports:/work/reports
+    depends_on:
+      proxy: { condition: service_healthy }
+
   # ------------------------------------------------------------------ profil demo
   # I-009 (B-014, TAKTYL-65): cykliczny reset danych demo, tylko gdy DEMO_MODE=true (inaczej usluga konczy sie bledem).
   # Odstep: DEMO_RESET_INTERVAL_MINUTES (domyslnie 60); DEMO_RESET_INTERVAL_SECONDS (jesli ustawione) ma pierwszenstwo, do testow.

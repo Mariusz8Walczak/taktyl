@@ -8,6 +8,9 @@ export const archivo = localFont({
   weight: "400 700",
   style: "normal",
   display: "swap",
+  // I-012 (TAKTYL-83): rodzina z tokens.css nazywa sie "Archivo Taktyl", nie "Archivo": nazwy rodzin sa niewrazliwe na
+  // wielkosc liter, wiec dawny @font-face "Archivo" z tokens.css kolidowal z "archivo" z next/font i plik (63 KB)
+  // pobieral sie dwa razy (docs/12 par. 4: fonty = 1 plik).
   preload: true,
   variable: "--font-archivo",
   declarations: [{ prop: "font-stretch", value: "100% 125%" }],

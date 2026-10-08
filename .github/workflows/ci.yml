@@ -1,7 +1,7 @@
 # I-006 (ADR-0008, ADR-0009, docs/19 par. 5, TAKTYL-7, TAKTYL-8): CI Taktyla.
 # Wszystko w kontenerach, tak samo jak lokalnie (docker compose). Tylko GITHUB_TOKEN, uprawnienia minimalne.
-# Jobs: lint, typecheck, unit, build-images, e2e-docker, e2e-demo, actionlint, audyt-tokenow, kontrola-sciezek, gitleaks, audit-deps.
-# a11y i perf-budget (docs/19 par. 5) dojda razem z Playwright i Lighthouse (docs/12), gdy powstana scenariusze.
+# Jobs: lint, typecheck, unit, build-images, e2e-docker, perf, e2e-demo, actionlint, audyt-tokenow, kontrola-sciezek, gitleaks, audit-deps.
+# perf (I-012, TAKTYL-83): Lighthouse wg docs/12 par. 4; LCP informacyjnie, reszta budzetu blokuje job.
 name: CI
 
 on:
@@ -156,6 +156,43 @@ jobs:
       - name: Zatrzymanie stosu
         if: always()
         run: docker compose --profile e2e down -v
+
+  # I-012 (S36, docs/12 par. 4, TAKTYL-83): Lighthouse (tryb Komorka, mediana z 3) na stosie produkcyjnym: waga i liczba zadan
+  # pierwszego widoku, LCP, CLS, TBT (zastepnik INP), obce domeny. Waga, zadania, CLS, TBT i obce domeny blokuja job;
+  # LCP jest INFORMACYJNY (PERF_INFO_METRICS=lcp_ms): na dzien TAKTYL-83 przekracza budzet (BUG-i w zadaniu), a pomiar
+  # na wspolnym runnerze (symulowane lacze, ale realny czas serwera) ma szum. Po naprawie LCP zdejmij PERF_INFO_METRICS.
+  # Job nie blokuje PR (nie jest w wymaganych), dopoki nie ma kilku zielonych przebiegow z rzedu.
+  perf:
+    name: perf
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: .env z losowymi sekretami jednorazowymi
+        run: sh scripts/init-env.sh
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - name: Start stosu z budowa obrazow
+        run: docker compose up -d --build --wait
+      - name: Lighthouse (kontener perf)
+        env:
+          PERF_INFO_METRICS: lcp_ms
+        run: docker compose --profile perf run --rm --build perf
+      - name: Wyniki Lighthouse jako artefakt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse
+          path: perf/reports
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Logi stosu przy bledzie
+        if: failure()
+        run: docker compose ps -a && docker compose logs --tail=200
+      - name: Zatrzymanie stosu
+        if: always()
+        run: docker compose --profile perf down -v
 
   # I-009 (B-014, S31, S32, TAKTYL-65): tryb demo na pelnym stosie z profilem demo. Czas od "up" do gotowosci stosu jest
   # mierzony i wypisany (S31: <= 10 min). Petla reset-demo ma odstep 60 s, wiec test czeka na samoczynny reset.

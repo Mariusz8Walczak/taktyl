@@ -193,7 +193,7 @@ Pliki w `e2e/tests/backpanel/`; projekt `backpanel` startuje po S1-S24 (zmienia 
 | S33 | CI (gitleaks, kontrola ścieżek) | poza e2e |
 | S34 | `s30-s34-s35-webhook-i-api.spec.ts` | automatyczny (nagłówki na 3 hostach, meta i `robots.txt` sklepu) |
 | S35 | `s30-s34-s35-webhook-i-api.spec.ts` | automatyczny |
-| S36 | `b-s-panel.spec.ts` (axe ekranów panelu); reszta (Lighthouse, audyt designu, 0 obcych domen panelu) | axe: automatyczny; reszta w TAKTYL-71 |
+| S36 | `b-s-panel.spec.ts` (axe ekranów panelu); Lighthouse: `perf/lighthouse.mjs` (`make perf`, job CI `perf`, TAKTYL-83); audyt designu i obce domeny: TAKTYL-66, TAKTYL-71 | axe i Lighthouse: automatyczne; LCP informacyjnie w CI do naprawy TAKTYL-84 |
 | B-S1, B-S4, B-S7, B-S8 | `b-s-panel.spec.ts` | automatyczne (B-S8 opisuje aktualne zachowanie: ostrzeżenie, nie blokada, Q-07) |
 
 ## 8. Pomiar

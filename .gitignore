@@ -13,6 +13,7 @@ out/
 coverage/
 .nyc_output/
 playwright-report/
+perf/reports/
 test-results/
 blob-report/
 
