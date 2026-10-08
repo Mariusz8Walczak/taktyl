@@ -2,6 +2,7 @@
 // profil CTA). Tagi: content:guide, content:{slug}, rules (etykiety profili). Komponent serwerowy.
 import type { Metadata } from "next";
 import { Breadcrumbs } from "../../components/breadcrumbs";
+import { PageHero } from "../../components/page-hero";
 import { GuideCard } from "../../components/guides/guide-card";
 import { getGuide, getGuides } from "../../lib/api";
 import { getRules } from "../../lib/builder/data";
@@ -23,11 +24,12 @@ export default async function GuidesPage() {
   return (
     <div className="kontener strona">
       <Breadcrumbs items={[{ label: "Strona główna", href: "/" }, { label: "Poradnik" }]} />
-      <h1 className="naglowek-strony">Poradnik</h1>
-      <p className="wstep">
-        Krótkie odpowiedzi na pytania sprzed zakupu. Każdy poradnik kończy się wejściem do kreatora
-        setu z ustawionym profilem.
-      </p>
+      <PageHero slug="poradnik" title="Poradnik">
+        <p className="wstep">
+          Krótkie odpowiedzi na pytania sprzed zakupu. Każdy poradnik kończy się wejściem do
+          kreatora setu z ustawionym profilem.
+        </p>
+      </PageHero>
       <ul className="lista poradnik-lista">
         {guides.map((g, i) => {
           const body = full[i]?.body_md;

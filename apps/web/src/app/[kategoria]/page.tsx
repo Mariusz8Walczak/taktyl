@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import "../../styles/listing.css";
 import { Breadcrumbs } from "../../components/breadcrumbs";
 import { Cards } from "../../components/listing/cards";
+import { PageHero, type HeroSlug } from "../../components/page-hero";
 import { EmptyState } from "../../components/listing/empty-state";
 import { ListingShell } from "../../components/listing/listing-shell";
 import { SetPrompt } from "../../components/listing/set-prompt";
@@ -97,15 +98,14 @@ export default async function ListingPage({ params, searchParams }: Props) {
   return (
     <div className="kontener strona strona--listing">
       <Breadcrumbs items={[{ label: "Strona główna", href: "/" }, { label: category.name }]} />
-      <header className="listing__naglowek">
-        <h1 className="naglowek-strony">{applyNbsp(category.h1)}</h1>
+      <PageHero slug={category.id as HeroSlug} title={category.h1}>
         <p className="wstep">{applyNbsp(category.intro)}</p>
         <p>
           <Link href={GUIDE_LINK[category.id]?.href ?? "/poradnik"} className="tk-link">
             {GUIDE_LINK[category.id]?.label}
           </Link>
         </p>
-      </header>
+      </PageHero>
       <ListingShell
         category={{ id: category.id, name: category.name }}
         facets={facets.facets}

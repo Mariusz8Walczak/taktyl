@@ -5,17 +5,26 @@ import Link from "next/link";
 import { extractToc, parseMarkdown } from "../../lib/content/markdown";
 import { builderHref, readingLabel, readingMinutes } from "../../lib/content/reading";
 import { Markdown } from "../content/markdown";
+import { GuideCover } from "./guide-cover";
 import "../../styles/poradnik.css";
 
 export interface GuideArticleProps {
   title: string;
+  slug: string;
   lead: string | null;
   body: string;
   profile: string | null;
   profileLabel: string | null;
 }
 
-export function GuideArticle({ title, lead, body, profile, profileLabel }: GuideArticleProps) {
+export function GuideArticle({
+  slug,
+  title,
+  lead,
+  body,
+  profile,
+  profileLabel,
+}: GuideArticleProps) {
   const blocks = parseMarkdown(body);
   const toc = extractToc(blocks);
   return (
@@ -27,6 +36,7 @@ export function GuideArticle({ title, lead, body, profile, profileLabel }: Guide
           <span>{readingLabel(readingMinutes(body))}</span>
         </p>
       </header>
+      <GuideCover slug={slug} />
       {toc.length >= 2 ? (
         <nav className="poradnik__spis" aria-labelledby="spis-tresci">
           <h2 id="spis-tresci" className="poradnik__spis-tytul">

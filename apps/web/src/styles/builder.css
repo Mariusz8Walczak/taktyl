@@ -24,10 +24,6 @@
 .strona--kreator {
   padding-block: var(--s4);
 }
-.kreator__h1 {
-  font-size: var(--t-2xl);
-}
-
 /* ---- pasek krokow (F-100, A-07) ---- */
 .kreator__naglowek {
   display: grid;

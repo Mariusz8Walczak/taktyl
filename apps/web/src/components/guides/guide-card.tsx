@@ -1,8 +1,9 @@
 // F-220 (wzorzec: karta wpisu `blog-grid`, docs/08 §6): karta poradnika - tytul, lead, czas czytania, profil CTA.
-// Komponent serwerowy do ponownego uzycia (lista /poradnik, 3 karty na stronie glownej). Bez zdjecia (brak w manifescie).
+// Komponent serwerowy do ponownego uzycia (lista /poradnik, 3 karty na stronie glownej). Okladka z public/img/poradnik (docs/09 §7).
 import { applyNbsp } from "@taktyl/domain";
 import Link from "next/link";
 import { readingLabel } from "../../lib/content/reading";
+import { GuideCover } from "./guide-cover";
 import "../../styles/poradnik.css";
 
 export interface GuideCardProps {
@@ -28,6 +29,7 @@ export function GuideCard({
   const H = `h${headingLevel}` as "h2" | "h3";
   return (
     <article className="poradnik-karta">
+      <GuideCover slug={slug} loading="lazy" />
       <H className="poradnik-karta__tytul">
         <Link href={`/poradnik/${slug}`} className="poradnik-karta__link">
           {applyNbsp(title)}

@@ -92,6 +92,7 @@ describe("GuideArticle (F-220)", () => {
   it("ma H1, spis tresci z odnosnikami do H2 i CTA z profilem na koncu", async () => {
     const { container } = render(
       <GuideArticle
+        slug="jak-wybrac-przelaczniki"
         title="Jak wybrać przełączniki"
         lead="Lead."
         body={BODY}
@@ -123,5 +124,27 @@ describe("Article JSON-LD (F-220)", () => {
     expect(ld["@type"]).toBe("Article");
     expect(ld.publisher).toEqual({ "@type": "Organization", name: "Taktyl" });
     expect(JSON.stringify(ld)).not.toMatch(/author|aggregateRating|review/);
+  });
+});
+
+describe("okladka artykulu i hero (docs/09 §7)", () => {
+  it("okladka tylko dla znanych sluga, dekoracyjna, z wersja @2x", async () => {
+    const { GuideCover } = await import("../src/components/guides/guide-cover");
+    const known = render(<GuideCover slug="rozmiary-klawiatur" />);
+    const img = known.container.querySelector("img");
+    expect(img?.getAttribute("alt")).toBe("");
+    expect(img?.getAttribute("srcset")).toContain("/img/poradnik/rozmiary-klawiatur@2x.webp 2400w");
+    const unknown = render(<GuideCover slug="nie-ma" />);
+    expect(unknown.container.querySelector("img")).toBeNull();
+  });
+
+  it("hero ma jeden H1 i zdjecie z alt pustym oraz zrodlem desktop", async () => {
+    const { PageHero } = await import("../src/components/page-hero");
+    const { container } = render(<PageHero slug="myszki" title="Myszki" />);
+    expect(container.querySelectorAll("h1")).toHaveLength(1);
+    expect(container.querySelector("img")?.getAttribute("alt")).toBe("");
+    expect(container.querySelector("source")?.getAttribute("srcset")).toContain(
+      "/img/hero/myszki-desktop-2400.webp 2400w",
+    );
   });
 });

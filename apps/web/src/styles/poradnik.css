@@ -298,3 +298,17 @@
   align-items: center;
   min-height: var(--cel-min);
 }
+
+/* ---- okladka artykulu i karty (docs/09 §7) ---- */
+.poradnik-okladka {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.poradnik__naglowek + .poradnik-okladka {
+  margin-bottom: var(--s3);
+}
