@@ -138,6 +138,7 @@ Kolejność czytania: `CLAUDE.md` → ten plik → `docs/01`–`docs/12` → `do
 | `docs/20-zespol-agentow-i-skille.md` | agenci, skille, praca z task-managerem |
 | `docs/21-plan-wdrozenia.md` | etapy i kamienie milowe |
 | `docs/22-przeglad-bezpieczenstwa.md` | przegląd bezpieczeństwa: ustalenia z wagą, naprawy |
+| `docs/23-raport-odbioru.md` | raport odbioru S1–S36 (TAKTYL-71) |
 | `docs/adr/` | ADR-0001…0009 |
 | `docs/decyzje.md` | dziennik decyzji i pytania otwarte |
 

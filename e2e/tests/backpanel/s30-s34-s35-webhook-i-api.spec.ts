@@ -66,11 +66,9 @@ test.describe("S30: webhook POST /api/revalidate sklepu", () => {
     expect(unknownTag.status).toBe(422);
   });
 
-  test.fixme("S30: po wylaczeniu sklepu zdarzenie z outbox zostaje dostarczone po jego powrocie (ponowienie)", async () => {
-    // Wymaga zatrzymania i uruchomienia kontenera `web` (docker compose stop/start), czego kontener e2e nie moze zrobic
-    // (brak gniazda Dockera). Ponawianie outboxu (5 s * 3^(n-1), po 8 probach `failed`) pokrywaja testy jednostkowe
-    // OutboxWorker w apps/api; scenariusz z zatrzymaniem sklepu nalezy do job-a CI e2e-demo (TAKTYL-71).
-  });
+  // Czesc "wylacz sklep, zmien cene, wlacz sklep" wymaga stop/start kontenera `web`, czego kontener e2e nie moze zrobic
+  // (brak gniazda Dockera). Pokrywa ja scripts/smoke-outbox.sh na hoscie (make smoke-outbox, job CI `e2e-demo`), TAKTYL-71;
+  // ponawianie outboxu (5 s * 3^(n-1), po 8 probach `failed`) pokrywaja tez testy jednostkowe OutboxWorker w apps/api.
 });
 
 test.describe("S34: noindex", () => {

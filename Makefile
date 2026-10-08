@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-designsmoke demo smoke-demo clean
+.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-design smoke smoke-outbox demo smoke-demo clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -69,6 +69,10 @@ audit-design: env ## audyt designu docs/12 par. 3 w przegladarce (strony P0 skle
 
 smoke: ## test dymny dzialajacego stosu (noindex na hostach, /health, 18 produktow)
 	@sh scripts/smoke-stack.sh
+
+# I-011 (S30, TAKTYL-71): wylacza sklep, zmienia cene, wlacza sklep; outbox ma dostarczyc zdarzenie (wymaga dzialajacego stosu).
+smoke-outbox: ## test S30: sklep wylaczony na czas zmiany ceny, outbox dostarcza po jego powrocie
+	@sh scripts/smoke-outbox.sh
 
 # I-009 (B-014, TAKTYL-65): tryb demo. Wymaga DEMO_MODE=true w .env; NIGDY z prawdziwymi danymi (reset kasuje zamowienia).
 demo: env ## stos z trybem demo (profil demo: cykliczny reset co DEMO_RESET_INTERVAL_MINUTES, domyslnie 60)
