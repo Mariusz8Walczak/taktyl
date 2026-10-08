@@ -4,7 +4,6 @@
 // wyboru wariantu (Dialog z @taktyl/ui, pobranie wariantow, picker) laduje sie dynamicznym importem dopiero po
 // pierwszym kliknieciu albo najechaniu/fokusie na przycisk, wiec nie wchodzi do budzetu JS strony (docs/12 §4).
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
-import "../../styles/szybko-dodaj.css";
 
 const loadPanel = () => import("./quick-add-panel");
 const QuickAddPanel = lazy(loadPanel);

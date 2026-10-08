@@ -5,7 +5,6 @@
 // bez przenoszenia fokusu (WCAG 1.4.13) - obsluguje to ShortcutsHost przez atrybut `data-zamkniete`.
 import Link from "next/link";
 import type { NavItem } from "../../lib/nav";
-import "../../styles/menu-kategorii.css";
 import { NavLink } from "./nav-link";
 
 export function CategoryMenuItem({

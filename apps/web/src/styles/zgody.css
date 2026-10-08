@@ -37,6 +37,11 @@
   font-size: var(--t-s);
 }
 
+/* TAKTYL-84: baner jest w HTML od serwera; powracajacy uzytkownik (skrypt w <head>) nie widzi go ani przez moment */
+html[data-zgody-zapisane] .zgody {
+  display: none;
+}
+
 /* Rezerwacja miejsca: fokus i koniec strony nie chowaja sie pod paskiem (docs/11 pulapka 26) */
 html[data-zgody="otwarte"] {
   scroll-padding-bottom: var(--zgody-wys);

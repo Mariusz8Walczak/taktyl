@@ -12,7 +12,6 @@ import {
 import { CART_LINK } from "../../lib/nav";
 import { readItem } from "../../lib/storage/safe-storage";
 import { NavLink } from "./nav-link";
-import "../../styles/animacje.css";
 
 const MAX_SHOWN = 99;
 

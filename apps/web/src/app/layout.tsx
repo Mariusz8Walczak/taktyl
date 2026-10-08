@@ -1,15 +1,7 @@
 // F-001, F-002, F-004, F-009, F-241, F-244, F-245 (TAKTYL-23): uklad bazowy sklepu.
-// Kolejnosc CSS (docs/06 §6): tokens.css -> taktyl.css -> style komponentow @taktyl/ui -> style ukladu.
-import "@taktyl/tokens/tokens.css";
-import "@taktyl/tokens/taktyl.css";
-import "@taktyl/ui/ui.css";
-import "../styles/rozmiary.css";
-import "../styles/baza.css";
-import "../styles/naglowek.css";
-import "../styles/stopka.css";
-import "../styles/szukaj.css";
-import "../styles/zgody.css";
-import "../styles/porownaj.css";
+// Kolejnosc CSS (docs/06 §6): tokens.css -> taktyl.css -> style komponentow @taktyl/ui -> style ukladu; wszystko
+// w jednym arkuszu globalne.css (TAKTYL-84: mniej plikow CSS blokujacych render).
+import "../styles/globalne.css";
 
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";

@@ -119,6 +119,29 @@ test.describe("Pierwsza wizyta (S24)", () => {
     ).toBe(0);
   });
 
+  test("S24 (TAKTYL-84, LCP): baner jest w HTML z serwera, a po zapisanej decyzji chowa go skrypt w <head> jeszcze przed hydracją", async ({
+    page,
+  }) => {
+    // Surowy HTML (bez JS): baner z przyciskami i stan domyslny, nie dopiero po hydracji. Pobranie z przegladarki
+    // (host taktyl.localhost rozwiazuje tylko Chromium, nie klient `request`).
+    await page.goto("/");
+    const html = await page.evaluate(async () => (await fetch("/klawiatury")).text());
+    expect(html).toContain('aria-label="Zgody na pliki cookies"');
+    expect(html).toContain("Akceptuję wszystkie");
+
+    // Zapisana decyzja: znacznik na <html> pojawia sie w skrypcie <head>, a baner nie jest widoczny od pierwszej ramki.
+    await page.addInitScript(() => {
+      localStorage.setItem(
+        "taktyl.consent.v1",
+        JSON.stringify({ v: 1, at: new Date().toISOString(), analytics: false, marketing: false }),
+      );
+    });
+    await page.route("**/_next/static/**/*.js", (route) => route.abort());
+    await page.goto("/klawiatury");
+    await expect(page.locator("html")).toHaveAttribute("data-zgody-zapisane", "");
+    await expect(page.getByRole("region", { name: "Zgody na pliki cookies" })).toBeHidden();
+  });
+
   test("S24: decyzja w banerze jest zapamiętana i przekazana w trybie zgody", async ({ page }) => {
     await page.goto("/");
     const banner = page.getByRole("region", { name: "Zgody na pliki cookies" });

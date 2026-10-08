@@ -337,6 +337,8 @@ services:
       PERF_RUNS: ${PERF_RUNS:-3}
       PERF_ENFORCE: ${PERF_ENFORCE:-1}
       PERF_INFO_METRICS: ${PERF_INFO_METRICS:-}
+      PERF_ONLY: ${PERF_ONLY:-}
+      PERF_SAVE_ALL: ${PERF_SAVE_ALL:-}
     volumes:
       - ./perf/reports:/work/reports
     depends_on:

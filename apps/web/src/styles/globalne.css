@@ -1,0 +1,18 @@
+/* I-012 (TAKTYL-84, docs/12 par. 4): JEDEN arkusz ukladu zamiast osobnych plikow na kazdy komponent ukladu. Kazdy
+   osobny <link rel=stylesheet> blokuje render i dokłada zapytanie w lancuchu krytycznym LCP (Lighthouse: 6-8 plikow
+   na strone). Kolejnosc jak w docs/06 par. 6: tokeny -> taktyl -> komponenty @taktyl/ui -> style ukladu. Strony maja
+   wlasne arkusze (home, listing, produkt, kreator, koszyk); tu tylko to, co laduje sie na kazdej stronie. */
+@import "@taktyl/tokens/tokens.css";
+@import "@taktyl/tokens/taktyl.css";
+@import "@taktyl/ui/ui.css";
+@import "./rozmiary.css";
+@import "./baza.css";
+@import "./naglowek.css";
+@import "./stopka.css";
+@import "./szukaj.css";
+@import "./zgody.css";
+@import "./porownaj.css";
+@import "./animacje.css";
+@import "./menu-kategorii.css";
+@import "./skroty.css";
+@import "./szybko-dodaj.css";

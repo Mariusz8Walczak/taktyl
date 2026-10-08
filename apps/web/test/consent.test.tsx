@@ -1,6 +1,7 @@
 // F-240, F-242 (docs/10 §2): tryb zgody, baner (rownorzedne przyciski, a11y), stopka. S24: pierwsza wizyta.
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderToString } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { ConsentManager } from "../src/components/consent/consent-manager";
@@ -62,6 +63,23 @@ describe("fragment trybu zgody w <head> (docs/10 §2)", () => {
     ]);
   });
 
+  it("TAKTYL-84: powracajacy uzytkownik dostaje html[data-zgody-zapisane] przed malowaniem (CSS chowa baner z HTML)", () => {
+    window.localStorage.setItem(
+      CONSENT_KEY,
+      JSON.stringify({ v: 1, at: "x", analytics: false, marketing: false }),
+    );
+    document.documentElement.removeAttribute("data-zgody-zapisane");
+    new Function(CONSENT_BOOTSTRAP_SCRIPT)();
+    expect(document.documentElement).toHaveAttribute("data-zgody-zapisane");
+    document.documentElement.removeAttribute("data-zgody-zapisane");
+  });
+
+  it("brak decyzji: znacznika nie ma", () => {
+    document.documentElement.removeAttribute("data-zgody-zapisane");
+    new Function(CONSENT_BOOTSTRAP_SCRIPT)();
+    expect(document.documentElement).not.toHaveAttribute("data-zgody-zapisane");
+  });
+
   it("uszkodzony localStorage nie rzuca", () => {
     window.localStorage.setItem(CONSENT_KEY, "{nie json");
     expect(() => new Function(CONSENT_BOOTSTRAP_SCRIPT)()).not.toThrow();
@@ -116,6 +134,14 @@ describe("saveConsent", () => {
 });
 
 describe("ConsentManager (F-240)", () => {
+  it("TAKTYL-84: baner jest w HTML z serwera (stan domyslny), bez czekania na hydracje", () => {
+    const html = renderToString(<ConsentManager />);
+    expect(html).toContain('class="zgody"');
+    expect(html).toContain("Akceptuję wszystkie");
+    expect(html).toContain("Tylko niezbędne");
+    expect(html).toContain("Ustawienia");
+  });
+
   it("S24: pierwsza wizyta - pasek demo i baner z rownorzednymi przyciskami, bez wywolan do narzedzi", async () => {
     render(
       <>
