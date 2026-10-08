@@ -379,8 +379,8 @@ export function VariantForm({ product, sku, onSaved, now = () => new Date() }: V
                 </tr>
               </thead>
               <tbody>
-                {[...history.data.entries]
-                  .reverse()
+                {/* B-105: API zwraca wpisy od najnowszego (TAKTYL-82) */}
+                {history.data.entries
                   .slice(0, 5)
                   .map((e) => (
                     <tr key={e.valid_from}>

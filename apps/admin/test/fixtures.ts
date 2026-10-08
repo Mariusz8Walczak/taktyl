@@ -80,19 +80,20 @@ export function wrobel(overrides: Partial<AdminProductDetail> = {}): AdminProduc
 
 export const priceHistory = {
   sku: "M-WRB-GRF",
+  // API zwraca wpisy od najnowszego (TAKTYL-82)
   entries: [
-    {
-      price_gr: 13900,
-      valid_from: "2026-07-09T12:00:00+02:00",
-      valid_to: "2026-10-05T12:00:00+02:00",
-      changed_by: null,
-      reason: null,
-    },
     {
       price_gr: 12900,
       valid_from: "2026-10-05T12:00:00+02:00",
       valid_to: null,
       changed_by: "editor@taktyl.example",
+      reason: null,
+    },
+    {
+      price_gr: 13900,
+      valid_from: "2026-07-09T12:00:00+02:00",
+      valid_to: "2026-10-05T12:00:00+02:00",
+      changed_by: null,
       reason: null,
     },
   ],
