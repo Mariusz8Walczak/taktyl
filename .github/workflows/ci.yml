@@ -80,6 +80,8 @@ jobs:
       - uses: ./.github/actions/prepare
       - name: Audyt tokenow (pnpm audit:tokens)
         run: docker compose --profile test run --rm --no-deps test pnpm audit:tokens
+      - name: Audyt ruchu (pnpm audit:motion, docs/07 §1)
+        run: docker compose --profile test run --rm --no-deps test pnpm audit:motion
 
   build-images:
     name: build-images

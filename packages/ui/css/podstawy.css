@@ -136,7 +136,6 @@
   text-decoration-thickness: var(--tk-linia-1);
   text-underline-offset: 0.2em;
   border-radius: var(--r);
-  transition: text-decoration-thickness var(--d-s) var(--e-wyjscie);
 }
 .tk-link:hover {
   text-decoration-thickness: var(--tk-linia-2);
@@ -176,7 +175,8 @@
   cursor: pointer;
   transition:
     transform var(--d-klik) var(--e-wyjscie),
-    background-color var(--d-s) var(--e-wyjscie);
+    background-color var(--d-s) var(--e-wyjscie),
+    color var(--d-s) var(--e-wyjscie);
 }
 .tk-ikonka:hover:not(:disabled) {
   background-color: var(--tlo-alt);

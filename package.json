@@ -13,6 +13,7 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "audit:tokens": "turbo run audit:tokens",
+    "audit:motion": "node scripts/audit-motion.mjs",
     "test": "turbo run test",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
