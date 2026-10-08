@@ -69,7 +69,7 @@ Zasady:
 ## 4. Odstępy, siatka, promień, cienie
 
 - Odstępy tylko ze skali `--s1`…`--s6` (8, 16, 24, 40, 64, 96). Między sekcjami `--s6` (komputer) / `--s5` (telefon), wewnątrz sekcji `--s3`–`--s4`.
-- Siatka: Bootstrap 5 z szablonu (12 kolumn, odstęp `--s3`), kontener `--max`. Punkty przełamania Bootstrapa bez zmian: 576 / 768 / 992 / 1200 / 1400.
+- Siatka: własny układ we flex i CSS grid z tokenów (12 kolumn, odstęp `--s3`), kontener `--max`; bez Bootstrapa (WEB-007). Punkty przełamania zachowane z pierwotnej siatki: 576 / 768 / 992 / 1200 / 1400.
 - Promień: `--r` (10 px) wszędzie — przyciski, karty, pola, kafle, szuflady. `--r-pelny` wyłącznie dla żetonów, plakietek, próbek kolorów i licznika na ikonie koszyka.
 - Cienie: `--cien-1` (karta uniesiona, przycisk), `--cien-2` (szuflada, okno, menu). `--krawedz-klawisza*` to dolna krawędź przycisków (nie cień podniesienia). `--cien-obiektu` tylko dla zdjęć w podglądzie biurka.
 - Warstwy: `--z-naglowek` < `--z-menu` < `--z-nakladka` < `--z-toast`. Inne wartości `z-index` nie występują.

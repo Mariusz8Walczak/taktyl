@@ -11,7 +11,7 @@ Każda funkcja ma ID, priorytet i kryterium odbioru. Kryterium to warunek „dzi
 
 ## 1. Stos i architektura
 
-> **Zastąpione przez ADR-0001** (`docs/adr/0001-stos-nestjs-nextjs.md`): stos to NestJS + Next.js + PostgreSQL w Dockerze. Tabela poniżej zostaje jako historia decyzji; funkcje F-xxx i ich kryteria odbioru obowiązują bez zmian. Klucze `localStorage` (§1.2) obowiązują dla koszyka, ulubionych i porównania (ADR-0007).
+> **Zastąpione przez ADR-0001** (`docs/adr/0001-stos-nestjs-nextjs.md`): stos to NestJS + Next.js + PostgreSQL w Dockerze. Tabela poniżej zostaje jako historia decyzji; funkcje F-xxx i ich kryteria odbioru obowiązują bez zmian. Klucze `localStorage` (§1.2) obowiązują dla koszyka, ulubionych i porównania (ADR-0007). Wiersze „Generowanie stron” (Astro) i „Style” (Ecomus, Bootstrap 5) są zastąpione zgodnie z ADR-0001: Next.js 15 oraz tokeny i własne komponenty (flex, CSS grid, WEB-007), bez Bootstrapa i bez plików szablonu (TAKTYL-73).
 
 | Warstwa | Decyzja | Powód |
 |---|---|---|

@@ -223,7 +223,7 @@ Dodatkowo: CSRF — token podwójnego ciasteczka dla mutacji z backpanelu (`X-CS
 | RSC + ISR dla stron treściowych | JS ≤ 150 KB, LCP ≤ 2,0 s; HTML z cache |
 | Wyspy kliencie tylko dla koszyka, kreatora, filtrów, wyszukiwarki | stron treściowych nie obciąża kod kreatora (dynamiczny import, trasy) |
 | Jeden font Archivo lokalnie (`next/font/local`, 64 KB), `preload` | zero obcych domen |
-| CSS: tokeny + Bootstrap 5 (tylko siatka i potrzebne komponenty, PurgeCSS) + `taktyl.css` | ≤ 60 KB na stronach treściowych |
+| CSS: tokeny + własny układ (flex, CSS grid) i style komponentów, bez Bootstrapa (WEB-007) | ≤ 60 KB na stronach treściowych |
 | Obrazy: `width`/`height`, `srcset`, `fetchpriority="high"` na pierwszym ekranie, placeholdery o tych samych wymiarach | CLS ≤ 0,05 |
 | Zero bibliotek animacji (`docs/07` §1) | brak kosztu JS |
 | Next.js `output: 'standalone'`, kompresja na `proxy` (zstd/gzip) | mały obraz, mała transmisja |
@@ -302,7 +302,7 @@ Zasada: logika domenowa testowana raz w `domain`; e2e sprawdza przepływ i integ
 | Sklep, backpanel | Next.js 15, React 19 | RSC, ISR, tagi cache |
 | Dane po stronie klienta (admin) | TanStack Query 5, TanStack Table 8, React Hook Form 7 | standard paneli |
 | UI backpanelu | Radix UI (bez stylu) + tokeny | D-002 |
-| Siatka sklepu | Bootstrap 5 (tylko CSS) | `docs/06` §4 |
+| Siatka sklepu | własny układ flex i CSS grid z tokenów (bez Bootstrapa, WEB-007) | `docs/06` §4 |
 | Testy | Vitest 2, Playwright 1, axe-core 4, Lighthouse CI 0.14 | piramida z §12 |
 | Konteneryzacja | Docker, Compose v2, Caddy 2 | ADR-0009 |
 | CI | GitHub Actions + buildx | ADR-0008, ADR-0009 |

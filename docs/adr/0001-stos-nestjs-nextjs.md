@@ -19,7 +19,7 @@ Dokumentacja bazowa zakładała statyczny sklep (Astro) bez backendu. Właścici
 | Sklep | **Next.js 15** (App Router, React 19, RSC) | SSR/ISR dla treści, wyspy kliencie dla koszyka, kreatora i filtrów |
 | Backpanel (UI) | **Next.js 15** jako osobna aplikacja `apps/admin` | React, rozdzielony od sklepu: osobny build, osobne uprawnienia, brak kodu admina w paczce sklepu |
 | Stan serwera w backpanelu | TanStack Query + React Hook Form + TanStack Table | standard dla paneli, mało własnego kodu |
-| Style | tokeny z `assets/tokens.css` + Bootstrap 5 (siatka) + `taktyl.css` | zgodnie z `docs/06`; szablon: ADR-0004 |
+| Style | tokeny z `assets/tokens.css` + własny układ (flex, CSS grid) + `taktyl.css`; bez Bootstrapa (WEB-007) | zgodnie z `docs/06`; szablon: ADR-0004 |
 | Testy | Vitest (domena, API), Playwright (S1–S24), axe-core (a11y), Lighthouse CI (budżet `docs/12` §4) | każdy punkt `docs/12` ma automat |
 | Uruchomienie | Docker Compose (db, api, web, admin, proxy) | `git clone` → `pnpm i` → `docker compose up` |
 
