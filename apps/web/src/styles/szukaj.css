@@ -47,6 +47,30 @@
   outline: var(--tk-linia-2) solid var(--akcent);
   outline-offset: calc(var(--tk-linia-2) * -1);
 }
+.szukaj__miniatura {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.szukaj__miniatura img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.szukaj__tekst {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.szukaj__rodzaj {
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
 .szukaj__cena {
   flex: none;
   font-size: var(--t-xs);

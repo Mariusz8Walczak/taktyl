@@ -51,9 +51,27 @@ export class SearchService {
       .map((p, i) => ({ p, i }))
       .sort((a, b) => rank(a.p) - rank(b.p) || a.i - b.i)
       .slice(0, limit)
-      .map(({ p }) =>
-        toCard({ product: p, variants: p.variants, displayVariant: undefined }, false),
-      );
+      .map(({ p }) => p);
+
+    // Miniatura: ujecie 01-34 domyslnego wariantu, tylko gotowe zdjecie, najmniejszy plik (400 px).
+    const images = await this.prisma.productImage.findMany({
+      where: {
+        productId: { in: products.map((p) => p.id) },
+        kind: "packshot",
+        shot: "01-34",
+        status: "gotowe",
+      },
+    });
+    const thumbFor = (p: Product): string | null => {
+      const color = p.variants.find((v) => v.sku === p.defaultVariant)?.color;
+      const img = images.find((i) => i.productId === p.id && i.colorId === color);
+      return img?.files[0] ?? null;
+    };
+    const cards = products.map((p) => ({
+      ...toCard({ product: p, variants: p.variants, displayVariant: undefined }, false),
+      thumb: thumbFor(p),
+      category_name: snap.categories.find((c) => c.id === p.category)?.name ?? "",
+    }));
 
     const categories = snap.categories
       .filter((c) => matchesSearch(c.name, q))
@@ -69,6 +87,6 @@ export class SearchService {
       .slice(0, limit)
       .map((g) => ({ slug: g.slug, title: g.title, lead: g.lead }));
 
-    return respond(searchResponseSchema, { products, categories, guides });
+    return respond(searchResponseSchema, { products: cards, categories, guides });
   }
 }

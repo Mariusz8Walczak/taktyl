@@ -10,7 +10,16 @@ export const SEARCH_DEBOUNCE_MS = 200;
 export const SEARCH_SKELETON_MS = 300;
 
 export interface SuggestResponse {
-  products: { id: string; slug: string; category: string; name: string; from_price_gr: number }[];
+  products: {
+    id: string;
+    slug: string;
+    category: string;
+    category_name: string;
+    name: string;
+    from_price_gr: number;
+    /** Plik miniatury wzgledem /media/ albo null (brak gotowego zdjecia). */
+    thumb: string | null;
+  }[];
   categories: { id: string; slug: string; name: string }[];
   guides: { slug: string; title: string; lead: string | null }[];
 }
@@ -24,6 +33,9 @@ export interface SuggestOption {
   label: string;
   /** Dopisek po prawej (cena od). */
   hint?: string;
+  /** Miniatura (adres pod /media/) i podpis rodzaju produktu (np. "Myszki"); tylko produkty. */
+  thumb?: string | null;
+  kind?: string;
   href: string;
 }
 
@@ -78,6 +90,8 @@ export function buildOptions(res: SuggestResponse): SuggestOption[] {
       group: "products",
       label: p.name,
       hint: `od ${formatPLN(p.from_price_gr)}`,
+      thumb: p.thumb,
+      kind: p.category_name,
       href: `/${p.category}/${p.slug}`,
     })),
     ...res.categories.map((c): SuggestOption => ({

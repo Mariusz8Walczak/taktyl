@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import type { FormEvent, KeyboardEvent, RefObject } from "react";
+import { MEDIA_BASE_URL } from "../../lib/catalog/images";
 import { NAV_MAIN } from "../../lib/nav";
 import {
   GROUP_LABEL,
@@ -217,8 +218,25 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
                             onMouseDown={(e) => e.preventDefault()}
                             onClick={() => go(o.href)}
                           >
-                            <span>
-                              <Highlighted text={o.label} query={trimmed} />
+                            {o.group === "products" ? (
+                              <span className="szukaj__miniatura" aria-hidden="true">
+                                {o.thumb ? (
+                                  <img
+                                    src={`${MEDIA_BASE_URL}${o.thumb}`}
+                                    alt=""
+                                    width={48}
+                                    height={48}
+                                    loading="lazy"
+                                    decoding="async"
+                                  />
+                                ) : null}
+                              </span>
+                            ) : null}
+                            <span className="szukaj__tekst">
+                              <span>
+                                <Highlighted text={o.label} query={trimmed} />
+                              </span>
+                              {o.kind ? <span className="szukaj__rodzaj">{o.kind}</span> : null}
                             </span>
                             {o.hint ? <span className="szukaj__cena">{o.hint}</span> : null}
                           </li>

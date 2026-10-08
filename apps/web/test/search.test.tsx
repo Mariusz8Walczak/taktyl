@@ -15,13 +15,23 @@ vi.mock("next/navigation", () => ({
 
 const RESPONSE: SuggestResponse = {
   products: [
-    { id: "p1", slug: "lupek-65", category: "klawiatury", name: "Łupek 65", from_price_gr: 59900 },
+    {
+      id: "p1",
+      slug: "lupek-65",
+      category: "klawiatury",
+      category_name: "Klawiatury",
+      name: "Łupek 65",
+      from_price_gr: 59900,
+      thumb: "img/produkty/k-lupek-65_grafit_01-34-400.webp",
+    },
     {
       id: "p2",
       slug: "granit-tkl",
       category: "klawiatury",
+      category_name: "Klawiatury",
       name: "Granit TKL",
       from_price_gr: 69900,
+      thumb: null,
     },
   ],
   categories: [{ id: "klawiatury", slug: "klawiatury", name: "Klawiatury" }],
@@ -121,6 +131,15 @@ describe("SearchBox (F-005)", () => {
     await user.keyboard("{ArrowDown}{Enter}");
     expect(push).toHaveBeenCalledWith("/klawiatury/lupek-65");
     expect(window.dataLayer).toContainEqual({ event: "search", search_term: "lupek" });
+  });
+
+  it("produkt ma miniature z /media/ i podpis rodzaju; brak zdjecia = sam podpis", async () => {
+    const opts = buildOptions(RESPONSE).filter((o) => o.group === "products");
+    expect(opts[0]).toMatchObject({
+      thumb: "img/produkty/k-lupek-65_grafit_01-34-400.webp",
+      kind: "Klawiatury",
+    });
+    expect(opts[1]).toMatchObject({ thumb: null, kind: "Klawiatury" });
   });
 
   it("Enter bez wyboru przechodzi na /szukaj?q= i wysyla search", async () => {
