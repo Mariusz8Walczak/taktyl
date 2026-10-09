@@ -772,3 +772,8 @@
 .kreator__wlasny h2 {
   margin-top: 0;
 }
+.kreator__wlasny a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}
