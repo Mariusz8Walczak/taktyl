@@ -17,7 +17,10 @@ describe("TAKTYL-70 CSP sklepu", () => {
       expect(csp).toContain(d);
     }
     expect(csp).not.toContain("googletagmanager");
-    expect(csp).not.toContain("unsafe-eval");
+    // Dekoder Draco (ADR-0011) wymaga tylko WebAssembly i workera z blob:, nigdy zwyklego eval.
+    expect(csp).not.toContain("'unsafe-eval'");
+    expect(csp).toContain("'wasm-unsafe-eval'");
+    expect(csp).toContain("worker-src 'self' blob:");
   });
 
   it("GTM dopuszczony tylko z gtm: true", () => {

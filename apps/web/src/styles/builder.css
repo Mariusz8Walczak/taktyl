@@ -760,3 +760,20 @@
     transition: none;
   }
 }
+
+/* F-255: odnosnik do „Stworz wlasny set” pod kreatorem. */
+.kreator__wlasny {
+  margin-top: var(--s4);
+  padding: var(--s3);
+  border: 1px solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.kreator__wlasny h2 {
+  margin-top: 0;
+}
+.kreator__wlasny a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+}

@@ -390,3 +390,9 @@ a.tk-btn {
     padding-bottom: var(--pasek-zakupu-wys);
   }
 }
+
+/* F-250: odnosnik do konfiguratora kolorow pod wyborem wariantu. */
+.konfigurator-link {
+  margin: var(--s2) 0 0;
+  font-size: var(--t-s);
+}

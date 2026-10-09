@@ -1,4 +1,4 @@
-// Konfigurator kolorow 3D (ADR-0011, F-110..F-119): walidacja, normalizacja, doplaty w groszach, SKU.
+// Konfigurator kolorow 3D (ADR-0011, F-250..F-256): walidacja, normalizacja, doplaty w groszach, SKU.
 // Czysta logika bez I/O; dane (`data/colors|finishes|parts|prints|surcharges.json`) dostarcza wywolujacy.
 import type { Grosze } from "./money.js";
 
@@ -11,7 +11,7 @@ export interface ConfColor {
 export interface ConfFinish {
   code: string;
   label: string;
-  pbr: Record<string, number | string | boolean>;
+  pbr: Record<string, number | string | boolean | number[]>;
 }
 export interface ConfPalette {
   wykonczenia: string[];
@@ -116,7 +116,9 @@ export function luminance(hex: string): number {
   const m = /^#([0-9a-f]{6})$/i.exec(hex);
   if (!m) throw new Error(`Zly kolor: ${hex}`);
   const n = parseInt(m[1]!, 16);
-  return 0.2126 * channel((n >> 16) & 255) + 0.7152 * channel((n >> 8) & 255) + 0.0722 * channel(n & 255);
+  return (
+    0.2126 * channel((n >> 16) & 255) + 0.7152 * channel((n >> 8) & 255) + 0.0722 * channel(n & 255)
+  );
 }
 /** Kontrast WCAG 1..21. */
 export function contrastRatio(a: string, b: string): number {
@@ -131,7 +133,9 @@ export function findModel(data: ConfData, id: string): ConfModel | undefined {
 function paletteColors(data: ConfData, key: string): string[] {
   const p = data.palettes[key];
   if (!p) return [];
-  return typeof p.kolory === "string" ? paletteColors(data, p.kolory.replace(/^jak /, "")) : p.kolory;
+  return typeof p.kolory === "string"
+    ? paletteColors(data, p.kolory.replace(/^jak /, ""))
+    : p.kolory;
 }
 /** Czesci, ktore bez wyraznego wyboru przejmuja wybor czesci nadrzednej (obudowa -> spod, pokretlo; korpus -> przyciski). */
 const FOLLOWS: Record<string, string> = {
@@ -152,7 +156,8 @@ function partOf(model: ConfModel, id: string): ConfPart | undefined {
 export function defaultConfiguration(model: ConfModel): Configuration {
   const parts: Record<string, ConfPartChoice> = {};
   for (const p of model.parts) {
-    if (p.konfigurowalna && p.domyslnie.kolor) parts[p.id] = { color: p.domyslnie.kolor, finish: p.domyslnie.wykonczenie };
+    if (p.konfigurowalna && p.domyslnie.kolor)
+      parts[p.id] = { color: p.domyslnie.kolor, finish: p.domyslnie.wykonczenie };
   }
   return { model: model.id, parts, print: null };
 }
@@ -178,13 +183,21 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
   for (const [id, choice] of Object.entries(input.parts)) {
     const part = partOf(model, id);
     if (!part || !part.konfigurowalna || !part.paleta) {
-      issues.push({ code: "unknown_part", part: id, message: `Czesc ${id} nie jest konfigurowalna w ${model.id}` });
+      issues.push({
+        code: "unknown_part",
+        part: id,
+        message: `Czesc ${id} nie jest konfigurowalna w ${model.id}`,
+      });
       continue;
     }
     const palette = data.palettes[part.paleta]!;
     const isAuto = choice.color === "auto" && palette.auto === "kontrast";
     if (!isAuto && !paletteColors(data, part.paleta).includes(choice.color)) {
-      issues.push({ code: "unknown_color", part: id, message: `Kolor ${choice.color} spoza palety ${part.paleta}` });
+      issues.push({
+        code: "unknown_color",
+        part: id,
+        message: `Kolor ${choice.color} spoza palety ${part.paleta}`,
+      });
       continue;
     }
     if (palette.wykonczenia.length === 0) {
@@ -192,15 +205,27 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
       continue;
     }
     if (!choice.finish || !data.finishes[choice.finish]) {
-      issues.push({ code: "unknown_finish", part: id, message: `Nieznane wykonczenie: ${choice.finish}` });
+      issues.push({
+        code: "unknown_finish",
+        part: id,
+        message: `Nieznane wykonczenie: ${choice.finish}`,
+      });
       continue;
     }
     if (!palette.wykonczenia.includes(choice.finish)) {
-      issues.push({ code: "finish_not_allowed", part: id, message: `Wykonczenie ${choice.finish} niedostepne dla ${id}` });
+      issues.push({
+        code: "finish_not_allowed",
+        part: id,
+        message: `Wykonczenie ${choice.finish} niedostepne dla ${id}`,
+      });
       continue;
     }
     if (BACKLIGHT_FINISHES.has(choice.finish) && !partOf(model, "podswietlenie")) {
-      issues.push({ code: "needs_backlight", part: id, message: `Wykonczenie ${choice.finish} wymaga podswietlenia` });
+      issues.push({
+        code: "needs_backlight",
+        part: id,
+        message: `Wykonczenie ${choice.finish} wymaga podswietlenia`,
+      });
       continue;
     }
     parts[id] = { color: choice.color, finish: choice.finish };
@@ -212,7 +237,10 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
     const from = parts[parent];
     if (!part?.paleta || !from || input.parts[child]) continue;
     const palette = data.palettes[part.paleta]!;
-    if (paletteColors(data, part.paleta).includes(from.color) && (!from.finish || palette.wykonczenia.includes(from.finish))) {
+    if (
+      paletteColors(data, part.paleta).includes(from.color) &&
+      (!from.finish || palette.wykonczenia.includes(from.finish))
+    ) {
       parts[child] = { ...from };
     }
   }
@@ -221,7 +249,11 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
   if (print) {
     const p = data.prints.find((x) => x.id === print);
     if (!p) issues.push({ code: "unknown_print", message: `Nieznany nadruk: ${print}` });
-    else if (!p.dla.includes(model.product)) issues.push({ code: "print_not_for_model", message: `Nadruk ${print} nie pasuje do ${model.product}` });
+    else if (!p.dla.includes(model.product))
+      issues.push({
+        code: "print_not_for_model",
+        message: `Nadruk ${print} nie pasuje do ${model.product}`,
+      });
   }
 
   // Kontrast nadrukow na klawiszach (auto albo wybor ponizej 3:1).
@@ -238,10 +270,16 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
       .map((c) => ({ c, r: contrastRatio(data.colors[c]!.swatch, keySwatch) }))
       .sort((a, b) => b.r - a.r)[0]!.c;
     parts[legendId] = { color: best, finish: null };
-    if (wanted && wanted !== best) adjustments.push({ part: legendId, from: wanted, to: best, reason: "contrast" });
+    if (wanted && wanted !== best)
+      adjustments.push({ part: legendId, from: wanted, to: best, reason: "contrast" });
   }
 
-  return { ok: issues.length === 0, issues, config: { model: model.id, parts, print }, adjustments };
+  return {
+    ok: issues.length === 0,
+    issues,
+    config: { model: model.id, parts, print },
+    adjustments,
+  };
 }
 
 const zl = (v: number): Grosze => Math.round(v * 100);
@@ -264,28 +302,48 @@ export function configurationSurcharge(data: ConfData, config: Configuration): G
     if (c) {
       const inSeries = isFree("obudowa", c.color);
       switch (c.finish) {
-        case "mat": total += inSeries ? 0 : k.case_off_series_mat!; break;
-        case "polysk": total += k.case_gloss!; break;
-        case "opal": total += k.case_opal!; break;
-        case "anodowane": total += inSeries ? 0 : k.case_anodized_off_series!; break;
-        case "polprzezroczyste": total += k.case_translucent!; break;
-        case "akryl": total += k.case_acrylic!; break;
+        case "mat":
+          total += inSeries ? 0 : k.case_off_series_mat!;
+          break;
+        case "polysk":
+          total += k.case_gloss!;
+          break;
+        case "opal":
+          total += k.case_opal!;
+          break;
+        case "anodowane":
+          total += inSeries ? 0 : k.case_anodized_off_series!;
+          break;
+        case "polprzezroczyste":
+          total += k.case_translucent!;
+          break;
+        case "akryl":
+          total += k.case_acrylic!;
+          break;
       }
       const spod = config.parts.obudowa_spod;
       if (spod && (spod.color !== c.color || spod.finish !== c.finish)) total += k.case_two_tone!;
       const knob = config.parts.pokretlo;
       if (knob && knob.color !== c.color) total += k.knob_other_color!;
     }
-    const jelly = ["klawisze_alfa", "klawisze_mod", "klawisze_akcent"].some((id) => config.parts[id]?.finish === "jelly");
+    const jelly = ["klawisze_alfa", "klawisze_mod", "klawisze_akcent"].some(
+      (id) => config.parts[id]?.finish === "jelly",
+    );
     if (jelly) total += k.keys_jelly!;
   } else if (cat === "mice") {
     const m = s.mice;
     const body = config.parts.korpus;
     if (body) {
       switch (body.finish) {
-        case "mat": total += isFree("korpus", body.color) ? 0 : m.body_off_series_mat!; break;
-        case "polysk": total += m.body_gloss!; break;
-        case "opal": total += m.body_opal!; break;
+        case "mat":
+          total += isFree("korpus", body.color) ? 0 : m.body_off_series_mat!;
+          break;
+        case "polysk":
+          total += m.body_gloss!;
+          break;
+        case "opal":
+          total += m.body_opal!;
+          break;
       }
       const btn = config.parts.przyciski;
       if (btn && btn.color !== body.color) total += m.buttons_other_color!;

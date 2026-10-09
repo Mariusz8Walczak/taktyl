@@ -12,6 +12,8 @@ const SKIP_DIRS = new Set(["node_modules", "dist", ".next", ".turbo", "coverage"
 const EXT = /\.(css|scss|sass|less|ts|tsx|mts|cts|js|jsx|mjs|cjs|html|svg|json|md|mdx)$/i;
 const ALLOWED = join("packages", "tokens", "css", "tokens.css");
 const GRAPHICS_DIR = join("apps", "web", "public") + sep;
+// Zewnetrzny dekoder Draco (three.js, MIT) w apps/web/public/3d/draco: kod cudzy, nie stylowanie (ADR-0011).
+const VENDOR_DIR = join("apps", "web", "public", "3d", "draco") + sep;
 // Hex: '#' nie moze byc czescia encji HTML (&#106;) ani wnetrzem tokenu (a#fff) - I-007.
 const PATTERNS = [/(?<![&\w])#[0-9a-fA-F]{3,8}\b/, /rgb\(/i];
 
@@ -24,6 +26,7 @@ function walk(dir) {
       const rel = relative(root, join(dir, e.name));
       if (rel === ALLOWED) continue;
       if (rel.startsWith(GRAPHICS_DIR) && /\.svg$/i.test(e.name)) continue;
+      if (rel.startsWith(VENDOR_DIR)) continue;
       readFileSync(join(dir, e.name), "utf8")
         .split(/\r?\n/)
         .forEach((line, i) => {

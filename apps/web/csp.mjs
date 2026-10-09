@@ -19,7 +19,9 @@ export function buildCsp(opts = {}) {
     : [];
   const directives = {
     "default-src": ["'self'"],
-    "script-src": ["'self'", "'unsafe-inline'", ...googleScripts],
+    // ADR-0011: dekoder Draco konfiguratora 3D to WebAssembly uruchamiany w workerze z blob: (`worker-src`); `'unsafe-eval'` nadal zakazany.
+    "script-src": ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'", ...googleScripts],
+    "worker-src": ["'self'", "blob:"],
     "style-src": ["'self'", "'unsafe-inline'"],
     "img-src": ["'self'", "data:", "blob:", ...googleConnect],
     "font-src": ["'self'"],
