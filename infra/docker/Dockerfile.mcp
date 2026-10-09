@@ -1,0 +1,56 @@
+# syntax=docker/dockerfile:1.7
+# I-014 (ADR-0009): obraz serwera MCP (front office albo backoffice). Kontekst budowy: korzen repo.
+#   docker build -f infra/docker/Dockerfile.mcp --build-arg APP=mcp-front -t taktyl-mcp-front:local .
+#   docker build -f infra/docker/Dockerfile.mcp --build-arg APP=mcp-admin -t taktyl-mcp-admin:local .
+# Obraz bazowy: tag z konkretna wersja + digest (jak apps/api/Dockerfile; aktualizuje Dependabot, ADR-0009).
+ARG NODE_IMAGE=node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+ARG APP=mcp-front
+
+FROM ${NODE_IMAGE} AS base
+ENV PNPM_HOME=/pnpm \
+    npm_config_store_dir=/pnpm/store \
+    CI=true
+ENV PATH=$PNPM_HOME:$PATH
+RUN corepack enable \
+ && corepack prepare pnpm@12.10.1 --activate
+WORKDIR /app
+
+# 1) Przycinamy monorepo do wybranego serwera i jego zaleznosci workspace.
+FROM base AS pruner
+ARG APP
+RUN npm install -g turbo@2.11.7
+COPY . .
+RUN turbo prune @taktyl/${APP} --docker
+
+# 2) Pelna instalacja i bundle tsup (pakiety @taktyl/* wchodza do bundla).
+FROM base AS build
+ARG APP
+COPY --from=pruner /app/out/json/ ./
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile
+COPY --from=pruner /app/out/full/ ./
+COPY tsconfig.base.json ./
+RUN pnpm turbo run build --filter=@taktyl/${APP}
+
+# 3) Tylko zaleznosci produkcyjne (SDK MCP, zod).
+FROM base AS prod-deps
+COPY --from=pruner /app/out/json/ ./
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile --prod --ignore-scripts
+
+# 4) Finalny obraz: bez narzedzi budowania, bez npm/yarn, uzytkownik nie-root, zadnych plikow danych ani sekretow.
+FROM ${NODE_IMAGE} AS runtime
+ARG APP
+ENV NODE_ENV=production \
+    TAKTYL_APP=${APP}
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+           /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-*
+WORKDIR /app
+COPY --from=prod-deps --chown=node:node /app/node_modules ./node_modules
+COPY --from=prod-deps --chown=node:node /app/apps/${APP}/node_modules ./apps/${APP}/node_modules
+COPY --from=build --chown=node:node /app/apps/${APP}/package.json ./apps/${APP}/package.json
+COPY --from=build --chown=node:node /app/apps/${APP}/dist ./apps/${APP}/dist
+USER node
+WORKDIR /app/apps/${APP}
+EXPOSE 3333
+CMD ["node", "dist/main.js"]

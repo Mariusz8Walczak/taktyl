@@ -141,6 +141,20 @@ Start od zera (S31): `docker compose --profile demo up --build --wait` na świe�
 
 **Uwaga bezpieczeństwa: nigdy nie ustawiaj `DEMO_MODE=true` w środowisku z prawdziwymi danymi.** Reset usuwa zamówienia i zgłoszenia, a konto `viewer` wchodzi bez hasła.
 
+## Serwery MCP
+
+Dwa serwery [MCP](https://modelcontextprotocol.io) (I-014, [`docs/24-mcp.md`](docs/24-mcp.md)) pozwalają klientowi MCP, np. Claude Code, używać sklepu przez jego API:
+
+- **`mcp-front`** (front office, klasa **open**): publiczne `/v1`, bez logowania i kluczy, tylko odczyt plus wycena koszyka; stdio i Streamable HTTP. Narzędzia zamówień są wyłączone, dopóki nie ustawisz `TAKTYL_MCP_ALLOW_ORDERS=true`.
+- **`mcp-admin`** (backoffice, tylko stdio): pełny panel przez `/v1/admin` z kontem z `TAKTYL_ADMIN_EMAIL` i `TAKTYL_ADMIN_PASSWORD` (albo `TAKTYL_ADMIN_DEMO=true`, rola viewer). Operacje nieodwracalne wymagają `confirm: true`.
+
+```bash
+docker compose --profile mcp run --rm -T --no-deps --build mcp-front   # stdio
+docker compose --profile mcp up --build -d --wait mcp-front-http        # HTTP, domyślnie 127.0.0.1:3333/mcp
+```
+
+Konfiguracja klienta: `.mcp.json.example`. Test na działającym stosie: `make smoke-mcp`.
+
 ## Stos i wersje
 
 Źródło prawdy: `package.json` (korzeń, `apps/*`, `packages/*`); zasady przypinania: `docs/adr/0010-aktualizacja-zaleznosci.md`.
@@ -185,7 +199,7 @@ Start od zera (S31): `docker compose --profile demo up --build --wait` na świe�
 
 ## Mapa dokumentacji
 
-Kolejność czytania: `CLAUDE.md` → ten plik → `docs/01`–`docs/12` → `docs/adr/` → `docs/13`–`docs/23` → `docs/decyzje.md`.
+Kolejność czytania: `CLAUDE.md` → ten plik → `docs/01`–`docs/12` → `docs/adr/` → `docs/13`–`docs/24` → `docs/decyzje.md`.
 
 | Dokument | Zawartość |
 |---|---|
@@ -213,6 +227,7 @@ Kolejność czytania: `CLAUDE.md` → ten plik → `docs/01`–`docs/12` → `do
 | `docs/21-plan-wdrozenia.md` | etapy i kamienie milowe |
 | `docs/22-przeglad-bezpieczenstwa.md` | przegląd bezpieczeństwa: ustalenia z wagą, naprawy |
 | `docs/23-raport-odbioru.md` | raport odbioru S1–S36 (TAKTYL-71) |
+| `docs/24-mcp.md` | serwery MCP: front office (klasa open) i backoffice, narzędzia, konfiguracja, bezpieczeństwo |
 | `docs/adr/` | ADR-0001…0010: stos, monorepo, propagacja zmian, szablon, baza, backpanel, koszyk, higiena repo, Docker, zależności |
 | `docs/decyzje.md` | dziennik decyzji i pytania otwarte |
 
@@ -223,11 +238,14 @@ apps/
   api/        NestJS: API sklepu i backpanelu, Prisma, seed
   web/        Next.js: sklep
   admin/      Next.js: backpanel
+  mcp-front/  serwer MCP front office (klasa open, publiczne API)
+  mcp-admin/  serwer MCP backoffice (stdio, uwierzytelniony)
 packages/
   domain/     czysta logika: grosze, rabat setu, reguły dopasowania, wysyłka, NIP, liczebniki
   contracts/  schematy Zod i typy DTO, klient HTTP
   tokens/     tokens.css bez zmian + taktyl.css
   ui/         wspólne komponenty React na tokenach
+  mcp-core/   rdzeń serwerów MCP: klient API, definicje narzędzi, transport HTTP
 data/         seed (jedyne źródło danych początkowych), _generator.py
 assets/       manifest zdjęć, tokeny, fonty Archivo (OFL)
 content/      treści (strony, poradniki, FAQ)
