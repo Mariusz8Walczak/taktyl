@@ -50,7 +50,7 @@ test.describe("Listing: filtry w adresie (S1-S4)", () => {
     for (const name of ["Kwarc 60", "Łupek 65", "Kreda 98", "Granit TKL", "Marmur 100"]) {
       await expect(productLink(page, name)).toBeVisible();
     }
-    for (const name of ["Kwarc 60", "Bazalt 75"]) {
+    for (const name of ["Bazalt 75"]) {
       await expect(productLink(page, name)).toHaveCount(0);
     }
   });
