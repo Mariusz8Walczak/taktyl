@@ -80,13 +80,13 @@ describe.skipIf(!hasDb)("B-500..B-508 media w backpanelu (PostgreSQL)", () => {
   const row = (key: string) => t.prisma.productImage.findUniqueOrThrow({ where: { key } });
   const outbox = () => t.prisma.outbox.findMany({ orderBy: { id: "asc" } });
 
-  it("B-500, B-501: po seedzie 190 wpisow, 76 w P0, wszystkie brak; filtry i licznik z danych", async () => {
+  it("B-500, B-501: po seedzie 300 wpisow, 76 w P0, wszystkie brak; filtry i licznik z danych", async () => {
     const res = await get("viewer", "/v1/admin/media?per_page=200");
     expect(res.status).toBe(200);
     const body = mediaListSchema.parse(res.body);
-    expect(body.total).toBe(190);
-    expect(body.items).toHaveLength(190);
-    expect(body.progress).toEqual({ p0_ready: 0, p0_total: 76, total_ready: 0, total: 190 });
+    expect(body.total).toBe(300);
+    expect(body.items).toHaveLength(200); // per_page ma limit 200
+    expect(body.progress).toEqual({ p0_ready: 0, p0_total: 76, total_ready: 0, total: 300 });
     expect(body.items.every((e) => e.status === "brak")).toBe(true);
 
     const top = body.items.find((e) => e.key === TOP);

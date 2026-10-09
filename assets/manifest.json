@@ -3484,5 +3484,1765 @@
     },
     "priority": "P0",
     "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_turkus_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "turkus",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Turkus",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_turkus_01-34-400.webp",
+      "img/produkty/k-kwarc-60_turkus_01-34-800.webp",
+      "img/produkty/k-kwarc-60_turkus_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_rubin_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "rubin",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Rubin",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_rubin_01-34-400.webp",
+      "img/produkty/k-kwarc-60_rubin_01-34-800.webp",
+      "img/produkty/k-kwarc-60_rubin_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_jadeit_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "jadeit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Jadeit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_jadeit_01-34-400.webp",
+      "img/produkty/k-kwarc-60_jadeit_01-34-800.webp",
+      "img/produkty/k-kwarc-60_jadeit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_bizmut_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "bizmut",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Bizmut",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_bizmut_01-34-400.webp",
+      "img/produkty/k-kwarc-60_bizmut_01-34-800.webp",
+      "img/produkty/k-kwarc-60_bizmut_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_granat_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "granat",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Granat",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_granat_01-34-400.webp",
+      "img/produkty/k-kwarc-60_granat_01-34-800.webp",
+      "img/produkty/k-kwarc-60_granat_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_amazonit_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "amazonit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Amazonit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_amazonit_01-34-400.webp",
+      "img/produkty/k-kwarc-60_amazonit_01-34-800.webp",
+      "img/produkty/k-kwarc-60_amazonit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kwarc-60_obsydian_01-34",
+    "product_id": "k-kwarc-60",
+    "color": "obsydian",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Obsydian",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kwarc-60_obsydian_01-34-400.webp",
+      "img/produkty/k-kwarc-60_obsydian_01-34-800.webp",
+      "img/produkty/k-kwarc-60_obsydian_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_ametyst_01-34",
+    "product_id": "k-lupek-65",
+    "color": "ametyst",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Ametyst",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_ametyst_01-34-400.webp",
+      "img/produkty/k-lupek-65_ametyst_01-34-800.webp",
+      "img/produkty/k-lupek-65_ametyst_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_cytryn_01-34",
+    "product_id": "k-lupek-65",
+    "color": "cytryn",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Cytryn",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_cytryn_01-34-400.webp",
+      "img/produkty/k-lupek-65_cytryn_01-34-800.webp",
+      "img/produkty/k-lupek-65_cytryn_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_rodonit_01-34",
+    "product_id": "k-lupek-65",
+    "color": "rodonit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Rodonit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_rodonit_01-34-400.webp",
+      "img/produkty/k-lupek-65_rodonit_01-34-800.webp",
+      "img/produkty/k-lupek-65_rodonit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_bursztyn_01-34",
+    "product_id": "k-lupek-65",
+    "color": "bursztyn",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Bursztyn",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_bursztyn_01-34-400.webp",
+      "img/produkty/k-lupek-65_bursztyn_01-34-800.webp",
+      "img/produkty/k-lupek-65_bursztyn_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_perydot_01-34",
+    "product_id": "k-lupek-65",
+    "color": "perydot",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Perydot",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_perydot_01-34-400.webp",
+      "img/produkty/k-lupek-65_perydot_01-34-800.webp",
+      "img/produkty/k-lupek-65_perydot_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_larimar_01-34",
+    "product_id": "k-lupek-65",
+    "color": "larimar",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Larimar",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_larimar_01-34-400.webp",
+      "img/produkty/k-lupek-65_larimar_01-34-800.webp",
+      "img/produkty/k-lupek-65_larimar_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-lupek-65_rodochrozyt_01-34",
+    "product_id": "k-lupek-65",
+    "color": "rodochrozyt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Rodochrozyt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-lupek-65_rodochrozyt_01-34-400.webp",
+      "img/produkty/k-lupek-65_rodochrozyt_01-34-800.webp",
+      "img/produkty/k-lupek-65_rodochrozyt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_malachit_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "malachit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Malachit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_malachit_01-34-400.webp",
+      "img/produkty/k-bazalt-75_malachit_01-34-800.webp",
+      "img/produkty/k-bazalt-75_malachit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_szmaragd_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "szmaragd",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Szmaragd",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_szmaragd_01-34-400.webp",
+      "img/produkty/k-bazalt-75_szmaragd_01-34-800.webp",
+      "img/produkty/k-bazalt-75_szmaragd_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_lapis_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "lapis",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Lapis",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_lapis_01-34-400.webp",
+      "img/produkty/k-bazalt-75_lapis_01-34-800.webp",
+      "img/produkty/k-bazalt-75_lapis_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_piryt_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "piryt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Piryt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_piryt_01-34-400.webp",
+      "img/produkty/k-bazalt-75_piryt_01-34-800.webp",
+      "img/produkty/k-bazalt-75_piryt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_chryzokola_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "chryzokola",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Chryzokola",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_chryzokola_01-34-400.webp",
+      "img/produkty/k-bazalt-75_chryzokola_01-34-800.webp",
+      "img/produkty/k-bazalt-75_chryzokola_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_morganit_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "morganit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Morganit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_morganit_01-34-400.webp",
+      "img/produkty/k-bazalt-75_morganit_01-34-800.webp",
+      "img/produkty/k-bazalt-75_morganit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_galena_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "galena",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Galena",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_galena_01-34-400.webp",
+      "img/produkty/k-bazalt-75_galena_01-34-800.webp",
+      "img/produkty/k-bazalt-75_galena_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-bazalt-75_akwamaryn_01-34",
+    "product_id": "k-bazalt-75",
+    "color": "akwamaryn",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Akwamaryn",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-bazalt-75_akwamaryn_01-34-400.webp",
+      "img/produkty/k-bazalt-75_akwamaryn_01-34-800.webp",
+      "img/produkty/k-bazalt-75_akwamaryn_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_fluoryt_01-34",
+    "product_id": "k-kreda-98",
+    "color": "fluoryt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Fluoryt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_fluoryt_01-34-400.webp",
+      "img/produkty/k-kreda-98_fluoryt_01-34-800.webp",
+      "img/produkty/k-kreda-98_fluoryt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_kalcyt_01-34",
+    "product_id": "k-kreda-98",
+    "color": "kalcyt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kalcyt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_kalcyt_01-34-400.webp",
+      "img/produkty/k-kreda-98_kalcyt_01-34-800.webp",
+      "img/produkty/k-kreda-98_kalcyt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_awenturyn_01-34",
+    "product_id": "k-kreda-98",
+    "color": "awenturyn",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Awenturyn",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_awenturyn_01-34-400.webp",
+      "img/produkty/k-kreda-98_awenturyn_01-34-800.webp",
+      "img/produkty/k-kreda-98_awenturyn_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_turmalin_01-34",
+    "product_id": "k-kreda-98",
+    "color": "turmalin",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Turmalin",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_turmalin_01-34-400.webp",
+      "img/produkty/k-kreda-98_turmalin_01-34-800.webp",
+      "img/produkty/k-kreda-98_turmalin_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_howlit_01-34",
+    "product_id": "k-kreda-98",
+    "color": "howlit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Howlit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_howlit_01-34-400.webp",
+      "img/produkty/k-kreda-98_howlit_01-34-800.webp",
+      "img/produkty/k-kreda-98_howlit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-kreda-98_jaspis_01-34",
+    "product_id": "k-kreda-98",
+    "color": "jaspis",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Jaspis",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-kreda-98_jaspis_01-34-400.webp",
+      "img/produkty/k-kreda-98_jaspis_01-34-800.webp",
+      "img/produkty/k-kreda-98_jaspis_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_opal_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "opal",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Opal",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_opal_01-34-400.webp",
+      "img/produkty/k-granit-tkl_opal_01-34-800.webp",
+      "img/produkty/k-granit-tkl_opal_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_szafir_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "szafir",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Szafir",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_szafir_01-34-400.webp",
+      "img/produkty/k-granit-tkl_szafir_01-34-800.webp",
+      "img/produkty/k-granit-tkl_szafir_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_hematyt_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "hematyt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Hematyt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_hematyt_01-34-400.webp",
+      "img/produkty/k-granit-tkl_hematyt_01-34-800.webp",
+      "img/produkty/k-granit-tkl_hematyt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_karneol_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "karneol",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Karneol",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_karneol_01-34-400.webp",
+      "img/produkty/k-granit-tkl_karneol_01-34-800.webp",
+      "img/produkty/k-granit-tkl_karneol_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_selenit_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "selenit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Selenit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_selenit_01-34-400.webp",
+      "img/produkty/k-granit-tkl_selenit_01-34-800.webp",
+      "img/produkty/k-granit-tkl_selenit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-granit-tkl_lignit_01-34",
+    "product_id": "k-granit-tkl",
+    "color": "lignit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Lignit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-granit-tkl_lignit_01-34-400.webp",
+      "img/produkty/k-granit-tkl_lignit_01-34-800.webp",
+      "img/produkty/k-granit-tkl_lignit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_onyks_01-34",
+    "product_id": "k-marmur-100",
+    "color": "onyks",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Onyks",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_onyks_01-34-400.webp",
+      "img/produkty/k-marmur-100_onyks_01-34-800.webp",
+      "img/produkty/k-marmur-100_onyks_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_labradoryt_01-34",
+    "product_id": "k-marmur-100",
+    "color": "labradoryt",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Labradoryt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_labradoryt_01-34-400.webp",
+      "img/produkty/k-marmur-100_labradoryt_01-34-800.webp",
+      "img/produkty/k-marmur-100_labradoryt_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_dolomit_01-34",
+    "product_id": "k-marmur-100",
+    "color": "dolomit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Dolomit",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_dolomit_01-34-400.webp",
+      "img/produkty/k-marmur-100_dolomit_01-34-800.webp",
+      "img/produkty/k-marmur-100_dolomit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_celestyn_01-34",
+    "product_id": "k-marmur-100",
+    "color": "celestyn",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Celestyn",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_celestyn_01-34-400.webp",
+      "img/produkty/k-marmur-100_celestyn_01-34-800.webp",
+      "img/produkty/k-marmur-100_celestyn_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_spinel_01-34",
+    "product_id": "k-marmur-100",
+    "color": "spinel",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Spinel",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_spinel_01-34-400.webp",
+      "img/produkty/k-marmur-100_spinel_01-34-800.webp",
+      "img/produkty/k-marmur-100_spinel_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "k-marmur-100_porfir_01-34",
+    "product_id": "k-marmur-100",
+    "color": "porfir",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Porfir",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/k-marmur-100_porfir_01-34-400.webp",
+      "img/produkty/k-marmur-100_porfir_01-34-800.webp",
+      "img/produkty/k-marmur-100_porfir_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_zimorodek_01-34",
+    "product_id": "m-jerzyk",
+    "color": "zimorodek",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Zimorodek",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_zimorodek_01-34-400.webp",
+      "img/produkty/m-jerzyk_zimorodek_01-34-800.webp",
+      "img/produkty/m-jerzyk_zimorodek_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_bogatka_01-34",
+    "product_id": "m-jerzyk",
+    "color": "bogatka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Bogatka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_bogatka_01-34-400.webp",
+      "img/produkty/m-jerzyk_bogatka_01-34-800.webp",
+      "img/produkty/m-jerzyk_bogatka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_szpak_01-34",
+    "product_id": "m-jerzyk",
+    "color": "szpak",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Szpak",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_szpak_01-34-400.webp",
+      "img/produkty/m-jerzyk_szpak_01-34-800.webp",
+      "img/produkty/m-jerzyk_szpak_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_kraska_01-34",
+    "product_id": "m-jerzyk",
+    "color": "kraska",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kraska",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_kraska_01-34-400.webp",
+      "img/produkty/m-jerzyk_kraska_01-34-800.webp",
+      "img/produkty/m-jerzyk_kraska_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_sowa_01-34",
+    "product_id": "m-jerzyk",
+    "color": "sowa",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Sowa",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_sowa_01-34-400.webp",
+      "img/produkty/m-jerzyk_sowa_01-34-800.webp",
+      "img/produkty/m-jerzyk_sowa_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_czajka_01-34",
+    "product_id": "m-jerzyk",
+    "color": "czajka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Czajka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_czajka_01-34-400.webp",
+      "img/produkty/m-jerzyk_czajka_01-34-800.webp",
+      "img/produkty/m-jerzyk_czajka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_wilga_01-34",
+    "product_id": "m-jerzyk",
+    "color": "wilga",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Wilga",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_wilga_01-34-400.webp",
+      "img/produkty/m-jerzyk_wilga_01-34-800.webp",
+      "img/produkty/m-jerzyk_wilga_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-jerzyk_kukulka_01-34",
+    "product_id": "m-jerzyk",
+    "color": "kukulka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kukułka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-jerzyk_kukulka_01-34-400.webp",
+      "img/produkty/m-jerzyk_kukulka_01-34-800.webp",
+      "img/produkty/m-jerzyk_kukulka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_gil_01-34",
+    "product_id": "m-mewa",
+    "color": "gil",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Gil",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_gil_01-34-400.webp",
+      "img/produkty/m-mewa_gil_01-34-800.webp",
+      "img/produkty/m-mewa_gil_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_modraszka_01-34",
+    "product_id": "m-mewa",
+    "color": "modraszka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Modraszka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_modraszka_01-34-400.webp",
+      "img/produkty/m-mewa_modraszka_01-34-800.webp",
+      "img/produkty/m-mewa_modraszka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_rudzik_01-34",
+    "product_id": "m-mewa",
+    "color": "rudzik",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Rudzik",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_rudzik_01-34-400.webp",
+      "img/produkty/m-mewa_rudzik_01-34-800.webp",
+      "img/produkty/m-mewa_rudzik_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_koliber_01-34",
+    "product_id": "m-mewa",
+    "color": "koliber",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Koliber",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_koliber_01-34-400.webp",
+      "img/produkty/m-mewa_koliber_01-34-800.webp",
+      "img/produkty/m-mewa_koliber_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_ibis_01-34",
+    "product_id": "m-mewa",
+    "color": "ibis",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Ibis",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_ibis_01-34-400.webp",
+      "img/produkty/m-mewa_ibis_01-34-800.webp",
+      "img/produkty/m-mewa_ibis_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_raniuszek_01-34",
+    "product_id": "m-mewa",
+    "color": "raniuszek",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Raniuszek",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_raniuszek_01-34-400.webp",
+      "img/produkty/m-mewa_raniuszek_01-34-800.webp",
+      "img/produkty/m-mewa_raniuszek_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_trznadel_01-34",
+    "product_id": "m-mewa",
+    "color": "trznadel",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Trznadel",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_trznadel_01-34-400.webp",
+      "img/produkty/m-mewa_trznadel_01-34-800.webp",
+      "img/produkty/m-mewa_trznadel_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-mewa_flaming_01-34",
+    "product_id": "m-mewa",
+    "color": "flaming",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Flaming",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-mewa_flaming_01-34-400.webp",
+      "img/produkty/m-mewa_flaming_01-34-800.webp",
+      "img/produkty/m-mewa_flaming_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_dudek_01-34",
+    "product_id": "m-pustulka",
+    "color": "dudek",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Dudek",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_dudek_01-34-400.webp",
+      "img/produkty/m-pustulka_dudek_01-34-800.webp",
+      "img/produkty/m-pustulka_dudek_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_szczygiel_01-34",
+    "product_id": "m-pustulka",
+    "color": "szczygiel",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Szczygieł",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_szczygiel_01-34-400.webp",
+      "img/produkty/m-pustulka_szczygiel_01-34-800.webp",
+      "img/produkty/m-pustulka_szczygiel_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_zolna_01-34",
+    "product_id": "m-pustulka",
+    "color": "zolna",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Żołna",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_zolna_01-34-400.webp",
+      "img/produkty/m-pustulka_zolna_01-34-800.webp",
+      "img/produkty/m-pustulka_zolna_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_puszczyk_01-34",
+    "product_id": "m-pustulka",
+    "color": "puszczyk",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Puszczyk",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_puszczyk_01-34-400.webp",
+      "img/produkty/m-pustulka_puszczyk_01-34-800.webp",
+      "img/produkty/m-pustulka_puszczyk_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_golab_01-34",
+    "product_id": "m-pustulka",
+    "color": "golab",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Gołąb",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_golab_01-34-400.webp",
+      "img/produkty/m-pustulka_golab_01-34-800.webp",
+      "img/produkty/m-pustulka_golab_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_kowalik_01-34",
+    "product_id": "m-pustulka",
+    "color": "kowalik",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kowalik",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_kowalik_01-34-400.webp",
+      "img/produkty/m-pustulka_kowalik_01-34-800.webp",
+      "img/produkty/m-pustulka_kowalik_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_jastrzab_01-34",
+    "product_id": "m-pustulka",
+    "color": "jastrzab",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Jastrząb",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_jastrzab_01-34-400.webp",
+      "img/produkty/m-pustulka_jastrzab_01-34-800.webp",
+      "img/produkty/m-pustulka_jastrzab_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-pustulka_pelikan_01-34",
+    "product_id": "m-pustulka",
+    "color": "pelikan",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Pelikan",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-pustulka_pelikan_01-34-400.webp",
+      "img/produkty/m-pustulka_pelikan_01-34-800.webp",
+      "img/produkty/m-pustulka_pelikan_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_kanarek_01-34",
+    "product_id": "m-wrobel",
+    "color": "kanarek",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kanarek",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_kanarek_01-34-400.webp",
+      "img/produkty/m-wrobel_kanarek_01-34-800.webp",
+      "img/produkty/m-wrobel_kanarek_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_sroka_01-34",
+    "product_id": "m-wrobel",
+    "color": "sroka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Sroka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_sroka_01-34-400.webp",
+      "img/produkty/m-wrobel_sroka_01-34-800.webp",
+      "img/produkty/m-wrobel_sroka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_labedz_01-34",
+    "product_id": "m-wrobel",
+    "color": "labedz",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Łabędź",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_labedz_01-34-400.webp",
+      "img/produkty/m-wrobel_labedz_01-34-800.webp",
+      "img/produkty/m-wrobel_labedz_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_tukan_01-34",
+    "product_id": "m-wrobel",
+    "color": "tukan",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Tukan",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_tukan_01-34-400.webp",
+      "img/produkty/m-wrobel_tukan_01-34-800.webp",
+      "img/produkty/m-wrobel_tukan_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_zieba_01-34",
+    "product_id": "m-wrobel",
+    "color": "zieba",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Zięba",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_zieba_01-34-400.webp",
+      "img/produkty/m-wrobel_zieba_01-34-800.webp",
+      "img/produkty/m-wrobel_zieba_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-wrobel_pliszka_01-34",
+    "product_id": "m-wrobel",
+    "color": "pliszka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Pliszka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-wrobel_pliszka_01-34-400.webp",
+      "img/produkty/m-wrobel_pliszka_01-34-800.webp",
+      "img/produkty/m-wrobel_pliszka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_kruk_01-34",
+    "product_id": "m-kos",
+    "color": "kruk",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kruk",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_kruk_01-34-400.webp",
+      "img/produkty/m-kos_kruk_01-34-800.webp",
+      "img/produkty/m-kos_kruk_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_dzieciol_01-34",
+    "product_id": "m-kos",
+    "color": "dzieciol",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Dzięcioł",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_dzieciol_01-34-400.webp",
+      "img/produkty/m-kos_dzieciol_01-34-800.webp",
+      "img/produkty/m-kos_dzieciol_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_paw_01-34",
+    "product_id": "m-kos",
+    "color": "paw",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Paw",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_paw_01-34-400.webp",
+      "img/produkty/m-kos_paw_01-34-800.webp",
+      "img/produkty/m-kos_paw_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_bazant_01-34",
+    "product_id": "m-kos",
+    "color": "bazant",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Bażant",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_bazant_01-34-400.webp",
+      "img/produkty/m-kos_bazant_01-34-800.webp",
+      "img/produkty/m-kos_bazant_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_bocian_01-34",
+    "product_id": "m-kos",
+    "color": "bocian",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Bocian",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_bocian_01-34-400.webp",
+      "img/produkty/m-kos_bocian_01-34-800.webp",
+      "img/produkty/m-kos_bocian_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_dzwoniec_01-34",
+    "product_id": "m-kos",
+    "color": "dzwoniec",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Dzwoniec",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_dzwoniec_01-34-400.webp",
+      "img/produkty/m-kos_dzwoniec_01-34-800.webp",
+      "img/produkty/m-kos_dzwoniec_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-kos_sojka_01-34",
+    "product_id": "m-kos",
+    "color": "sojka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Sójka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-kos_sojka_01-34-400.webp",
+      "img/produkty/m-kos_sojka_01-34-800.webp",
+      "img/produkty/m-kos_sojka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_kormoran_01-34",
+    "product_id": "m-czapla",
+    "color": "kormoran",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kormoran",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_kormoran_01-34-400.webp",
+      "img/produkty/m-czapla_kormoran_01-34-800.webp",
+      "img/produkty/m-czapla_kormoran_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_zuraw_01-34",
+    "product_id": "m-czapla",
+    "color": "zuraw",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Żuraw",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_zuraw_01-34-400.webp",
+      "img/produkty/m-czapla_zuraw_01-34-800.webp",
+      "img/produkty/m-czapla_zuraw_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "m-czapla_ara_01-34",
+    "product_id": "m-czapla",
+    "color": "ara",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Ara",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/m-czapla_ara_01-34-400.webp",
+      "img/produkty/m-czapla_ara_01-34-800.webp",
+      "img/produkty/m-czapla_ara_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_paski_01-34",
+    "product_id": "p-tafla",
+    "color": "paski",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Paski",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_paski_01-34-400.webp",
+      "img/produkty/p-tafla_paski_01-34-800.webp",
+      "img/produkty/p-tafla_paski_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_krata_01-34",
+    "product_id": "p-len",
+    "color": "krata",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Krata",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_krata_01-34-400.webp",
+      "img/produkty/p-len_krata_01-34-800.webp",
+      "img/produkty/p-len_krata_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_szachownica_01-34",
+    "product_id": "p-tafla",
+    "color": "szachownica",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Szachownica",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_szachownica_01-34-400.webp",
+      "img/produkty/p-tafla_szachownica_01-34-800.webp",
+      "img/produkty/p-tafla_szachownica_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_groszki_01-34",
+    "product_id": "p-tafla",
+    "color": "groszki",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Groszki",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_groszki_01-34-400.webp",
+      "img/produkty/p-tafla_groszki_01-34-800.webp",
+      "img/produkty/p-tafla_groszki_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_lastryko_01-34",
+    "product_id": "p-tafla",
+    "color": "lastryko",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Lastryko",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_lastryko_01-34-400.webp",
+      "img/produkty/p-tafla_lastryko_01-34-800.webp",
+      "img/produkty/p-tafla_lastryko_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_konfetti_01-34",
+    "product_id": "p-szron",
+    "color": "konfetti",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Konfetti",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_konfetti_01-34-400.webp",
+      "img/produkty/p-szron_konfetti_01-34-800.webp",
+      "img/produkty/p-szron_konfetti_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_moro_01-34",
+    "product_id": "p-tafla",
+    "color": "moro",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Moro",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_moro_01-34-400.webp",
+      "img/produkty/p-tafla_moro_01-34-800.webp",
+      "img/produkty/p-tafla_moro_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_fala_01-34",
+    "product_id": "p-tafla",
+    "color": "fala",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Fala",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_fala_01-34-400.webp",
+      "img/produkty/p-tafla_fala_01-34-800.webp",
+      "img/produkty/p-tafla_fala_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_poziomica_01-34",
+    "product_id": "p-tafla",
+    "color": "poziomica",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Poziomica",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_poziomica_01-34-400.webp",
+      "img/produkty/p-tafla_poziomica_01-34-800.webp",
+      "img/produkty/p-tafla_poziomica_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_siatka_01-34",
+    "product_id": "p-szron",
+    "color": "siatka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Siatka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_siatka_01-34-400.webp",
+      "img/produkty/p-szron_siatka_01-34-800.webp",
+      "img/produkty/p-szron_siatka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_swit_01-34",
+    "product_id": "p-tafla",
+    "color": "swit",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Świt",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_swit_01-34-400.webp",
+      "img/produkty/p-tafla_swit_01-34-800.webp",
+      "img/produkty/p-tafla_swit_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_zmierzch_01-34",
+    "product_id": "p-tafla",
+    "color": "zmierzch",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Zmierzch",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_zmierzch_01-34-400.webp",
+      "img/produkty/p-tafla_zmierzch_01-34-800.webp",
+      "img/produkty/p-tafla_zmierzch_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_raster_01-34",
+    "product_id": "p-tafla",
+    "color": "raster",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Raster",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_raster_01-34-400.webp",
+      "img/produkty/p-tafla_raster_01-34-800.webp",
+      "img/produkty/p-tafla_raster_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_zylka_01-34",
+    "product_id": "p-lod",
+    "color": "zylka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Żyłka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_zylka_01-34-400.webp",
+      "img/produkty/p-lod_zylka_01-34-800.webp",
+      "img/produkty/p-lod_zylka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_piksel_01-34",
+    "product_id": "p-tafla",
+    "color": "piksel",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Piksel",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_piksel_01-34-400.webp",
+      "img/produkty/p-tafla_piksel_01-34-800.webp",
+      "img/produkty/p-tafla_piksel_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_mozaika_01-34",
+    "product_id": "p-tafla",
+    "color": "mozaika",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Mozaika",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_mozaika_01-34-400.webp",
+      "img/produkty/p-tafla_mozaika_01-34-800.webp",
+      "img/produkty/p-tafla_mozaika_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-szron_neon_01-34",
+    "product_id": "p-szron",
+    "color": "neon",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Neon",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-szron_neon_01-34-400.webp",
+      "img/produkty/p-szron_neon_01-34-800.webp",
+      "img/produkty/p-szron_neon_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_gwiazdy_01-34",
+    "product_id": "p-tafla",
+    "color": "gwiazdy",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Gwiazdy",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_gwiazdy_01-34-400.webp",
+      "img/produkty/p-tafla_gwiazdy_01-34-800.webp",
+      "img/produkty/p-tafla_gwiazdy_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_lawa_01-34",
+    "product_id": "p-tafla",
+    "color": "lawa",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Lawa",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_lawa_01-34-400.webp",
+      "img/produkty/p-tafla_lawa_01-34-800.webp",
+      "img/produkty/p-tafla_lawa_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_zebra_01-34",
+    "product_id": "p-tafla",
+    "color": "zebra",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Zebra",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_zebra_01-34-400.webp",
+      "img/produkty/p-tafla_zebra_01-34-800.webp",
+      "img/produkty/p-tafla_zebra_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_pantera_01-34",
+    "product_id": "p-tafla",
+    "color": "pantera",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Pantera",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_pantera_01-34-400.webp",
+      "img/produkty/p-tafla_pantera_01-34-800.webp",
+      "img/produkty/p-tafla_pantera_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_mieta_01-34",
+    "product_id": "p-filc",
+    "color": "mieta",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Mięta",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_mieta_01-34-400.webp",
+      "img/produkty/p-filc_mieta_01-34-800.webp",
+      "img/produkty/p-filc_mieta_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_malina_01-34",
+    "product_id": "p-filc",
+    "color": "malina",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Malina",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_malina_01-34-400.webp",
+      "img/produkty/p-filc_malina_01-34-800.webp",
+      "img/produkty/p-filc_malina_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-filc_musztarda_01-34",
+    "product_id": "p-filc",
+    "color": "musztarda",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Musztarda",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-filc_musztarda_01-34-400.webp",
+      "img/produkty/p-filc_musztarda_01-34-800.webp",
+      "img/produkty/p-filc_musztarda_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_zorza_01-34",
+    "product_id": "p-lod",
+    "color": "zorza",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Zorza",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_zorza_01-34-400.webp",
+      "img/produkty/p-lod_zorza_01-34-800.webp",
+      "img/produkty/p-lod_zorza_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-lod_holo_01-34",
+    "product_id": "p-lod",
+    "color": "holo",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Holo",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-lod_holo_01-34-400.webp",
+      "img/produkty/p-lod_holo_01-34-800.webp",
+      "img/produkty/p-lod_holo_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-len_plotno_01-34",
+    "product_id": "p-len",
+    "color": "plotno",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Płótno",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-len_plotno_01-34-400.webp",
+      "img/produkty/p-len_plotno_01-34-800.webp",
+      "img/produkty/p-len_plotno_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_sztruks_01-34",
+    "product_id": "p-tafla",
+    "color": "sztruks",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Sztruks",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_sztruks_01-34-400.webp",
+      "img/produkty/p-tafla_sztruks_01-34-800.webp",
+      "img/produkty/p-tafla_sztruks_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_kratka_01-34",
+    "product_id": "p-tafla",
+    "color": "kratka",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Kratka",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_kratka_01-34-400.webp",
+      "img/produkty/p-tafla_kratka_01-34-800.webp",
+      "img/produkty/p-tafla_kratka_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
+  },
+  {
+    "key": "p-tafla_sorbet_01-34",
+    "product_id": "p-tafla",
+    "color": "sorbet",
+    "kind": "packshot",
+    "shot": "01-34",
+    "description": "ujecie produktu w kolorze Sorbet",
+    "ratio": "1:1",
+    "files": [
+      "img/produkty/p-tafla_sorbet_01-34-400.webp",
+      "img/produkty/p-tafla_sorbet_01-34-800.webp",
+      "img/produkty/p-tafla_sorbet_01-34-1600.webp"
+    ],
+    "priority": "P1",
+    "status": "brak"
   }
 ]

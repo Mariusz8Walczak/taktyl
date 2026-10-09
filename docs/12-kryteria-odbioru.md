@@ -7,7 +7,7 @@ Sklep jest gotowy, gdy przechodzą wszystkie punkty P0 poniżej. Każda wartoś�
 | # | Kroki | Oczekiwany wynik |
 |---|---|---|
 | S1 | `/klawiatury` → Rozmiar 75% + Łączność Bluetooth | „1 produkt” (Bazalt 75); adres `?rozmiar=75&lacznosc=bt`; odświeżenie zachowuje widok |
-| S2 | `/klawiatury` → Cena 300–700 | „4 produkty”: Łupek 65, Kreda 98, Granit TKL, Marmur 100 |
+| S2 | `/klawiatury` → Cena 300–700 | „5 produktów”: Kwarc 60 (kolor z kolekcji, 329 zł), Łupek 65, Kreda 98, Granit TKL, Marmur 100 (po ADR-0011; wcześniej 4) |
 | S3 | `/myszki` → Długość dłoni 19,5 | „5 produktów”: wszystkie poza Mewą |
 | S4 | `/podkladki` → Na biurko | „5 produktów” (bez Lodu) |
 | S5 | `/klawiatury/granit-tkl` | 599,00 zł; przekreślone 699,00 zł; plakietka −14%; „Najniższa cena z 30 dni przed obniżką: 699,00 zł” |

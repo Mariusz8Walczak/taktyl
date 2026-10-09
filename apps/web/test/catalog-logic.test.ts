@@ -32,7 +32,7 @@ describe("cena i Omnibus (F-064, S5, S6)", () => {
 
   it("S6: Wrobel 129 zł, przekreslona 139 zł (nie 149), -7%", () => {
     const p = productFixture("wrobel");
-    const v = p.variants[0]!;
+    const v = p.variants.find((x) => x.color === "grafit")!;
     const view = priceView(v);
     expect(view.priceGr).toBe(12900);
     expect(view.omnibusGr).toBe(13900);

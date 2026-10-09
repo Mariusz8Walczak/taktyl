@@ -19,7 +19,7 @@ import { useAuth } from "../../lib/auth/session";
 import { useCan } from "../../lib/can";
 import { REVIEW_COUNT, REVIEWS_PREVIEW_LABEL } from "../../lib/content-labels";
 import {
-  COLOR_LABEL,
+  colorLabel,
   formatCount,
   PRODUCT_COUNT,
   shopProductUrl,
@@ -358,7 +358,7 @@ export function ReviewsEditor({ id }: { id: string }) {
   const labels = useMemo(() => {
     const out = new Set<string>();
     for (const v of product.data?.variants ?? []) {
-      const color = COLOR_LABEL[v.color];
+      const color = colorLabel(v.color);
       out.add(color);
       if (v.switch) out.add(`${color} · ${SWITCH_LABEL[v.switch]}`);
       if (v.size) out.add(`${color} · ${v.size.toUpperCase()}`);

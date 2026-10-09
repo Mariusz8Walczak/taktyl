@@ -73,11 +73,13 @@ describe.skipIf(!hasDb)("B-216 katalog (PostgreSQL)", () => {
     expect(body.next_cursor).toBeNull();
   });
 
-  it("S2: klawiatury 300-700 zl (cena w groszach) = 4 produkty", async () => {
+  it("S2: klawiatury 300-700 zl (cena w groszach) = 5 produktow (z Kwarc 60 w kolorze z kolekcji)", async () => {
     const res = await t.http().get("/v1/products?category=klawiatury&cena=30000-70000").expect(200);
     const body = listingResponseSchema.parse(res.body);
-    expect(body.total).toBe(4);
-    expect(names(body).sort()).toEqual(["Granit TKL", "Kreda 98", "Marmur 100", "Łupek 65"].sort());
+    expect(body.total).toBe(5);
+    expect(names(body).sort()).toEqual(
+      ["Granit TKL", "Kreda 98", "Kwarc 60", "Marmur 100", "Łupek 65"].sort(),
+    );
   });
 
   it("S3: myszki, dlugosc dloni 19,5 = 5 produktow, bez Mewy", async () => {
@@ -262,7 +264,7 @@ describe.skipIf(!hasDb)("B-216 katalog (PostgreSQL)", () => {
     ).toHaveLength(4);
     expect(
       ((await t.http().get("/v1/colors").expect(200)).body as { items: unknown[] }).items,
-    ).toHaveLength(49);
+    ).toHaveLength(150);
     await t.http().get("/v1/rules").expect(200);
     const shop = (await t.http().get("/v1/shop-settings").expect(200)).body as {
       free_shipping_threshold_gr: number;

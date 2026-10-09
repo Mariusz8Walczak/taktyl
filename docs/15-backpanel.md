@@ -260,7 +260,7 @@ Backpanel **nie tworzy grafiki**. Pokazuje manifest `assets/manifest.json` jako 
 
 | ID | Funkcja | P | Kryterium odbioru |
 |---|---|---|---|
-| B-500 | Lista wpisów manifestu (190 obrazów): klucz, produkt, kolor, rodzaj (`packshot` / `topdown` / `texture`), wymiary wymagane, priorytet P0/P1, status `gotowe` / `brak` | P1 | po seedzie: 190 wpisów, 76 w P0, wszystkie `brak`; filtry po rodzaju, priorytecie, statusie |
+| B-500 | Lista wpisów manifestu (300 obrazów): klucz, produkt, kolor, rodzaj (`packshot` / `topdown` / `texture`), wymiary wymagane, priorytet P0/P1, status `gotowe` / `brak` | P1 | po seedzie: 190 wpisów, 76 w P0, wszystkie `brak`; filtry po rodzaju, priorytecie, statusie |
 | B-501 | Pasek postępu P0 jako liczba: „Gotowe 12 z 76” (tekst, bez wykresu) | P1 | liczba zgodna z manifestem |
 | B-502 | Wgrywanie pliku do wpisu (WebP, `@1x` i `@2x`, dla `packshot` rozmiary 400/800/1600) z kontrolą nazwy i typu | P1 | zły typ pliku: „Wgraj plik WebP.”; zła nazwa: pokazuje oczekiwaną |
 | B-503 | Kontrola wymiarów `topdown`: wymiary pliku muszą być równe `pixels` z manifestu co do piksela (1 px = 1 mm dla `@1x`, 2 px = 1 mm dla `@2x`) | P1 | plik 330 × 140 dla 327 × 140: „Plik ma 330 × 140 px. Ten wpis wymaga 327 × 140 px (1 px = 1 mm).” i odrzucenie |

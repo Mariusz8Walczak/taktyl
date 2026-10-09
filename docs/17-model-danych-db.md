@@ -395,7 +395,7 @@ Testy (Vitest, na `domain` i na module `pricing`): S5 (Granit TKL), S6 (Wróbel 
 | `data/reviews.json` (do napisania przez model, P1) | `reviews` | `demo = true` |
 | treści stron i poradnika (do napisania przez model) | `content_pages`, `faq_items` | pliki w `seed/content/`, nie w `data/` |
 
-Liczby kontrolne po seedzie (test): 3 kategorie, 18 produktów, 99 wariantów (56 + 12 + 31), 4 przełączniki, 49 kolorów (4 używane przez warianty, reszta to paleta konfiguratora, ADR-0011), 4 presety, 3 metody dostawy, 4 metody płatności, 2 kody, 6 punktów odbioru, 190 wpisów zdjęć (76 w P0).
+Liczby kontrolne po seedzie (test): 3 kategorie, 18 produktów, 329 wariantów (99 z serii: 56 + 12 + 31, oraz 230 z kolekcji kolorów: 160 + 40 + 30), 4 przełączniki, 150 kolorów (4 w serii, 45 palety konfiguratora i 101 kolekcji, ADR-0011), 4 presety, 3 metody dostawy, 4 metody płatności, 2 kody, 6 punktów odbioru, 300 wpisów zdjęć (76 w P0; 110 z kolekcji).
 
 ## 7. Seed idempotentny
 

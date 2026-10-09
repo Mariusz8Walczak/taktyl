@@ -22,8 +22,8 @@ const texture = findManifestEntry(manifest, "p-tafla_grafit_tekstura")!;
 const gotowe = (e: ManifestEntry): ManifestEntry => ({ ...e, status: "gotowe" });
 
 describe("manifest (assets/manifest.json)", () => {
-  it("ma 190 wpisow, kazdy z kind i status, wszystkie na razie brak", () => {
-    expect(manifest).toHaveLength(190);
+  it("ma 300 wpisow, kazdy z kind i status, wszystkie na razie brak", () => {
+    expect(manifest).toHaveLength(300);
     expect(new Set(manifest.map((e) => e.kind))).toEqual(
       new Set(["packshot", "topdown", "texture"]),
     );
@@ -201,7 +201,7 @@ describe("ProductImage: status brak (placeholdery, docs/09 §5)", () => {
     }
   });
 
-  it("wszystkie 190 wpisow manifestu renderuje sie jako placeholder o wymiarach z manifestu", () => {
+  it("wszystkie 300 wpisow manifestu renderuje sie jako placeholder o wymiarach z manifestu", () => {
     for (const entry of manifest) {
       const { container, unmount } = render(
         <ProductImage entry={entry} productName="X" colorName="Y" swatch="var(--tekst)" />,

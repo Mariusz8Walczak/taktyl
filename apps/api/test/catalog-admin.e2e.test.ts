@@ -146,7 +146,7 @@ describe.skipIf(!hasDb)("B-100..B-115 katalog w backpanelu (PostgreSQL)", () => 
       id: "m-wrobel",
       category: "myszki",
       status: "active",
-      variant_count: 2,
+      variant_count: 8, // 2 z serii + 6 kolorow kolekcji (ADR-0011)
       from_price_gr: 12900,
       on_sale: true,
     });
@@ -692,8 +692,22 @@ describe.skipIf(!hasDb)("B-100..B-115 katalog w backpanelu (PostgreSQL)", () => 
       ifMatch(grf.version),
     );
     expect(stale.status).toBe(412);
-    // wylaczenie ostatniego aktywnego wariantu aktywnego produktu: 422
-    const mgl = offDetail.variants.find((v) => v.sku === "M-WRB-MGL")!;
+    // wylaczamy pozostale warianty (kolekcja, ADR-0011), zostaje MGL; wylaczenie ostatniego aktywnego wariantu: 422
+    let current = offDetail;
+    for (const v of offDetail.variants) {
+      if (v.sku === "M-WRB-GRF" || v.sku === "M-WRB-MGL") continue;
+      const fresh = current.variants.find((x) => x.sku === v.sku)!;
+      const r = await call(
+        "editor",
+        "patch",
+        `/v1/admin/variants/${v.sku}`,
+        { status: "disabled" },
+        ifMatch(fresh.version),
+      );
+      expect(r.status, JSON.stringify(r.body)).toBe(200);
+      current = adminProductDetailSchema.parse(r.body);
+    }
+    const mgl = current.variants.find((v) => v.sku === "M-WRB-MGL")!;
     const last = await call(
       "editor",
       "patch",

@@ -33,7 +33,7 @@ test.describe("Listing: filtry w adresie (S1-S4)", () => {
     await expect(page.getByRole("checkbox", { name: /^Bluetooth/ })).toBeChecked();
   });
 
-  test("S2: klawiatury w cenie 300-700 zł to 4 produkty (Łupek 65, Kreda 98, Granit TKL, Marmur 100)", async ({
+  test("S2: klawiatury w cenie 300-700 zł to 5 produktów (Kwarc 60 w kolorze z kolekcji, Łupek 65, Kreda 98, Granit TKL, Marmur 100)", async ({
     page,
   }) => {
     await page.goto("/klawiatury");
@@ -46,8 +46,8 @@ test.describe("Listing: filtry w adresie (S1-S4)", () => {
     await expect(page).toHaveURL(/\?cena=300-700$/);
     await expect(to).toHaveValue("700");
 
-    await expect(resultCount(page)).toHaveText("4 produkty");
-    for (const name of ["Łupek 65", "Kreda 98", "Granit TKL", "Marmur 100"]) {
+    await expect(resultCount(page)).toHaveText("5 produktów");
+    for (const name of ["Kwarc 60", "Łupek 65", "Kreda 98", "Granit TKL", "Marmur 100"]) {
       await expect(productLink(page, name)).toBeVisible();
     }
     for (const name of ["Kwarc 60", "Bazalt 75"]) {

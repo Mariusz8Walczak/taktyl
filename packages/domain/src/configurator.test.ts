@@ -28,11 +28,11 @@ function cfg(model: string, patch: Configuration["parts"] = {}, print: string | 
 }
 
 describe("dane konfiguratora (ADR-0011)", () => {
-  it("26 modeli, 49 kolorow, kody kolorow i wykonczen sa unikalne", () => {
+  it("26 modeli, 150 kolorow (49 palety + 101 kolekcji), kody kolorow i wykonczen sa unikalne", () => {
     expect(data.models).toHaveLength(26);
     const codes = Object.values(data.colors).map((c) => c.code);
-    expect(codes).toHaveLength(49);
-    expect(new Set(codes).size).toBe(49);
+    expect(codes).toHaveLength(150);
+    expect(new Set(codes).size).toBe(150);
     expect(codes).not.toContain("AUT");
     const fin = Object.values(data.finishes).map((f) => f.code);
     expect(new Set(fin).size).toBe(fin.length);

@@ -114,6 +114,286 @@
         "lowest_30d": null,
         "stock": 40,
         "images": "mgla"
+      },
+      {
+        "sku": "K-KWR60-TRK-SLZ",
+        "color": "turkus",
+        "switch": "slizg",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "turkus"
+      },
+      {
+        "sku": "K-KWR60-TRK-PRG",
+        "color": "turkus",
+        "switch": "prog",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "turkus"
+      },
+      {
+        "sku": "K-KWR60-TRK-TRZ",
+        "color": "turkus",
+        "switch": "trzask",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "turkus"
+      },
+      {
+        "sku": "K-KWR60-TRK-SZP",
+        "color": "turkus",
+        "switch": "szept",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "turkus"
+      },
+      {
+        "sku": "K-KWR60-RUB-SLZ",
+        "color": "rubin",
+        "switch": "slizg",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "rubin"
+      },
+      {
+        "sku": "K-KWR60-RUB-PRG",
+        "color": "rubin",
+        "switch": "prog",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "rubin"
+      },
+      {
+        "sku": "K-KWR60-RUB-TRZ",
+        "color": "rubin",
+        "switch": "trzask",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "rubin"
+      },
+      {
+        "sku": "K-KWR60-RUB-SZP",
+        "color": "rubin",
+        "switch": "szept",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "rubin"
+      },
+      {
+        "sku": "K-KWR60-JAD-SLZ",
+        "color": "jadeit",
+        "switch": "slizg",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "jadeit"
+      },
+      {
+        "sku": "K-KWR60-JAD-PRG",
+        "color": "jadeit",
+        "switch": "prog",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "jadeit"
+      },
+      {
+        "sku": "K-KWR60-JAD-TRZ",
+        "color": "jadeit",
+        "switch": "trzask",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "jadeit"
+      },
+      {
+        "sku": "K-KWR60-JAD-SZP",
+        "color": "jadeit",
+        "switch": "szept",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "jadeit"
+      },
+      {
+        "sku": "K-KWR60-BIZ-SLZ",
+        "color": "bizmut",
+        "switch": "slizg",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "bizmut"
+      },
+      {
+        "sku": "K-KWR60-BIZ-PRG",
+        "color": "bizmut",
+        "switch": "prog",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "bizmut"
+      },
+      {
+        "sku": "K-KWR60-BIZ-TRZ",
+        "color": "bizmut",
+        "switch": "trzask",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "bizmut"
+      },
+      {
+        "sku": "K-KWR60-BIZ-SZP",
+        "color": "bizmut",
+        "switch": "szept",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "bizmut"
+      },
+      {
+        "sku": "K-KWR60-GRA-SLZ",
+        "color": "granat",
+        "switch": "slizg",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "granat"
+      },
+      {
+        "sku": "K-KWR60-GRA-PRG",
+        "color": "granat",
+        "switch": "prog",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 34,
+        "images": "granat"
+      },
+      {
+        "sku": "K-KWR60-GRA-TRZ",
+        "color": "granat",
+        "switch": "trzask",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "granat"
+      },
+      {
+        "sku": "K-KWR60-GRA-SZP",
+        "color": "granat",
+        "switch": "szept",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "granat"
+      },
+      {
+        "sku": "K-KWR60-AMA-SLZ",
+        "color": "amazonit",
+        "switch": "slizg",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "amazonit"
+      },
+      {
+        "sku": "K-KWR60-AMA-PRG",
+        "color": "amazonit",
+        "switch": "prog",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "amazonit"
+      },
+      {
+        "sku": "K-KWR60-AMA-TRZ",
+        "color": "amazonit",
+        "switch": "trzask",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "amazonit"
+      },
+      {
+        "sku": "K-KWR60-AMA-SZP",
+        "color": "amazonit",
+        "switch": "szept",
+        "price": 329,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "amazonit"
+      },
+      {
+        "sku": "K-KWR60-OBS-SLZ",
+        "color": "obsydian",
+        "switch": "slizg",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "obsydian"
+      },
+      {
+        "sku": "K-KWR60-OBS-PRG",
+        "color": "obsydian",
+        "switch": "prog",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "obsydian"
+      },
+      {
+        "sku": "K-KWR60-OBS-TRZ",
+        "color": "obsydian",
+        "switch": "trzask",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "obsydian"
+      },
+      {
+        "sku": "K-KWR60-OBS-SZP",
+        "color": "obsydian",
+        "switch": "szept",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "obsydian"
       }
     ],
     "images": {
@@ -134,6 +414,41 @@
           "k-kwarc-60_mgla_04-detal"
         ],
         "topdown": "k-kwarc-60_mgla_top"
+      },
+      "turkus": {
+        "packshots": [
+          "k-kwarc-60_turkus_01-34"
+        ]
+      },
+      "rubin": {
+        "packshots": [
+          "k-kwarc-60_rubin_01-34"
+        ]
+      },
+      "jadeit": {
+        "packshots": [
+          "k-kwarc-60_jadeit_01-34"
+        ]
+      },
+      "bizmut": {
+        "packshots": [
+          "k-kwarc-60_bizmut_01-34"
+        ]
+      },
+      "granat": {
+        "packshots": [
+          "k-kwarc-60_granat_01-34"
+        ]
+      },
+      "amazonit": {
+        "packshots": [
+          "k-kwarc-60_amazonit_01-34"
+        ]
+      },
+      "obsydian": {
+        "packshots": [
+          "k-kwarc-60_obsydian_01-34"
+        ]
       }
     },
     "badges": [],
@@ -312,6 +627,286 @@
         "lowest_30d": null,
         "stock": 14,
         "images": "kobalt"
+      },
+      {
+        "sku": "K-LPK65-AME-SLZ",
+        "color": "ametyst",
+        "switch": "slizg",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "ametyst"
+      },
+      {
+        "sku": "K-LPK65-AME-PRG",
+        "color": "ametyst",
+        "switch": "prog",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "ametyst"
+      },
+      {
+        "sku": "K-LPK65-AME-TRZ",
+        "color": "ametyst",
+        "switch": "trzask",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "ametyst"
+      },
+      {
+        "sku": "K-LPK65-AME-SZP",
+        "color": "ametyst",
+        "switch": "szept",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "ametyst"
+      },
+      {
+        "sku": "K-LPK65-CTR-SLZ",
+        "color": "cytryn",
+        "switch": "slizg",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "cytryn"
+      },
+      {
+        "sku": "K-LPK65-CTR-PRG",
+        "color": "cytryn",
+        "switch": "prog",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 30,
+        "images": "cytryn"
+      },
+      {
+        "sku": "K-LPK65-CTR-TRZ",
+        "color": "cytryn",
+        "switch": "trzask",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 30,
+        "images": "cytryn"
+      },
+      {
+        "sku": "K-LPK65-CTR-SZP",
+        "color": "cytryn",
+        "switch": "szept",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "cytryn"
+      },
+      {
+        "sku": "K-LPK65-ROD-SLZ",
+        "color": "rodonit",
+        "switch": "slizg",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "rodonit"
+      },
+      {
+        "sku": "K-LPK65-ROD-PRG",
+        "color": "rodonit",
+        "switch": "prog",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "rodonit"
+      },
+      {
+        "sku": "K-LPK65-ROD-TRZ",
+        "color": "rodonit",
+        "switch": "trzask",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "rodonit"
+      },
+      {
+        "sku": "K-LPK65-ROD-SZP",
+        "color": "rodonit",
+        "switch": "szept",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "rodonit"
+      },
+      {
+        "sku": "K-LPK65-BUR-SLZ",
+        "color": "bursztyn",
+        "switch": "slizg",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "bursztyn"
+      },
+      {
+        "sku": "K-LPK65-BUR-PRG",
+        "color": "bursztyn",
+        "switch": "prog",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "bursztyn"
+      },
+      {
+        "sku": "K-LPK65-BUR-TRZ",
+        "color": "bursztyn",
+        "switch": "trzask",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "bursztyn"
+      },
+      {
+        "sku": "K-LPK65-BUR-SZP",
+        "color": "bursztyn",
+        "switch": "szept",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "bursztyn"
+      },
+      {
+        "sku": "K-LPK65-PER-SLZ",
+        "color": "perydot",
+        "switch": "slizg",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "perydot"
+      },
+      {
+        "sku": "K-LPK65-PER-PRG",
+        "color": "perydot",
+        "switch": "prog",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "perydot"
+      },
+      {
+        "sku": "K-LPK65-PER-TRZ",
+        "color": "perydot",
+        "switch": "trzask",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "perydot"
+      },
+      {
+        "sku": "K-LPK65-PER-SZP",
+        "color": "perydot",
+        "switch": "szept",
+        "price": 469,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "perydot"
+      },
+      {
+        "sku": "K-LPK65-LAR-SLZ",
+        "color": "larimar",
+        "switch": "slizg",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "larimar"
+      },
+      {
+        "sku": "K-LPK65-LAR-PRG",
+        "color": "larimar",
+        "switch": "prog",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "larimar"
+      },
+      {
+        "sku": "K-LPK65-LAR-TRZ",
+        "color": "larimar",
+        "switch": "trzask",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "larimar"
+      },
+      {
+        "sku": "K-LPK65-LAR-SZP",
+        "color": "larimar",
+        "switch": "szept",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "larimar"
+      },
+      {
+        "sku": "K-LPK65-RDC-SLZ",
+        "color": "rodochrozyt",
+        "switch": "slizg",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "rodochrozyt"
+      },
+      {
+        "sku": "K-LPK65-RDC-PRG",
+        "color": "rodochrozyt",
+        "switch": "prog",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "rodochrozyt"
+      },
+      {
+        "sku": "K-LPK65-RDC-TRZ",
+        "color": "rodochrozyt",
+        "switch": "trzask",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "rodochrozyt"
+      },
+      {
+        "sku": "K-LPK65-RDC-SZP",
+        "color": "rodochrozyt",
+        "switch": "szept",
+        "price": 459,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "rodochrozyt"
       }
     ],
     "images": {
@@ -341,6 +936,41 @@
           "k-lupek-65_kobalt_04-detal"
         ],
         "topdown": "k-lupek-65_kobalt_top"
+      },
+      "ametyst": {
+        "packshots": [
+          "k-lupek-65_ametyst_01-34"
+        ]
+      },
+      "cytryn": {
+        "packshots": [
+          "k-lupek-65_cytryn_01-34"
+        ]
+      },
+      "rodonit": {
+        "packshots": [
+          "k-lupek-65_rodonit_01-34"
+        ]
+      },
+      "bursztyn": {
+        "packshots": [
+          "k-lupek-65_bursztyn_01-34"
+        ]
+      },
+      "perydot": {
+        "packshots": [
+          "k-lupek-65_perydot_01-34"
+        ]
+      },
+      "larimar": {
+        "packshots": [
+          "k-lupek-65_larimar_01-34"
+        ]
+      },
+      "rodochrozyt": {
+        "packshots": [
+          "k-lupek-65_rodochrozyt_01-34"
+        ]
       }
     },
     "badges": [
@@ -522,6 +1152,326 @@
         "lowest_30d": null,
         "stock": 0,
         "images": "kobalt"
+      },
+      {
+        "sku": "K-BZL75-MLC-SLZ",
+        "color": "malachit",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "malachit"
+      },
+      {
+        "sku": "K-BZL75-MLC-PRG",
+        "color": "malachit",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 30,
+        "images": "malachit"
+      },
+      {
+        "sku": "K-BZL75-MLC-TRZ",
+        "color": "malachit",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "malachit"
+      },
+      {
+        "sku": "K-BZL75-MLC-SZP",
+        "color": "malachit",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "malachit"
+      },
+      {
+        "sku": "K-BZL75-SZM-SLZ",
+        "color": "szmaragd",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "szmaragd"
+      },
+      {
+        "sku": "K-BZL75-SZM-PRG",
+        "color": "szmaragd",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "szmaragd"
+      },
+      {
+        "sku": "K-BZL75-SZM-TRZ",
+        "color": "szmaragd",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "szmaragd"
+      },
+      {
+        "sku": "K-BZL75-SZM-SZP",
+        "color": "szmaragd",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "szmaragd"
+      },
+      {
+        "sku": "K-BZL75-LAP-SLZ",
+        "color": "lapis",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "lapis"
+      },
+      {
+        "sku": "K-BZL75-LAP-PRG",
+        "color": "lapis",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "lapis"
+      },
+      {
+        "sku": "K-BZL75-LAP-TRZ",
+        "color": "lapis",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "lapis"
+      },
+      {
+        "sku": "K-BZL75-LAP-SZP",
+        "color": "lapis",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "lapis"
+      },
+      {
+        "sku": "K-BZL75-PIR-SLZ",
+        "color": "piryt",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "piryt"
+      },
+      {
+        "sku": "K-BZL75-PIR-PRG",
+        "color": "piryt",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "piryt"
+      },
+      {
+        "sku": "K-BZL75-PIR-TRZ",
+        "color": "piryt",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "piryt"
+      },
+      {
+        "sku": "K-BZL75-PIR-SZP",
+        "color": "piryt",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "piryt"
+      },
+      {
+        "sku": "K-BZL75-CHR-SLZ",
+        "color": "chryzokola",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "chryzokola"
+      },
+      {
+        "sku": "K-BZL75-CHR-PRG",
+        "color": "chryzokola",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "chryzokola"
+      },
+      {
+        "sku": "K-BZL75-CHR-TRZ",
+        "color": "chryzokola",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "chryzokola"
+      },
+      {
+        "sku": "K-BZL75-CHR-SZP",
+        "color": "chryzokola",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "chryzokola"
+      },
+      {
+        "sku": "K-BZL75-MOR-SLZ",
+        "color": "morganit",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "morganit"
+      },
+      {
+        "sku": "K-BZL75-MOR-PRG",
+        "color": "morganit",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "morganit"
+      },
+      {
+        "sku": "K-BZL75-MOR-TRZ",
+        "color": "morganit",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "morganit"
+      },
+      {
+        "sku": "K-BZL75-MOR-SZP",
+        "color": "morganit",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "morganit"
+      },
+      {
+        "sku": "K-BZL75-GAL-SLZ",
+        "color": "galena",
+        "switch": "slizg",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "galena"
+      },
+      {
+        "sku": "K-BZL75-GAL-PRG",
+        "color": "galena",
+        "switch": "prog",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "galena"
+      },
+      {
+        "sku": "K-BZL75-GAL-TRZ",
+        "color": "galena",
+        "switch": "trzask",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "galena"
+      },
+      {
+        "sku": "K-BZL75-GAL-SZP",
+        "color": "galena",
+        "switch": "szept",
+        "price": 789,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "galena"
+      },
+      {
+        "sku": "K-BZL75-AKW-SLZ",
+        "color": "akwamaryn",
+        "switch": "slizg",
+        "price": 799,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "akwamaryn"
+      },
+      {
+        "sku": "K-BZL75-AKW-PRG",
+        "color": "akwamaryn",
+        "switch": "prog",
+        "price": 799,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "akwamaryn"
+      },
+      {
+        "sku": "K-BZL75-AKW-TRZ",
+        "color": "akwamaryn",
+        "switch": "trzask",
+        "price": 799,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "akwamaryn"
+      },
+      {
+        "sku": "K-BZL75-AKW-SZP",
+        "color": "akwamaryn",
+        "switch": "szept",
+        "price": 799,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "akwamaryn"
       }
     ],
     "images": {
@@ -551,6 +1501,46 @@
           "k-bazalt-75_kobalt_04-detal"
         ],
         "topdown": "k-bazalt-75_kobalt_top"
+      },
+      "malachit": {
+        "packshots": [
+          "k-bazalt-75_malachit_01-34"
+        ]
+      },
+      "szmaragd": {
+        "packshots": [
+          "k-bazalt-75_szmaragd_01-34"
+        ]
+      },
+      "lapis": {
+        "packshots": [
+          "k-bazalt-75_lapis_01-34"
+        ]
+      },
+      "piryt": {
+        "packshots": [
+          "k-bazalt-75_piryt_01-34"
+        ]
+      },
+      "chryzokola": {
+        "packshots": [
+          "k-bazalt-75_chryzokola_01-34"
+        ]
+      },
+      "morganit": {
+        "packshots": [
+          "k-bazalt-75_morganit_01-34"
+        ]
+      },
+      "galena": {
+        "packshots": [
+          "k-bazalt-75_galena_01-34"
+        ]
+      },
+      "akwamaryn": {
+        "packshots": [
+          "k-bazalt-75_akwamaryn_01-34"
+        ]
       }
     },
     "badges": [
@@ -693,6 +1683,246 @@
         "lowest_30d": null,
         "stock": 28,
         "images": "grafit"
+      },
+      {
+        "sku": "K-KRD98-FLU-SLZ",
+        "color": "fluoryt",
+        "switch": "slizg",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "fluoryt"
+      },
+      {
+        "sku": "K-KRD98-FLU-PRG",
+        "color": "fluoryt",
+        "switch": "prog",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "fluoryt"
+      },
+      {
+        "sku": "K-KRD98-FLU-TRZ",
+        "color": "fluoryt",
+        "switch": "trzask",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "fluoryt"
+      },
+      {
+        "sku": "K-KRD98-FLU-SZP",
+        "color": "fluoryt",
+        "switch": "szept",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "fluoryt"
+      },
+      {
+        "sku": "K-KRD98-KAL-SLZ",
+        "color": "kalcyt",
+        "switch": "slizg",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "kalcyt"
+      },
+      {
+        "sku": "K-KRD98-KAL-PRG",
+        "color": "kalcyt",
+        "switch": "prog",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "kalcyt"
+      },
+      {
+        "sku": "K-KRD98-KAL-TRZ",
+        "color": "kalcyt",
+        "switch": "trzask",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "kalcyt"
+      },
+      {
+        "sku": "K-KRD98-KAL-SZP",
+        "color": "kalcyt",
+        "switch": "szept",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "kalcyt"
+      },
+      {
+        "sku": "K-KRD98-AWE-SLZ",
+        "color": "awenturyn",
+        "switch": "slizg",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "awenturyn"
+      },
+      {
+        "sku": "K-KRD98-AWE-PRG",
+        "color": "awenturyn",
+        "switch": "prog",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "awenturyn"
+      },
+      {
+        "sku": "K-KRD98-AWE-TRZ",
+        "color": "awenturyn",
+        "switch": "trzask",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "awenturyn"
+      },
+      {
+        "sku": "K-KRD98-AWE-SZP",
+        "color": "awenturyn",
+        "switch": "szept",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "awenturyn"
+      },
+      {
+        "sku": "K-KRD98-TUR-SLZ",
+        "color": "turmalin",
+        "switch": "slizg",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "turmalin"
+      },
+      {
+        "sku": "K-KRD98-TUR-PRG",
+        "color": "turmalin",
+        "switch": "prog",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "turmalin"
+      },
+      {
+        "sku": "K-KRD98-TUR-TRZ",
+        "color": "turmalin",
+        "switch": "trzask",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "turmalin"
+      },
+      {
+        "sku": "K-KRD98-TUR-SZP",
+        "color": "turmalin",
+        "switch": "szept",
+        "price": 579,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "turmalin"
+      },
+      {
+        "sku": "K-KRD98-HOW-SLZ",
+        "color": "howlit",
+        "switch": "slizg",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "howlit"
+      },
+      {
+        "sku": "K-KRD98-HOW-PRG",
+        "color": "howlit",
+        "switch": "prog",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "howlit"
+      },
+      {
+        "sku": "K-KRD98-HOW-TRZ",
+        "color": "howlit",
+        "switch": "trzask",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "howlit"
+      },
+      {
+        "sku": "K-KRD98-HOW-SZP",
+        "color": "howlit",
+        "switch": "szept",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "howlit"
+      },
+      {
+        "sku": "K-KRD98-JAS-SLZ",
+        "color": "jaspis",
+        "switch": "slizg",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "jaspis"
+      },
+      {
+        "sku": "K-KRD98-JAS-PRG",
+        "color": "jaspis",
+        "switch": "prog",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "jaspis"
+      },
+      {
+        "sku": "K-KRD98-JAS-TRZ",
+        "color": "jaspis",
+        "switch": "trzask",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "jaspis"
+      },
+      {
+        "sku": "K-KRD98-JAS-SZP",
+        "color": "jaspis",
+        "switch": "szept",
+        "price": 599,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "jaspis"
       }
     ],
     "images": {
@@ -713,6 +1943,36 @@
           "k-kreda-98_grafit_04-detal"
         ],
         "topdown": "k-kreda-98_grafit_top"
+      },
+      "fluoryt": {
+        "packshots": [
+          "k-kreda-98_fluoryt_01-34"
+        ]
+      },
+      "kalcyt": {
+        "packshots": [
+          "k-kreda-98_kalcyt_01-34"
+        ]
+      },
+      "awenturyn": {
+        "packshots": [
+          "k-kreda-98_awenturyn_01-34"
+        ]
+      },
+      "turmalin": {
+        "packshots": [
+          "k-kreda-98_turmalin_01-34"
+        ]
+      },
+      "howlit": {
+        "packshots": [
+          "k-kreda-98_howlit_01-34"
+        ]
+      },
+      "jaspis": {
+        "packshots": [
+          "k-kreda-98_jaspis_01-34"
+        ]
       }
     },
     "badges": [],
@@ -851,6 +2111,246 @@
         "lowest_30d": 699.0,
         "stock": 37,
         "images": "mgla"
+      },
+      {
+        "sku": "K-GRNTKL-OPA-SLZ",
+        "color": "opal",
+        "switch": "slizg",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "opal"
+      },
+      {
+        "sku": "K-GRNTKL-OPA-PRG",
+        "color": "opal",
+        "switch": "prog",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "opal"
+      },
+      {
+        "sku": "K-GRNTKL-OPA-TRZ",
+        "color": "opal",
+        "switch": "trzask",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "opal"
+      },
+      {
+        "sku": "K-GRNTKL-OPA-SZP",
+        "color": "opal",
+        "switch": "szept",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "opal"
+      },
+      {
+        "sku": "K-GRNTKL-SZF-SLZ",
+        "color": "szafir",
+        "switch": "slizg",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "szafir"
+      },
+      {
+        "sku": "K-GRNTKL-SZF-PRG",
+        "color": "szafir",
+        "switch": "prog",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 19,
+        "images": "szafir"
+      },
+      {
+        "sku": "K-GRNTKL-SZF-TRZ",
+        "color": "szafir",
+        "switch": "trzask",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "szafir"
+      },
+      {
+        "sku": "K-GRNTKL-SZF-SZP",
+        "color": "szafir",
+        "switch": "szept",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "szafir"
+      },
+      {
+        "sku": "K-GRNTKL-HEM-SLZ",
+        "color": "hematyt",
+        "switch": "slizg",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "hematyt"
+      },
+      {
+        "sku": "K-GRNTKL-HEM-PRG",
+        "color": "hematyt",
+        "switch": "prog",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "hematyt"
+      },
+      {
+        "sku": "K-GRNTKL-HEM-TRZ",
+        "color": "hematyt",
+        "switch": "trzask",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "hematyt"
+      },
+      {
+        "sku": "K-GRNTKL-HEM-SZP",
+        "color": "hematyt",
+        "switch": "szept",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "hematyt"
+      },
+      {
+        "sku": "K-GRNTKL-KAR-SLZ",
+        "color": "karneol",
+        "switch": "slizg",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "karneol"
+      },
+      {
+        "sku": "K-GRNTKL-KAR-PRG",
+        "color": "karneol",
+        "switch": "prog",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "karneol"
+      },
+      {
+        "sku": "K-GRNTKL-KAR-TRZ",
+        "color": "karneol",
+        "switch": "trzask",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "karneol"
+      },
+      {
+        "sku": "K-GRNTKL-KAR-SZP",
+        "color": "karneol",
+        "switch": "szept",
+        "price": 639,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 28,
+        "images": "karneol"
+      },
+      {
+        "sku": "K-GRNTKL-SEL-SLZ",
+        "color": "selenit",
+        "switch": "slizg",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "selenit"
+      },
+      {
+        "sku": "K-GRNTKL-SEL-PRG",
+        "color": "selenit",
+        "switch": "prog",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "selenit"
+      },
+      {
+        "sku": "K-GRNTKL-SEL-TRZ",
+        "color": "selenit",
+        "switch": "trzask",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "selenit"
+      },
+      {
+        "sku": "K-GRNTKL-SEL-SZP",
+        "color": "selenit",
+        "switch": "szept",
+        "price": 659,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "selenit"
+      },
+      {
+        "sku": "K-GRNTKL-LIG-SLZ",
+        "color": "lignit",
+        "switch": "slizg",
+        "price": 689,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "lignit"
+      },
+      {
+        "sku": "K-GRNTKL-LIG-PRG",
+        "color": "lignit",
+        "switch": "prog",
+        "price": 689,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "lignit"
+      },
+      {
+        "sku": "K-GRNTKL-LIG-TRZ",
+        "color": "lignit",
+        "switch": "trzask",
+        "price": 689,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "lignit"
+      },
+      {
+        "sku": "K-GRNTKL-LIG-SZP",
+        "color": "lignit",
+        "switch": "szept",
+        "price": 689,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "lignit"
       }
     ],
     "images": {
@@ -871,6 +2371,36 @@
           "k-granit-tkl_mgla_04-detal"
         ],
         "topdown": "k-granit-tkl_mgla_top"
+      },
+      "opal": {
+        "packshots": [
+          "k-granit-tkl_opal_01-34"
+        ]
+      },
+      "szafir": {
+        "packshots": [
+          "k-granit-tkl_szafir_01-34"
+        ]
+      },
+      "hematyt": {
+        "packshots": [
+          "k-granit-tkl_hematyt_01-34"
+        ]
+      },
+      "karneol": {
+        "packshots": [
+          "k-granit-tkl_karneol_01-34"
+        ]
+      },
+      "selenit": {
+        "packshots": [
+          "k-granit-tkl_selenit_01-34"
+        ]
+      },
+      "lignit": {
+        "packshots": [
+          "k-granit-tkl_lignit_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1008,6 +2538,246 @@
         "lowest_30d": null,
         "stock": 32,
         "images": "mgla"
+      },
+      {
+        "sku": "K-MRM100-ONY-SLZ",
+        "color": "onyks",
+        "switch": "slizg",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "onyks"
+      },
+      {
+        "sku": "K-MRM100-ONY-PRG",
+        "color": "onyks",
+        "switch": "prog",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "onyks"
+      },
+      {
+        "sku": "K-MRM100-ONY-TRZ",
+        "color": "onyks",
+        "switch": "trzask",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "onyks"
+      },
+      {
+        "sku": "K-MRM100-ONY-SZP",
+        "color": "onyks",
+        "switch": "szept",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "onyks"
+      },
+      {
+        "sku": "K-MRM100-LAB-SLZ",
+        "color": "labradoryt",
+        "switch": "slizg",
+        "price": 409,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "labradoryt"
+      },
+      {
+        "sku": "K-MRM100-LAB-PRG",
+        "color": "labradoryt",
+        "switch": "prog",
+        "price": 409,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "labradoryt"
+      },
+      {
+        "sku": "K-MRM100-LAB-TRZ",
+        "color": "labradoryt",
+        "switch": "trzask",
+        "price": 409,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "labradoryt"
+      },
+      {
+        "sku": "K-MRM100-LAB-SZP",
+        "color": "labradoryt",
+        "switch": "szept",
+        "price": 409,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "labradoryt"
+      },
+      {
+        "sku": "K-MRM100-DOL-SLZ",
+        "color": "dolomit",
+        "switch": "slizg",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "dolomit"
+      },
+      {
+        "sku": "K-MRM100-DOL-PRG",
+        "color": "dolomit",
+        "switch": "prog",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "dolomit"
+      },
+      {
+        "sku": "K-MRM100-DOL-TRZ",
+        "color": "dolomit",
+        "switch": "trzask",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "dolomit"
+      },
+      {
+        "sku": "K-MRM100-DOL-SZP",
+        "color": "dolomit",
+        "switch": "szept",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "dolomit"
+      },
+      {
+        "sku": "K-MRM100-CEL-SLZ",
+        "color": "celestyn",
+        "switch": "slizg",
+        "price": 379,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 27,
+        "images": "celestyn"
+      },
+      {
+        "sku": "K-MRM100-CEL-PRG",
+        "color": "celestyn",
+        "switch": "prog",
+        "price": 379,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "celestyn"
+      },
+      {
+        "sku": "K-MRM100-CEL-TRZ",
+        "color": "celestyn",
+        "switch": "trzask",
+        "price": 379,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 31,
+        "images": "celestyn"
+      },
+      {
+        "sku": "K-MRM100-CEL-SZP",
+        "color": "celestyn",
+        "switch": "szept",
+        "price": 379,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "celestyn"
+      },
+      {
+        "sku": "K-MRM100-SPI-SLZ",
+        "color": "spinel",
+        "switch": "slizg",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "spinel"
+      },
+      {
+        "sku": "K-MRM100-SPI-PRG",
+        "color": "spinel",
+        "switch": "prog",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 15,
+        "images": "spinel"
+      },
+      {
+        "sku": "K-MRM100-SPI-TRZ",
+        "color": "spinel",
+        "switch": "trzask",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "spinel"
+      },
+      {
+        "sku": "K-MRM100-SPI-SZP",
+        "color": "spinel",
+        "switch": "szept",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "spinel"
+      },
+      {
+        "sku": "K-MRM100-POR-SLZ",
+        "color": "porfir",
+        "switch": "slizg",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "porfir"
+      },
+      {
+        "sku": "K-MRM100-POR-PRG",
+        "color": "porfir",
+        "switch": "prog",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "porfir"
+      },
+      {
+        "sku": "K-MRM100-POR-TRZ",
+        "color": "porfir",
+        "switch": "trzask",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 9,
+        "images": "porfir"
+      },
+      {
+        "sku": "K-MRM100-POR-SZP",
+        "color": "porfir",
+        "switch": "szept",
+        "price": 399,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "porfir"
       }
     ],
     "images": {
@@ -1028,6 +2798,36 @@
           "k-marmur-100_mgla_04-detal"
         ],
         "topdown": "k-marmur-100_mgla_top"
+      },
+      "onyks": {
+        "packshots": [
+          "k-marmur-100_onyks_01-34"
+        ]
+      },
+      "labradoryt": {
+        "packshots": [
+          "k-marmur-100_labradoryt_01-34"
+        ]
+      },
+      "dolomit": {
+        "packshots": [
+          "k-marmur-100_dolomit_01-34"
+        ]
+      },
+      "celestyn": {
+        "packshots": [
+          "k-marmur-100_celestyn_01-34"
+        ]
+      },
+      "spinel": {
+        "packshots": [
+          "k-marmur-100_spinel_01-34"
+        ]
+      },
+      "porfir": {
+        "packshots": [
+          "k-marmur-100_porfir_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1107,6 +2907,78 @@
         "lowest_30d": null,
         "stock": 2,
         "images": "mgla"
+      },
+      {
+        "sku": "M-JRZ-ZIM",
+        "color": "zimorodek",
+        "price": 489,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "zimorodek"
+      },
+      {
+        "sku": "M-JRZ-BOG",
+        "color": "bogatka",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "bogatka"
+      },
+      {
+        "sku": "M-JRZ-SPA",
+        "color": "szpak",
+        "price": 509,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "szpak"
+      },
+      {
+        "sku": "M-JRZ-KRA",
+        "color": "kraska",
+        "price": 479,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "kraska"
+      },
+      {
+        "sku": "M-JRZ-SOW",
+        "color": "sowa",
+        "price": 499,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 22,
+        "images": "sowa"
+      },
+      {
+        "sku": "M-JRZ-CZA",
+        "color": "czajka",
+        "price": 509,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "czajka"
+      },
+      {
+        "sku": "M-JRZ-WIL",
+        "color": "wilga",
+        "price": 489,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 10,
+        "images": "wilga"
+      },
+      {
+        "sku": "M-JRZ-KUK",
+        "color": "kukulka",
+        "price": 499,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "kukulka"
       }
     ],
     "images": {
@@ -1127,6 +2999,46 @@
           "m-jerzyk_mgla_04-detal"
         ],
         "topdown": "m-jerzyk_mgla_top"
+      },
+      "zimorodek": {
+        "packshots": [
+          "m-jerzyk_zimorodek_01-34"
+        ]
+      },
+      "bogatka": {
+        "packshots": [
+          "m-jerzyk_bogatka_01-34"
+        ]
+      },
+      "szpak": {
+        "packshots": [
+          "m-jerzyk_szpak_01-34"
+        ]
+      },
+      "kraska": {
+        "packshots": [
+          "m-jerzyk_kraska_01-34"
+        ]
+      },
+      "sowa": {
+        "packshots": [
+          "m-jerzyk_sowa_01-34"
+        ]
+      },
+      "czajka": {
+        "packshots": [
+          "m-jerzyk_czajka_01-34"
+        ]
+      },
+      "wilga": {
+        "packshots": [
+          "m-jerzyk_wilga_01-34"
+        ]
+      },
+      "kukulka": {
+        "packshots": [
+          "m-jerzyk_kukulka_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1216,6 +3128,78 @@
         "lowest_30d": null,
         "stock": 22,
         "images": "kobalt"
+      },
+      {
+        "sku": "M-MEW-GIL",
+        "color": "gil",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "gil"
+      },
+      {
+        "sku": "M-MEW-MOD",
+        "color": "modraszka",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 40,
+        "images": "modraszka"
+      },
+      {
+        "sku": "M-MEW-RUD",
+        "color": "rudzik",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "rudzik"
+      },
+      {
+        "sku": "M-MEW-KOL",
+        "color": "koliber",
+        "price": 339,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "koliber"
+      },
+      {
+        "sku": "M-MEW-IBI",
+        "color": "ibis",
+        "price": 319,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "ibis"
+      },
+      {
+        "sku": "M-MEW-RAN",
+        "color": "raniuszek",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "raniuszek"
+      },
+      {
+        "sku": "M-MEW-TZN",
+        "color": "trznadel",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "trznadel"
+      },
+      {
+        "sku": "M-MEW-FLA",
+        "color": "flaming",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "flaming"
       }
     ],
     "images": {
@@ -1245,6 +3229,46 @@
           "m-mewa_kobalt_04-detal"
         ],
         "topdown": "m-mewa_kobalt_top"
+      },
+      "gil": {
+        "packshots": [
+          "m-mewa_gil_01-34"
+        ]
+      },
+      "modraszka": {
+        "packshots": [
+          "m-mewa_modraszka_01-34"
+        ]
+      },
+      "rudzik": {
+        "packshots": [
+          "m-mewa_rudzik_01-34"
+        ]
+      },
+      "koliber": {
+        "packshots": [
+          "m-mewa_koliber_01-34"
+        ]
+      },
+      "ibis": {
+        "packshots": [
+          "m-mewa_ibis_01-34"
+        ]
+      },
+      "raniuszek": {
+        "packshots": [
+          "m-mewa_raniuszek_01-34"
+        ]
+      },
+      "trznadel": {
+        "packshots": [
+          "m-mewa_trznadel_01-34"
+        ]
+      },
+      "flaming": {
+        "packshots": [
+          "m-mewa_flaming_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1324,6 +3348,78 @@
         "lowest_30d": null,
         "stock": 10,
         "images": "mgla"
+      },
+      {
+        "sku": "M-PST-DUD",
+        "color": "dudek",
+        "price": 449,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "dudek"
+      },
+      {
+        "sku": "M-PST-SZC",
+        "color": "szczygiel",
+        "price": 429,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "szczygiel"
+      },
+      {
+        "sku": "M-PST-ZON",
+        "color": "zolna",
+        "price": 439,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 34,
+        "images": "zolna"
+      },
+      {
+        "sku": "M-PST-PUS",
+        "color": "puszczyk",
+        "price": 449,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "puszczyk"
+      },
+      {
+        "sku": "M-PST-GOA",
+        "color": "golab",
+        "price": 429,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "golab"
+      },
+      {
+        "sku": "M-PST-KOW",
+        "color": "kowalik",
+        "price": 429,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "kowalik"
+      },
+      {
+        "sku": "M-PST-JST",
+        "color": "jastrzab",
+        "price": 449,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "jastrzab"
+      },
+      {
+        "sku": "M-PST-PEL",
+        "color": "pelikan",
+        "price": 429,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 30,
+        "images": "pelikan"
       }
     ],
     "images": {
@@ -1344,6 +3440,46 @@
           "m-pustulka_mgla_04-detal"
         ],
         "topdown": "m-pustulka_mgla_top"
+      },
+      "dudek": {
+        "packshots": [
+          "m-pustulka_dudek_01-34"
+        ]
+      },
+      "szczygiel": {
+        "packshots": [
+          "m-pustulka_szczygiel_01-34"
+        ]
+      },
+      "zolna": {
+        "packshots": [
+          "m-pustulka_zolna_01-34"
+        ]
+      },
+      "puszczyk": {
+        "packshots": [
+          "m-pustulka_puszczyk_01-34"
+        ]
+      },
+      "golab": {
+        "packshots": [
+          "m-pustulka_golab_01-34"
+        ]
+      },
+      "kowalik": {
+        "packshots": [
+          "m-pustulka_kowalik_01-34"
+        ]
+      },
+      "jastrzab": {
+        "packshots": [
+          "m-pustulka_jastrzab_01-34"
+        ]
+      },
+      "pelikan": {
+        "packshots": [
+          "m-pustulka_pelikan_01-34"
+        ]
       }
     },
     "badges": [
@@ -1424,6 +3560,60 @@
         "lowest_30d": 139.0,
         "stock": 17,
         "images": "mgla"
+      },
+      {
+        "sku": "M-WRB-KAN",
+        "color": "kanarek",
+        "price": 169,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "kanarek"
+      },
+      {
+        "sku": "M-WRB-SRO",
+        "color": "sroka",
+        "price": 169,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 34,
+        "images": "sroka"
+      },
+      {
+        "sku": "M-WRB-ABE",
+        "color": "labedz",
+        "price": 169,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "labedz"
+      },
+      {
+        "sku": "M-WRB-TUK",
+        "color": "tukan",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "tukan"
+      },
+      {
+        "sku": "M-WRB-ZEB",
+        "color": "zieba",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "zieba"
+      },
+      {
+        "sku": "M-WRB-PLI",
+        "color": "pliszka",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "pliszka"
       }
     ],
     "images": {
@@ -1444,6 +3634,36 @@
           "m-wrobel_mgla_04-detal"
         ],
         "topdown": "m-wrobel_mgla_top"
+      },
+      "kanarek": {
+        "packshots": [
+          "m-wrobel_kanarek_01-34"
+        ]
+      },
+      "sroka": {
+        "packshots": [
+          "m-wrobel_sroka_01-34"
+        ]
+      },
+      "labedz": {
+        "packshots": [
+          "m-wrobel_labedz_01-34"
+        ]
+      },
+      "tukan": {
+        "packshots": [
+          "m-wrobel_tukan_01-34"
+        ]
+      },
+      "zieba": {
+        "packshots": [
+          "m-wrobel_zieba_01-34"
+        ]
+      },
+      "pliszka": {
+        "packshots": [
+          "m-wrobel_pliszka_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1519,6 +3739,69 @@
         "lowest_30d": null,
         "stock": 32,
         "images": "mgla"
+      },
+      {
+        "sku": "M-KOS-KRU",
+        "color": "kruk",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "kruk"
+      },
+      {
+        "sku": "M-KOS-DZI",
+        "color": "dzieciol",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 29,
+        "images": "dzieciol"
+      },
+      {
+        "sku": "M-KOS-PAW",
+        "color": "paw",
+        "price": 389,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "paw"
+      },
+      {
+        "sku": "M-KOS-BAZ",
+        "color": "bazant",
+        "price": 369,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "bazant"
+      },
+      {
+        "sku": "M-KOS-BOC",
+        "color": "bocian",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "bocian"
+      },
+      {
+        "sku": "M-KOS-DZW",
+        "color": "dzwoniec",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "dzwoniec"
+      },
+      {
+        "sku": "M-KOS-SOJ",
+        "color": "sojka",
+        "price": 379,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "sojka"
       }
     ],
     "images": {
@@ -1539,6 +3822,41 @@
           "m-kos_mgla_04-detal"
         ],
         "topdown": "m-kos_mgla_top"
+      },
+      "kruk": {
+        "packshots": [
+          "m-kos_kruk_01-34"
+        ]
+      },
+      "dzieciol": {
+        "packshots": [
+          "m-kos_dzieciol_01-34"
+        ]
+      },
+      "paw": {
+        "packshots": [
+          "m-kos_paw_01-34"
+        ]
+      },
+      "bazant": {
+        "packshots": [
+          "m-kos_bazant_01-34"
+        ]
+      },
+      "bocian": {
+        "packshots": [
+          "m-kos_bocian_01-34"
+        ]
+      },
+      "dzwoniec": {
+        "packshots": [
+          "m-kos_dzwoniec_01-34"
+        ]
+      },
+      "sojka": {
+        "packshots": [
+          "m-kos_sojka_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1608,6 +3926,33 @@
         "lowest_30d": null,
         "stock": 37,
         "images": "grafit"
+      },
+      {
+        "sku": "M-CZP-KOM",
+        "color": "kormoran",
+        "price": 309,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 16,
+        "images": "kormoran"
+      },
+      {
+        "sku": "M-CZP-ZUR",
+        "color": "zuraw",
+        "price": 279,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "zuraw"
+      },
+      {
+        "sku": "M-CZP-ARA",
+        "color": "ara",
+        "price": 289,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 19,
+        "images": "ara"
       }
     ],
     "images": {
@@ -1619,6 +3964,21 @@
           "m-czapla_grafit_04-detal"
         ],
         "topdown": "m-czapla_grafit_top"
+      },
+      "kormoran": {
+        "packshots": [
+          "m-czapla_kormoran_01-34"
+        ]
+      },
+      "zuraw": {
+        "packshots": [
+          "m-czapla_zuraw_01-34"
+        ]
+      },
+      "ara": {
+        "packshots": [
+          "m-czapla_ara_01-34"
+        ]
       }
     },
     "badges": [],
@@ -1805,6 +4165,196 @@
         "lowest_30d": null,
         "stock": 33,
         "images": "kobalt"
+      },
+      {
+        "sku": "P-TFL-XL-PAS",
+        "color": "paski",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 25,
+        "images": "paski"
+      },
+      {
+        "sku": "P-TFL-L-SZA",
+        "color": "szachownica",
+        "size": "l",
+        "price": 109,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "szachownica"
+      },
+      {
+        "sku": "P-TFL-XL-GRO",
+        "color": "groszki",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 12,
+        "images": "groszki"
+      },
+      {
+        "sku": "P-TFL-XL-LAS",
+        "color": "lastryko",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 36,
+        "images": "lastryko"
+      },
+      {
+        "sku": "P-TFL-XL-MRO",
+        "color": "moro",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "moro"
+      },
+      {
+        "sku": "P-TFL-XL-FAL",
+        "color": "fala",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "fala"
+      },
+      {
+        "sku": "P-TFL-XL-POZ",
+        "color": "poziomica",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 13,
+        "images": "poziomica"
+      },
+      {
+        "sku": "P-TFL-XL-SWI",
+        "color": "swit",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "swit"
+      },
+      {
+        "sku": "P-TFL-XL-ZMI",
+        "color": "zmierzch",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 34,
+        "images": "zmierzch"
+      },
+      {
+        "sku": "P-TFL-XL-RAS",
+        "color": "raster",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "raster"
+      },
+      {
+        "sku": "P-TFL-XL-PIK",
+        "color": "piksel",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "piksel"
+      },
+      {
+        "sku": "P-TFL-XL-MOZ",
+        "color": "mozaika",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 33,
+        "images": "mozaika"
+      },
+      {
+        "sku": "P-TFL-XL-GWI",
+        "color": "gwiazdy",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 18,
+        "images": "gwiazdy"
+      },
+      {
+        "sku": "P-TFL-XL-LWA",
+        "color": "lawa",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "lawa"
+      },
+      {
+        "sku": "P-TFL-L-ZBR",
+        "color": "zebra",
+        "size": "l",
+        "price": 109,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 8,
+        "images": "zebra"
+      },
+      {
+        "sku": "P-TFL-XL-PAN",
+        "color": "pantera",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 32,
+        "images": "pantera"
+      },
+      {
+        "sku": "P-TFL-XL-SZT",
+        "color": "sztruks",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 20,
+        "images": "sztruks"
+      },
+      {
+        "sku": "P-TFL-XL-KAT",
+        "color": "kratka",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "kratka"
+      },
+      {
+        "sku": "P-TFL-XL-SOR",
+        "color": "sorbet",
+        "size": "xl",
+        "price": 159,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 21,
+        "images": "sorbet"
       }
     ],
     "images": {
@@ -1834,6 +4384,101 @@
           "p-tafla_kobalt_04-detal"
         ],
         "texture": "p-tafla_kobalt_tekstura"
+      },
+      "paski": {
+        "packshots": [
+          "p-tafla_paski_01-34"
+        ]
+      },
+      "szachownica": {
+        "packshots": [
+          "p-tafla_szachownica_01-34"
+        ]
+      },
+      "groszki": {
+        "packshots": [
+          "p-tafla_groszki_01-34"
+        ]
+      },
+      "lastryko": {
+        "packshots": [
+          "p-tafla_lastryko_01-34"
+        ]
+      },
+      "moro": {
+        "packshots": [
+          "p-tafla_moro_01-34"
+        ]
+      },
+      "fala": {
+        "packshots": [
+          "p-tafla_fala_01-34"
+        ]
+      },
+      "poziomica": {
+        "packshots": [
+          "p-tafla_poziomica_01-34"
+        ]
+      },
+      "swit": {
+        "packshots": [
+          "p-tafla_swit_01-34"
+        ]
+      },
+      "zmierzch": {
+        "packshots": [
+          "p-tafla_zmierzch_01-34"
+        ]
+      },
+      "raster": {
+        "packshots": [
+          "p-tafla_raster_01-34"
+        ]
+      },
+      "piksel": {
+        "packshots": [
+          "p-tafla_piksel_01-34"
+        ]
+      },
+      "mozaika": {
+        "packshots": [
+          "p-tafla_mozaika_01-34"
+        ]
+      },
+      "gwiazdy": {
+        "packshots": [
+          "p-tafla_gwiazdy_01-34"
+        ]
+      },
+      "lawa": {
+        "packshots": [
+          "p-tafla_lawa_01-34"
+        ]
+      },
+      "zebra": {
+        "packshots": [
+          "p-tafla_zebra_01-34"
+        ]
+      },
+      "pantera": {
+        "packshots": [
+          "p-tafla_pantera_01-34"
+        ]
+      },
+      "sztruks": {
+        "packshots": [
+          "p-tafla_sztruks_01-34"
+        ]
+      },
+      "kratka": {
+        "packshots": [
+          "p-tafla_kratka_01-34"
+        ]
+      },
+      "sorbet": {
+        "packshots": [
+          "p-tafla_sorbet_01-34"
+        ]
       }
     },
     "badges": [
@@ -1953,6 +4598,26 @@
         "lowest_30d": null,
         "stock": 17,
         "images": "mgla"
+      },
+      {
+        "sku": "P-LEN-XL-KRT",
+        "color": "krata",
+        "size": "xl",
+        "price": 149,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "krata"
+      },
+      {
+        "sku": "P-LEN-XL-POT",
+        "color": "plotno",
+        "size": "xl",
+        "price": 149,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 17,
+        "images": "plotno"
       }
     ],
     "images": {
@@ -1973,6 +4638,16 @@
           "p-len_mgla_04-detal"
         ],
         "texture": "p-len_mgla_tekstura"
+      },
+      "krata": {
+        "packshots": [
+          "p-len_krata_01-34"
+        ]
+      },
+      "plotno": {
+        "packshots": [
+          "p-len_plotno_01-34"
+        ]
       }
     },
     "badges": [],
@@ -2064,6 +4739,36 @@
         "lowest_30d": null,
         "stock": 28,
         "images": "kobalt"
+      },
+      {
+        "sku": "P-SZR-XL-KON",
+        "color": "konfetti",
+        "size": "xl",
+        "price": 209,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 14,
+        "images": "konfetti"
+      },
+      {
+        "sku": "P-SZR-XL-SIA",
+        "color": "siatka",
+        "size": "xl",
+        "price": 209,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 23,
+        "images": "siatka"
+      },
+      {
+        "sku": "P-SZR-XL-NEO",
+        "color": "neon",
+        "size": "xl",
+        "price": 209,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 11,
+        "images": "neon"
       }
     ],
     "images": {
@@ -2084,6 +4789,21 @@
           "p-szron_kobalt_04-detal"
         ],
         "texture": "p-szron_kobalt_tekstura"
+      },
+      "konfetti": {
+        "packshots": [
+          "p-szron_konfetti_01-34"
+        ]
+      },
+      "siatka": {
+        "packshots": [
+          "p-szron_siatka_01-34"
+        ]
+      },
+      "neon": {
+        "packshots": [
+          "p-szron_neon_01-34"
+        ]
       }
     },
     "badges": [],
@@ -2175,6 +4895,36 @@
         "lowest_30d": null,
         "stock": 0,
         "images": "mgla"
+      },
+      {
+        "sku": "P-LOD-L-ZYK",
+        "color": "zylka",
+        "size": "l",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 38,
+        "images": "zylka"
+      },
+      {
+        "sku": "P-LOD-L-ZOR",
+        "color": "zorza",
+        "size": "l",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 35,
+        "images": "zorza"
+      },
+      {
+        "sku": "P-LOD-L-HOL",
+        "color": "holo",
+        "size": "l",
+        "price": 359,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 39,
+        "images": "holo"
       }
     ],
     "images": {
@@ -2195,6 +4945,21 @@
           "p-lod_mgla_04-detal"
         ],
         "texture": "p-lod_mgla_tekstura"
+      },
+      "zylka": {
+        "packshots": [
+          "p-lod_zylka_01-34"
+        ]
+      },
+      "zorza": {
+        "packshots": [
+          "p-lod_zorza_01-34"
+        ]
+      },
+      "holo": {
+        "packshots": [
+          "p-lod_holo_01-34"
+        ]
       }
     },
     "badges": [
@@ -2288,6 +5053,36 @@
         "lowest_30d": null,
         "stock": 20,
         "images": "mgla"
+      },
+      {
+        "sku": "P-FLC-XL-MIE",
+        "color": "mieta",
+        "size": "xl",
+        "price": 139,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 24,
+        "images": "mieta"
+      },
+      {
+        "sku": "P-FLC-XL-MAL",
+        "color": "malina",
+        "size": "xl",
+        "price": 139,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 37,
+        "images": "malina"
+      },
+      {
+        "sku": "P-FLC-XL-MUS",
+        "color": "musztarda",
+        "size": "xl",
+        "price": 139,
+        "regular_price": null,
+        "lowest_30d": null,
+        "stock": 26,
+        "images": "musztarda"
       }
     ],
     "images": {
@@ -2308,6 +5103,21 @@
           "p-filc_mgla_04-detal"
         ],
         "texture": "p-filc_mgla_tekstura"
+      },
+      "mieta": {
+        "packshots": [
+          "p-filc_mieta_01-34"
+        ]
+      },
+      "malina": {
+        "packshots": [
+          "p-filc_malina_01-34"
+        ]
+      },
+      "musztarda": {
+        "packshots": [
+          "p-filc_musztarda_01-34"
+        ]
       }
     },
     "badges": [],

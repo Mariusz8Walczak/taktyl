@@ -39,14 +39,14 @@ describe("scenariusze S1-S4 (docs/12 par. 1) na danych z products.json", () => {
     expect(serializeListingQuery(q, defs("klawiatury"))).toEqual({ rozmiar: "75", lacznosc: "bt" });
   });
 
-  it("S2: klawiatury, cena 300-700 -> 4 produkty: Lupek 65, Kreda 98, Granit TKL, Marmur 100", () => {
+  it("S2: klawiatury, cena 300-700 -> 5 produktow: Kwarc 60 (kolor z kolekcji 329 zl), Lupek 65, Kreda 98, Granit TKL, Marmur 100", () => {
     const q = parseListingQuery({ cena: "300-700" }, defs("klawiatury"));
     expect(q.filters["cena"]).toEqual({ min: 30000, max: 70000 });
     const r = queryListing({ products: inCat("klawiatury"), facets: defs("klawiatury"), query: q, ctx });
     expect(r.items.map((i) => i.product.name).sort()).toEqual(
-      ["Granit TKL", "Kreda 98", "Marmur 100", "Łupek 65"].sort(),
+      ["Granit TKL", "Kreda 98", "Kwarc 60", "Marmur 100", "Łupek 65"].sort(),
     );
-    expect(r.countLabel).toBe("4 produkty");
+    expect(r.countLabel).toBe("5 produktów");
   });
 
   it("S3: myszki, dlugosc dloni 19,5 -> 5 produktow, wszystkie poza Mewa", () => {
@@ -153,7 +153,9 @@ describe("facety i liczniki (F-021)", () => {
   it("kolory dynamiczne z colors.json (etykieta i probka) oraz granice ceny", () => {
     const r = computeFacets(kb, defs("klawiatury"), {}, ctx);
     const kolor = find(r, "kolor").values;
-    expect(kolor.map((v) => v.v)).toEqual(["grafit", "mgla", "kobalt"]);
+    // Seria na poczatku (kolejnosc colors.json), potem kolory kolekcji (ADR-0011).
+    expect(kolor.slice(0, 3).map((v) => v.v)).toEqual(["grafit", "mgla", "kobalt"]);
+    expect(kolor.length).toBeGreaterThan(3);
     expect(kolor[2]).toMatchObject({ label: "Kobalt", swatch: ctx.colors["kobalt"]?.swatch });
     const prices = kb.flatMap((p) => p.variants.map((v) => v.price));
     expect(find(r, "cena").bounds).toEqual({ min: Math.min(...prices), max: Math.max(...prices) });

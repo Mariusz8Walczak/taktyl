@@ -4,9 +4,9 @@ import { z } from "zod";
 export const categoryIdSchema = z.enum(["klawiatury", "myszki", "podkladki"]);
 export type CategoryId = z.infer<typeof categoryIdSchema>;
 
-export const colorIdSchema = z.enum(["grafit", "mgla", "kobalt", "naturalny"]);
-/** Slownik kolorow (49 pozycji, ADR-0011); warianty uzywaja na razie tylko czterech z `colorIdSchema`. */
+/** Klucz koloru ze slownika `data/colors.json` (150 pozycji: seria, paleta konfiguratora i kolekcja, ADR-0011). */
 export const colorKeySchema = z.string().regex(/^[a-z0-9-]{2,40}$/);
+export const colorIdSchema = colorKeySchema;
 export const switchIdSchema = z.enum(["slizg", "prog", "trzask", "szept"]);
 export const padSizeKeySchema = z.enum(["m", "l", "xl", "xxl"]);
 export const profileIdSchema = z.enum(["fps", "gry", "programowanie", "biuro", "cisza"]);

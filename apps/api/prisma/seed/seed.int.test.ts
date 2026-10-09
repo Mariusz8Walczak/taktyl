@@ -47,19 +47,19 @@ describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
     expect(await counts()).toMatchObject({
       categories: 3,
       products: 18,
-      variants: 99,
+      variants: 329,
       switches: 4,
-      colors: 49,
+      colors: 150,
       presets: 4,
       presetItems: 12,
-      productImages: 190,
+      productImages: 300,
       shipping: 3,
       payments: 4,
       codes: 2,
       pickup: 6,
     });
     expect(await prisma.productImage.count({ where: { priority: "P0" } })).toBe(76);
-    expect(first.variants).toBe(99);
+    expect(first.variants).toBe(329);
   });
 
   it("opisy i strony z tresci trafiaja do bazy, wariant domyslny ustawiony", async () => {

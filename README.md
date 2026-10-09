@@ -10,7 +10,7 @@ Wzorcowy sklep demonstracyjny z klawiaturami, myszkami i podkładkami oraz kreat
 
 Scenariusze odbioru S1-S36 zostały uruchomione w Dockerze (wyniki i jedno otwarte zadanie: sekcja „Wyniki odbioru”).
 
-- **Sklep (`apps/web`):** katalog 18 produktów (99 wariantów) z filtrami w adresie, karta produktu z ceną i „najniższą ceną z 30 dni” liczoną z historii cen, wyszukiwarka, koszyk, zamówienie z **symulowaną płatnością**, poradniki, strony prawne i informacyjne.
+- **Sklep (`apps/web`):** katalog 18 produktów (329 wariantów, w tym 110 kolorów z kolekcji) z filtrami w adresie, karta produktu z ceną i „najniższą ceną z 30 dni” liczoną z historii cen, wyszukiwarka, koszyk, zamówienie z **symulowaną płatnością**, poradniki, strony prawne i informacyjne.
 - **Kreator setu „Zbuduj set” (`docs/03`):** klawiatura + myszka + podkładka, sprawdzenie wymiarów na biurku, −10% za komplet, liczone w groszach w `packages/domain`.
 - **Backpanel (`apps/admin`):** produkty i warianty, ceny i stany, treści i opisy, opinie, zamówienia i statusy, zgłoszenia z formularzy, ustawienia sklepu, użytkownicy i role (`owner`, `editor`, `viewer`), dziennik zmian.
 - **Propagacja zmian w ≤ 5 s (ADR-0003):** mutacja w backpanelu -> commit -> outbox -> webhook HMAC -> `revalidateTag` w sklepie. Gdy sklep jest wyłączony, outbox ponawia dostawę po jego powrocie (S30, `make smoke-outbox`).
@@ -189,7 +189,7 @@ Konfiguracja klienta: `.mcp.json.example`. Test na działającym stosie: `make s
 | Nazwa | **Taktyl** (od „taktylny”) | `docs/01-marka-i-nazwa.md` |
 | Rdzeń oferty | Set: klawiatura + myszka + podkładka, sprawdzony wymiarami, −10% za komplet | `docs/03-kreator-setu.md` |
 | Stos | NestJS + Next.js + PostgreSQL/Prisma + Zod, pnpm + Turborepo (zastąpił Astro + czysty JS); wersje: sekcja „Stos i wersje” | `docs/adr/0001-stos-nestjs-nextjs.md`, `docs/adr/0010-aktualizacja-zaleznosci.md` |
-| Dane | `data/*.json` = seed (18 produktów, 99 wariantów, 4 sety); w runtime baza, edytowana backpanelem | `docs/adr/0005-baza-danych-i-dane-zrodlowe.md` |
+| Dane | `data/*.json` = seed (18 produktów, 329 wariantów, 4 sety); w runtime baza, edytowana backpanelem | `docs/adr/0005-baza-danych-i-dane-zrodlowe.md` |
 | Szablon | Crafto (wariant z `docs/08` §6); jego pliki **nie są** w repozytorium | `docs/adr/0004-szablon-crafto-i-licencja.md` |
 | Uruchomienie | Docker Compose, profile `dev`, `test`, `e2e`, `demo` | `docs/adr/0009-docker-first.md` |
 | Kolorystyka | Paleta jak zestaw keycapów, kobaltowy „Enter” jako jedyny akcent | `docs/06-design-system.md` |
