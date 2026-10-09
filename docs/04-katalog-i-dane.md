@@ -9,7 +9,7 @@ Dane są gotowe w `data/`. Model ich nie wymyśla, nie uzupełnia i nie poprawia
 | `data/categories.json` | 3 kategorie: id, slug, nazwa, H1, wstęp | strony, nawigacja |
 | `data/products.json` | 18 produktów, 99 wariantów (SKU), atrybuty, zdjęcia, plakietki, `fit`, GPSR | wszystko |
 | `data/switches.json` | 4 przełączniki: Ślizg, Próg, Trzask, Szept | karta produktu, kreator, filtry |
-| `data/colors.json` | 4 kolory: kod w SKU, etykieta, grupa harmonii, kolor próbki (`swatch`) | próbki, reguła kolorystyki, placeholdery tekstur |
+| `data/colors.json` | 49 kolorów (4 w wariantach + paleta konfiguratora, ADR-0011): kod w SKU, etykieta, grupa harmonii, kolor próbki (`swatch`) | próbki, reguła kolorystyki, placeholdery tekstur |
 | `data/facets.json` | definicje filtrów dla każdej kategorii | listing |
 | `data/rules.json` | profile, strefy myszki, reguły dopasowania i ich komunikaty | kreator |
 | `data/presets.json` | 4 gotowe sety z policzoną ceną | strona główna, kreator |

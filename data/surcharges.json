@@ -1,0 +1,30 @@
+{
+  "currency": "PLN",
+  "unit": "zl brutto",
+  "series": [
+    "grafit",
+    "mgla",
+    "kobalt"
+  ],
+  "keyboards": {
+    "case_off_series_mat": 30,
+    "case_gloss": 40,
+    "case_opal": 60,
+    "case_anodized_off_series": 40,
+    "case_translucent": 50,
+    "case_acrylic": 70,
+    "case_two_tone": 20,
+    "keys_jelly": 20,
+    "knob_other_color": 10
+  },
+  "mice": {
+    "body_off_series_mat": 20,
+    "body_gloss": 30,
+    "body_opal": 40,
+    "buttons_other_color": 20
+  },
+  "pads": {
+    "print": 10,
+    "print_under_glass": 30
+  }
+}

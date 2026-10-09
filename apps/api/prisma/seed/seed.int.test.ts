@@ -49,7 +49,7 @@ describe.skipIf(!url)("B-102 seed (PostgreSQL)", () => {
       products: 18,
       variants: 99,
       switches: 4,
-      colors: 4,
+      colors: 49,
       presets: 4,
       presetItems: 12,
       productImages: 190,
