@@ -1,5 +1,5 @@
-// F-002, wzorzec: naglowek `home-setup-gear.html` (logotyp, nawigacja, akcje), przyklejony. Wordmark `taktyl`
-// zlozony fontem (docs/06 §5.1), bez grafiki. Akcje jako widoczne etykiety tekstowe (docs/09 §2).
+// F-002, wzorzec: naglowek `home-setup-gear.html` (logotyp, nawigacja, akcje), przyklejony. Logo `taktyl` (znak
+// klawisza + wordmark, SVG od wlasciciela, docs/06 §5.1, DESIGN-072). Akcje jako widoczne etykiety tekstowe (docs/09 §2).
 import Link from "next/link";
 import { CATEGORY_SHORTCUTS } from "../../lib/category-shortcuts";
 import { ACCOUNT_LINK, COMPARE_LINK, NAV_MAIN, WISHLIST_LINK } from "../../lib/nav";
@@ -15,7 +15,13 @@ export function Header() {
       <div className="kontener naglowek__wnetrze">
         <MobileMenu />
         <Link href="/" className="wordmark" aria-label="Taktyl, strona główna">
-          taktyl
+          <img
+            src="/brand/taktyl-logo.svg"
+            alt=""
+            width={111}
+            height={32}
+            className="wordmark__logo"
+          />
         </Link>
         <nav className="naglowek__nawigacja" aria-label="Główna">
           <ul className="lista lista--rzad">

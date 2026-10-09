@@ -1,6 +1,7 @@
 // Audyt regula 2 (TAKTYL-9): kolory wpisane wprost poza plikiem tokenow.
 // Szuka #[0-9a-fA-F]{3,8} i rgb( w apps/** i packages/** (bez node_modules, dist, .next, .turbo, coverage).
-// Jedyny wyjatek: packages/tokens/css/tokens.css. Kod wyjscia 1 przy trafieniu.
+// Wyjatki: packages/tokens/css/tokens.css oraz pliki graficzne SVG od wlasciciela w apps/web/public/ (logo, favicon:
+// to grafika, nie stylowanie; docs/09 §7, DESIGN-072). Kod wyjscia 1 przy trafieniu.
 // Uzycie: node scripts/audit-tokens.mjs [katalog-glowny]   (domyslnie: korzen repo)
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -10,6 +11,7 @@ const root = resolve(process.argv[2] ?? join(dirname(fileURLToPath(import.meta.u
 const SKIP_DIRS = new Set(["node_modules", "dist", ".next", ".turbo", "coverage", ".git"]);
 const EXT = /\.(css|scss|sass|less|ts|tsx|mts|cts|js|jsx|mjs|cjs|html|svg|json|md|mdx)$/i;
 const ALLOWED = join("packages", "tokens", "css", "tokens.css");
+const GRAPHICS_DIR = join("apps", "web", "public") + sep;
 // Hex: '#' nie moze byc czescia encji HTML (&#106;) ani wnetrzem tokenu (a#fff) - I-007.
 const PATTERNS = [/(?<![&\w])#[0-9a-fA-F]{3,8}\b/, /rgb\(/i];
 
@@ -21,6 +23,7 @@ function walk(dir) {
     } else if (EXT.test(e.name)) {
       const rel = relative(root, join(dir, e.name));
       if (rel === ALLOWED) continue;
+      if (rel.startsWith(GRAPHICS_DIR) && /\.svg$/i.test(e.name)) continue;
       readFileSync(join(dir, e.name), "utf8")
         .split(/\r?\n/)
         .forEach((line, i) => {
