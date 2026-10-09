@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { parseConfigurationSku, resolveConfiguration, defaultConfiguration } from "@taktyl/domain";
 import "../../styles/konfigurator.css";
+import { BenefitIcon } from "../../components/configurator/ikony";
 import { SetCreator } from "../../components/configurator/set-creator";
 import { getConfiguratorData } from "../../lib/configurator/data";
 import { toDomainData } from "../../lib/configurator/model";
@@ -50,13 +51,16 @@ export default async function CreateSetPage({ searchParams }: Props) {
         </p>
         <ul className="konfigurator__zalety">
           <li>
+            <BenefitIcon name="kolory" />
             <strong>Dowolny wygląd.</strong> Każda część w osobnym kolorze, bez gotowych zestawień.
           </li>
           <li>
+            <BenefitIcon name="biurko" />
             <strong>Podgląd na biurku.</strong> Klawiatura, mysz i podkładka razem, do obrócenia ze
             wszystkich stron.
           </li>
           <li>
+            <BenefitIcon name="rabat" />
             <strong>Rabat za komplet.</strong> Trzy elementy w jednym secie kosztują mniej niż
             osobno.
           </li>

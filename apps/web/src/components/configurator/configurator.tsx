@@ -8,6 +8,7 @@ import { Button } from "@taktyl/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { addToCart } from "../../lib/cart-adapter";
 import { applyChoice, explicitChoices, toDomainData } from "../../lib/configurator/model";
+import { BenefitIcon } from "./ikony";
 import { PartsPanel } from "./parts-panel";
 import { SceneView } from "./scene-view";
 import type { StageHandle, StageItem } from "./stage";
@@ -141,7 +142,7 @@ export function Configurator({ data, model, productName, productHref, initial }:
             </p>
           ) : null}
           <p className="konfigurator__info">
-            Wykonanie na zamówienie, wysyłka w ok. 7 dni roboczych.
+            <BenefitIcon name="termin" /> Wykonanie na zamówienie, wysyłka w ok. 7 dni roboczych.
           </p>
           <Button
             className="konfigurator__koszyk"

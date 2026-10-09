@@ -212,7 +212,18 @@
   display: grid;
   gap: var(--s1);
   margin: var(--s2) 0 0;
-  padding-left: var(--s3);
+  padding-left: 0;
+  list-style: none;
+}
+.konfigurator__zalety li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s1);
+}
+.konfigurator__zalety svg {
+  flex: none;
+  margin-top: 0.125em;
+  color: var(--akcent);
 }
 .konfigurator__sekcja {
   display: grid;
@@ -284,4 +295,16 @@
   align-items: center;
   min-height: var(--cel-min);
   padding-inline: var(--s1);
+}
+
+/* Ikony konfiguratora (Lucide, D-I015-ikony): rozmiar z lokalnej zmiennej, kolor z tekstu albo akcentu. */
+:root {
+  --tk-ikona-konf: 1.25rem;
+}
+.konfigurator__grupa legend svg,
+.konfigurator__sekcja-tytul svg,
+.konfigurator__info svg {
+  display: inline-block;
+  vertical-align: -0.2em;
+  color: var(--akcent);
 }

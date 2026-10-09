@@ -1,6 +1,7 @@
 "use client";
 // F-250, F-251, F-255 (ADR-0011): panel wyboru czesci jednego modelu (wzor wierzchu podkladki, kolory i wykonczenia).
 // Uzywany w konfiguratorze produktu i w „Stworz wlasny set”. Kazdy wybor to przycisk radio z nazwa koloru (a11y).
+import { PartIcon } from "./ikony";
 import type { ConfiguratorData } from "@taktyl/contracts";
 import type { Configuration } from "@taktyl/domain";
 import { useId } from "react";
@@ -51,7 +52,9 @@ export function PartsPanel({
     <>
       {keyboard ? (
         <fieldset className="konfigurator__grupa">
-          <legend>Przełącznik</legend>
+          <legend>
+            <PartIcon id="przelaczniki" /> Przełącznik
+          </legend>
           <div className="konfigurator__modele" role="radiogroup" aria-label="Przełącznik">
             {Object.entries(data.switches).map(([id, sw]) => (
               <label key={id} className="konfigurator__model">
@@ -69,7 +72,9 @@ export function PartsPanel({
       ) : null}
       {printable ? (
         <fieldset className="konfigurator__grupa">
-          <legend>Wzór wierzchu</legend>
+          <legend>
+            <PartIcon id="wierzch" /> Wzór wierzchu
+          </legend>
           <div
             className="konfigurator__wzory"
             role="radiogroup"
@@ -121,7 +126,7 @@ export function PartsPanel({
         return (
           <fieldset key={part.id} className="konfigurator__grupa">
             <legend>
-              {part.etykieta}: <strong>{currentLabel}</strong>
+              <PartIcon id={part.id} /> {part.etykieta}: <strong>{currentLabel}</strong>
             </legend>
             <div className="konfigurator__probki" role="radiogroup" aria-label={part.etykieta}>
               {autoAllowed ? (
