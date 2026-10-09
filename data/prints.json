@@ -1,0 +1,563 @@
+[
+  {
+    "id": "p-paski",
+    "nazwa": "Paski",
+    "plik": "textures/nadruki/p-paski.webp",
+    "miniatura": "textures/miniatury/p-paski.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#E2402F"
+  },
+  {
+    "id": "p-krata",
+    "nazwa": "Krata",
+    "plik": "textures/nadruki/p-krata.webp",
+    "miniatura": "textures/miniatury/p-krata.webp",
+    "tryb": "skala",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#1C2B44"
+  },
+  {
+    "id": "p-szachownica",
+    "nazwa": "Szachownica",
+    "plik": "textures/nadruki/p-szachownica.webp",
+    "miniatura": "textures/miniatury/p-szachownica.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#16181C"
+  },
+  {
+    "id": "p-groszki",
+    "nazwa": "Groszki",
+    "plik": "textures/nadruki/p-groszki.webp",
+    "miniatura": "textures/miniatury/p-groszki.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#F7C6D5"
+  },
+  {
+    "id": "p-lastryko",
+    "nazwa": "Lastryko",
+    "plik": "textures/nadruki/p-lastryko.webp",
+    "miniatura": "textures/miniatury/p-lastryko.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#3A3F47"
+  },
+  {
+    "id": "p-konfetti",
+    "nazwa": "Konfetti",
+    "plik": "textures/nadruki/p-konfetti.webp",
+    "miniatura": "textures/miniatury/p-konfetti.webp",
+    "tryb": "skala",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#16181C"
+  },
+  {
+    "id": "p-moro",
+    "nazwa": "Moro",
+    "plik": "textures/nadruki/p-moro.webp",
+    "miniatura": "textures/miniatury/p-moro.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2E3328"
+  },
+  {
+    "id": "p-fala",
+    "nazwa": "Fala",
+    "plik": "textures/nadruki/p-fala.webp",
+    "miniatura": "textures/miniatury/p-fala.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#1C3F8C"
+  },
+  {
+    "id": "p-poziomica",
+    "nazwa": "Poziomica",
+    "plik": "textures/nadruki/p-poziomica.webp",
+    "miniatura": "textures/miniatury/p-poziomica.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#3CC6C0"
+  },
+  {
+    "id": "p-siatka",
+    "nazwa": "Siatka",
+    "plik": "textures/nadruki/p-siatka.webp",
+    "miniatura": "textures/miniatury/p-siatka.webp",
+    "tryb": "skala",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#1F5A40"
+  },
+  {
+    "id": "p-swit",
+    "nazwa": "Świt",
+    "plik": "textures/nadruki/p-swit.webp",
+    "miniatura": "textures/miniatury/p-swit.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#9B8AE0"
+  },
+  {
+    "id": "p-zmierzch",
+    "nazwa": "Zmierzch",
+    "plik": "textures/nadruki/p-zmierzch.webp",
+    "miniatura": "textures/miniatury/p-zmierzch.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#1C2B5A"
+  },
+  {
+    "id": "p-raster",
+    "nazwa": "Raster",
+    "plik": "textures/nadruki/p-raster.webp",
+    "miniatura": "textures/miniatury/p-raster.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#16181C"
+  },
+  {
+    "id": "p-zylka",
+    "nazwa": "Żyłka",
+    "plik": "textures/nadruki/p-zylka.webp",
+    "miniatura": "textures/miniatury/p-zylka.webp",
+    "tryb": "skala",
+    "mm": [
+      450,
+      400
+    ],
+    "px": [
+      2048,
+      1820
+    ],
+    "dla": [
+      "p-lod"
+    ],
+    "obszycie": null
+  },
+  {
+    "id": "p-piksel",
+    "nazwa": "Piksel",
+    "plik": "textures/nadruki/p-piksel.webp",
+    "miniatura": "textures/miniatury/p-piksel.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2B3038"
+  },
+  {
+    "id": "p-mozaika",
+    "nazwa": "Mozaika",
+    "plik": "textures/nadruki/p-mozaika.webp",
+    "miniatura": "textures/miniatury/p-mozaika.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2B3038"
+  },
+  {
+    "id": "p-neon",
+    "nazwa": "Neon",
+    "plik": "textures/nadruki/p-neon.webp",
+    "miniatura": "textures/miniatury/p-neon.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2A0F4A"
+  },
+  {
+    "id": "p-gwiazdy",
+    "nazwa": "Gwiazdy",
+    "plik": "textures/nadruki/p-gwiazdy.webp",
+    "miniatura": "textures/miniatury/p-gwiazdy.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#0E1430"
+  },
+  {
+    "id": "p-lawa",
+    "nazwa": "Lawa",
+    "plik": "textures/nadruki/p-lawa.webp",
+    "miniatura": "textures/miniatury/p-lawa.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2A0F0A"
+  },
+  {
+    "id": "p-zebra",
+    "nazwa": "Zebra",
+    "plik": "textures/nadruki/p-zebra.webp",
+    "miniatura": "textures/miniatury/p-zebra.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#16181C"
+  },
+  {
+    "id": "p-pantera",
+    "nazwa": "Pantera",
+    "plik": "textures/nadruki/p-pantera.webp",
+    "miniatura": "textures/miniatury/p-pantera.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#2A1C10"
+  },
+  {
+    "id": "p-zorza",
+    "nazwa": "Zorza",
+    "plik": "textures/nadruki/p-zorza.webp",
+    "miniatura": "textures/miniatury/p-zorza.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      450,
+      400
+    ],
+    "px": [
+      2048,
+      1820
+    ],
+    "dla": [
+      "p-lod"
+    ],
+    "obszycie": null
+  },
+  {
+    "id": "p-holo",
+    "nazwa": "Holo",
+    "plik": "textures/nadruki/p-holo.webp",
+    "miniatura": "textures/miniatury/p-holo.webp",
+    "tryb": "rozciagnij",
+    "mm": [
+      450,
+      400
+    ],
+    "px": [
+      2048,
+      1820
+    ],
+    "dla": [
+      "p-lod"
+    ],
+    "obszycie": null
+  },
+  {
+    "id": "p-plotno",
+    "nazwa": "Płótno",
+    "plik": "textures/nadruki/p-plotno.webp",
+    "miniatura": "textures/miniatury/p-plotno.webp",
+    "tryb": "skala",
+    "mm": [
+      900,
+      400
+    ],
+    "px": [
+      2048,
+      910
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#8C7A5A"
+  },
+  {
+    "id": "p-sztruks",
+    "nazwa": "Sztruks",
+    "plik": "textures/nadruki/p-sztruks.webp",
+    "miniatura": "textures/miniatury/p-sztruks.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#5A3420"
+  },
+  {
+    "id": "p-kratka",
+    "nazwa": "Kratka",
+    "plik": "textures/nadruki/p-kratka.webp",
+    "miniatura": "textures/miniatury/p-kratka.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#E85D8A"
+  },
+  {
+    "id": "p-sorbet",
+    "nazwa": "Sorbet",
+    "plik": "textures/nadruki/p-sorbet.webp",
+    "miniatura": "textures/miniatury/p-sorbet.webp",
+    "tryb": "skala",
+    "mm": [
+      1200,
+      500
+    ],
+    "px": [
+      2048,
+      853
+    ],
+    "dla": [
+      "p-tafla",
+      "p-len",
+      "p-szron"
+    ],
+    "obszycie": "#E9A6BB"
+  }
+]

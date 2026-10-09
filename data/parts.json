@@ -1,0 +1,2403 @@
+{
+  "palettes": {
+    "kb.obudowa.tworzywo": {
+      "wykonczenia": [
+        "mat",
+        "polysk",
+        "polprzezroczyste",
+        "opal"
+      ],
+      "kolory": [
+        "grafit",
+        "antracyt",
+        "czern",
+        "popiel",
+        "mgla",
+        "biel",
+        "krem",
+        "kobalt",
+        "niebo",
+        "blekit",
+        "turkus",
+        "mieta",
+        "jadeit",
+        "limonka",
+        "cytryna",
+        "miod",
+        "pomarancz",
+        "koral",
+        "czerwien",
+        "wisnia",
+        "bordo",
+        "malina",
+        "roz",
+        "puder",
+        "lawenda",
+        "fiolet"
+      ]
+    },
+    "kb.obudowa.aluminium": {
+      "wykonczenia": [
+        "anodowane",
+        "opal"
+      ],
+      "kolory": [
+        "antracyt",
+        "czern",
+        "stal",
+        "srebro",
+        "kobalt",
+        "szafir",
+        "atrament",
+        "morski",
+        "malachit",
+        "szmaragd",
+        "pomarancz",
+        "wisnia",
+        "zloto",
+        "rozowe-zloto",
+        "miedz"
+      ]
+    },
+    "kb.klawisze": {
+      "wykonczenia": [
+        "pbt",
+        "abs",
+        "jelly"
+      ],
+      "kolory": [
+        "grafit",
+        "antracyt",
+        "czern",
+        "popiel",
+        "mgla",
+        "biel",
+        "krem",
+        "kobalt",
+        "niebo",
+        "blekit",
+        "lazur",
+        "atrament",
+        "turkus",
+        "mieta",
+        "jadeit",
+        "malachit",
+        "szmaragd",
+        "limonka",
+        "cytryna",
+        "miod",
+        "pomarancz",
+        "koral",
+        "czerwien",
+        "wisnia",
+        "bordo",
+        "malina",
+        "flaming",
+        "roz",
+        "puder",
+        "brzoskwinia",
+        "lawenda",
+        "liliowy",
+        "fiolet",
+        "czekolada",
+        "zloto"
+      ]
+    },
+    "kb.legendy": {
+      "wykonczenia": [],
+      "kolory": [
+        "biel",
+        "krem",
+        "mgla",
+        "popiel",
+        "grafit",
+        "czern",
+        "kobalt",
+        "atrament",
+        "czerwien",
+        "bordo",
+        "malina",
+        "szmaragd",
+        "zloto",
+        "fiolet"
+      ],
+      "auto": "kontrast"
+    },
+    "kb.pokretlo": {
+      "wykonczenia": [
+        "anodowane"
+      ],
+      "kolory": [
+        "antracyt",
+        "czern",
+        "srebro",
+        "stal",
+        "zloto",
+        "rozowe-zloto",
+        "miedz"
+      ],
+      "auto": "jak_obudowa"
+    },
+    "kb.podswietlenie": {
+      "wykonczenia": [],
+      "kolory": [
+        "biel",
+        "brzoskwinia",
+        "turkus",
+        "malina",
+        "kobalt"
+      ],
+      "tryby": [
+        "wyl",
+        "kolor",
+        "rgb"
+      ]
+    },
+    "ms.korpus": {
+      "wykonczenia": [
+        "mat",
+        "polysk",
+        "opal"
+      ],
+      "kolory": [
+        "grafit",
+        "antracyt",
+        "czern",
+        "popiel",
+        "mgla",
+        "biel",
+        "krem",
+        "kobalt",
+        "lazur",
+        "blekit",
+        "morski",
+        "turkus",
+        "mieta",
+        "zielen",
+        "limonka",
+        "oliwka",
+        "cytryna",
+        "slonecznik",
+        "piasek",
+        "pomarancz",
+        "koral",
+        "czerwien",
+        "wisnia",
+        "malina",
+        "flaming",
+        "roz",
+        "puder",
+        "lawenda",
+        "fiolet",
+        "braz"
+      ]
+    },
+    "ms.przyciski": {
+      "wykonczenia": [
+        "mat",
+        "polysk",
+        "opal"
+      ],
+      "kolory": "jak ms.korpus",
+      "auto": "jak_korpus"
+    },
+    "ms.rolka": {
+      "wykonczenia": [
+        "guma"
+      ],
+      "kolory": [
+        "czern",
+        "grafit",
+        "biel",
+        "krem",
+        "kobalt",
+        "turkus",
+        "limonka",
+        "slonecznik",
+        "pomarancz",
+        "czerwien",
+        "malina",
+        "zloto"
+      ]
+    },
+    "ms.przyciski_boczne": {
+      "wykonczenia": [
+        "polysk"
+      ],
+      "kolory": "jak ms.rolka",
+      "auto": "jak_korpus"
+    },
+    "ms.spod": {
+      "wykonczenia": [
+        "mat"
+      ],
+      "kolory": [
+        "czern",
+        "grafit",
+        "mgla",
+        "biel",
+        "kobalt",
+        "pomarancz"
+      ],
+      "auto": "ciemniejszy_korpus"
+    },
+    "pd.wierzch.tkanina": {
+      "wykonczenia": [
+        "tkanina"
+      ],
+      "kolory": [
+        "grafit",
+        "czern",
+        "mgla",
+        "kobalt",
+        "atrament",
+        "turkus",
+        "malachit",
+        "oliwka",
+        "musztarda",
+        "bordo",
+        "malina",
+        "roz",
+        "fiolet"
+      ],
+      "nadruki": "tekstury/nadruki"
+    },
+    "pd.obszycie": {
+      "wykonczenia": [
+        "tkanina"
+      ],
+      "kolory": [
+        "grafit",
+        "czern",
+        "mgla",
+        "biel",
+        "kobalt",
+        "turkus",
+        "czerwien",
+        "malina",
+        "roz",
+        "slonecznik",
+        "zloto",
+        "fiolet"
+      ],
+      "auto": "z_nadruku"
+    },
+    "pd.filc": {
+      "wykonczenia": [
+        "filc"
+      ],
+      "kolory": [
+        "grafit",
+        "mgla",
+        "mieta",
+        "malina",
+        "musztarda",
+        "kobalt",
+        "czekolada"
+      ]
+    },
+    "pd.nadruk_pod_szklem": {
+      "wykonczenia": [
+        "mat"
+      ],
+      "kolory": [
+        "grafit",
+        "mgla",
+        "czern",
+        "kobalt"
+      ],
+      "nadruki": "tekstury/nadruki"
+    }
+  },
+  "models": [
+    {
+      "id": "k-kwarc-60",
+      "product": "k-kwarc-60",
+      "size": null,
+      "sku_prefix": "K-KWR60",
+      "name": "Kwarc 60",
+      "file": "models/k-kwarc-60.glb",
+      "dims_mm": [
+        293.0,
+        102.0,
+        39.0
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "abs"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "abs"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "abs"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "podswietlenie",
+          "etykieta": "Podświetlenie",
+          "konfigurowalna": true,
+          "paleta": "kb.podswietlenie",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "emissive; wyłączenie: emissiveIntensity = 0"
+        }
+      ]
+    },
+    {
+      "id": "k-lupek-65",
+      "product": "k-lupek-65",
+      "size": null,
+      "sku_prefix": "K-LPK65",
+      "name": "Łupek 65",
+      "file": "models/k-lupek-65.glb",
+      "dims_mm": [
+        318.0,
+        108.0,
+        38.7
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "pbt"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "podswietlenie",
+          "etykieta": "Podświetlenie",
+          "konfigurowalna": true,
+          "paleta": "kb.podswietlenie",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "emissive; wyłączenie: emissiveIntensity = 0"
+        }
+      ]
+    },
+    {
+      "id": "k-bazalt-75",
+      "product": "k-bazalt-75",
+      "size": null,
+      "sku_prefix": "K-BZL75",
+      "name": "Bazalt 75",
+      "file": "models/k-bazalt-75.glb",
+      "dims_mm": [
+        327.0,
+        140.0,
+        34.8
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.aluminium",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.aluminium",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "anodowane"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "obudowa_fazowanie",
+          "etykieta": "Fazowanie krawędzi",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "polerowane"
+          },
+          "uwagi": "kolor obudowy rozjaśniony o 45% w stronę bieli, polerowany metal"
+        },
+        {
+          "id": "pokretlo",
+          "etykieta": "Pokrętło",
+          "konfigurowalna": true,
+          "paleta": "kb.pokretlo",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "anodowane"
+          },
+          "uwagi": "domyślnie jak obudowa"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "pbt"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "podswietlenie",
+          "etykieta": "Podświetlenie",
+          "konfigurowalna": true,
+          "paleta": "kb.podswietlenie",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "emissive; wyłączenie: emissiveIntensity = 0"
+        }
+      ]
+    },
+    {
+      "id": "k-kreda-98",
+      "product": "k-kreda-98",
+      "size": null,
+      "sku_prefix": "K-KRD98",
+      "name": "Kreda 98",
+      "file": "models/k-kreda-98.glb",
+      "dims_mm": [
+        385.0,
+        138.0,
+        38.7
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "pbt"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "podswietlenie",
+          "etykieta": "Podświetlenie",
+          "konfigurowalna": true,
+          "paleta": "kb.podswietlenie",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "emissive; wyłączenie: emissiveIntensity = 0"
+        }
+      ]
+    },
+    {
+      "id": "k-granit-tkl",
+      "product": "k-granit-tkl",
+      "size": null,
+      "sku_prefix": "K-GRNTKL",
+      "name": "Granit TKL",
+      "file": "models/k-granit-tkl.glb",
+      "dims_mm": [
+        360.0,
+        140.0,
+        36.9
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.aluminium",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.aluminium",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "anodowane"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "obudowa_fazowanie",
+          "etykieta": "Fazowanie krawędzi",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "polerowane"
+          },
+          "uwagi": "kolor obudowy rozjaśniony o 45% w stronę bieli, polerowany metal"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "pbt"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "pbt"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        }
+      ]
+    },
+    {
+      "id": "k-marmur-100",
+      "product": "k-marmur-100",
+      "size": null,
+      "sku_prefix": "K-MRM100",
+      "name": "Marmur 100",
+      "file": "models/k-marmur-100.glb",
+      "dims_mm": [
+        440.0,
+        135.0,
+        37.1
+      ],
+      "parts": [
+        {
+          "id": "obudowa",
+          "etykieta": "Obudowa",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "obudowa_spod",
+          "etykieta": "Spód obudowy",
+          "konfigurowalna": true,
+          "paleta": "kb.obudowa.tworzywo",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak obudowa, osobny kolor = obudowa dwukolorowa"
+        },
+        {
+          "id": "klawisze_alfa",
+          "etykieta": "Klawisze alfanumeryczne",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "antracyt",
+            "wykonczenie": "abs"
+          },
+          "uwagi": "spacja należy do tej grupy"
+        },
+        {
+          "id": "klawisze_mod",
+          "etykieta": "Klawisze modyfikatorów",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "abs"
+          }
+        },
+        {
+          "id": "klawisze_akcent",
+          "etykieta": "Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.klawisze",
+          "domyslnie": {
+            "kolor": "kobalt",
+            "wykonczenie": "abs"
+          },
+          "uwagi": "Esc i oba Enter (główny i numeryczny, jeśli jest)"
+        },
+        {
+          "id": "legendy_alfa",
+          "etykieta": "Nadruki na klawiszach alfanumerycznych",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_mod",
+          "etykieta": "Nadruki na modyfikatorach",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "mgla",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "legendy_akcent",
+          "etykieta": "Nadruki na Esc i Enter",
+          "konfigurowalna": true,
+          "paleta": "kb.legendy",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "auto: kontrast do koloru klawiszy"
+        },
+        {
+          "id": "plyta",
+          "etykieta": "Płyta montażowa",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "anodowane"
+          }
+        },
+        {
+          "id": "przelaczniki",
+          "etykieta": "Przełączniki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "półprzezroczyste w modelach z podświetleniem"
+        },
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "podswietlenie",
+          "etykieta": "Podświetlenie",
+          "konfigurowalna": true,
+          "paleta": "kb.podswietlenie",
+          "domyslnie": {
+            "kolor": "biel",
+            "wykonczenie": null
+          },
+          "uwagi": "emissive; wyłączenie: emissiveIntensity = 0"
+        }
+      ]
+    },
+    {
+      "id": "m-jerzyk",
+      "product": "m-jerzyk",
+      "size": null,
+      "sku_prefix": "M-JRZ",
+      "name": "Jerzyk",
+      "file": "models/m-jerzyk.glb",
+      "dims_mm": [
+        63.0,
+        120.0,
+        38.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": true,
+          "paleta": "ms.rolka",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "przyciski_boczne",
+          "etykieta": "Przyciski boczne",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski_boczne",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m-mewa",
+      "product": "m-mewa",
+      "size": null,
+      "sku_prefix": "M-MEW",
+      "name": "Mewa",
+      "file": "models/m-mewa.glb",
+      "dims_mm": [
+        60.0,
+        116.0,
+        37.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": true,
+          "paleta": "ms.rolka",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "przyciski_boczne",
+          "etykieta": "Przyciski boczne",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski_boczne",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m-pustulka",
+      "product": "m-pustulka",
+      "size": null,
+      "sku_prefix": "M-PST",
+      "name": "Pustułka",
+      "file": "models/m-pustulka.glb",
+      "dims_mm": [
+        66.0,
+        126.0,
+        43.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": true,
+          "paleta": "ms.rolka",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "przyciski_boczne",
+          "etykieta": "Przyciski boczne",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski_boczne",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przycisk_dpi",
+          "etykieta": "Przycisk DPI",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m-wrobel",
+      "product": "m-wrobel",
+      "size": null,
+      "sku_prefix": "M-WRB",
+      "name": "Wróbel",
+      "file": "models/m-wrobel.glb",
+      "dims_mm": [
+        64.0,
+        121.0,
+        39.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": true,
+          "paleta": "ms.rolka",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "przyciski_boczne",
+          "etykieta": "Przyciski boczne",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski_boczne",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przycisk_dpi",
+          "etykieta": "Przycisk DPI",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m-kos",
+      "product": "m-kos",
+      "size": null,
+      "sku_prefix": "M-KOS",
+      "name": "Kos",
+      "file": "models/m-kos.glb",
+      "dims_mm": [
+        80.0,
+        128.0,
+        48.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "stal",
+            "wykonczenie": "polerowane"
+          },
+          "uwagi": "metalowa, stała"
+        },
+        {
+          "id": "przyciski_boczne",
+          "etykieta": "Przyciski boczne",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski_boczne",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przycisk_dpi",
+          "etykieta": "Przycisk DPI",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "m-czapla",
+      "product": "m-czapla",
+      "size": null,
+      "sku_prefix": "M-CZP",
+      "name": "Czapla",
+      "file": "models/m-czapla.glb",
+      "dims_mm": [
+        75.0,
+        108.0,
+        76.0
+      ],
+      "parts": [
+        {
+          "id": "korpus",
+          "etykieta": "Korpus",
+          "konfigurowalna": true,
+          "paleta": "ms.korpus",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przyciski",
+          "etykieta": "Przyciski",
+          "konfigurowalna": true,
+          "paleta": "ms.przyciski",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "domyślnie jak korpus; w myszce pionowej to pas na przedniej ścianie"
+        },
+        {
+          "id": "rolka",
+          "etykieta": "Rolka",
+          "konfigurowalna": true,
+          "paleta": "ms.rolka",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": true,
+          "paleta": "ms.spod",
+          "domyslnie": {
+            "kolor": "czern",
+            "wykonczenie": "mat"
+          }
+        },
+        {
+          "id": "przycisk_dpi",
+          "etykieta": "Przycisk DPI",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "polysk"
+          }
+        },
+        {
+          "id": "slizgacze",
+          "etykieta": "Ślizgacze",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "PTFE"
+        },
+        {
+          "id": "sensor",
+          "etykieta": "Sensor",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        },
+        {
+          "id": "logo",
+          "etykieta": "Logo na spodzie",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-tafla_m",
+      "product": "p-tafla",
+      "size": "m",
+      "sku_prefix": "P-TFL-M",
+      "name": "Tafla",
+      "file": "models/p-tafla_m.glb",
+      "dims_mm": [
+        359.8,
+        299.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-tafla_l",
+      "product": "p-tafla",
+      "size": "l",
+      "sku_prefix": "P-TFL-L",
+      "name": "Tafla",
+      "file": "models/p-tafla_l.glb",
+      "dims_mm": [
+        449.8,
+        399.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-tafla_xl",
+      "product": "p-tafla",
+      "size": "xl",
+      "sku_prefix": "P-TFL-XL",
+      "name": "Tafla",
+      "file": "models/p-tafla_xl.glb",
+      "dims_mm": [
+        899.8,
+        399.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-tafla_xxl",
+      "product": "p-tafla",
+      "size": "xxl",
+      "sku_prefix": "P-TFL-XXL",
+      "name": "Tafla",
+      "file": "models/p-tafla_xxl.glb",
+      "dims_mm": [
+        1199.8,
+        499.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-len_m",
+      "product": "p-len",
+      "size": "m",
+      "sku_prefix": "P-LEN-M",
+      "name": "Len",
+      "file": "models/p-len_m.glb",
+      "dims_mm": [
+        359.7,
+        299.7,
+        5.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-len_l",
+      "product": "p-len",
+      "size": "l",
+      "sku_prefix": "P-LEN-L",
+      "name": "Len",
+      "file": "models/p-len_l.glb",
+      "dims_mm": [
+        449.7,
+        399.7,
+        5.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-len_xl",
+      "product": "p-len",
+      "size": "xl",
+      "sku_prefix": "P-LEN-XL",
+      "name": "Len",
+      "file": "models/p-len_xl.glb",
+      "dims_mm": [
+        899.7,
+        399.7,
+        5.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-szron_l",
+      "product": "p-szron",
+      "size": "l",
+      "sku_prefix": "P-SZR-L",
+      "name": "Szron",
+      "file": "models/p-szron_l.glb",
+      "dims_mm": [
+        449.8,
+        399.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-szron_xl",
+      "product": "p-szron",
+      "size": "xl",
+      "sku_prefix": "P-SZR-XL",
+      "name": "Szron",
+      "file": "models/p-szron_xl.glb",
+      "dims_mm": [
+        899.8,
+        399.8,
+        4.2
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.wierzch.tkanina",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        },
+        {
+          "id": "obszycie",
+          "etykieta": "Obszycie",
+          "konfigurowalna": true,
+          "paleta": "pd.obszycie",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "tkanina"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-lod_m",
+      "product": "p-lod",
+      "size": "m",
+      "sku_prefix": "P-LOD-M",
+      "name": "Lód",
+      "file": "models/p-lod_m.glb",
+      "dims_mm": [
+        360.0,
+        300.0,
+        4.9
+      ],
+      "parts": [
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "szklo",
+          "etykieta": "Szkło",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "transmission 1, IOR 1,52"
+        },
+        {
+          "id": "nadruk",
+          "etykieta": "Nadruk pod szkłem",
+          "konfigurowalna": true,
+          "paleta": "pd.nadruk_pod_szklem",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "UV 0..1; nadruk albo kolor"
+        }
+      ]
+    },
+    {
+      "id": "p-lod_l",
+      "product": "p-lod",
+      "size": "l",
+      "sku_prefix": "P-LOD-L",
+      "name": "Lód",
+      "file": "models/p-lod_l.glb",
+      "dims_mm": [
+        450.0,
+        400.0,
+        4.9
+      ],
+      "parts": [
+        {
+          "id": "nozki",
+          "etykieta": "Nóżki",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "szklo",
+          "etykieta": "Szkło",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": null
+          },
+          "uwagi": "transmission 1, IOR 1,52"
+        },
+        {
+          "id": "nadruk",
+          "etykieta": "Nadruk pod szkłem",
+          "konfigurowalna": true,
+          "paleta": "pd.nadruk_pod_szklem",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "UV 0..1; nadruk albo kolor"
+        }
+      ]
+    },
+    {
+      "id": "p-filc_xl",
+      "product": "p-filc",
+      "size": "xl",
+      "sku_prefix": "P-FLC-XL",
+      "name": "Filc",
+      "file": "models/p-filc_xl.glb",
+      "dims_mm": [
+        900.0,
+        400.0,
+        3.0
+      ],
+      "parts": [
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.filc",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "filc"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        }
+      ]
+    },
+    {
+      "id": "p-filc_xxl",
+      "product": "p-filc",
+      "size": "xxl",
+      "sku_prefix": "P-FLC-XXL",
+      "name": "Filc",
+      "file": "models/p-filc_xxl.glb",
+      "dims_mm": [
+        1200.0,
+        500.0,
+        3.0
+      ],
+      "parts": [
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": true,
+          "paleta": "pd.filc",
+          "domyslnie": {
+            "kolor": "grafit",
+            "wykonczenie": "filc"
+          },
+          "uwagi": "UV 0..1 na całą powierzchnię; nadruk albo kolor"
+        }
+      ]
+    },
+    {
+      "id": "p-korek_xl",
+      "product": "p-korek",
+      "size": "xl",
+      "sku_prefix": "P-KRK-XL",
+      "name": "Korek",
+      "file": "models/p-korek_xl.glb",
+      "dims_mm": [
+        900.0,
+        400.0,
+        3.0
+      ],
+      "parts": [
+        {
+          "id": "spod",
+          "etykieta": "Spód",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": null,
+            "wykonczenie": "guma"
+          }
+        },
+        {
+          "id": "wierzch",
+          "etykieta": "Wierzch",
+          "konfigurowalna": false,
+          "paleta": null,
+          "domyslnie": {
+            "kolor": "naturalny",
+            "wykonczenie": "mat"
+          },
+          "uwagi": "tekstura korka wbudowana w GLB"
+        }
+      ]
+    }
+  ]
+}

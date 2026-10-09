@@ -1,0 +1,129 @@
+{
+  "mat": {
+    "code": "M",
+    "label": "mat",
+    "pbr": {
+      "roughness": 0.5,
+      "metalness": 0
+    }
+  },
+  "polysk": {
+    "code": "P",
+    "label": "połysk",
+    "pbr": {
+      "roughness": 0.16,
+      "metalness": 0,
+      "clearcoat": 0.6,
+      "clearcoatRoughness": 0.05
+    }
+  },
+  "opal": {
+    "code": "O",
+    "label": "opal (perłowa powłoka)",
+    "pbr": {
+      "roughness": 0.22,
+      "metalness": 0,
+      "clearcoat": 0.4,
+      "iridescence": 1,
+      "iridescenceIOR": 1.6,
+      "iridescenceThicknessRange": [
+        420,
+        620
+      ]
+    }
+  },
+  "polprzezroczyste": {
+    "code": "T",
+    "label": "półprzezroczyste",
+    "pbr": {
+      "roughness": 0.32,
+      "metalness": 0,
+      "transmission": 0.9,
+      "thickness": 0.003,
+      "ior": 1.49
+    }
+  },
+  "akryl": {
+    "code": "K",
+    "label": "akryl przezroczysty",
+    "pbr": {
+      "roughness": 0.12,
+      "metalness": 0,
+      "transmission": 1,
+      "thickness": 0.004,
+      "ior": 1.49
+    }
+  },
+  "anodowane": {
+    "code": "A",
+    "label": "aluminium anodowane",
+    "pbr": {
+      "roughness": 0.34,
+      "metalness": 1
+    }
+  },
+  "polerowane": {
+    "code": "L",
+    "label": "polerowany metal",
+    "pbr": {
+      "roughness": 0.09,
+      "metalness": 1
+    }
+  },
+  "pbt": {
+    "code": "B",
+    "label": "PBT, matowe ziarno",
+    "pbr": {
+      "roughness": 0.62,
+      "metalness": 0
+    }
+  },
+  "abs": {
+    "code": "S",
+    "label": "ABS, satyna",
+    "pbr": {
+      "roughness": 0.34,
+      "metalness": 0
+    }
+  },
+  "jelly": {
+    "code": "J",
+    "label": "klawisze półprzezroczyste",
+    "pbr": {
+      "roughness": 0.18,
+      "metalness": 0,
+      "transmission": 0.88,
+      "thickness": 0.002,
+      "ior": 1.49,
+      "clearcoat": 0.3
+    }
+  },
+  "tkanina": {
+    "code": "N",
+    "label": "tkanina",
+    "pbr": {
+      "roughness": 0.9,
+      "metalness": 0,
+      "sheen": 0.15,
+      "sheenRoughness": 0.5
+    }
+  },
+  "filc": {
+    "code": "F",
+    "label": "filc",
+    "pbr": {
+      "roughness": 1.0,
+      "metalness": 0,
+      "sheen": 0.8,
+      "sheenRoughness": 0.6
+    }
+  },
+  "guma": {
+    "code": "G",
+    "label": "guma",
+    "pbr": {
+      "roughness": 0.8,
+      "metalness": 0
+    }
+  }
+}

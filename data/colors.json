@@ -22,5 +22,275 @@
     "label": "Naturalny korek",
     "harmony": "neutralny",
     "swatch": "#B8916A"
+  },
+  "czern": {
+    "code": "CZR",
+    "label": "Czerń",
+    "harmony": "neutralny",
+    "swatch": "#16181C"
+  },
+  "antracyt": {
+    "code": "ANT",
+    "label": "Antracyt",
+    "harmony": "grafit",
+    "swatch": "#3A3F47"
+  },
+  "popiel": {
+    "code": "POP",
+    "label": "Popiel",
+    "harmony": "neutralny",
+    "swatch": "#8C949E"
+  },
+  "stal": {
+    "code": "STL",
+    "label": "Stal",
+    "harmony": "neutralny",
+    "swatch": "#8A9099"
+  },
+  "srebro": {
+    "code": "SRB",
+    "label": "Srebro",
+    "harmony": "neutralny",
+    "swatch": "#C9CDD3"
+  },
+  "biel": {
+    "code": "BIA",
+    "label": "Biel",
+    "harmony": "neutralny",
+    "swatch": "#F7F7F5"
+  },
+  "krem": {
+    "code": "KRM",
+    "label": "Krem",
+    "harmony": "neutralny",
+    "swatch": "#F4EFE6"
+  },
+  "piasek": {
+    "code": "PIA",
+    "label": "Piasek",
+    "harmony": "braz",
+    "swatch": "#E8A25C"
+  },
+  "niebo": {
+    "code": "NIE",
+    "label": "Niebo",
+    "harmony": "niebieski",
+    "swatch": "#BFD8F2"
+  },
+  "blekit": {
+    "code": "BLK",
+    "label": "Błękit",
+    "harmony": "niebieski",
+    "swatch": "#7CC6E0"
+  },
+  "lazur": {
+    "code": "LAZ",
+    "label": "Lazur",
+    "harmony": "niebieski",
+    "swatch": "#4F8FD6"
+  },
+  "szafir": {
+    "code": "SZF",
+    "label": "Szafir",
+    "harmony": "niebieski",
+    "swatch": "#1D3FA8"
+  },
+  "atrament": {
+    "code": "ATR",
+    "label": "Atrament",
+    "harmony": "niebieski",
+    "swatch": "#22357A"
+  },
+  "morski": {
+    "code": "MRS",
+    "label": "Morski",
+    "harmony": "turkus",
+    "swatch": "#1593B8"
+  },
+  "turkus": {
+    "code": "TRK",
+    "label": "Turkus",
+    "harmony": "turkus",
+    "swatch": "#3CC6C0"
+  },
+  "mieta": {
+    "code": "MIE",
+    "label": "Mięta",
+    "harmony": "zielen",
+    "swatch": "#9ED9C0"
+  },
+  "jadeit": {
+    "code": "JAD",
+    "label": "Jadeit",
+    "harmony": "zielen",
+    "swatch": "#7FC8A0"
+  },
+  "malachit": {
+    "code": "MLC",
+    "label": "Malachit",
+    "harmony": "zielen",
+    "swatch": "#1E7A55"
+  },
+  "szmaragd": {
+    "code": "SZM",
+    "label": "Szmaragd",
+    "harmony": "zielen",
+    "swatch": "#0B5D3B"
+  },
+  "zielen": {
+    "code": "ZIE",
+    "label": "Zieleń",
+    "harmony": "zielen",
+    "swatch": "#2E9E5B"
+  },
+  "limonka": {
+    "code": "LIM",
+    "label": "Limonka",
+    "harmony": "zielen",
+    "swatch": "#9BC53D"
+  },
+  "oliwka": {
+    "code": "OLI",
+    "label": "Oliwka",
+    "harmony": "zielen",
+    "swatch": "#7FA342"
+  },
+  "cytryna": {
+    "code": "CYT",
+    "label": "Cytryna",
+    "harmony": "zolty",
+    "swatch": "#F6C744"
+  },
+  "slonecznik": {
+    "code": "SLO",
+    "label": "Słonecznik",
+    "harmony": "zolty",
+    "swatch": "#FFC20E"
+  },
+  "musztarda": {
+    "code": "MUS",
+    "label": "Musztarda",
+    "harmony": "zolty",
+    "swatch": "#D9A520"
+  },
+  "miod": {
+    "code": "MIO",
+    "label": "Miód",
+    "harmony": "pomarancz",
+    "swatch": "#E39A2D"
+  },
+  "pomarancz": {
+    "code": "POM",
+    "label": "Pomarańcz",
+    "harmony": "pomarancz",
+    "swatch": "#E86A2C"
+  },
+  "koral": {
+    "code": "KOR",
+    "label": "Koral",
+    "harmony": "pomarancz",
+    "swatch": "#E86F4C"
+  },
+  "cegla": {
+    "code": "CEG",
+    "label": "Cegła",
+    "harmony": "czerwien",
+    "swatch": "#8E3B2E"
+  },
+  "czerwien": {
+    "code": "CZE",
+    "label": "Czerwień",
+    "harmony": "czerwien",
+    "swatch": "#D3212D"
+  },
+  "wisnia": {
+    "code": "WIS",
+    "label": "Wiśnia",
+    "harmony": "czerwien",
+    "swatch": "#B3122E"
+  },
+  "bordo": {
+    "code": "BOR",
+    "label": "Bordo",
+    "harmony": "czerwien",
+    "swatch": "#6E1423"
+  },
+  "malina": {
+    "code": "MAL",
+    "label": "Malina",
+    "harmony": "roz",
+    "swatch": "#E2336B"
+  },
+  "flaming": {
+    "code": "FLA",
+    "label": "Flaming",
+    "harmony": "roz",
+    "swatch": "#F49AB5"
+  },
+  "roz": {
+    "code": "ROZ",
+    "label": "Róż",
+    "harmony": "roz",
+    "swatch": "#F2A7B8"
+  },
+  "puder": {
+    "code": "PUD",
+    "label": "Puder",
+    "harmony": "roz",
+    "swatch": "#F3D9DF"
+  },
+  "brzoskwinia": {
+    "code": "BRZ",
+    "label": "Brzoskwinia",
+    "harmony": "pomarancz",
+    "swatch": "#FBD3B5"
+  },
+  "lawenda": {
+    "code": "LAW",
+    "label": "Lawenda",
+    "harmony": "fiolet",
+    "swatch": "#B497DD"
+  },
+  "liliowy": {
+    "code": "LIL",
+    "label": "Liliowy",
+    "harmony": "fiolet",
+    "swatch": "#E7D3F5"
+  },
+  "fiolet": {
+    "code": "FIO",
+    "label": "Fiolet",
+    "harmony": "fiolet",
+    "swatch": "#7B4FA8"
+  },
+  "braz": {
+    "code": "BRA",
+    "label": "Brąz",
+    "harmony": "braz",
+    "swatch": "#6B4A32"
+  },
+  "czekolada": {
+    "code": "CZK",
+    "label": "Czekolada",
+    "harmony": "braz",
+    "swatch": "#4A3426"
+  },
+  "miedz": {
+    "code": "MDZ",
+    "label": "Miedź",
+    "harmony": "metal",
+    "swatch": "#B5652B"
+  },
+  "zloto": {
+    "code": "ZLO",
+    "label": "Złoto",
+    "harmony": "metal",
+    "swatch": "#C9A14A"
+  },
+  "rozowe-zloto": {
+    "code": "RZL",
+    "label": "Różowe złoto",
+    "harmony": "metal",
+    "swatch": "#E8B7A8"
   }
 }

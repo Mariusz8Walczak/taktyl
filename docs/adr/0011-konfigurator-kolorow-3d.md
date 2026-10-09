@@ -1,6 +1,6 @@
 # ADR-0011 · Konfigurator kolorów z modelami 3D
 
-- **Status:** przyjęty 2026-10-09 (F-110..F-119 do nadania w `docs/02`, TAKTYL-bd). Faza 1 (ten ADR, dane) w toku.
+- **Status:** przyjęty 2026-10-09 (F-110..F-119 do nadania w `docs/02`). Faza 1 (dane, kontrakty, reguły i SKU w `packages/domain`) wykonana 2026-10-09.
 - **Wejście od właściciela:** paczka `taktyl-rendery/out/konfigurator` (26 modeli GLB, 27 nadruków podkładek, `kolory.json`, `modele.json`) oraz kolekcja kolorów `out/kolekcja`.
 
 ## Kontekst
@@ -18,11 +18,20 @@ Dziś wariant to para kolor + przełącznik z 4 kolorów (`data/colors.json`). W
 7. **Widok 3D to wyspa kliencka ładowana na żądanie** (three.js, dynamic import po kliknięciu "Dostosuj kolory"; dekoder Draco hostowany u nas, bez CDN). Nie wchodzi do budżetu JS strony (S36), a bez WebGL, przy `prefers-reduced-motion` lub błędzie ładowania zostaje wybór z listy kolorów ze zdjęciem wariantu. Wszystko działa z klawiatury, a kolor i wykończenie są ogłaszane tekstowo (WCAG), nie tylko kolorem.
 8. **Zdjęcia.** Reguła 1 bez zmian: nie tworzymy grafiki. Modele i nadruki są od właściciela, a kadry produktowe gotowych wariantów to rendery od właściciela.
 
+9. **Sety zostają, dochodzi „Stwórz własny set” (decyzja właściciela 2026-10-09).** Gotowe sety i kreator „Zbuduj set” (−10% za komplet) działają bez zmian. Obok nich powstaje ścieżka, w której klient komponuje cały zestaw (klawiatura + mysz + podkładka) wizualnie dowolnie: na jednej scenie 3D wybiera modele i kolory każdej części, a rabat setu liczy się jak dziś (reguła z `shop.json`, nie z widoku). Tekst marketingowy ścieżki pisze agent treści z atrybutów (reguła 4), a hasła i opisy trafiają do `docs/` i `data/` jako treści, nie do kodu.
+
+## Reguły przyjęte w fazie 1 (do wglądu właściciela)
+
+- **Bez dopłaty jest kolor z serii (grafit, mgła, kobalt) oraz domyślny kolor części w danym modelu** (np. antracyt anodowany w Bazalcie 75); inny kolor anodowany +40 zł.
+- **Części zależne podążają za nadrzędnymi**, jeśli klient ich nie ruszył: spód obudowy i pokrętło za obudową, przyciski i przyciski boczne myszki za korpusem. Dwukolorowa obudowa (+20 zł) to dopiero świadomy wybór innego spodu.
+- **SKU liczymy po rozwiązaniu konfiguracji:** nadruki „auto” stają się konkretnym kolorem (biel lub czerń), więc dwie konfiguracje o tym samym wyglądzie mają to samo SKU. Token `AUTO` z propozycji paczki nie występuje.
+- **Rozbieżność do wyjaśnienia (faza 2):** ceny 110 wariantów kolekcji nie zawsze zgadzają się z tabelą dopłat. Zgadzają się dla klawiatur i myszek w macie, połysku i opalu, ale podkładki z nadrukiem w kolekcji kosztują +40…+110 zł, a tabela przewiduje +10 zł za nadruk i +30 zł pod szkłem. Warianty kolekcji mają w sklepie ceny z kolekcji, a konfiguracja własna liczy się z tabeli, więc ta sama podkładka może mieć dwie ceny.
+
 ## Fazy (osobne PR)
 
 1. Dane i kontrakty: assety do `apps/web/public/3d`, `data/` + seed, schemat Zod konfiguracji, reguły i wycena w `packages/domain`, testy.
 2. Gotowe warianty kolorystyczne (A): kolekcja jako warianty, picker kolorów na karcie i w listingu, zdjęcia.
-3. Widok 3D i konfigurator części (B): wyspa kliencka, panel wyboru, podgląd ceny i SKU.
+3. Widok 3D i konfigurator części (B): wyspa kliencka, panel wyboru, podgląd ceny i SKU; następnie „Stwórz własny set” (pkt 9) na wspólnej scenie.
 4. Koszyk, zamówienie, backpanel: pozycja z konfiguracją, wycena serwerowa, widok w panelu, MCP.
 
 ## Konsekwencje

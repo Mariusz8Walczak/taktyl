@@ -18,7 +18,7 @@ describe("B-102 loadSeedData (data/*.json)", () => {
     expect(d.products).toHaveLength(18);
     expect(d.variants).toHaveLength(99);
     expect(d.switches).toHaveLength(4);
-    expect(d.colors).toHaveLength(4);
+    expect(d.colors).toHaveLength(49);
     expect(d.presets).toHaveLength(4);
     expect(d.shop.shipping_methods).toHaveLength(3);
     expect(d.shop.payment_methods).toHaveLength(4);

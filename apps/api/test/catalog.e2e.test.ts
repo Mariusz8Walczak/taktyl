@@ -262,7 +262,7 @@ describe.skipIf(!hasDb)("B-216 katalog (PostgreSQL)", () => {
     ).toHaveLength(4);
     expect(
       ((await t.http().get("/v1/colors").expect(200)).body as { items: unknown[] }).items,
-    ).toHaveLength(4);
+    ).toHaveLength(49);
     await t.http().get("/v1/rules").expect(200);
     const shop = (await t.http().get("/v1/shop-settings").expect(200)).body as {
       free_shipping_threshold_gr: number;

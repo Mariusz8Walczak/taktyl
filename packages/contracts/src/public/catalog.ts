@@ -4,6 +4,7 @@ import {
   badgeSchema,
   categoryIdSchema,
   colorIdSchema,
+  colorKeySchema,
   padSizeKeySchema,
   profileIdSchema,
   sortKeySchema,
@@ -297,7 +298,7 @@ export const switchSchema = z.object({
   summary: z.string(),
 });
 export const colorSchema = z.object({
-  id: colorIdSchema,
+  id: colorKeySchema,
   code: z.string().length(3),
   label: z.string(),
   harmony: z.string(),
