@@ -449,7 +449,7 @@ describe.skipIf(!hasDb)("B-219/B-220 zamowienia i platnosci (PostgreSQL)", () =>
     const rows = await t.prisma.$queryRaw<{ sku: string; stock: number; moved: bigint }[]>`
       SELECT v.sku, v.stock, COALESCE(SUM(m.delta), 0) AS moved
       FROM variants v LEFT JOIN stock_movements m ON m.sku = v.sku GROUP BY v.sku, v.stock`;
-    expect(rows).toHaveLength(99);
+    expect(rows).toHaveLength(329);
     for (const r of rows) expect(Number(r.moved)).toBe(r.stock);
   });
 });

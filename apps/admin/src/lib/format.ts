@@ -48,12 +48,15 @@ export const CATEGORY_LABEL = {
   myszki: "Myszki",
   podkladki: "Podkładki",
 } as const;
-export const COLOR_LABEL = {
+/** Etykiety serii; pozostale kolory (kolekcja, ADR-0011) pokazujemy kluczem przez `colorLabel`. */
+export const COLOR_LABEL: Record<string, string> = {
   grafit: "Grafit",
   mgla: "Mgła",
   kobalt: "Kobalt",
   naturalny: "Naturalny",
-} as const;
+};
+export const colorLabel = (id: string): string => COLOR_LABEL[id] ?? id;
+export const SERIES_COLORS = ["grafit", "mgla", "kobalt", "naturalny"] as const;
 export const SWITCH_LABEL = {
   slizg: "Ślizg",
   prog: "Próg",

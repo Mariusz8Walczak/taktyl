@@ -16,15 +16,15 @@ describe("B-102 loadSeedData (data/*.json)", () => {
   it("liczby kontrolne z docs/17 par. 6", () => {
     expect(d.categories).toHaveLength(3);
     expect(d.products).toHaveLength(18);
-    expect(d.variants).toHaveLength(99);
+    expect(d.variants).toHaveLength(329);
     expect(d.switches).toHaveLength(4);
-    expect(d.colors).toHaveLength(49);
+    expect(d.colors).toHaveLength(150);
     expect(d.presets).toHaveLength(4);
     expect(d.shop.shipping_methods).toHaveLength(3);
     expect(d.shop.payment_methods).toHaveLength(4);
     expect(d.shop.codes).toHaveLength(2);
     expect(d.shop.pickup_points).toHaveLength(6);
-    expect(d.manifest).toHaveLength(190);
+    expect(d.manifest).toHaveLength(300);
     expect(d.manifest.filter((m) => m.priority === "P0")).toHaveLength(76);
   });
 

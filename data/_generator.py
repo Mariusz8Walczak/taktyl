@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generator danych katalogu Taktyl (sklep fikcyjny). Jedno źródło prawdy dla data/*.json i assets/manifest.json."""
+"""Generator danych katalogu Taktyl (sklep fikcyjny). Jedno źródło prawdy dla data/*.json i assets/manifest.json.
+
+UWAGA (ADR-0011): od 2026-10-09 `colors.json`, `finishes.json`, `parts.json`, `prints.json`, `surcharges.json`, warianty kolekcji kolorów
+w `products.json` i wpisy `assets/manifest.json` są edytowane bezpośrednio. Generator odtwarza tylko stan sprzed ADR-0011 (seria).
+"""
 import json, hashlib, os, sys
 from decimal import Decimal, ROUND_HALF_UP
 

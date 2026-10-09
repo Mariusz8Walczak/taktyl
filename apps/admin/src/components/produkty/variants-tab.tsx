@@ -23,7 +23,8 @@ import { useAuth } from "../../lib/auth/session";
 import { useCan } from "../../lib/can";
 import { applyServerErrors, plError } from "../../lib/forms";
 import {
-  COLOR_LABEL,
+  colorLabel,
+  SERIES_COLORS,
   formatPLN,
   formatCount,
   PAD_SIZE_LABEL,
@@ -67,7 +68,7 @@ export function VariantsTab({ product }: { product: Product }) {
         {
           id: "color",
           header: "Kolor",
-          cell: ({ row }: { row: { original: Variant } }) => COLOR_LABEL[row.original.color],
+          cell: ({ row }: { row: { original: Variant } }) => colorLabel(row.original.color),
         },
         {
           id: "option",
@@ -180,7 +181,7 @@ export function VariantsTab({ product }: { product: Product }) {
           >
             {product.variants.map((v) => (
               <option key={v.sku} value={v.sku}>
-                {v.sku} ({COLOR_LABEL[v.color]}, stan {v.stock})
+                {v.sku} ({colorLabel(v.color)}, stan {v.stock})
               </option>
             ))}
           </Field>
@@ -323,9 +324,9 @@ export function VariantCreateForm({ product, onDone }: { product: Product; onDon
           error={errors.color?.message}
           {...register("color")}
         >
-          {colorIdSchema.options.map((c) => (
+          {[...new Set<string>([...SERIES_COLORS, ...product.variants.map((x) => x.color)])].map((c) => (
             <option key={c} value={c}>
-              {COLOR_LABEL[c]}
+              {colorLabel(c)}
             </option>
           ))}
         </Field>
