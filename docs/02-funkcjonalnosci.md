@@ -217,3 +217,16 @@ Pełna specyfikacja: `docs/03`. Tu lista do odhaczania.
 | F-245 | Odnośnik „Przejdź do treści” jako pierwszy element | P0 | widoczny przy fokusie |
 | F-246 | Ciemny motyw całej strony (przełącznik + `prefers-color-scheme`) | P2 | tokeny ciemne z `docs/06` |
 | F-247 | Sekcje ciemne („mody”) w jasnym motywie | P0 | lokalnie przełączają tokeny na ciemne |
+
+## 13. Konfigurator kolorów 3D i własny set (ADR-0011)
+
+| ID | Funkcja | P | Kryterium odbioru |
+|---|---|---|---|
+| F-250 | Konfigurator części na karcie produktu: model 3D (GLB) ładowany po wejściu na stronę konfiguratora, obrót myszą, dotykiem i klawiaturą, malowanie części (obudowa, klawisze, nadruki, korpus, przyciski) | P1 | zmiana koloru części widoczna od razu; bez WebGL lub przy błędzie ładowania działa wybór z listy ze zdjęciem produktu |
+| F-251 | Wybór wykończenia części i wzoru podkładki (nadruk, nadruk pod szkłem w Lodzie) | P1 | tylko wykończenia dozwolone dla palety części; wzór pasuje do rodziny podkładki |
+| F-252 | Ograniczenia techniczne: anodowanie tylko w modelach aluminiowych, półprzezroczyste tylko z podświetleniem, nadruk klawisza o kontraście poniżej 3:1 zamieniany na biel lub czerń z komunikatem | P1 | zgodnie z `packages/domain` i testami |
+| F-253 | Wycena i SKU konfiguracji liczone wyłącznie po stronie serwera (`POST /v1/configurator/quote`), cena w groszach: model bazowy + dopłaty za wykończenie | P1 | klient nie wysyła ceny; ta sama konfiguracja daje to samo SKU |
+| F-254 | Podsumowanie konfiguracji: cena bazowa, dopłata, razem, SKU, informacja „na zamówienie, wysyłka w 7 dni roboczych” | P1 | kwoty zgodne z odpowiedzią API |
+| F-255 | „Stwórz własny set”: scena z klawiaturą, myszką i podkładką, dowolny wygląd każdej części, rabat setu jak w kreatorze | P1 | rabat liczy API wg `shop.json`; gotowe sety i „Zbuduj set” bez zmian |
+| F-256 | Konfiguracja w koszyku i zamówieniu (pozycja na zamówienie, bez stanu magazynowego) | P1 | wycena serwerowa, widoczna w backpanelu |
+

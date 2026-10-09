@@ -27,6 +27,7 @@ import { PublicContentModule } from "./public-content/public-content.module.js";
 import { PricingModule } from "./pricing/pricing.module.js";
 import { PrismaModule } from "./prisma/prisma.module.js";
 import { SearchModule } from "./search/search.module.js";
+import { ConfiguratorModule } from "./configurator/configurator.module.js";
 import { SettingsModule } from "./settings/settings.module.js";
 import { UsersModule } from "./users/users.module.js";
 
@@ -41,6 +42,7 @@ import { UsersModule } from "./users/users.module.js";
     PricingModule,
     CatalogModule,
     SearchModule,
+    ConfiguratorModule,
     PresetsModule,
     SettingsModule,
     CartQuoteModule,

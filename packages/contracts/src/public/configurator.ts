@@ -1,7 +1,18 @@
-// F-110..F-119 (ADR-0011): konfiguracja wlasna produktu. Klient niesie tylko wybory; cene (doplaty) i SKU liczy serwer.
+// F-250..F-256 (ADR-0011): konfiguracja wlasna produktu. Klient niesie tylko wybory; cene (doplaty) i SKU liczy serwer.
 import { z } from "zod";
 
-const keySchema = z.string().min(1).max(40).regex(/^[a-z0-9-]+$/);
+const keySchema = z
+  .string()
+  .min(1)
+  .max(40)
+  .regex(/^[a-z0-9-]+$/);
+
+/** Id czesci modelu (`legendy_alfa`, `obudowa_spod`). */
+const partKeySchema = z
+  .string()
+  .min(1)
+  .max(40)
+  .regex(/^[a-z0-9_-]+$/);
 
 export const configPartChoiceSchema = z.strictObject({
   /** Klucz koloru z `data/colors.json`; "auto" tylko dla nadrukow klawiszy (kontrast liczy serwer). */
@@ -10,8 +21,84 @@ export const configPartChoiceSchema = z.strictObject({
 });
 
 export const configurationSchema = z.strictObject({
-  model: keySchema,
-  parts: z.record(keySchema, configPartChoiceSchema),
+  /** Id modelu 3D: `k-kwarc-60`, `p-tafla_l`. */
+  model: partKeySchema,
+  parts: z.record(partKeySchema, configPartChoiceSchema),
   print: keySchema.nullish(),
 });
 export type ConfigurationInput = z.infer<typeof configurationSchema>;
+
+// --- Odpowiedzi publiczne: slowniki konfiguratora i wycena (GET /v1/configurator, POST /v1/configurator/quote) ---
+
+const finishPbrSchema = z.record(z.string(), z.union([z.number(), z.string(), z.boolean(), z.array(z.number())]));
+
+export const configuratorPartSchema = z.object({
+  id: z.string().min(1).max(40),
+  etykieta: z.string(),
+  konfigurowalna: z.boolean(),
+  paleta: z.string().nullish(),
+  domyslnie: z.object({ kolor: z.string().nullable(), wykonczenie: z.string().nullable() }),
+  uwagi: z.string().optional(),
+});
+export const configuratorModelSchema = z.object({
+  id: z.string(),
+  product: z.string(),
+  size: z.string().nullable(),
+  sku_prefix: z.string(),
+  name: z.string(),
+  file: z.string(),
+  dims_mm: z.array(z.number()),
+  parts: z.array(configuratorPartSchema),
+});
+export const configuratorDataSchema = z.object({
+  colors: z.record(
+    z.string(),
+    z.object({ code: z.string(), label: z.string(), harmony: z.string(), swatch: z.string() }),
+  ),
+  finishes: z.record(
+    z.string(),
+    z.object({ code: z.string(), label: z.string(), pbr: finishPbrSchema }),
+  ),
+  palettes: z.record(
+    z.string(),
+    z.object({
+      wykonczenia: z.array(z.string()),
+      kolory: z.union([z.array(z.string()), z.string()]),
+      auto: z.string().optional(),
+    }),
+  ),
+  models: z.array(configuratorModelSchema),
+  prints: z.array(
+    z.object({
+      id: z.string(),
+      nazwa: z.string(),
+      plik: z.string(),
+      miniatura: z.string(),
+      tryb: z.string(),
+      mm: z.array(z.number()).optional(),
+      dla: z.array(z.string()),
+      obszycie: z.string().nullish(),
+    }),
+  ),
+});
+export type ConfiguratorData = z.infer<typeof configuratorDataSchema>;
+
+export const configuratorQuoteSchema = z.object({
+  ok: z.boolean(),
+  issues: z.array(z.object({ code: z.string(), part: z.string().optional(), message: z.string() })),
+  adjustments: z.array(
+    z.object({ part: z.string(), from: z.string(), to: z.string(), reason: z.string() }),
+  ),
+  /** Konfiguracja po uzupelnieniu domyslnych i podmianie nadrukow o slabym kontrascie. */
+  config: z.object({
+    model: z.string(),
+    parts: z.record(z.string(), configPartChoiceSchema),
+    print: z.string().nullable(),
+  }),
+  sku: z.string().nullable(),
+  base_price_gr: z.number().int().nonnegative(),
+  surcharge_gr: z.number().int().nonnegative(),
+  total_gr: z.number().int().nonnegative(),
+  made_to_order: z.literal(true),
+});
+export type ConfiguratorQuote = z.infer<typeof configuratorQuoteSchema>;

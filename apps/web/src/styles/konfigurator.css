@@ -1,0 +1,197 @@
+/* Konfigurator kolorow (ADR-0011, F-250..F-254). Tylko tokeny (regula 2); kolor probek idzie z danych (style inline z colors.json).
+   Telefon: scena nad panelem; od 992 px: scena po lewej (przyklejona), panel po prawej. Brak animacji. */
+.konfigurator {
+  display: grid;
+  gap: var(--s3);
+  margin-top: var(--s3);
+}
+.konfigurator__scena {
+  position: relative;
+  min-height: 18rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.konfigurator__scena-plotno {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+.konfigurator__brak-3d,
+.konfigurator__laduje {
+  position: absolute;
+  inset: auto var(--s2) var(--s2) var(--s2);
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.konfigurator__brak-3d {
+  inset: var(--s3);
+  display: grid;
+  align-content: center;
+  text-align: center;
+}
+.konfigurator__widok {
+  position: absolute;
+  inset: auto var(--s2) var(--s2) var(--s2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  justify-content: center;
+}
+.konfigurator__panel {
+  display: grid;
+  gap: var(--s3);
+  align-content: start;
+  min-width: 0;
+}
+.konfigurator__grupa {
+  min-width: 0;
+  margin: 0;
+  padding: var(--s2);
+  border: 1px solid var(--linia);
+  border-radius: var(--r);
+}
+.konfigurator__grupa legend {
+  padding-inline: var(--s1);
+  font-size: var(--t-s);
+}
+.konfigurator__probki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.konfigurator__probka,
+.konfigurator__auto {
+  min-width: var(--cel-min);
+  min-height: var(--cel-min);
+  border: 2px solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+  cursor: pointer;
+}
+.konfigurator__probka {
+  width: var(--cel-min);
+  padding: 0;
+}
+.konfigurator__auto {
+  padding-inline: var(--s2);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font: inherit;
+}
+.konfigurator__probka[aria-checked="true"],
+.konfigurator__auto[aria-checked="true"] {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+  border-color: var(--tekst);
+}
+.konfigurator__probka:focus-visible,
+.konfigurator__auto:focus-visible {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+}
+.konfigurator__wykonczenie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  align-items: center;
+  margin-top: var(--s2);
+  font-size: var(--t-s);
+}
+.konfigurator__wzory {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--s2);
+}
+.konfigurator__wzor {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--s1);
+  padding: var(--s1);
+  border: 2px solid var(--linia);
+  border-radius: var(--r);
+  font-size: var(--t-xs);
+  text-align: center;
+  cursor: pointer;
+}
+.konfigurator__wzor input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.konfigurator__wzor:has(input:checked) {
+  border-color: var(--tekst);
+  outline: 3px solid var(--fokus);
+  outline-offset: 1px;
+}
+.konfigurator__wzor:has(input:focus-visible) {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+}
+.konfigurator__wzor-obraz {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: var(--r);
+}
+.konfigurator__podsumowanie {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  box-shadow: var(--cien-1);
+}
+.konfigurator__ceny {
+  display: grid;
+  gap: var(--s1);
+  margin: 0;
+}
+.konfigurator__ceny > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.konfigurator__ceny dt,
+.konfigurator__ceny dd {
+  margin: 0;
+}
+.konfigurator__razem {
+  padding-top: var(--s1);
+  border-top: 1px solid var(--linia);
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.konfigurator__sku code {
+  overflow-wrap: anywhere;
+}
+.konfigurator__uwaga {
+  margin: 0;
+  color: var(--uwaga);
+}
+.konfigurator__blad {
+  margin: 0;
+  color: var(--blad);
+}
+.konfigurator__info {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+
+@media (min-width: 992px) {
+  .konfigurator {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .konfigurator__scena {
+    position: sticky;
+    top: var(--s3);
+    aspect-ratio: 1 / 1;
+    max-height: 80vh;
+  }
+}

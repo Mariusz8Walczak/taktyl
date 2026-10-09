@@ -5,7 +5,9 @@
 // Cena i stan pochodza z wybranego wariantu (API); przekreslona jest `lowest_30d`, nie regular_price (docs/04 §5.2).
 import { formatPLN } from "@taktyl/domain";
 import { Badge, Button, Quantity } from "@taktyl/ui";
+import Link from "next/link";
 import type { ReactNode } from "react";
+import { modelIdFor } from "../../lib/configurator/model";
 import type { DispatchTexts } from "../../lib/catalog/dispatch";
 import {
   omnibusSentence,
@@ -90,6 +92,15 @@ export function BuyColumn({
       </div>
 
       <VariantPicker />
+
+      {/* F-250 (ADR-0011): konfigurator kolorow; Korek ma jeden wyglad (tekstura w modelu), wiec bez wyboru. */}
+      {product.id !== "p-korek" ? (
+        <p className="konfigurator-link">
+          <Link href={`/konfigurator/${modelIdFor(product.id, variant.size)}`} className="tk-link">
+            Dostosuj kolory w 3D
+          </Link>
+        </p>
+      ) : null}
 
       <div className="dostepnosc" aria-live="polite">
         <p className={`dostepnosc__stan dostepnosc__stan--${stock.level}`}>{stock.label}</p>

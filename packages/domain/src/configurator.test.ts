@@ -22,7 +22,11 @@ const data: ConfData = {
   surcharges: readData("surcharges"),
 };
 
-function cfg(model: string, patch: Configuration["parts"] = {}, print: string | null = null): Configuration {
+function cfg(
+  model: string,
+  patch: Configuration["parts"] = {},
+  print: string | null = null,
+): Configuration {
   // Tylko wybory uzytkownika: reszte (i czesci zalezne) uzupelnia resolveConfiguration.
   return { model, parts: patch, print };
 }
@@ -40,7 +44,11 @@ describe("dane konfiguratora (ADR-0011)", () => {
 
   it("nowy kolor Bazaltu: antracyt bez doplaty, inny anodowany +40 zl", () => {
     const s = (color: string) =>
-      configurationSurcharge(data, resolveConfiguration(data, cfg("k-bazalt-75", { obudowa: { color, finish: "anodowane" } })).config);
+      configurationSurcharge(
+        data,
+        resolveConfiguration(data, cfg("k-bazalt-75", { obudowa: { color, finish: "anodowane" } }))
+          .config,
+      );
     expect(s("antracyt")).toBe(0);
     expect(s("stal")).toBe(4000);
   });
@@ -52,7 +60,8 @@ describe("dane konfiguratora (ADR-0011)", () => {
 
   it("kazda paleta czesci wskazuje istniejace kolory i wykonczenia", () => {
     for (const [id, p] of Object.entries(data.palettes)) {
-      if (typeof p.kolory === "string") expect(data.palettes[p.kolory.replace(/^jak /, "")], id).toBeDefined();
+      if (typeof p.kolory === "string")
+        expect(data.palettes[p.kolory.replace(/^jak /, "")], id).toBeDefined();
       else for (const c of p.kolory) expect(data.colors[c], `${id}:${c}`).toBeDefined();
       for (const f of p.wykonczenia) expect(data.finishes[f], `${id}:${f}`).toBeDefined();
     }
@@ -90,7 +99,9 @@ describe("kontrast nadrukow", () => {
     );
     expect(r.ok).toBe(true);
     expect(r.config.parts.legendy_alfa!.color).toBe("czern");
-    expect(r.adjustments).toEqual([{ part: "legendy_alfa", from: "mgla", to: "czern", reason: "contrast" }]);
+    expect(r.adjustments).toEqual([
+      { part: "legendy_alfa", from: "mgla", to: "czern", reason: "contrast" },
+    ]);
   });
 
   it("auto wybiera lepszy kontrast bez raportu zmiany", () => {
@@ -122,35 +133,62 @@ describe("ograniczenia techniczne", () => {
   it("czerwony Esc na kobaltowej obudowie jest dozwolony", () => {
     const r = resolveConfiguration(
       data,
-      cfg("k-kwarc-60", { obudowa: { color: "kobalt", finish: "mat" }, klawisze_akcent: { color: "czerwien", finish: "abs" } }),
+      cfg("k-kwarc-60", {
+        obudowa: { color: "kobalt", finish: "mat" },
+        klawisze_akcent: { color: "czerwien", finish: "abs" },
+      }),
     );
     expect(r.ok).toBe(true);
   });
 
   it("anodowanie tylko w modelach aluminiowych", () => {
-    expect(resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "grafit", finish: "anodowane" } })).issues[0]?.code).toBe(
-      "finish_not_allowed",
-    );
-    expect(resolveConfiguration(data, cfg("k-bazalt-75", { obudowa: { color: "stal", finish: "anodowane" } })).ok).toBe(true);
+    expect(
+      resolveConfiguration(
+        data,
+        cfg("k-kwarc-60", { obudowa: { color: "grafit", finish: "anodowane" } }),
+      ).issues[0]?.code,
+    ).toBe("finish_not_allowed");
+    expect(
+      resolveConfiguration(
+        data,
+        cfg("k-bazalt-75", { obudowa: { color: "stal", finish: "anodowane" } }),
+      ).ok,
+    ).toBe(true);
   });
 
   it("polprzezroczysta obudowa wymaga podswietlenia (Granit TKL go nie ma)", () => {
     const granitPart = findModel(data, "k-granit-tkl")!.parts.some((p) => p.id === "podswietlenie");
     expect(granitPart).toBe(false);
-    const r = resolveConfiguration(data, cfg("k-granit-tkl", { obudowa: { color: "grafit", finish: "polprzezroczyste" } }));
+    const r = resolveConfiguration(
+      data,
+      cfg("k-granit-tkl", { obudowa: { color: "grafit", finish: "polprzezroczyste" } }),
+    );
     expect(r.ok).toBe(false);
-    expect(resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "grafit", finish: "polprzezroczyste" } })).ok).toBe(true);
+    expect(
+      resolveConfiguration(
+        data,
+        cfg("k-kwarc-60", { obudowa: { color: "grafit", finish: "polprzezroczyste" } }),
+      ).ok,
+    ).toBe(true);
   });
 
   it("pokretlo tylko w Bazalcie", () => {
-    const r = resolveConfiguration(data, cfg("k-kwarc-60", { pokretlo: { color: "grafit", finish: "anodowane" } }));
+    const r = resolveConfiguration(
+      data,
+      cfg("k-kwarc-60", { pokretlo: { color: "grafit", finish: "anodowane" } }),
+    );
     expect(r.issues[0]?.code).toBe("unknown_part");
     expect(resolveConfiguration(data, cfg("k-bazalt-75")).config.parts.pokretlo).toBeDefined();
   });
 
   it("odrzuca kolor spoza palety, nieznany model i nadruk spoza rodziny", () => {
-    expect(resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "nie-ma", finish: "mat" } })).issues[0]?.code).toBe("unknown_color");
-    expect(resolveConfiguration(data, { model: "x", parts: {} }).issues[0]?.code).toBe("unknown_model");
+    expect(
+      resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "nie-ma", finish: "mat" } }))
+        .issues[0]?.code,
+    ).toBe("unknown_color");
+    expect(resolveConfiguration(data, { model: "x", parts: {} }).issues[0]?.code).toBe(
+      "unknown_model",
+    );
     const forTafla = data.prints.find((p) => p.dla.includes("p-tafla"))!;
     const notForFilc = resolveConfiguration(data, cfg("p-filc_xl", {}, forTafla.id));
     expect(notForFilc.issues[0]?.code).toBe("print_not_for_model");
@@ -159,13 +197,33 @@ describe("ograniczenia techniczne", () => {
 
 describe("doplaty w groszach", () => {
   it("seria bez doplaty, kolor spoza serii w macie +30 zl", () => {
-    expect(configurationSurcharge(data, resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "kobalt", finish: "mat" } })).config)).toBe(0);
-    expect(configurationSurcharge(data, resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "turkus", finish: "mat" } })).config)).toBe(3000);
+    expect(
+      configurationSurcharge(
+        data,
+        resolveConfiguration(
+          data,
+          cfg("k-kwarc-60", { obudowa: { color: "kobalt", finish: "mat" } }),
+        ).config,
+      ),
+    ).toBe(0);
+    expect(
+      configurationSurcharge(
+        data,
+        resolveConfiguration(
+          data,
+          cfg("k-kwarc-60", { obudowa: { color: "turkus", finish: "mat" } }),
+        ).config,
+      ),
+    ).toBe(3000);
   });
 
   it("wykonczenia: polysk 40, opal 60, polprzezroczyste 50", () => {
     const s = (finish: string) =>
-      configurationSurcharge(data, resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "grafit", finish } })).config);
+      configurationSurcharge(
+        data,
+        resolveConfiguration(data, cfg("k-kwarc-60", { obudowa: { color: "grafit", finish } }))
+          .config,
+      );
     expect(s("polysk")).toBe(4000);
     expect(s("opal")).toBe(6000);
     expect(s("polprzezroczyste")).toBe(5000);
@@ -190,7 +248,10 @@ describe("doplaty w groszach", () => {
   it("myszka: kolor spoza serii +20, przyciski w innym kolorze +20", () => {
     const c = resolveConfiguration(
       data,
-      cfg("m-kos", { korpus: { color: "turkus", finish: "mat" }, przyciski: { color: "grafit", finish: "mat" } }),
+      cfg("m-kos", {
+        korpus: { color: "turkus", finish: "mat" },
+        przyciski: { color: "grafit", finish: "mat" },
+      }),
     ).config;
     expect(configurationSurcharge(data, c)).toBe(4000);
   });
