@@ -34,7 +34,7 @@ export interface CatalogSnapshot {
   index: SkuIndex;
   facets: FacetsConfig;
   colors: ColorsConfig;
-  switches: { id: string; name: string; type: string }[];
+  switches: { id: string; name: string; type: string; code: string }[];
   rules: RulesConfig;
   ctx: FilterContext;
 }
@@ -125,7 +125,12 @@ export class CatalogLoader {
       (facets[f.categoryId] ??= []).push(def);
     }
 
-    const switches = switchRows.map((s) => ({ id: s.id, name: s.name, type: s.type }));
+    const switches = switchRows.map((s) => ({
+      id: s.id,
+      name: s.name,
+      type: s.type,
+      code: s.code,
+    }));
     return {
       now,
       categories,

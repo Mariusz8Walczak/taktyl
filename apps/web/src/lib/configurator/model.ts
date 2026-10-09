@@ -24,6 +24,7 @@ export function toDomainData(data: ConfiguratorData): ConfData {
     palettes: data.palettes,
     models: data.models as ConfData["models"],
     prints: data.prints,
+    switches: data.switches,
     surcharges: { series: [], keyboards: {}, mice: {}, pads: {} },
   };
 }

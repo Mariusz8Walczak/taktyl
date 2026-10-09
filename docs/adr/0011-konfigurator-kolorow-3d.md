@@ -1,6 +1,6 @@
 # ADR-0011 · Konfigurator kolorów z modelami 3D
 
-- **Status:** przyjęty 2026-10-09 (F-250..F-256 w `docs/02` §14). Faza 1 (dane, kontrakty, reguły i SKU w `packages/domain`) wykonana 2026-10-09.
+- **Status:** przyjęty 2026-10-09 (F-250..F-256 w `docs/02` §14). Fazy 1-4 wykonane 2026-10-09: dane i reguły, kolekcja jako warianty, konfigurator 3D i „Stwórz własny set”, zamawianie konfiguracji (koszyk, zamówienie, backpanel, MCP).
 - **Wejście od właściciela:** paczka `taktyl-rendery/out/konfigurator` (26 modeli GLB, 27 nadruków podkładek, `kolory.json`, `modele.json`) oraz kolekcja kolorów `out/kolekcja`.
 
 ## Kontekst

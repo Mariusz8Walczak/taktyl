@@ -343,6 +343,10 @@ model OrderItem {
   unitPriceGr      Int     @map("unit_price_gr")
   setDiscountGr    Int     @default(0) @map("set_discount_gr")
   couponDiscountGr Int     @default(0) @map("coupon_discount_gr")
+  /// Kod konfiguracji wlasnej (ADR-0011); wtedy `sku` to wariant bazowy, a pozycja jest na zamowienie (bez ruchu magazynowego).
+  configSku        String? @map("config_sku")
+  /// Rozwiazana konfiguracja (czesci, kolory, wykonczenia, nadruk) w chwili zamowienia.
+  config           Json?
   order            Order   @relation(fields: [orderNumber], references: [number], onDelete: Cascade)
   variant          Variant @relation(fields: [sku], references: [sku])
 

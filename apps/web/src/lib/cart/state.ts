@@ -13,7 +13,8 @@ import {
   type CartState,
 } from "./types";
 
-const SKU_LOOSE = /^[KMP]-[A-Z0-9]+(?:-[A-Z0-9]+){1,3}$/;
+// Kody konfiguracji wlasnej (ADR-0011) maja kropki miedzy kodami czesci: K-KWR60-CFG-GRFM.GRFM.SLZ.
+const SKU_LOOSE = /^[KMP]-[A-Z0-9]+(?:-[A-Z0-9.]+){1,3}$/;
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
 function validQty(q: unknown, max: number): number | null {

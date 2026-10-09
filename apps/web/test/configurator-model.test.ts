@@ -32,6 +32,12 @@ const data: ConfiguratorData = {
   palettes: parts.palettes,
   models: parts.models,
   prints: read("prints"),
+  switches: Object.fromEntries(
+    read<{ id: string; code: string; name: string }[]>("switches").map((s) => [
+      s.id,
+      { code: s.code, name: s.name },
+    ]),
+  ),
 };
 
 describe("model konfiguratora", () => {

@@ -276,7 +276,9 @@ export class AdminOrdersService {
       orderBy: { id: "asc" },
     });
     const demand = new Map<string, number>();
-    for (const i of items) demand.set(i.sku, (demand.get(i.sku) ?? 0) + i.qty);
+    for (const i of items) {
+      if (i.configSku === null) demand.set(i.sku, (demand.get(i.sku) ?? 0) + i.qty);
+    }
     const skus = [...demand.keys()].sort();
     if (skus.length === 0) return [];
     const locked = await tx.$queryRaw<{ sku: string; stock: number }[]>`

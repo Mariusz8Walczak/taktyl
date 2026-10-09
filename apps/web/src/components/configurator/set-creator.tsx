@@ -4,7 +4,9 @@
 // widok pokazuje tylko to, co zwroci serwer. Gotowe sety i kreator „Zbuduj set” zostaja bez zmian.
 import type { ConfiguratorData, ConfiguratorSetQuote } from "@taktyl/contracts";
 import { formatPLN, resolveConfiguration, type Configuration } from "@taktyl/domain";
+import { Button } from "@taktyl/ui";
 import { useEffect, useId, useMemo, useState } from "react";
+import { addSet } from "../../lib/cart-adapter";
 import {
   applyChoice,
   explicitChoices,
@@ -29,6 +31,7 @@ interface SlotState {
   modelId: string;
   choices: Choices;
   print: string | null;
+  switchId: string | null;
 }
 
 export interface SetCreatorProps {
@@ -56,11 +59,13 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
         modelId: model.id,
         choices: explicitChoices(model, initial[slot].config.parts),
         print: initial[slot].config.print ?? null,
+        switchId: initial[slot].config.switch ?? null,
       };
     }
     return out;
   });
   const [quote, setQuote] = useState<ConfiguratorSetQuote | null>(null);
+  const [added, setAdded] = useState(false);
   const [quoteError, setQuoteError] = useState(false);
 
   const models = useMemo(
@@ -85,6 +90,7 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
           model: model.id,
           parts: s.choices,
           print: s.print,
+          switch: s.switchId,
         }),
       };
     }
@@ -109,6 +115,9 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
     ];
   }, [resolved]);
 
+  // Zmiana wyborow po dodaniu: to nowy zestaw, przycisk wraca do "Dodaj set do koszyka".
+  useEffect(() => setAdded(false), [state]);
+
   // Wycena setu z API (opoznienie 300 ms, poprzednie zadanie anulowane) + kody w adresie.
   useEffect(() => {
     const ctrl = new AbortController();
@@ -122,6 +131,7 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
               model: state[slot].modelId,
               parts: state[slot].choices,
               print: state[slot].print,
+              switch: state[slot].switchId,
             })),
           }),
           signal: ctrl.signal,
@@ -147,7 +157,7 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
   }, [state]);
 
   function pickModel(slot: Slot, modelId: string) {
-    setState((s) => ({ ...s, [slot]: { modelId, choices: {}, print: null } }));
+    setState((s) => ({ ...s, [slot]: { modelId, choices: {}, print: null, switchId: null } }));
   }
 
   return (
@@ -190,6 +200,10 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
                   choices={state[slot].choices}
                   resolved={result.config}
                   print={state[slot].print}
+                  switchId={result.config.switch ?? null}
+                  onSwitch={(id) =>
+                    setState((s) => ({ ...s, [slot]: { ...s[slot], switchId: id } }))
+                  }
                   onChoose={(partId, patch) =>
                     setState((s) => ({
                       ...s,
@@ -266,10 +280,26 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
             </p>
           )}
           <p className="konfigurator__info">
-            Każdy element wykonujemy na zamówienie, wysyłka w ok. 7 dni roboczych. Zamawianie
-            własnych setów uruchomimy w kolejnym wydaniu; teraz możesz złożyć set, obejrzeć go na
-            biurku i zachować link z kodami.
+            Każdy element wykonujemy na zamówienie, wysyłka w ok. 7 dni roboczych. Rabat za komplet
+            obejmuje trzy elementy w jednym secie.
           </p>
+          <Button
+            className="konfigurator__koszyk"
+            disabled={!quote?.ok || quote.items.some((i) => !i.sku)}
+            onClick={async () => {
+              if (!quote) return;
+              const skus = quote.items.map((i) => i.sku).filter((s): s is string => Boolean(s));
+              if (skus.length !== 3) return;
+              const res = await addSet({ skus, name: "Własny set", qty: 1 });
+              if (res.ok) setAdded(true);
+            }}
+          >
+            {added ? (
+              <span className="tk-etykieta-dodano">Dodano do koszyka</span>
+            ) : (
+              "Dodaj set do koszyka"
+            )}
+          </Button>
           <p>
             <a className="przycisk-tekstowy" href="/zbuduj-set">
               Wolisz gotowy set? Zbuduj set

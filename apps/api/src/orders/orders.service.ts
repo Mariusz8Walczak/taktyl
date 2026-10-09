@@ -319,11 +319,21 @@ export class OrdersService {
       const entry = q.entries[i]?.entry;
       for (const item of line.items) {
         const found = q.index.get(item.sku);
+        // ADR-0011: konfiguracja wlasna to pozycja na zamowienie; wiersz wskazuje wariant bazowy, a kod i wybory zapisuje obok.
+        const cfg = q.configs.get(item.sku);
+        const configFields = cfg
+          ? {
+              configSku: cfg.sku,
+              config: JSON.parse(JSON.stringify(cfg.resolved)) as Prisma.InputJsonValue,
+            }
+          : {};
+        const variantSku = cfg ? cfg.baseVariantSku : item.sku;
         // Id z numeru i pozycji: sortowanie po id zachowuje kolejnosc koszyka (brak kolumny pozycji w docs/17).
         const base = {
           id: `${number}-${String(rows.length + 1).padStart(2, "0")}`,
           name: found?.product.name ?? item.sku,
-          variantLabel: this.variantLabel(q, item.sku),
+          variantLabel: cfg ? cfg.label : this.variantLabel(q, item.sku),
+          ...configFields,
           qty: line.qty,
           unitPriceGr: item.price,
         };
@@ -333,7 +343,7 @@ export class OrdersService {
             groupId: entry?.type === "set" ? entry.id : null,
             setDiscountGr: item.discount * line.qty,
             couponDiscountGr: 0,
-            variant: { connect: { sku: item.sku } },
+            variant: { connect: { sku: variantSku } },
           });
         } else {
           rows.push({
@@ -341,7 +351,7 @@ export class OrdersService {
             groupId: null,
             setDiscountGr: 0,
             couponDiscountGr: line.codeDiscount,
-            variant: { connect: { sku: item.sku } },
+            variant: { connect: { sku: variantSku } },
           });
         }
       }

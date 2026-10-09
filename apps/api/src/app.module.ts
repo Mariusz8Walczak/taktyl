@@ -63,8 +63,8 @@ import { UsersModule } from "./users/users.module.js";
       useFactory: (config: AppConfig) => {
         configureDemoThrottle(config);
         return {
-        throttlers: [{ name: "default", ttl: RATE_WINDOW_MS, limit: LIMITS.default.limit }],
-        skipIf: () => !config.RATE_LIMIT_ENABLED,
+          throttlers: [{ name: "default", ttl: RATE_WINDOW_MS, limit: LIMITS.default.limit }],
+          skipIf: () => !config.RATE_LIMIT_ENABLED,
         };
       },
     }),

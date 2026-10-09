@@ -25,6 +25,8 @@ export const configurationSchema = z.strictObject({
   model: partKeySchema,
   parts: z.record(partKeySchema, configPartChoiceSchema),
   print: keySchema.nullish(),
+  /** Przelacznik klawiatury (id ze slownika); pominiety = pierwszy ze slownika. */
+  switch: keySchema.nullish(),
 });
 export type ConfigurationInput = z.infer<typeof configurationSchema>;
 
@@ -70,6 +72,8 @@ export const configuratorDataSchema = z.object({
       auto: z.string().optional(),
     }),
   ),
+  /** Przelaczniki klawiatur (kod 3-literowy z SKU). */
+  switches: z.record(z.string(), z.object({ code: z.string(), name: z.string() })),
   models: z.array(configuratorModelSchema),
   prints: z.array(
     z.object({
@@ -97,6 +101,7 @@ export const configuratorQuoteSchema = z.object({
     model: z.string(),
     parts: z.record(z.string(), configPartChoiceSchema),
     print: z.string().nullable(),
+    switch: z.string().nullish(),
   }),
   sku: z.string().nullable(),
   base_price_gr: z.number().int().nonnegative(),

@@ -12,6 +12,7 @@ import {
   stockProblemText,
 } from "../../lib/cart/messages";
 import {
+  BUILDER_PARAM,
   BUILDER_STEP,
   MAX_ITEM_QTY,
   MAX_SET_QTY,
@@ -227,7 +228,11 @@ function SetGroup({
   const firstLacking = skus.find((s) => problems.get(s)?.code === "out_of_stock");
   const unknown = quote !== null && !quoted;
   const heading = quoted ? setGroupTitle(percent) : "Twój set";
-  const editHref = builderHref({ skus, profile: line.profile, editId: line.id });
+  // ADR-0011: set z konfiguracji wlasnych edytuje sie w „Stworz wlasny set” (kody w adresie), nie w kreatorze gotowych setow.
+  const custom = skus.some((s) => s.includes("-CFG-"));
+  const editHref = custom
+    ? `/stworz-set?${skus.map((s) => `${BUILDER_PARAM[categoryOfSku(s)]}=${encodeURIComponent(s)}`).join("&")}`
+    : builderHref({ skus, profile: line.profile, editId: line.id });
   return (
     <section
       className={firstLacking || unknown ? "koszyk-set is-problem" : "koszyk-set"}

@@ -320,7 +320,19 @@ function OrderView({ initial }: { initial: Detail }) {
                           {it.group_id ? ", w secie" : ""}
                         </span>
                       </th>
-                      <td>{it.sku}</td>
+                      <td>
+                        {it.config_sku ? (
+                          <>
+                            <code>{it.config_sku}</code>
+                            <br />
+                            <span className="adm-tekst-slaby adm-tekst-xs">
+                              na zamówienie, wariant bazowy {it.sku}
+                            </span>
+                          </>
+                        ) : (
+                          it.sku
+                        )}
+                      </td>
                       <td className="adm-liczba">{it.qty}</td>
                       <td className="adm-liczba">{formatPLN(it.unit_price_gr)}</td>
                       <td className="adm-liczba">

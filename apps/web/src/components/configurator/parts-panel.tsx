@@ -23,18 +23,50 @@ interface Props {
   /** Konfiguracja po rozwiazaniu regul (pelna). */
   resolved: Configuration;
   print: string | null;
+  /** Przelacznik klawiatury (id); `null` dla myszek i podkladek. */
+  switchId: string | null;
+  onSwitch: (id: string) => void;
   onChoose: (partId: string, patch: Partial<{ color: string; finish: string | null }>) => void;
   onPrint: (id: string | null) => void;
 }
 
-export function PartsPanel({ data, model, choices, resolved, print, onChoose, onPrint }: Props) {
+export function PartsPanel({
+  data,
+  model,
+  choices,
+  resolved,
+  print,
+  switchId,
+  onSwitch,
+  onChoose,
+  onPrint,
+}: Props) {
   const uid = useId();
   const parts = configurableParts(model);
   const printable = supportsPrints(data, model);
   const prints = printable ? printsForModel(data, model) : [];
 
+  const keyboard = model.id.startsWith("k-");
   return (
     <>
+      {keyboard ? (
+        <fieldset className="konfigurator__grupa">
+          <legend>Przełącznik</legend>
+          <div className="konfigurator__modele" role="radiogroup" aria-label="Przełącznik">
+            {Object.entries(data.switches).map(([id, sw]) => (
+              <label key={id} className="konfigurator__model">
+                <input
+                  type="radio"
+                  name={`${uid}-przelacznik`}
+                  checked={switchId === id}
+                  onChange={() => onSwitch(id)}
+                />
+                <span>{sw.name}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ) : null}
       {printable ? (
         <fieldset className="konfigurator__grupa">
           <legend>Wzór wierzchu</legend>

@@ -2,13 +2,13 @@
 
 Dwa serwery [Model Context Protocol](https://modelcontextprotocol.io), które pozwalają klientowi MCP (Claude Code, Claude Desktop, inny klient) używać sklepu Taktyl przez jego REST API (`docs/16`). Oba są **cienkimi nakładkami**: nie mają logiki biznesowej ani dostępu do bazy, a każda zmiana przechodzi przez to samo API co backpanel (dziennik zmian `audit_log`, `outbox`, rewalidacja sklepu ≤ 5 s, ADR-0003). Kod: `apps/mcp-front`, `apps/mcp-admin`, wspólny rdzeń `packages/mcp-core`.
 
-| | `mcp-front` (front office) | `mcp-admin` (backoffice) |
-|---|---|---|
-| API | publiczne `/v1/*` | `/v1/admin/*` |
-| Klasa | **open**: bez uwierzytelniania i kluczy | uwierzytelniony jako konto backpanelu |
-| Transport | stdio **i** Streamable HTTP | tylko stdio |
-| Zapis | domyślnie żaden | pełny panel, rola konta decyduje |
-| Narzędzia | 19 (+4 za flagą) | 47 |
+|           | `mcp-front` (front office)              | `mcp-admin` (backoffice)              |
+| --------- | --------------------------------------- | ------------------------------------- |
+| API       | publiczne `/v1/*`                       | `/v1/admin/*`                         |
+| Klasa     | **open**: bez uwierzytelniania i kluczy | uwierzytelniony jako konto backpanelu |
+| Transport | stdio **i** Streamable HTTP             | tylko stdio                           |
+| Zapis     | domyślnie żaden                         | pełny panel, rola konta decyduje      |
+| Narzędzia | 19 (+4 za flagą)                        | 47                                    |
 
 ## 1. Klasa „open” (front office): gwarancje
 
@@ -28,36 +28,38 @@ Czego klasa „open” **nie** gwarantuje: dostępności (to demo), ochrony prze
 
 Odpowiedzi są walidowane schematami z `@taktyl/contracts`, a niezgodność z kontraktem to błąd narzędzia, nie surowe dane. Identyfikatory trafiające do ścieżek (slug, SKU, numer zamówienia) przechodzą wąski wzorzec, więc `../` i znaki specjalne są odrzucane przed zapytaniem.
 
-| Narzędzie | Opis | Dostęp | Ryzyko | `confirm` |
-|---|---|---|---|---|
-| `list_categories` | Kategorie sklepu | każdy | odczyt | nie |
-| `list_products` | Lista produktow kategorii | każdy | odczyt | nie |
-| `get_product` | Szczegoly produktu | każdy | odczyt | nie |
-| `get_complete_set` | Propozycja Dokoncz set | każdy | odczyt | nie |
-| `get_facets` | Facety kategorii | każdy | odczyt | nie |
-| `search_catalog` | Wyszukiwanie | każdy | odczyt | nie |
-| `list_switches` | Przelaczniki | każdy | odczyt | nie |
-| `list_colors` | Kolory | każdy | odczyt | nie |
-| `get_rules` | Reguly kreatora setu | każdy | odczyt | nie |
-| `list_presets` | Gotowe sety | każdy | odczyt | nie |
-| `quote_cart` | Wycena koszyka | każdy | odczyt | nie |
-| `get_shop_settings` | Ustawienia sklepu | każdy | odczyt | nie |
-| `get_shipping_estimate` | Termin wysylki i dostawy | każdy | odczyt | nie |
-| `list_pickup_points` | Punkty odbioru | każdy | odczyt | nie |
-| `get_info_page` | Strona informacyjna lub prawna | każdy | odczyt | nie |
-| `list_guides` | Lista poradnikow | każdy | odczyt | nie |
-| `get_guide` | Poradnik | każdy | odczyt | nie |
-| `get_faq` | FAQ | każdy | odczyt | nie |
-| `get_product_reviews` | Opinie o produkcie | każdy | odczyt | nie |
+| Narzędzie               | Opis                                                                               | Dostęp | Ryzyko | `confirm` |
+| ----------------------- | ---------------------------------------------------------------------------------- | ------ | ------ | --------- |
+| `list_categories`       | Kategorie sklepu                                                                   | każdy  | odczyt | nie       |
+| `list_products`         | Lista produktow kategorii                                                          | każdy  | odczyt | nie       |
+| `get_product`           | Szczegoly produktu                                                                 | każdy  | odczyt | nie       |
+| `get_complete_set`      | Propozycja Dokoncz set                                                             | każdy  | odczyt | nie       |
+| `get_facets`            | Facety kategorii                                                                   | każdy  | odczyt | nie       |
+| `search_catalog`        | Wyszukiwanie                                                                       | każdy  | odczyt | nie       |
+| `list_switches`         | Przelaczniki                                                                       | każdy  | odczyt | nie       |
+| `list_colors`           | Kolory                                                                             | każdy  | odczyt | nie       |
+| `get_rules`             | Reguly kreatora setu                                                               | każdy  | odczyt | nie       |
+| `list_presets`          | Gotowe sety                                                                        | każdy  | odczyt | nie       |
+| `quote_cart`            | Wycena koszyka                                                                     | każdy  | odczyt | nie       |
+| `get_configurator`      | Słowniki konfiguratora kolorów 3D                                                  | każdy  | odczyt | nie       |
+| `quote_configuration`   | Wycena i kod konfiguracji własnej (ADR-0011); kod wchodzi do `quote_cart` jako SKU | każdy  | odczyt | nie       |
+| `get_shop_settings`     | Ustawienia sklepu                                                                  | każdy  | odczyt | nie       |
+| `get_shipping_estimate` | Termin wysylki i dostawy                                                           | każdy  | odczyt | nie       |
+| `list_pickup_points`    | Punkty odbioru                                                                     | każdy  | odczyt | nie       |
+| `get_info_page`         | Strona informacyjna lub prawna                                                     | każdy  | odczyt | nie       |
+| `list_guides`           | Lista poradnikow                                                                   | każdy  | odczyt | nie       |
+| `get_guide`             | Poradnik                                                                           | każdy  | odczyt | nie       |
+| `get_faq`               | FAQ                                                                                | każdy  | odczyt | nie       |
+| `get_product_reviews`   | Opinie o produkcie                                                                 | każdy  | odczyt | nie       |
 
 Za flagą `TAKTYL_MCP_ALLOW_ORDERS=true` (domyślnie wyłączone):
 
-| Narzędzie | Opis | Dostęp | Ryzyko | `confirm` |
-|---|---|---|---|---|
-| `create_order` | Zalozenie zamowienia (demo) | flaga | zapis | nie |
-| `get_order` | Odczyt zamowienia po tokenie | flaga | odczyt | nie |
-| `list_orders` | Lista zamowien po tokenach | flaga | odczyt | nie |
-| `simulate_payment` | Symulacja platnosci (demo) | flaga | zapis | nie |
+| Narzędzie          | Opis                         | Dostęp | Ryzyko | `confirm` |
+| ------------------ | ---------------------------- | ------ | ------ | --------- |
+| `create_order`     | Zalozenie zamowienia (demo)  | flaga  | zapis  | nie       |
+| `get_order`        | Odczyt zamowienia po tokenie | flaga  | odczyt | nie       |
+| `list_orders`      | Lista zamowien po tokenach   | flaga  | odczyt | nie       |
+| `simulate_payment` | Symulacja platnosci (demo)   | flaga  | zapis  | nie       |
 
 `create_order` wymaga `idempotency_key` (UUID) i ciała jak w `POST /v1/orders` (`docs/16` §2, w tym `expected_total_gr` z `quote_cart`).
 
@@ -67,71 +69,71 @@ Za flagą `TAKTYL_MCP_ALLOW_ORDERS=true` (domyślnie wyłączone):
 
 **`confirm: true`** wymagają operacje nieodwracalne lub szerokie: kasowanie (produkt, wariant, treść, zgłoszenie, zdjęcie), reset danych demo, konta i role użytkowników (w tym reset hasła), ustawienia sklepu i reguły dopasowania, zastępowanie całych list (FAQ, opinie) oraz anulowanie zamówienia. Bez `confirm` narzędzie niczego nie wysyła do API i zwraca czytelną odmowę. Adnotacje MCP: `readOnlyHint` dla odczytów, `destructiveHint` dla ryzyka „nieodwracalne”, `idempotentHint` dla edycji ustawiających wartość.
 
-| Narzędzie | Opis | Min. rola | Ryzyko | `confirm` |
-|---|---|---|---|---|
-| `whoami` | Biezacy uzytkownik | viewer | odczyt | nie |
-| `get_dashboard` | Pulpit | viewer | odczyt | nie |
-| `list_audit` | Dziennik zmian | viewer | odczyt | nie |
-| `list_users` | Konta backpanelu | owner | odczyt | nie |
-| `create_user` | Nowe konto backpanelu | owner | nieodwracalne | tak |
-| `update_user` | Zmiana konta (rola, dezaktywacja, reset hasla) | owner | nieodwracalne | tak |
-| `list_products` | Produkty (panel) | viewer | odczyt | nie |
-| `get_product` | Produkt (panel) | viewer | odczyt | nie |
-| `create_product` | Nowy produkt | editor | zapis | nie |
-| `update_product` | Edycja produktu | editor | zapis | nie |
-| `delete_product` | Usuniecie produktu | owner | nieodwracalne | tak |
-| `set_product_description` | Opis produktu | editor | zapis | nie |
-| `create_variant` | Nowy wariant | editor | zapis | nie |
-| `update_variant` | Edycja wariantu | editor | zapis | nie |
-| `delete_variant` | Usuniecie wariantu | owner | nieodwracalne | tak |
-| `set_price` | Zmiana ceny wariantu | editor | zapis | nie |
-| `get_price_history` | Historia cen wariantu | viewer | odczyt | nie |
-| `set_stock` | Korekta stanu wariantu | editor | zapis | nie |
-| `get_stock_movements` | Ruchy magazynowe wariantu | viewer | odczyt | nie |
-| `list_presets` | Gotowe sety (panel) | viewer | odczyt | nie |
-| `update_preset` | Edycja gotowego setu | editor | zapis | nie |
-| `update_category` | Edycja kategorii | editor | zapis | nie |
-| `update_switch` | Edycja przelacznika (slownik) | editor | zapis | nie |
-| `update_color` | Edycja koloru (slownik) | editor | zapis | nie |
-| `update_rules` | Reguly dopasowania | owner | zapis | tak |
-| `list_orders` | Zamowienia (panel) | viewer | odczyt | nie |
-| `get_order` | Zamowienie (panel) | viewer | odczyt | nie |
-| `transition_order` | Zmiana statusu zamowienia | editor | zapis | tak |
-| `add_order_note` | Notatka do zamowienia | editor | zapis | nie |
-| `list_content` | Tresci (strony i poradniki) | viewer | odczyt | nie |
-| `get_content` | Pojedyncza tresc | viewer | odczyt | nie |
-| `create_content` | Nowa strona albo artykul | editor | zapis | nie |
-| `update_content` | Edycja tresci | editor | zapis | nie |
-| `delete_content` | Usuniecie artykulu | owner | nieodwracalne | tak |
-| `get_faq` | FAQ (panel) | viewer | odczyt | nie |
-| `put_faq` | Zapis calego FAQ | editor | zapis | tak |
-| `list_reviews` | Opinie demo (panel) | viewer | odczyt | nie |
-| `put_reviews` | Zapis opinii produktu | editor | zapis | tak |
-| `list_messages` | Zgloszenia z formularzy | viewer | odczyt | nie |
-| `update_message` | Oznaczenie zgloszenia jako obsluzone | editor | zapis | nie |
-| `delete_message` | Usuniecie zgloszenia | owner | nieodwracalne | tak |
-| `get_settings` | Ustawienia sklepu (panel) | viewer | odczyt | nie |
-| `update_settings` | Zmiana ustawien sklepu | owner | zapis | tak |
-| `list_media` | Zdjecia (manifest) | viewer | odczyt | nie |
-| `delete_media` | Usuniecie zdjecia | owner | nieodwracalne | tak |
-| `revalidate_tags` | Reczne odswiezenie cache sklepu | owner | zapis | nie |
-| `reset_demo` | Reset danych demo | owner | nieodwracalne | tak |
+| Narzędzie                 | Opis                                           | Min. rola | Ryzyko        | `confirm` |
+| ------------------------- | ---------------------------------------------- | --------- | ------------- | --------- |
+| `whoami`                  | Biezacy uzytkownik                             | viewer    | odczyt        | nie       |
+| `get_dashboard`           | Pulpit                                         | viewer    | odczyt        | nie       |
+| `list_audit`              | Dziennik zmian                                 | viewer    | odczyt        | nie       |
+| `list_users`              | Konta backpanelu                               | owner     | odczyt        | nie       |
+| `create_user`             | Nowe konto backpanelu                          | owner     | nieodwracalne | tak       |
+| `update_user`             | Zmiana konta (rola, dezaktywacja, reset hasla) | owner     | nieodwracalne | tak       |
+| `list_products`           | Produkty (panel)                               | viewer    | odczyt        | nie       |
+| `get_product`             | Produkt (panel)                                | viewer    | odczyt        | nie       |
+| `create_product`          | Nowy produkt                                   | editor    | zapis         | nie       |
+| `update_product`          | Edycja produktu                                | editor    | zapis         | nie       |
+| `delete_product`          | Usuniecie produktu                             | owner     | nieodwracalne | tak       |
+| `set_product_description` | Opis produktu                                  | editor    | zapis         | nie       |
+| `create_variant`          | Nowy wariant                                   | editor    | zapis         | nie       |
+| `update_variant`          | Edycja wariantu                                | editor    | zapis         | nie       |
+| `delete_variant`          | Usuniecie wariantu                             | owner     | nieodwracalne | tak       |
+| `set_price`               | Zmiana ceny wariantu                           | editor    | zapis         | nie       |
+| `get_price_history`       | Historia cen wariantu                          | viewer    | odczyt        | nie       |
+| `set_stock`               | Korekta stanu wariantu                         | editor    | zapis         | nie       |
+| `get_stock_movements`     | Ruchy magazynowe wariantu                      | viewer    | odczyt        | nie       |
+| `list_presets`            | Gotowe sety (panel)                            | viewer    | odczyt        | nie       |
+| `update_preset`           | Edycja gotowego setu                           | editor    | zapis         | nie       |
+| `update_category`         | Edycja kategorii                               | editor    | zapis         | nie       |
+| `update_switch`           | Edycja przelacznika (slownik)                  | editor    | zapis         | nie       |
+| `update_color`            | Edycja koloru (slownik)                        | editor    | zapis         | nie       |
+| `update_rules`            | Reguly dopasowania                             | owner     | zapis         | tak       |
+| `list_orders`             | Zamowienia (panel)                             | viewer    | odczyt        | nie       |
+| `get_order`               | Zamowienie (panel)                             | viewer    | odczyt        | nie       |
+| `transition_order`        | Zmiana statusu zamowienia                      | editor    | zapis         | tak       |
+| `add_order_note`          | Notatka do zamowienia                          | editor    | zapis         | nie       |
+| `list_content`            | Tresci (strony i poradniki)                    | viewer    | odczyt        | nie       |
+| `get_content`             | Pojedyncza tresc                               | viewer    | odczyt        | nie       |
+| `create_content`          | Nowa strona albo artykul                       | editor    | zapis         | nie       |
+| `update_content`          | Edycja tresci                                  | editor    | zapis         | nie       |
+| `delete_content`          | Usuniecie artykulu                             | owner     | nieodwracalne | tak       |
+| `get_faq`                 | FAQ (panel)                                    | viewer    | odczyt        | nie       |
+| `put_faq`                 | Zapis calego FAQ                               | editor    | zapis         | tak       |
+| `list_reviews`            | Opinie demo (panel)                            | viewer    | odczyt        | nie       |
+| `put_reviews`             | Zapis opinii produktu                          | editor    | zapis         | tak       |
+| `list_messages`           | Zgloszenia z formularzy                        | viewer    | odczyt        | nie       |
+| `update_message`          | Oznaczenie zgloszenia jako obsluzone           | editor    | zapis         | nie       |
+| `delete_message`          | Usuniecie zgloszenia                           | owner     | nieodwracalne | tak       |
+| `get_settings`            | Ustawienia sklepu (panel)                      | viewer    | odczyt        | nie       |
+| `update_settings`         | Zmiana ustawien sklepu                         | owner     | zapis         | tak       |
+| `list_media`              | Zdjecia (manifest)                             | viewer    | odczyt        | nie       |
+| `delete_media`            | Usuniecie zdjecia                              | owner     | nieodwracalne | tak       |
+| `revalidate_tags`         | Reczne odswiezenie cache sklepu                | owner     | zapis         | nie       |
+| `reset_demo`              | Reset danych demo                              | owner     | nieodwracalne | tak       |
 
 Czego `mcp-admin` świadomie nie robi: wgrywania plików zdjęć (multipart; zdjęcia wgrywa się w panelu), wylogowania i ręcznego ustawiania `lowest_30d` (liczy serwer, ADR-0005). Nie dopisuje produktów do `data/*.json` ani do seeda (reguła 4, ADR-0005): zmiany katalogu idą wyłącznie przez API.
 
 ## 4. Konfiguracja
 
-| Zmienna | Serwer | Domyślnie | Znaczenie |
-|---|---|---|---|
-| `TAKTYL_API_URL` | oba | `http://api:4000` | adres API; w compose usługa `api`, z hosta np. `http://api.taktyl.localhost:8188` |
-| `TAKTYL_MCP_TRANSPORT` | front | `stdio` | `stdio` albo `http` |
-| `TAKTYL_MCP_HTTP_PORT`, `TAKTYL_MCP_HTTP_HOST` | front | `3333`, `0.0.0.0` | port i interfejs w kontenerze; na hoście `TAKTYL_MCP_HTTP_BIND` (domyślnie `127.0.0.1`) |
-| `TAKTYL_MCP_RATE_LIMIT` | front | `120` | zapytań na minutę z jednego IP |
-| `TAKTYL_MCP_MAX_BODY_BYTES` | front | `262144` | maksymalny rozmiar ciała zapytania |
-| `TAKTYL_MCP_TRUST_PROXY` | front | `false` | ufaj `X-Forwarded-For` (tylko za zaufanym proxy) |
-| `TAKTYL_MCP_ALLOW_ORDERS` | front | `false` | narzędzia zamówień; w usłudze HTTP wyłączone na stałe |
-| `TAKTYL_ADMIN_EMAIL`, `TAKTYL_ADMIN_PASSWORD` | admin | puste | konto backpanelu (adres tylko `@taktyl.example`); **nigdy w repo** |
-| `TAKTYL_ADMIN_DEMO` | admin | `false` | `true` = `POST /v1/admin/auth/demo-viewer` (rola `viewer`, tylko odczyt; wymaga `DEMO_MODE=true` w API) |
+| Zmienna                                        | Serwer | Domyślnie         | Znaczenie                                                                                               |
+| ---------------------------------------------- | ------ | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| `TAKTYL_API_URL`                               | oba    | `http://api:4000` | adres API; w compose usługa `api`, z hosta np. `http://api.taktyl.localhost:8188`                       |
+| `TAKTYL_MCP_TRANSPORT`                         | front  | `stdio`           | `stdio` albo `http`                                                                                     |
+| `TAKTYL_MCP_HTTP_PORT`, `TAKTYL_MCP_HTTP_HOST` | front  | `3333`, `0.0.0.0` | port i interfejs w kontenerze; na hoście `TAKTYL_MCP_HTTP_BIND` (domyślnie `127.0.0.1`)                 |
+| `TAKTYL_MCP_RATE_LIMIT`                        | front  | `120`             | zapytań na minutę z jednego IP                                                                          |
+| `TAKTYL_MCP_MAX_BODY_BYTES`                    | front  | `262144`          | maksymalny rozmiar ciała zapytania                                                                      |
+| `TAKTYL_MCP_TRUST_PROXY`                       | front  | `false`           | ufaj `X-Forwarded-For` (tylko za zaufanym proxy)                                                        |
+| `TAKTYL_MCP_ALLOW_ORDERS`                      | front  | `false`           | narzędzia zamówień; w usłudze HTTP wyłączone na stałe                                                   |
+| `TAKTYL_ADMIN_EMAIL`, `TAKTYL_ADMIN_PASSWORD`  | admin  | puste             | konto backpanelu (adres tylko `@taktyl.example`); **nigdy w repo**                                      |
+| `TAKTYL_ADMIN_DEMO`                            | admin  | `false`           | `true` = `POST /v1/admin/auth/demo-viewer` (rola `viewer`, tylko odczyt; wymaga `DEMO_MODE=true` w API) |
 
 Przykład jest w `.env.example`. Hasło zostaw puste i ustaw w lokalnym `.env` (git go ignoruje) albo w zmiennej środowiska. Bez poświadczeń i bez `TAKTYL_ADMIN_DEMO` `mcp-admin` zgłasza czytelny błąd przy pierwszym użyciu, a nie przy starcie.
 

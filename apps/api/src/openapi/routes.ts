@@ -709,11 +709,16 @@ export const ROUTES: RouteDoc[] = [
   {
     method: "post",
     path: "/v1/admin/demo/reset",
-    summary: "Reset danych demo do stanu z seeda (tylko owner i DEMO_MODE=true; body { confirm: \"reset\" })",
+    summary:
+      'Reset danych demo do stanu z seeda (tylko owner i DEMO_MODE=true; body { confirm: "reset" })',
     tag: "admin: demo",
     ids: ["B-014"],
     body: demoResetRequestSchema,
-    success: { status: 200, schema: demoResetResponseSchema, description: "Dane przywrocone do seeda." },
+    success: {
+      status: 200,
+      schema: demoResetResponseSchema,
+      description: "Dane przywrocone do seeda.",
+    },
     errors: [
       { status: 404, code: "not_found (gdy tryb demo wylaczony)" },
       { status: 422, code: "validation_failed (brak potwierdzenia)" },

@@ -11,8 +11,10 @@ export const productIdParam = z
   .describe("Id produktu, np. k-bazalt-75");
 export const skuParam = z
   .string()
-  .regex(/^[A-Z0-9][A-Z0-9-]{2,40}$/, "SKU wielkimi literami, np. K-BZL75-GRF-SLZ")
-  .describe("SKU wariantu, np. K-BZL75-GRF-SLZ");
+  .regex(/^[A-Z0-9][A-Z0-9.-]{2,160}$/, "SKU wielkimi literami, np. K-BZL75-GRF-SLZ")
+  .describe(
+    "SKU wariantu, np. K-BZL75-GRF-SLZ, albo kod konfiguracji wlasnej z narzedzia quote_configuration",
+  );
 export const orderNumberParam = z
   .string()
   .regex(/^TK-\d{6}-[A-Z0-9]{4}$/, "numer zamowienia: TK-RRMMDD-XXXX")

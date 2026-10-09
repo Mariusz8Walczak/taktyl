@@ -16,15 +16,58 @@ import {
   findModel,
   priceSet,
   resolveConfiguration,
+  parseConfigurationSku,
   type ConfData,
+  type Configuration,
+  type Product,
+  type Variant,
 } from "@taktyl/domain";
 import { findSeedRoot } from "../../prisma/seed/root.js";
-import { CatalogLoader } from "../catalog/catalog.loader.js";
+import { CatalogLoader, type CatalogSnapshot } from "../catalog/catalog.loader.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { ShopConfigService } from "../settings/shop-config.service.js";
 import { respond } from "../common/zod.pipe.js";
 
-type StaticData = Omit<ConfData, "colors">;
+/** Pozycje na zamowienie nie maja stanu; wirtualny wariant dostaje zapas, ktory nigdy nie wywoluje braku towaru. */
+export const MADE_TO_ORDER_STOCK = 1000;
+
+export interface CartConfig {
+  sku: string;
+  baseVariantSku: string;
+  surchargeGr: number;
+  /** Czytelny opis wyborow, np. "Obudowa: Turkus, polysk · Klawisze alfanumeryczne: Krem, PBT". */
+  label: string;
+  resolved: Configuration;
+  /** Produkt bazowy z nazwa "<model> (wlasne kolory)". */
+  product: Product;
+  /** Wirtualny wariant: SKU konfiguracji, cena = baza + doplaty, stan = na zamowienie. */
+  variant: Variant;
+}
+
+function configLabel(
+  d: ConfData,
+  model: ConfData["models"][number],
+  config: Configuration,
+): string {
+  const parts = model.parts
+    .filter((p) => p.konfigurowalna && p.paleta && config.parts[p.id])
+    .map((p) => {
+      const c = config.parts[p.id]!;
+      if (p.id === "wierzch" && config.print) return null;
+      const color = d.colors[c.color]?.label ?? c.color;
+      const finish = c.finish ? `, ${d.finishes[c.finish]?.label ?? c.finish}` : "";
+      return `${p.etykieta}: ${color}${finish}`;
+    })
+    .filter((x): x is string => x !== null);
+  if (config.print) {
+    parts.unshift(`Wzór: ${d.prints.find((p) => p.id === config.print)?.nazwa ?? config.print}`);
+  }
+  if (config.switch && d.switches[config.switch])
+    parts.push(`Przełącznik: ${d.switches[config.switch]!.name}`);
+  return parts.join(" · ");
+}
+
+type StaticData = Omit<ConfData, "colors" | "switches">;
 
 @Injectable()
 export class ConfiguratorService {
@@ -52,14 +95,21 @@ export class ConfiguratorService {
     return this.staticData;
   }
 
-  private withColors(colors: ConfData["colors"]): ConfData {
-    return { ...this.files(), colors };
+  private withColors(snap: CatalogSnapshot): ConfData {
+    return {
+      ...this.files(),
+      colors: snap.colors,
+      switches: Object.fromEntries(
+        snap.switches.map((s) => [s.id, { code: s.code, name: s.name }]),
+      ),
+    };
   }
 
   async dictionaries() {
-    const d = this.withColors((await this.loader.load()).colors);
+    const d = this.withColors(await this.loader.load());
     return respond(configuratorDataSchema, {
       colors: d.colors,
+      switches: d.switches,
       finishes: d.finishes,
       palettes: d.palettes,
       models: d.models,
@@ -69,12 +119,13 @@ export class ConfiguratorService {
 
   async quote(input: ConfigurationInput) {
     const snap = await this.loader.load();
-    const d = this.withColors(snap.colors);
+    const d = this.withColors(snap);
     const model = findModel(d, input.model);
     const resolved = resolveConfiguration(d, {
       model: input.model,
       parts: input.parts,
       print: input.print ?? null,
+      switch: input.switch ?? null,
     });
     let base = 0;
     if (model) {
@@ -93,6 +144,7 @@ export class ConfiguratorService {
         model: resolved.config.model,
         parts: resolved.config.parts,
         print: resolved.config.print ?? null,
+        switch: resolved.config.switch ?? null,
       },
       sku: usable ? configurationSku(d, resolved.config) : null,
       base_price_gr: base,
@@ -100,6 +152,49 @@ export class ConfiguratorService {
       total_gr: usable ? base + configurationSurcharge(d, resolved.config) : 0,
       made_to_order: true,
     });
+  }
+
+  /**
+   * F-256: konfiguracja z koszyka. Kod musi byc kanoniczny (odtwarza sie z rozwiazanej konfiguracji), inaczej `null`
+   * (ten sam wyglad = ten sam kod). Zwraca wirtualny wariant do wyceny koszyka (cena = model bazowy + doplaty, stan
+   * "na zamowienie") oraz wariant bazowy z katalogu, na ktory wskazuje pozycja zamowienia.
+   */
+  cartConfig(snap: CatalogSnapshot, sku: string): CartConfig | null {
+    const d = this.withColors(snap);
+    const parsed = parseConfigurationSku(d, sku);
+    if (!parsed) return null;
+    const resolved = resolveConfiguration(d, parsed);
+    if (!resolved.ok || configurationSku(d, resolved.config) !== sku) return null;
+    const model = findModel(d, resolved.config.model);
+    const product = snap.products.find((p) => p.id === model?.product);
+    if (!model || !product) return null;
+    const candidates = product.variants
+      .filter((v) => (model.size ? v.size === model.size : true))
+      .filter((v) => (resolved.config.switch ? v.switch === resolved.config.switch : true))
+      .sort((a, b) => a.price - b.price || a.sku.localeCompare(b.sku));
+    const baseVariant = candidates[0];
+    if (!baseVariant) return null;
+    const surcharge = configurationSurcharge(d, resolved.config);
+    const size = model.size ? ` ${model.size.toUpperCase()}` : "";
+    const name = `${model.name}${size} (własne kolory)`;
+    const partColor = resolved.config.parts.obudowa?.color ?? resolved.config.parts.korpus?.color;
+    return {
+      sku,
+      baseVariantSku: baseVariant.sku,
+      surchargeGr: surcharge,
+      label: configLabel(d, model, resolved.config),
+      resolved: resolved.config,
+      product: { ...product, name },
+      variant: {
+        ...baseVariant,
+        sku,
+        color: partColor && d.colors[partColor] ? partColor : baseVariant.color,
+        price: baseVariant.price + surcharge,
+        regularPrice: null,
+        lowest30d: null,
+        stock: MADE_TO_ORDER_STOCK,
+      },
+    };
   }
 
   /** F-255: set z trzech konfiguracji; rabat jak w koszyku (`priceSet`, procent i kategorie z ustawien sklepu). */
