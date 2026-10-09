@@ -38,6 +38,14 @@ export default async function BuilderPage({ searchParams }: Props) {
         </p>
       </PageHero>
       <Builder data={data} initialSearch={toQuery(sp)} />
+      {/* F-255 (ADR-0011): osobna sciezka obok gotowych setow i kreatora. */}
+      <aside className="kreator__wlasny" aria-labelledby="kreator-wlasny-tytul">
+        <h2 id="kreator-wlasny-tytul">Nic nie pasuje? Stwórz własny set</h2>
+        <p>Własne kolory każdej części, podgląd całości na biurku w 3D i rabat za komplet.</p>
+        <a className="przycisk-tekstowy" href="/stworz-set">
+          Stwórz własny set
+        </a>
+      </aside>
     </div>
   );
 }

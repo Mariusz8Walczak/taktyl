@@ -1,16 +1,27 @@
 "use client";
-// F-250 (ADR-0011): scena 3D konfiguratora. three.js i dekoder Draco ladowane dynamicznie dopiero tutaj (po wejsciu na
+// F-250, F-255 (ADR-0011): scena 3D konfiguratora. three.js i dekoder Draco ladowane dynamicznie dopiero tutaj (po wejsciu na
 // strone konfiguratora), wiec nie wchodza do budzetu JS pozostalych stron. Renderowanie na zadanie (bez petli
 // animacji): obrot, zmiana farb i zmiana rozmiaru. Model i dekoder to pliki wlasne (`/3d`), bez CDN.
-// Wymiary i kolory pochodza z danych, nie z kodu; zadnej wlasnej grafiki.
+// Scena trzyma liste elementow (jedna sztuka na stronie produktu, trzy w „Stworz wlasny set”), kazdy z wlasnym
+// przesunieciem; zmiana modelu jednego elementu laduje tylko ten element. Wymiary i kolory pochodza z danych.
 import type { ConfiguratorData } from "@taktyl/contracts";
+import type { Configuration } from "@taktyl/domain";
 import type * as T from "three";
 import type { OrbitControls as OrbitControlsType } from "three/addons/controls/OrbitControls.js";
-import type { Configuration } from "@taktyl/domain";
+import type { GLTFLoader as GLTFLoaderType } from "three/addons/loaders/GLTFLoader.js";
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import { partPaint, printMapping } from "../../lib/configurator/model";
 
 type Model = ConfiguratorData["models"][number];
+
+export interface StageItem {
+  /** Stabilny klucz miejsca (np. "k", "m", "p"); zmiana modelu pod tym samym kluczem przeladowuje element. */
+  key: string;
+  model: Model;
+  config: Configuration;
+  /** Przesuniecie w metrach (x w prawo, y w gore, z do uzytkownika). */
+  offset: [number, number, number];
+}
 
 export interface StageHandle {
   rotate: (deg: number) => void;
@@ -18,11 +29,17 @@ export interface StageHandle {
 }
 
 interface Props {
-  model: Model;
   data: ConfiguratorData;
-  config: Configuration;
+  items: StageItem[];
   handleRef?: Ref<StageHandle>;
   onStatus?: (s: "loading" | "ready" | "error") => void;
+}
+
+interface Loaded {
+  modelId: string;
+  offsetKey: string;
+  obj: T.Object3D;
+  meshes: Map<string, T.Mesh>;
 }
 
 /** Zmienne three.js trzymane w refie, zeby efekty nie tworzyly sceny od nowa. */
@@ -32,35 +49,29 @@ interface Runtime {
   scene: T.Scene;
   camera: T.PerspectiveCamera;
   controls: OrbitControlsType;
-  root: T.Object3D;
-  meshes: Map<string, T.Mesh>;
+  group: T.Group;
+  loader: GLTFLoaderType;
+  loaded: Map<string, Loaded>;
   render: () => void;
-  dispose: () => void;
+  frame: () => void;
 }
 
-export function hasWebGL(): boolean {
-  try {
-    const c = document.createElement("canvas");
-    return Boolean(c.getContext("webgl2") ?? c.getContext("webgl"));
-  } catch {
-    return false;
-  }
-}
-
-export default function Stage({ model, data, config, handleRef, onStatus }: Props) {
+export default function Stage({ data, items, handleRef, onStatus }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const rt = useRef<Runtime | null>(null);
-  const [ready, setReady] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
+  const [modelsVersion, setModelsVersion] = useState(0);
   const status = useRef(onStatus);
   status.current = onStatus;
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
 
-  // Budowa sceny i wczytanie modelu (od nowa tylko dla innego modelu).
+  // Scena, kamera, sterowanie i oswietlenie: raz na zamontowanie.
   useEffect(() => {
     const el = host.current;
     if (!el) return;
     let cancelled = false;
     let cleanup: (() => void) | null = null;
-    setReady(false);
     status.current?.("loading");
 
     (async () => {
@@ -90,48 +101,35 @@ export default function Stage({ model, data, config, handleRef, onStatus }: Prop
       controls.enableDamping = false;
       controls.minPolarAngle = 0.15;
       controls.maxPolarAngle = Math.PI / 2 - 0.05;
+      const group = new THREE.Group();
+      scene.add(group);
 
       const draco = new DRACOLoader().setDecoderPath("/3d/draco/");
       const loader = new GLTFLoader().setDRACOLoader(draco);
-      const base = `/3d/${model.file}`;
-      let gltf;
-      try {
-        gltf = await loader.loadAsync(base);
-      } catch {
-        renderer.dispose();
-        draco.dispose();
-        if (!cancelled) status.current?.("error");
-        return;
-      }
-      if (cancelled) {
-        renderer.dispose();
-        draco.dispose();
-        return;
-      }
-
-      const root = gltf.scene;
-      const meshes = new Map<string, T.Mesh>();
-      root.traverse((o) => {
-        if ((o as T.Mesh).isMesh) meshes.set(o.name, o as T.Mesh);
-      });
-      scene.add(root);
-
-      const box = new THREE.Box3().setFromObject(root);
-      const size = box.getSize(new THREE.Vector3());
-      const radius = Math.max(size.x, size.y, size.z);
-      const target = new THREE.Vector3(0, size.y / 2, 0);
-      controls.target.copy(target);
-      camera.position.set(
-        target.x + radius * 1.4,
-        target.y + radius * 1.7,
-        target.z + radius * 2.6,
-      );
-      controls.minDistance = radius * 1.2;
-      controls.maxDistance = radius * 6;
-      controls.update();
 
       const render = () => renderer.render(scene, camera);
       controls.addEventListener("change", render);
+
+      /** Kadruje kamere na wszystkie elementy (po zaladowaniu albo zmianie skladu). */
+      const frame = () => {
+        const box = new THREE.Box3().setFromObject(group);
+        if (box.isEmpty()) return;
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        const radius = Math.max(size.x, size.y, size.z);
+        const target = new THREE.Vector3(center.x, size.y / 2, center.z);
+        controls.target.copy(target);
+        camera.position.set(
+          target.x + radius * 1.1,
+          target.y + radius * 1.4,
+          target.z + radius * 2.1,
+        );
+        controls.minDistance = radius * 1.2;
+        controls.maxDistance = radius * 6;
+        controls.update();
+        render();
+      };
+
       const resize = () => {
         const w = Math.max(el.clientWidth, 1);
         const h = Math.max(el.clientHeight, 1);
@@ -146,7 +144,7 @@ export default function Stage({ model, data, config, handleRef, onStatus }: Prop
       ro.observe(el);
       resize();
 
-      const dispose = () => {
+      cleanup = () => {
         ro.disconnect();
         controls.dispose();
         draco.dispose();
@@ -159,10 +157,19 @@ export default function Stage({ model, data, config, handleRef, onStatus }: Prop
         renderer.dispose();
         renderer.domElement.remove();
       };
-      cleanup = dispose;
-      rt.current = { THREE, renderer, scene, camera, controls, root, meshes, render, dispose };
-      setReady(true);
-      status.current?.("ready");
+      rt.current = {
+        THREE,
+        renderer,
+        scene,
+        camera,
+        controls,
+        group,
+        loader,
+        loaded: new Map(),
+        render,
+        frame,
+      };
+      setSceneReady(true);
     })().catch(() => {
       if (!cancelled) status.current?.("error");
     });
@@ -170,57 +177,121 @@ export default function Stage({ model, data, config, handleRef, onStatus }: Prop
     return () => {
       cancelled = true;
       rt.current = null;
+      setSceneReady(false);
       cleanup?.();
     };
-  }, [model.id, model.file]);
+  }, []);
+
+  // Sklad sceny: ladowanie tylko zmienionych elementow (inny model albo inne przesuniecie pod danym kluczem).
+  const layoutKey = items.map((i) => `${i.key}:${i.model.id}:${i.offset.join(",")}`).join("|");
+  useEffect(() => {
+    const r = rt.current;
+    if (!r || !sceneReady) return;
+    let cancelled = false;
+    status.current?.("loading");
+    const wanted = itemsRef.current;
+
+    for (const [key, l] of r.loaded) {
+      const w = wanted.find((i) => i.key === key);
+      if (!w || w.model.id !== l.modelId) {
+        r.group.remove(l.obj);
+        r.loaded.delete(key);
+      }
+    }
+
+    (async () => {
+      let changed = false;
+      await Promise.all(
+        wanted.map(async (item) => {
+          const offsetKey = item.offset.join(",");
+          const existing = r.loaded.get(item.key);
+          if (existing) {
+            if (existing.offsetKey !== offsetKey) {
+              existing.obj.position.set(...item.offset);
+              existing.offsetKey = offsetKey;
+              changed = true;
+            }
+            return;
+          }
+          const gltf = await r.loader.loadAsync(`/3d/${item.model.file}`);
+          if (cancelled || !rt.current) return;
+          const obj = gltf.scene;
+          obj.position.set(...item.offset);
+          const meshes = new Map<string, T.Mesh>();
+          obj.traverse((o) => {
+            if ((o as T.Mesh).isMesh) meshes.set(o.name, o as T.Mesh);
+          });
+          r.group.add(obj);
+          r.loaded.set(item.key, { modelId: item.model.id, offsetKey, obj, meshes });
+          changed = true;
+        }),
+      );
+      if (cancelled) return;
+      if (changed) r.frame();
+      setModelsVersion((v) => v + 1);
+      status.current?.("ready");
+    })().catch(() => {
+      if (!cancelled) status.current?.("error");
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [layoutKey, sceneReady]);
 
   // Farby czesci i nadruk podkladki przy kazdej zmianie konfiguracji.
   useEffect(() => {
     const r = rt.current;
-    if (!r || !ready) return;
-    const { THREE, meshes } = r;
+    if (!r || !sceneReady) return;
+    const { THREE } = r;
     let cancelled = false;
 
-    for (const [partId, mesh] of meshes) {
-      const paint = partPaint(data, config, partId);
-      if (!paint) continue;
-      const old = mesh.material as T.Material;
-      const params: Record<string, unknown> = { ...paint.pbr };
-      const mat = new THREE.MeshPhysicalMaterial(params as T.MeshPhysicalMaterialParameters);
-      if (paint.emissive) {
-        mat.color.copy(new THREE.Color(0, 0, 0));
-        mat.emissive.set(paint.color);
-        mat.emissiveIntensity = 1;
-      } else {
-        mat.color.set(paint.color);
+    for (const item of items) {
+      const loaded = r.loaded.get(item.key);
+      if (!loaded || loaded.modelId !== item.model.id) continue;
+      for (const [partId, mesh] of loaded.meshes) {
+        const paint = partPaint(data, item.config, partId);
+        if (!paint) continue;
+        const old = mesh.material as T.Material;
+        const mat = new THREE.MeshPhysicalMaterial(
+          paint.pbr as unknown as T.MeshPhysicalMaterialParameters,
+        );
+        if (paint.emissive) {
+          mat.color.copy(new THREE.Color(0, 0, 0));
+          mat.emissive.set(paint.color);
+          mat.emissiveIntensity = 1;
+        } else {
+          mat.color.set(paint.color);
+        }
+        mesh.material = mat;
+        old.dispose();
       }
-      mesh.material = mat;
-      old.dispose();
-    }
 
-    const top = meshes.get("wierzch");
-    const print = config.print ? data.prints.find((p) => p.id === config.print) : undefined;
-    if (top && print) {
-      new THREE.TextureLoader().loadAsync(`/3d/${print.plik}`).then((tex) => {
-        if (cancelled || !rt.current) return;
-        tex.flipY = false;
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.anisotropy = 8;
-        const map = printMapping(print, model.dims_mm);
-        tex.repeat.set(...map.repeat);
-        tex.offset.set(...map.offset);
-        const mat = top.material as T.MeshPhysicalMaterial;
-        mat.map = tex;
-        mat.color.copy(new THREE.Color(1, 1, 1));
-        mat.needsUpdate = true;
-        r.render();
-      });
+      const top = loaded.meshes.get("wierzch");
+      const print = item.config.print
+        ? data.prints.find((p) => p.id === item.config.print)
+        : undefined;
+      if (top && print) {
+        new THREE.TextureLoader().loadAsync(`/3d/${print.plik}`).then((tex) => {
+          if (cancelled || !rt.current) return;
+          tex.flipY = false;
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.anisotropy = 8;
+          const map = printMapping(print, item.model.dims_mm);
+          tex.repeat.set(...map.repeat);
+          tex.offset.set(...map.offset);
+          const mat = top.material as T.MeshPhysicalMaterial;
+          mat.map = tex;
+          mat.color.copy(new THREE.Color(1, 1, 1));
+          mat.needsUpdate = true;
+          r.render();
+        });
+      }
     }
     r.render();
     return () => {
       cancelled = true;
     };
-  }, [config, data, ready, model.dims_mm]);
+  }, [items, data, sceneReady, modelsVersion]);
 
   useImperativeHandle(
     handleRef,
@@ -228,15 +299,15 @@ export default function Stage({ model, data, config, handleRef, onStatus }: Prop
       rotate(deg) {
         const r = rt.current;
         if (!r) return;
-        r.root.rotation.y += (deg * Math.PI) / 180;
+        r.group.rotation.y += (deg * Math.PI) / 180;
         r.render();
       },
       view(v) {
         const r = rt.current;
         if (!r) return;
-        const { camera, controls, root, THREE } = r;
-        root.rotation.y = 0;
-        const box = new THREE.Box3().setFromObject(root);
+        const { camera, controls, group, THREE } = r;
+        group.rotation.y = 0;
+        const box = new THREE.Box3().setFromObject(group);
         const s = box.getSize(new THREE.Vector3());
         const radius = Math.max(s.x, s.y, s.z);
         const t = controls.target;

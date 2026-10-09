@@ -30,7 +30,10 @@ export type ConfigurationInput = z.infer<typeof configurationSchema>;
 
 // --- Odpowiedzi publiczne: slowniki konfiguratora i wycena (GET /v1/configurator, POST /v1/configurator/quote) ---
 
-const finishPbrSchema = z.record(z.string(), z.union([z.number(), z.string(), z.boolean(), z.array(z.number())]));
+const finishPbrSchema = z.record(
+  z.string(),
+  z.union([z.number(), z.string(), z.boolean(), z.array(z.number())]),
+);
 
 export const configuratorPartSchema = z.object({
   id: z.string().min(1).max(40),
@@ -102,3 +105,23 @@ export const configuratorQuoteSchema = z.object({
   made_to_order: z.literal(true),
 });
 export type ConfiguratorQuote = z.infer<typeof configuratorQuoteSchema>;
+
+// --- „Stwórz własny set” (F-255): trzy konfiguracje, rabat setu liczy API wg ustawien sklepu ---
+
+export const configuratorSetRequestSchema = z.strictObject({
+  items: z.array(configurationSchema).min(1).max(3),
+});
+export type ConfiguratorSetRequest = z.infer<typeof configuratorSetRequestSchema>;
+
+export const configuratorSetQuoteSchema = z.object({
+  items: z.array(configuratorQuoteSchema),
+  sum_gr: z.number().int().nonnegative(),
+  /** Rabat setu (reguła i procent z ustawien sklepu); 0, gdy brak kompletu trzech kategorii. */
+  discount_gr: z.number().int().nonnegative(),
+  total_gr: z.number().int().nonnegative(),
+  percent: z.number(),
+  complete: z.boolean(),
+  ok: z.boolean(),
+  made_to_order: z.literal(true),
+});
+export type ConfiguratorSetQuote = z.infer<typeof configuratorSetQuoteSchema>;

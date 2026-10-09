@@ -195,3 +195,85 @@
     max-height: 80vh;
   }
 }
+
+/* „Stworz wlasny set” (F-255): naglowek z zaletami, sekcje produktow, wybor modelu. */
+.konfigurator__naglowek {
+  max-width: var(--max-tekst);
+}
+.konfigurator__nadtytul {
+  margin: 0 0 var(--s1);
+  color: var(--akcent);
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.konfigurator__zalety {
+  display: grid;
+  gap: var(--s1);
+  margin: var(--s2) 0 0;
+  padding-left: var(--s3);
+}
+.konfigurator__sekcja {
+  display: grid;
+  gap: var(--s2);
+}
+.konfigurator__sekcja-tytul {
+  margin: 0;
+  font-size: var(--t-l);
+}
+.konfigurator__sekcja-tytul span {
+  color: var(--tekst-slaby);
+  font-weight: var(--w-zwykla);
+}
+.konfigurator__modele {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--s1);
+}
+.konfigurator__model {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding: var(--s1) var(--s2);
+  border: 2px solid var(--linia);
+  border-radius: var(--r);
+  font-size: var(--t-s);
+  cursor: pointer;
+}
+.konfigurator__model input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.konfigurator__model:has(input:checked) {
+  border-color: var(--tekst);
+  outline: 3px solid var(--fokus);
+  outline-offset: 1px;
+}
+.konfigurator__model:has(input:focus-visible) {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+}
+.konfigurator__czesci > summary {
+  min-height: var(--cel-min);
+  padding-block: var(--s1);
+  cursor: pointer;
+  font-weight: var(--w-mocna);
+}
+.konfigurator__czesci[open] > summary {
+  margin-bottom: var(--s2);
+}
+.konfigurator__czesci > :not(summary) {
+  margin-bottom: var(--s2);
+}
+.konfigurator__kody {
+  margin: 0;
+  padding-left: var(--s3);
+  font-size: var(--t-s);
+}
+.konfigurator__kody code {
+  overflow-wrap: anywhere;
+}

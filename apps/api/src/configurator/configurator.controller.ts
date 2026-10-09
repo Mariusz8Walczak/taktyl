@@ -1,7 +1,7 @@
 // F-250..F-256 (ADR-0011): cienki kontroler konfiguratora; wycena bez cache jak koszyk.
 import { Body, Controller, Get, HttpCode, Inject, Post } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
-import { configurationSchema } from "@taktyl/contracts";
+import { configurationSchema, configuratorSetRequestSchema } from "@taktyl/contracts";
 import type { z } from "zod";
 import { LIMITS } from "../common/rate-limits.js";
 import { ZodPipe } from "../common/zod.pipe.js";
@@ -21,5 +21,15 @@ export class ConfiguratorController {
   @Throttle({ default: LIMITS.quote })
   quote(@Body(new ZodPipe(configurationSchema)) body: z.output<typeof configurationSchema>) {
     return this.configurator.quote(body);
+  }
+
+  @Post("set-quote")
+  @HttpCode(200)
+  @Throttle({ default: LIMITS.quote })
+  setQuote(
+    @Body(new ZodPipe(configuratorSetRequestSchema))
+    body: z.output<typeof configuratorSetRequestSchema>,
+  ) {
+    return this.configurator.quoteSet(body);
   }
 }

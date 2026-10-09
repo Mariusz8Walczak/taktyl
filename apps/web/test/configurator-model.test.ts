@@ -6,6 +6,9 @@ import type { ConfiguratorData } from "@taktyl/contracts";
 import { defaultConfiguration, resolveConfiguration } from "@taktyl/domain";
 import { describe, expect, it } from "vitest";
 import {
+  applyChoice,
+  explicitChoices,
+  placeOnDesk,
   allowedFinishes,
   configurableParts,
   findModelById,
@@ -20,7 +23,9 @@ import {
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "data");
 const read = <T>(n: string): T => JSON.parse(readFileSync(join(root, `${n}.json`), "utf8")) as T;
-const parts = read<{ palettes: ConfiguratorData["palettes"]; models: ConfiguratorData["models"] }>("parts");
+const parts = read<{ palettes: ConfiguratorData["palettes"]; models: ConfiguratorData["models"] }>(
+  "parts",
+);
 const data: ConfiguratorData = {
   colors: read("colors"),
   finishes: read("finishes"),
@@ -51,7 +56,10 @@ describe("model konfiguratora", () => {
 
   it("partPaint: kolor z probki, PBR z wykonczenia, podswietlenie jako emisja", () => {
     const model = findModelById(data, "k-kwarc-60")!;
-    const cfg = resolveConfiguration(toDomainData(data), defaultConfiguration(model as never)).config;
+    const cfg = resolveConfiguration(
+      toDomainData(data),
+      defaultConfiguration(model as never),
+    ).config;
     const body = partPaint(data, cfg, "obudowa")!;
     expect(body.color).toBe(data.colors[cfg.parts.obudowa!.color]!.swatch);
     expect(body.emissive).toBe(false);
@@ -66,7 +74,8 @@ describe("model konfiguratora", () => {
     expect(m.repeat[1]).toBeCloseTo(1);
     expect(m.offset[0]).toBeCloseTo(0.25);
     const rozciagnij = data.prints.find((p) => p.tryb !== "skala");
-    if (rozciagnij) expect(printMapping(rozciagnij, [100, 100])).toEqual({ repeat: [1, 1], offset: [0, 0] });
+    if (rozciagnij)
+      expect(printMapping(rozciagnij, [100, 100])).toEqual({ repeat: [1, 1], offset: [0, 0] });
   });
 
   it("nadruki dla Tafli tak, dla Filcu nie; klawiatury nie maja wyboru nadruku", () => {
@@ -81,5 +90,48 @@ describe("model konfiguratora", () => {
     const ids = configurableParts(findModelById(data, "k-bazalt-75")!).map((p) => p.id);
     expect(ids).toContain("pokretlo");
     expect(ids).not.toContain("plyta");
+  });
+
+  it("placeOnDesk: elementy stoja na grubosci podkladki, mysz obok klawiatury, klawiatura przy krawedzi uzytkownika", () => {
+    const pad = findModelById(data, "p-tafla_l")!;
+    const kb = findModelById(data, "k-kwarc-60")!;
+    const mouse = findModelById(data, "m-kos")!;
+    const p = placeOnDesk(pad.dims_mm, kb.dims_mm, mouse.dims_mm);
+    expect(p.pad).toEqual([0, 0, 0]);
+    expect(p.keyboard[1]).toBeCloseTo((pad.dims_mm[2] ?? 0) / 1000);
+    expect(p.mouse[0]).toBeGreaterThan(p.keyboard[0]);
+    expect(p.keyboard[2]).toBeGreaterThan(0);
+    expect((p.mouse[0] - p.keyboard[0]) * 1000).toBeGreaterThanOrEqual(
+      ((kb.dims_mm[0] ?? 0) + (mouse.dims_mm[0] ?? 0)) / 2,
+    );
+  });
+
+  it("explicitChoices zostawia tylko wybory inne niz domyslne", () => {
+    const model = findModelById(data, "k-kwarc-60")!;
+    const full = resolveConfiguration(
+      toDomainData(data),
+      defaultConfiguration(model as never),
+    ).config;
+    expect(explicitChoices(model, full.parts)).toEqual({});
+    const changed = { ...full.parts, obudowa: { color: "turkus", finish: "mat" } };
+    expect(Object.keys(explicitChoices(model, changed))).toEqual(["obudowa"]);
+  });
+
+  it("applyChoice: zmiana koloru zachowuje wykonczenie, niedozwolone zastepuje domyslnym, paleta bez wykonczen daje null", () => {
+    const model = findModelById(data, "k-kwarc-60")!;
+    const resolved = resolveConfiguration(
+      toDomainData(data),
+      defaultConfiguration(model as never),
+    ).config;
+    const next = applyChoice(data, model, resolved, {}, "obudowa", { color: "turkus" });
+    expect(next.obudowa).toEqual({ color: "turkus", finish: "mat" });
+    const bad = applyChoice(data, model, resolved, {}, "obudowa", { finish: "anodowane" });
+    expect(bad.obudowa?.finish).toBe("mat");
+    expect(
+      applyChoice(data, model, resolved, {}, "legendy_alfa", { color: "czerwien" }).legendy_alfa,
+    ).toEqual({
+      color: "czerwien",
+      finish: null,
+    });
   });
 });

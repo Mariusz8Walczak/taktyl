@@ -14,7 +14,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "da
 function read<T>(n: string): T {
   return JSON.parse(readFileSync(join(root, `${n}.json`), "utf8")) as T;
 }
-const parts = read<{ palettes: ConfiguratorData["palettes"]; models: ConfiguratorData["models"] }>("parts");
+const parts = read<{ palettes: ConfiguratorData["palettes"]; models: ConfiguratorData["models"] }>(
+  "parts",
+);
 const data: ConfiguratorData = {
   colors: read("colors"),
   finishes: read("finishes"),
@@ -25,8 +27,19 @@ const data: ConfiguratorData = {
 
 function setup(modelId: string, name: string) {
   const model = findModelById(data, modelId)!;
-  const initial = resolveConfiguration(toDomainData(data), defaultConfiguration(model as never)).config;
-  return render(<Configurator data={data} model={model} productName={name} productHref="/klawiatury/kwarc-60" initial={initial} />);
+  const initial = resolveConfiguration(
+    toDomainData(data),
+    defaultConfiguration(model as never),
+  ).config;
+  return render(
+    <Configurator
+      data={data}
+      model={model}
+      productName={name}
+      productHref="/klawiatury/kwarc-60"
+      initial={initial}
+    />,
+  );
 }
 
 describe("Configurator (F-250..F-254)", () => {
@@ -36,7 +49,10 @@ describe("Configurator (F-250..F-254)", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async (_url: string, init: RequestInit) => {
-        const body = JSON.parse(String(init.body)) as { model: string; parts: Record<string, unknown> };
+        const body = JSON.parse(String(init.body)) as {
+          model: string;
+          parts: Record<string, unknown>;
+        };
         calls.push(body);
         const turkus = JSON.stringify(body.parts).includes("turkus");
         return new Response(
@@ -62,7 +78,9 @@ describe("Configurator (F-250..F-254)", () => {
     setup("k-kwarc-60", "Kwarc 60");
     expect(screen.getByRole("radiogroup", { name: "Obudowa" })).toBeInTheDocument();
     expect(screen.getByText(/Podgląd 3D jest niedostępny/)).toBeInTheDocument();
-    expect(screen.getByRole("radiogroup", { name: "Nadruki na klawiszach alfanumerycznych" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("radiogroup", { name: "Nadruki na klawiszach alfanumerycznych" }),
+    ).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText("K-KWR60-CFG-TEST")).toBeInTheDocument());
   });
 
@@ -84,7 +102,9 @@ describe("Configurator (F-250..F-254)", () => {
     setup("k-kwarc-60", "Kwarc 60");
     const group = screen.getByRole("radiogroup", { name: "Nadruki na modyfikatorach" });
     await user.click(within(group).getByRole("radio", { name: "Auto" }));
-    await waitFor(() => expect(calls.at(-1)?.parts).toMatchObject({ legendy_mod: { color: "auto" } }));
+    await waitFor(() =>
+      expect(calls.at(-1)?.parts).toMatchObject({ legendy_mod: { color: "auto" } }),
+    );
   });
 
   it("podkladka: wybor wzoru ukrywa kolor wierzchu i przekazuje nadruk", async () => {
