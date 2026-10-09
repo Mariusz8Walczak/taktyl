@@ -17,6 +17,7 @@ import {
 import { CatalogLoader, type CatalogSnapshot } from "../catalog/catalog.loader.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { respond } from "../common/zod.pipe.js";
+import { ConfiguratorService, type CartConfig } from "../configurator/configurator.service.js";
 import { ShopConfigService } from "../settings/shop-config.service.js";
 
 export interface QuoteInput {
@@ -31,7 +32,10 @@ export interface QuoteComputation {
   quote: CartQuote;
   /** Pozycje, ktore weszly do wyceny (bez linii z nieznanym SKU), z indeksem linii w zadaniu. */
   entries: { entry: CartEntry; sourceIndex: number }[];
+  /** Indeks katalogu z wirtualnymi wariantami konfiguracji wlasnych (ADR-0011), ktore weszly do koszyka. */
   index: SkuIndex;
+  /** Konfiguracje wlasne z koszyka po kodzie (pozycje na zamowienie, bez stanu magazynowego). */
+  configs: ReadonlyMap<string, CartConfig>;
   /** Migawka katalogu uzyta do wyceny (etykiety kolorow, przelacznikow, rozmiarow). */
   snapshot: CatalogSnapshot;
   config: ShopConfig;
@@ -60,6 +64,7 @@ export class CartQuoteService {
     @Inject(CatalogLoader) private readonly loader: CatalogLoader,
     @Inject(ShopConfigService) private readonly shop: ShopConfigService,
     @Inject(CLOCK) private readonly clock: Clock,
+    @Inject(ConfiguratorService) private readonly configurator: ConfiguratorService,
   ) {}
 
   async quote(input: QuoteInput): Promise<QuoteResponse> {
@@ -69,7 +74,18 @@ export class CartQuoteService {
   async compute(input: QuoteInput): Promise<QuoteComputation> {
     const now = this.clock();
     const [snap, config] = await Promise.all([this.loader.load(), this.shop.load(now)]);
-    const { index } = snap;
+    // Konfiguracje wlasne (kod "-CFG-") wchodza do wyceny jako wirtualne warianty: cena z serwera, stan "na zamowienie".
+    const configs = new Map<string, CartConfig>();
+    const index = new Map(snap.index);
+    for (const line of input.items) {
+      for (const sku of line.type === "set" ? line.skus : [line.sku]) {
+        if (!sku.includes("-CFG-") || configs.has(sku)) continue;
+        const cfg = this.configurator.cartConfig(snap, sku);
+        if (!cfg) continue;
+        configs.set(sku, cfg);
+        index.set(sku, { product: cfg.product, variant: cfg.variant });
+      }
+    }
 
     // Linie z nieznanym SKU nie wchodza do wyceny (problem unknown_sku, nie blad HTTP).
     const entries: QuoteComputation["entries"] = [];
@@ -181,6 +197,17 @@ export class CartQuoteService {
           : { code, applied: message.applied, message_code: message.message },
       problems,
     });
-    return { response, quote, entries, index, snapshot: snap, config, now, shortages, unknown };
+    return {
+      response,
+      quote,
+      entries,
+      index,
+      configs,
+      snapshot: snap,
+      config,
+      now,
+      shortages,
+      unknown,
+    };
   }
 }

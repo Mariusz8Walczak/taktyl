@@ -4,7 +4,9 @@
 // Dostepnosc: kazdy wybor to przycisk radio z nazwa koloru, scena jest dekoracja (aria-hidden), stan oglasza region live.
 import type { ConfiguratorData, ConfiguratorQuote } from "@taktyl/contracts";
 import { formatPLN, resolveConfiguration, type Configuration } from "@taktyl/domain";
+import { Button } from "@taktyl/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { addToCart } from "../../lib/cart-adapter";
 import { applyChoice, explicitChoices, toDomainData } from "../../lib/configurator/model";
 import { PartsPanel } from "./parts-panel";
 import { SceneView } from "./scene-view";
@@ -27,13 +29,21 @@ export function Configurator({ data, model, productName, productHref, initial }:
   // Tylko wybory odbiegajace od domyslnych: reszta (spod, pokretlo, przyciski) podaza za czescia nadrzedna.
   const [choices, setChoices] = useState<Choices>(() => explicitChoices(model, initial.parts));
   const [print, setPrint] = useState<string | null>(initial.print ?? null);
+  const [switchId, setSwitchId] = useState<string | null>(initial.switch ?? null);
+  const [added, setAdded] = useState(false);
   const [quote, setQuote] = useState<ConfiguratorQuote | null>(null);
   const [quoteError, setQuoteError] = useState(false);
   const stage = useRef<StageHandle>(null);
 
   const resolved = useMemo(
-    () => resolveConfiguration(domainData, { model: model.id, parts: choices, print }),
-    [domainData, model.id, choices, print],
+    () =>
+      resolveConfiguration(domainData, {
+        model: model.id,
+        parts: choices,
+        print,
+        switch: switchId,
+      }),
+    [domainData, model.id, choices, print, switchId],
   );
   const items = useMemo<StageItem[]>(
     () => [{ key: "p", model, config: resolved.config, offset: [0, 0, 0] }],
@@ -48,7 +58,7 @@ export function Configurator({ data, model, productName, productHref, initial }:
         const res = await fetch("/api/configurator/quote", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ model: model.id, parts: choices, print }),
+          body: JSON.stringify({ model: model.id, parts: choices, print, switch: switchId }),
           signal: ctrl.signal,
         });
         if (!res.ok) throw new Error(String(res.status));
@@ -64,7 +74,10 @@ export function Configurator({ data, model, productName, productHref, initial }:
       clearTimeout(t);
       ctrl.abort();
     };
-  }, [model.id, choices, print]);
+  }, [model.id, choices, print, switchId]);
+
+  // Zmiana wyborow po dodaniu: przycisk wraca do "Dodaj do koszyka" (to nowe zestawienie).
+  useEffect(() => setAdded(false), [choices, print, switchId]);
 
   const total = quote?.ok ? quote.total_gr : null;
   const adjustments = resolved.adjustments.map((a) => {
@@ -83,6 +96,8 @@ export function Configurator({ data, model, productName, productHref, initial }:
           choices={choices}
           resolved={resolved.config}
           print={print}
+          switchId={resolved.config.switch ?? null}
+          onSwitch={setSwitchId}
           onChoose={(partId, patch) =>
             setChoices((c) => applyChoice(data, model, resolved.config, c, partId, patch))
           }
@@ -126,9 +141,23 @@ export function Configurator({ data, model, productName, productHref, initial }:
             </p>
           ) : null}
           <p className="konfigurator__info">
-            Wykonanie na zamówienie, wysyłka w ok. 7 dni roboczych. Zamawianie własnych zestawień
-            uruchomimy w kolejnym wydaniu; teraz możesz je obejrzeć i zachować link z kodem.
+            Wykonanie na zamówienie, wysyłka w ok. 7 dni roboczych.
           </p>
+          <Button
+            className="konfigurator__koszyk"
+            disabled={!quote?.ok || !quote.sku}
+            onClick={async () => {
+              if (!quote?.sku) return;
+              const res = await addToCart({ sku: quote.sku, qty: 1 });
+              if (res.ok) setAdded(true);
+            }}
+          >
+            {added ? (
+              <span className="tk-etykieta-dodano">Dodano do koszyka</span>
+            ) : (
+              "Dodaj do koszyka"
+            )}
+          </Button>
           <p>
             <a className="przycisk-tekstowy" href={productHref}>
               Wróć do produktu

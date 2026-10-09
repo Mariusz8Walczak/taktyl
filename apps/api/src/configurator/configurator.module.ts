@@ -9,5 +9,6 @@ import { ConfiguratorService } from "./configurator.service.js";
   imports: [CatalogModule, SettingsModule],
   controllers: [ConfiguratorController],
   providers: [ConfiguratorService],
+  exports: [ConfiguratorService],
 })
 export class ConfiguratorModule {}

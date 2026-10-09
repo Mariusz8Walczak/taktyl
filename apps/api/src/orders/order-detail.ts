@@ -18,6 +18,7 @@ export function toOrderDetail(o: OrderWithItems): OrderDetail {
       sku: i.sku,
       name: i.name,
       variant_label: i.variantLabel,
+      config_sku: i.configSku,
       qty: i.qty,
       unit_price_gr: i.unitPriceGr,
       set_discount_gr: i.setDiscountGr,

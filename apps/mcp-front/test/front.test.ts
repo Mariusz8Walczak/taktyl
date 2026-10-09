@@ -190,3 +190,39 @@ describe("narzedzia", () => {
     for (const w of ORDER_TOOLS) expect(names).not.toContain(w);
   });
 });
+
+describe("konfigurator (ADR-0011)", () => {
+  it("quote_configuration wysyla wybory do wyceny serwera i jest tylko do odczytu", async () => {
+    const f = fakeApi(() => ({
+      ok: true,
+      issues: [],
+      adjustments: [],
+      config: { model: "k-kwarc-60", parts: {}, print: null, switch: "prog" },
+      sku: "K-KWR60-CFG-GRFM.PRG",
+      base_price_gr: 29900,
+      surcharge_gr: 4000,
+      total_gr: 33900,
+      made_to_order: true,
+    }));
+    const c = await client(false, f.api);
+    const { tools } = await c.listTools();
+    expect(tools.find((t) => t.name === "quote_configuration")?.annotations?.readOnlyHint).toBe(
+      true,
+    );
+    expect(tools.map((t) => t.name)).toContain("get_configurator");
+    const res = await c.callTool({
+      name: "quote_configuration",
+      arguments: {
+        model: "k-kwarc-60",
+        parts: { obudowa: { color: "turkus", finish: "polysk" } },
+        switch: "prog",
+      },
+    });
+    expect(res.isError).toBeFalsy();
+    expect(f.calls[0]).toMatchObject({
+      method: "POST",
+      body: { model: "k-kwarc-60", switch: "prog", print: null },
+    });
+    expect(f.calls[0]?.url).toContain("/v1/configurator/quote");
+  });
+});

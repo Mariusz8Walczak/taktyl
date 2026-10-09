@@ -48,8 +48,15 @@ export interface ConfSurcharges {
   mice: Record<string, number>;
   pads: Record<string, number>;
 }
+/** Przelacznik klawiatury (slownik `switches`): kod 3-literowy z SKU wariantu. */
+export interface ConfSwitch {
+  code: string;
+  name: string;
+}
 export interface ConfData {
   colors: Record<string, ConfColor>;
+  /** Przelaczniki klawiatur; puste dla modeli bez wyboru (myszki, podkladki). */
+  switches: Record<string, ConfSwitch>;
   finishes: Record<string, ConfFinish>;
   palettes: Record<string, ConfPalette>;
   models: ConfModel[];
@@ -67,6 +74,8 @@ export interface Configuration {
   parts: Record<string, ConfPartChoice>;
   /** Id nadruku podkladki (`prints.json`); wtedy `wierzch` ignoruje kolor. */
   print?: string | null;
+  /** Przelacznik klawiatury (id ze slownika `switches`); dla klawiatur wymagany, domyslnie pierwszy ze slownika. */
+  switch?: string | null;
 }
 
 export type ConfIssueCode =
@@ -77,7 +86,8 @@ export type ConfIssueCode =
   | "finish_not_allowed"
   | "needs_backlight"
   | "unknown_print"
-  | "print_not_for_model";
+  | "print_not_for_model"
+  | "unknown_switch";
 export interface ConfIssue {
   code: ConfIssueCode;
   part?: string;
@@ -144,6 +154,8 @@ const FOLLOWS: Record<string, string> = {
   przyciski: "korpus",
   przyciski_boczne: "korpus",
 };
+
+const isKeyboard = (model: ConfModel): boolean => model.id.startsWith("k-");
 
 function category(model: ConfModel): "keyboards" | "mice" | "pads" {
   return model.id.startsWith("k-") ? "keyboards" : model.id.startsWith("m-") ? "mice" : "pads";
@@ -245,6 +257,17 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
     }
   }
 
+  let switchId: string | null = null;
+  if (isKeyboard(model)) {
+    const requested = input.switch ?? Object.keys(data.switches)[0] ?? null;
+    if (requested && data.switches[requested]) switchId = requested;
+    else
+      issues.push({
+        code: "unknown_switch",
+        message: `Nieznany przelacznik: ${input.switch ?? "brak"}`,
+      });
+  }
+
   const print = input.print ?? null;
   if (print) {
     const p = data.prints.find((x) => x.id === print);
@@ -277,7 +300,7 @@ export function resolveConfiguration(data: ConfData, input: Configuration): Conf
   return {
     ok: issues.length === 0,
     issues,
-    config: { model: model.id, parts, print },
+    config: { model: model.id, parts, print, switch: switchId },
     adjustments,
   };
 }
@@ -380,6 +403,11 @@ export function configurationSku(data: ConfData, config: Configuration): string 
     const finish = choice.finish ? data.finishes[choice.finish]!.code : "";
     tokens.push(color + finish);
   }
+  if (isKeyboard(model)) {
+    const sw = config.switch ? data.switches[config.switch] : undefined;
+    if (!sw) throw new Error(`Brak przelacznika w konfiguracji ${config.model}`);
+    tokens.push(sw.code);
+  }
   return `${model.sku_prefix}-CFG-${tokens.join(".")}`;
 }
 
@@ -397,12 +425,19 @@ export function parseConfigurationSku(data: ConfData, sku: string): Configuratio
   const finishByCode = new Map(Object.entries(data.finishes).map(([k, f]) => [f.code, k]));
   for (const model of data.models.filter((m) => m.sku_prefix === prefix)) {
     const slots = model.parts.filter((p) => p.konfigurowalna && p.paleta);
-    if (slots.length !== tokens.length) continue;
+    // Klawiatury koncza kod przelacznikiem (kod z SKU wariantu, np. SLZ).
+    const switchCode = isKeyboard(model) ? tokens[tokens.length - 1] : undefined;
+    const switchId = switchCode
+      ? Object.entries(data.switches).find(([, s]) => s.code === switchCode)?.[0]
+      : undefined;
+    if (isKeyboard(model) && !switchId) continue;
+    const partTokens = isKeyboard(model) ? tokens.slice(0, -1) : tokens;
+    if (slots.length !== partTokens.length) continue;
     const parts: Record<string, ConfPartChoice> = {};
     let print: string | null = null;
     let valid = true;
     slots.forEach((slot, i) => {
-      const t = tokens[i]!;
+      const t = partTokens[i]!;
       if (slot.id === "wierzch" && t.startsWith("N")) {
         const id = `p-${t.slice(1).toLowerCase()}`;
         if (!data.prints.some((p) => p.id === id)) {
@@ -423,7 +458,7 @@ export function parseConfigurationSku(data: ConfData, sku: string): Configuratio
       }
       parts[slot.id] = { color, finish: finish ?? null };
     });
-    if (valid) return { model: model.id, parts, print };
+    if (valid) return { model: model.id, parts, print, switch: switchId ?? null };
   }
   return null;
 }

@@ -20,6 +20,12 @@ const data: ConfData = {
   models: parts.models,
   prints: readData("prints"),
   surcharges: readData("surcharges"),
+  switches: Object.fromEntries(
+    readData<{ id: string; code: string; name: string }[]>("switches").map((s) => [
+      s.id,
+      { code: s.code, name: s.name },
+    ]),
+  ),
 };
 
 function cfg(
@@ -294,5 +300,30 @@ describe("SKU konfiguracji", () => {
     expect(parseConfigurationSku(data, "K-KWR60-GRF-SLZ")).toBeNull();
     expect(parseConfigurationSku(data, "K-KWR60-CFG-XXXM.YYYM")).toBeNull();
     expect(parseConfigurationSku(data, "Z-NIE-CFG-GRFM")).toBeNull();
+  });
+});
+
+describe("przelacznik klawiatury (ADR-0011, F-256)", () => {
+  it("klawiatura bez wyboru dostaje pierwszy przelacznik, SKU konczy sie jego kodem", () => {
+    const r = resolveConfiguration(data, cfg("k-kwarc-60"));
+    expect(r.config.switch).toBe("slizg");
+    expect(configurationSku(data, r.config).endsWith(".SLZ")).toBe(true);
+  });
+
+  it("wybrany przelacznik trafia do SKU i wraca po odtworzeniu", () => {
+    const r = resolveConfiguration(data, { ...cfg("k-kwarc-60"), switch: "trzask" });
+    const sku = configurationSku(data, r.config);
+    expect(sku.endsWith(".TRZ")).toBe(true);
+    expect(parseConfigurationSku(data, sku)?.switch).toBe("trzask");
+  });
+
+  it("nieznany przelacznik to blad, mysz i podkladka przelacznika nie maja", () => {
+    expect(
+      resolveConfiguration(data, { ...cfg("k-kwarc-60"), switch: "nie-ma" }).issues[0]?.code,
+    ).toBe("unknown_switch");
+    expect(resolveConfiguration(data, cfg("m-kos")).config.switch).toBeNull();
+    expect(configurationSku(data, resolveConfiguration(data, cfg("m-kos")).config)).not.toContain(
+      ".SLZ",
+    );
   });
 });

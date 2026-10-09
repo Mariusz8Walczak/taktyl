@@ -401,3 +401,8 @@
     animation: none;
   }
 }
+
+/* ADR-0011: kod konfiguracji wlasnej jest dlugi (kody czesci po kropkach); zawija sie, zeby nie poszerzac strony (WCAG 1.4.10). */
+.koszyk-poz__sku {
+  overflow-wrap: anywhere;
+}

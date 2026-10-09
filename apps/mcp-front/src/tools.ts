@@ -4,6 +4,8 @@
 import {
   categoriesResponseSchema,
   colorsResponseSchema,
+  configuratorDataSchema,
+  configuratorQuoteSchema,
   completeSetResponseSchema,
   contentPageSchema,
   facetsResponseSchema,
@@ -238,6 +240,56 @@ export function readTools(api: ApiClient): Tool[] {
       run: async (i) =>
         (await api.request("POST", "/v1/cart/quote", { body: i, schema: quoteResponseSchema }))
           .data,
+    }),
+    defineTool({
+      name: "get_configurator",
+      title: "Slowniki konfiguratora",
+      description:
+        "Slowniki konfiguratora kolorow 3D (ADR-0011): kolory, wykonczenia, przelaczniki, palety czesci, 26 modeli z lista czesci i nadruki podkladek. Czesci i palety okreslaja, co mozna podac w quote_configuration.",
+      risk: "read",
+      inputSchema: {},
+      run: () => api.get("/v1/configurator", { schema: configuratorDataSchema }),
+    }),
+    defineTool({
+      name: "quote_configuration",
+      title: "Wycena konfiguracji wlasnej",
+      description:
+        'Wycena i kod (SKU) konfiguracji wlasnej produktu (niczego nie zapisuje). Cena = model bazowy + doplaty za wykonczenie, liczona przez serwer. Wejscie: {"model":"k-kwarc-60","parts":{"obudowa":{"color":"turkus","finish":"polysk"}},"switch":"prog"}; pominiete czesci maja wartosci domyslne, nadruk klawiszy mozna ustawic na color:"auto". Zwrocony kod mozna wstawic do quote_cart jako SKU pozycji (pozycja na zamowienie, bez stanu).',
+      risk: "read",
+      inputSchema: {
+        model: z.string().regex(/^[a-z0-9_-]{2,40}$/),
+        parts: z
+          .record(
+            z.string().regex(/^[a-z0-9_-]{1,40}$/),
+            z.object({
+              color: z.string().regex(/^[a-z0-9-]{2,40}$/),
+              finish: z.string().nullable(),
+            }),
+          )
+          .default({}),
+        print: z
+          .string()
+          .regex(/^[a-z0-9-]{2,40}$/)
+          .nullable()
+          .optional(),
+        switch: z
+          .string()
+          .regex(/^[a-z0-9-]{2,40}$/)
+          .nullable()
+          .optional(),
+      },
+      run: async (i) =>
+        (
+          await api.request("POST", "/v1/configurator/quote", {
+            body: {
+              model: i.model,
+              parts: i.parts,
+              print: i.print ?? null,
+              switch: i.switch ?? null,
+            },
+            schema: configuratorQuoteSchema,
+          })
+        ).data,
     }),
     defineTool({
       name: "get_shop_settings",

@@ -63,7 +63,10 @@ export class PaymentsSimService {
       orderBy: { id: "asc" },
     });
     const demand = new Map<string, number>();
-    for (const i of items) demand.set(i.sku, (demand.get(i.sku) ?? 0) + i.qty);
+    // Konfiguracje wlasne (ADR-0011) sa na zamowienie: nie ruszaja stanu wariantu bazowego.
+    for (const i of items) {
+      if (i.configSku === null) demand.set(i.sku, (demand.get(i.sku) ?? 0) + i.qty);
+    }
     const skus = [...demand.keys()].sort();
     const locked = await tx.$queryRaw<{ sku: string; stock: number }[]>`
       SELECT sku, stock FROM variants WHERE sku = ANY(${skus}) ORDER BY sku FOR UPDATE`;
