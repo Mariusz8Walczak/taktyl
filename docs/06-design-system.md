@@ -106,7 +106,7 @@ Stany obowiązkowe dla każdego elementu interaktywnego: spoczynek · najechanie
 
 ### 5.1. Logotyp
 
-Wordmark `taktyl` złożony fontem (Archivo 700, szerokość 125%, `letter-spacing: -0.02em`), kolor `--tekst`. Bez znaku graficznego, bez ikony, bez obrysu klawisza. Favicon i obraz do udostępnień dostarcza człowiek (`docs/09`).
+Logo `taktyl` to gotowy SVG od właściciela (`apps/web/public/brand/taktyl-logo.svg`, na ciemne tło `taktyl-logo-ciemne-tlo.svg`): znak klawisza z literą `t` i wordmark. Wysokość w nagłówku 2 rem, `alt=""` (link ma `aria-label`). Znak osobno: `public/brand/taktyl-znak*.svg`, favicon i ikony: `public/favicon.*`, `apple-touch-icon.png`, `icon-512.png`. Wcześniejszy zapis „wordmark złożony fontem, bez znaku” zastąpiony decyzją DESIGN-072.
 
 ## 6. Przestylowanie szablonu
 

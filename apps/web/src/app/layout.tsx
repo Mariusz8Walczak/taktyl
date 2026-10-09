@@ -26,6 +26,15 @@ export const metadata: Metadata = {
     "Taktyl: klawiatury, myszki i podkładki. Złóż set, który pasuje do biurka i dłoni. Sklep demonstracyjny.",
   // F-244: noindex w meta (nagłówek X-Robots-Tag ustawia next.config i proxy)
   robots: { index: false, follow: false },
+  // docs/09 §7: znak od wlasciciela (public/favicon.*, apple-touch-icon.png)
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+  },
   // docs/09 §7: kadr setu z gory, 1200 x 630
   openGraph: { images: [{ url: "/og.jpg", width: 1200, height: 630 }] },
 };

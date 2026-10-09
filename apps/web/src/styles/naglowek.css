@@ -21,14 +21,23 @@
   align-items: center;
   min-height: var(--cel-min);
   padding-inline: var(--s1);
-  font-size: var(--t-l);
-  font-weight: var(--w-mocna);
-  font-stretch: var(--szer-naglowek);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-transform: lowercase;
-  color: var(--tekst);
   text-decoration: none;
+}
+.wordmark__logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 2rem;
+}
+/* 320 px (WCAG 1.4.10): mniejsze logo i bez bocznego odstepu, zeby naglowek nie poszerzal strony */
+@media (max-width: 479px) {
+  .wordmark {
+    min-width: 0;
+    padding-inline: 0;
+  }
+  .wordmark__logo {
+    height: 1.5rem;
+  }
 }
 
 .naglowek__link,
