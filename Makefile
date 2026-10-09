@@ -6,7 +6,7 @@ HTTP_PORT := $(shell sed -n 's/^PROXY_HTTP_PORT=//p' .env 2>/dev/null | head -n 
 SITE_PORT := $(if $(filter-out 80,$(HTTP_PORT)),:$(HTTP_PORT),)
 
 .DEFAULT_GOAL := help
-.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-design smoke smoke-outbox demo smoke-demo perf clean
+.PHONY: help env up down dev dev-down test e2e reset logs build ps lint typecheck audit-tokens audit-design smoke smoke-outbox demo smoke-demo smoke-mcp perf clean
 
 help: ## lista polecen
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | sort
@@ -78,6 +78,12 @@ smoke: ## test dymny dzialajacego stosu (noindex na hostach, /health, 18 produkt
 # I-011 (S30, TAKTYL-71): wylacza sklep, zmienia cene, wlacza sklep; outbox ma dostarczyc zdarzenie (wymaga dzialajacego stosu).
 smoke-outbox: ## test S30: sklep wylaczony na czas zmiany ceny, outbox dostarcza po jego powrocie
 	@sh scripts/smoke-outbox.sh
+
+# I-014 (docs/24): serwery MCP (front i backoffice) na prawdziwym stosie; KONCZY resetem danych demo, wiec wymaga DEMO_MODE=true.
+smoke-mcp: env ## smoke serwerow MCP na dzialajacym stosie (wymaga DEMO_MODE=true; konczy resetem danych demo)
+	@grep -q '^DEMO_MODE=true' .env || { echo "Ustaw DEMO_MODE=true w .env (smoke konczy sie resetem danych demo)." >&2; exit 1; }
+	$(COMPOSE) up --build -d --wait
+	$(COMPOSE) --profile test run --rm --no-deps --build test sh -c 'pnpm turbo run build --filter=@taktyl/mcp-front --filter=@taktyl/mcp-admin && TAKTYL_API_URL=http://api:4000 TAKTYL_ADMIN_EMAIL="$$ADMIN_BOOTSTRAP_EMAIL" TAKTYL_ADMIN_PASSWORD="$$ADMIN_BOOTSTRAP_PASSWORD" pnpm --filter @taktyl/mcp-core smoke'
 
 # I-009 (B-014, TAKTYL-65): tryb demo. Wymaga DEMO_MODE=true w .env; NIGDY z prawdziwymi danymi (reset kasuje zamowienia).
 demo: env ## stos z trybem demo (profil demo: cykliczny reset co DEMO_RESET_INTERVAL_MINUTES, domyslnie 60)

@@ -376,6 +376,85 @@ services:
     depends_on:
       api: { condition: service_healthy }
 
+  # I-014 (docs/24): serwery MCP (profil `mcp`), tylko cienkie nakladki na REST API; nie dostaja env_file ani sekretow bazy.
+  #   stdio (klient MCP uruchamia kontener):  docker compose --profile mcp run --rm -T --build mcp-front
+  #                                           docker compose --profile mcp run --rm -T --build mcp-admin
+  #   HTTP klasy "open" (front office):       docker compose --profile mcp up --build -d --wait mcp-front-http
+  # mcp-front nie ma zadnych poswiadczen ani dostepu do /v1/admin; zamowienia (TAKTYL_MCP_ALLOW_ORDERS) sa domyslnie wylaczone.
+  # mcp-admin loguje sie w API jako konto z TAKTYL_ADMIN_EMAIL/TAKTYL_ADMIN_PASSWORD (albo demo-viewer przy TAKTYL_ADMIN_DEMO=true).
+  mcp-front:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.mcp
+      args:
+        APP: mcp-front
+    image: taktyl-mcp-front:local
+    profiles: [mcp]
+    restart: "no"
+    stdin_open: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      TAKTYL_API_URL: http://api:4000
+      TAKTYL_MCP_TRANSPORT: stdio
+      TAKTYL_MCP_ALLOW_ORDERS: ${TAKTYL_MCP_ALLOW_ORDERS:-false}
+    depends_on:
+      api: { condition: service_healthy }
+
+  mcp-front-http:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.mcp
+      args:
+        APP: mcp-front
+    image: taktyl-mcp-front:local
+    profiles: [mcp]
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    # Domyslnie tylko localhost; adres publiczny i hosting wskaze wlasciciel (TAKTYL_MCP_HTTP_BIND=0.0.0.0 za proxy z TLS).
+    ports:
+      - "${TAKTYL_MCP_HTTP_BIND:-127.0.0.1}:${TAKTYL_MCP_HTTP_PORT:-3333}:3333"
+    environment:
+      TAKTYL_API_URL: http://api:4000
+      TAKTYL_MCP_TRANSPORT: http
+      TAKTYL_MCP_HTTP_PORT: "3333"
+      TAKTYL_MCP_RATE_LIMIT: ${TAKTYL_MCP_RATE_LIMIT:-120}
+      TAKTYL_MCP_TRUST_PROXY: ${TAKTYL_MCP_TRUST_PROXY:-false}
+      # Nie przekazujemy flagi z .env: otwarty endpoint nie zaklada zamowien (docs/24, klasa open).
+      TAKTYL_MCP_ALLOW_ORDERS: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3333/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    depends_on:
+      api: { condition: service_healthy }
+
+  mcp-admin:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.mcp
+      args:
+        APP: mcp-admin
+    image: taktyl-mcp-admin:local
+    profiles: [mcp]
+    restart: "no"
+    stdin_open: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      TAKTYL_API_URL: http://api:4000
+      TAKTYL_ADMIN_EMAIL: ${TAKTYL_ADMIN_EMAIL:-}
+      TAKTYL_ADMIN_PASSWORD: ${TAKTYL_ADMIN_PASSWORD:-}
+      TAKTYL_ADMIN_DEMO: ${TAKTYL_ADMIN_DEMO:-false}
+    depends_on:
+      api: { condition: service_healthy }
+
 volumes:
   pgdata:
   media:

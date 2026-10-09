@@ -1,0 +1,26 @@
+{
+  "name": "@taktyl/mcp-admin",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Serwer MCP Taktyl: backoffice, stdio z uwierzytelnieniem (/v1/admin) (I-014)",
+  "type": "module",
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@taktyl/contracts": "workspace:*",
+    "@taktyl/mcp-core": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15"
+  }
+}

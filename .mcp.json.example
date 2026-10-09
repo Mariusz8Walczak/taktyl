@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "taktyl-front": {
+      "command": "docker",
+      "args": ["compose", "--profile", "mcp", "run", "--rm", "-T", "--no-deps", "mcp-front"]
+    },
+    "taktyl-admin": {
+      "command": "docker",
+      "args": ["compose", "--profile", "mcp", "run", "--rm", "-T", "--no-deps", "mcp-admin"],
+      "env": {
+        "TAKTYL_ADMIN_EMAIL": "${TAKTYL_ADMIN_EMAIL:-owner@taktyl.example}",
+        "TAKTYL_ADMIN_PASSWORD": "${TAKTYL_ADMIN_PASSWORD:-}",
+        "TAKTYL_ADMIN_DEMO": "${TAKTYL_ADMIN_DEMO:-false}"
+      }
+    }
+  }
+}
