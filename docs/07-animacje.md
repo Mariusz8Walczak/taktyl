@@ -38,6 +38,7 @@ Wszystko obejrzysz w `podglad/podglad-palety-i-animacji.html`.
 | **A-16** | podsumowanie kreatora | przejście z 2 na 3 kategorie (nie przy wczytaniu gotowego kompletu) | jednorazowy obieg pierścienia w kolorze `--akcent` wokół karty podsumowania (`conic-gradient` z animowanym kątem `@property`), równocześnie wjeżdża linia „Rabat za set −133,70 zł” | `--d-scena` · `--e-wyjscie`, 1 raz |
 | **A-17** | `<kbd>` przy wyszukiwarce i w liście skrótów | użycie skrótu | klawisz wciska się jak A-01 | `--d-klik` |
 | **A-18** | podpowiedzi wyszukiwarki, panel „Szybko dodaj” | ładowanie dłuższe niż 300 ms | szkielet z przesuwanym połyskiem (pseudoelement z `translateX`) | pętla tylko w trakcie ładowania |
+| **A-19** | scena 3D konfiguratora (`stage.tsx`) | „Obróć w lewo/prawo”, „Widok z przodu/z góry”, zmiana modelu w secie; przeciąganie sceny | przejście kamery i obrotu bryły do nowego kadru (JS, czas i krzywa czytane z tokenów); po puszczeniu przeciąganej sceny obrót wygasa (wygaszanie `OrbitControls`). Pętla klatek działa tylko w trakcie ruchu. Przy `reduce`: przejście natychmiastowe, bez wygaszania | `--d-l` · `--e-wyjscie` |
 
 ## 3. Wzorce kodu
 

@@ -18,6 +18,8 @@ type Choices = Configuration["parts"];
 
 interface Props {
   data: ConfiguratorData;
+  /** Klucz elementu na scenie (F-257: klikniecie czesci na modelu wskazuje jej grupe w panelu). */
+  scope: string;
   model: Model;
   /** Wybory uzytkownika (tylko jawne). */
   choices: Choices;
@@ -33,6 +35,7 @@ interface Props {
 
 export function PartsPanel({
   data,
+  scope,
   model,
   choices,
   resolved,
@@ -71,7 +74,7 @@ export function PartsPanel({
         </fieldset>
       ) : null}
       {printable ? (
-        <fieldset className="konfigurator__grupa">
+        <fieldset className="konfigurator__grupa" data-czesc={`${scope}:wzor`}>
           <legend>
             <PartIcon id="wierzch" /> Wzór wierzchu
           </legend>
@@ -124,7 +127,7 @@ export function PartsPanel({
           ? "Auto (kontrast)"
           : (data.colors[current?.color ?? ""]?.label ?? "");
         return (
-          <fieldset key={part.id} className="konfigurator__grupa">
+          <fieldset key={part.id} className="konfigurator__grupa" data-czesc={`${scope}:${part.id}`}>
             <legend>
               <PartIcon id={part.id} /> {part.etykieta}: <strong>{currentLabel}</strong>
             </legend>

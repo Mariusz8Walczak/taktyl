@@ -198,6 +198,7 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
                 <summary>Dobierz kolory części</summary>
                 <PartsPanel
                   data={data}
+                  scope={slot}
                   model={model}
                   choices={state[slot].choices}
                   resolved={result.config}
