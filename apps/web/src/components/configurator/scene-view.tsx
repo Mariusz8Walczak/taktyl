@@ -1,6 +1,7 @@
 "use client";
 // F-250, F-255 (ADR-0011): rama sceny 3D: wykrycie WebGL, stan ladowania, przyciski obrotu (obsluga bez myszy)
 // i komunikat zastepczy, gdy podglad 3D jest niedostepny. Wybor czesci dziala niezaleznie od sceny.
+// F-257: klikniecie czesci na modelu otwiera jej grupe w panelu i przenosi tam fokus (zaznaczona probka albo pierwsza).
 import type { ConfiguratorData } from "@taktyl/contracts";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type Ref } from "react";
@@ -31,6 +32,21 @@ export function SceneView({
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [canRender, setCanRender] = useState(true);
   const own = useRef<StageHandle>(null);
+  const box = useRef<HTMLDivElement>(null);
+
+  const focusPart = (itemKey: string, partId: string) => {
+    const root = box.current?.closest(".konfigurator") ?? document;
+    const group =
+      root.querySelector<HTMLElement>(`[data-czesc="${itemKey}:${partId}"]`) ??
+      (partId === "wierzch" ? root.querySelector<HTMLElement>(`[data-czesc="${itemKey}:wzor"]`) : null);
+    if (!group) return;
+    const details = group.closest("details");
+    if (details && !details.open) details.open = true;
+    const target =
+      group.querySelector<HTMLElement>('[aria-checked="true"], input:checked') ??
+      group.querySelector<HTMLElement>("button, input, select");
+    (target ?? group).focus();
+  };
   useEffect(() => setCanRender(webglAvailable()), []);
 
   const setRefs = (h: StageHandle | null) => {
@@ -40,9 +56,15 @@ export function SceneView({
   };
 
   return (
-    <div className="konfigurator__scena" role="group" aria-label={title}>
+    <div ref={box} className="konfigurator__scena" role="group" aria-label={title}>
       {canRender && state !== "error" ? (
-        <Stage data={data} items={items} handleRef={setRefs} onStatus={setState} />
+        <Stage
+          data={data}
+          items={items}
+          handleRef={setRefs}
+          onStatus={setState}
+          onPick={focusPart}
+        />
       ) : (
         <p className="konfigurator__brak-3d" role="status">
           Podgląd 3D jest niedostępny w tej przeglądarce. Wybór kolorów obok działa, a cena i kod
@@ -54,11 +76,12 @@ export function SceneView({
           Ładuję model…
         </p>
       ) : null}
-      {state === "ready" ? (
+      {canRender && state !== "error" ? (
         <div className="konfigurator__widok" role="group" aria-label="Obracanie modelu">
           <button
             type="button"
             className="przycisk-tekstowy"
+            disabled={state !== "ready"}
             onClick={() => own.current?.rotate(-30)}
           >
             Obróć w lewo
@@ -66,6 +89,7 @@ export function SceneView({
           <button
             type="button"
             className="przycisk-tekstowy"
+            disabled={state !== "ready"}
             onClick={() => own.current?.rotate(30)}
           >
             Obróć w prawo
@@ -73,6 +97,7 @@ export function SceneView({
           <button
             type="button"
             className="przycisk-tekstowy"
+            disabled={state !== "ready"}
             onClick={() => own.current?.view("front")}
           >
             Widok z przodu
@@ -80,6 +105,7 @@ export function SceneView({
           <button
             type="button"
             className="przycisk-tekstowy"
+            disabled={state !== "ready"}
             onClick={() => own.current?.view("top")}
           >
             Widok z góry

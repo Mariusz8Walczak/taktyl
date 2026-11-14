@@ -93,6 +93,7 @@ export function Configurator({ data, model, productName, productHref, initial }:
       <div className="konfigurator__panel">
         <PartsPanel
           data={data}
+          scope="p"
           model={model}
           choices={choices}
           resolved={resolved.config}
