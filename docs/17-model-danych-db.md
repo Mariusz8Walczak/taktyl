@@ -281,6 +281,20 @@ Wiersz powstaje **w tej samej transakcji** co zmiana danych (gwarancja: bez zmia
 
 **`media_assets`** — nie jest osobną tabelą: stan zdjęć trzyma `product_images` (§3.1); pliki leżą w wolumenie `media` (`MEDIA_DIR`), nazwa pliku zawiera skrót treści.
 
+**`analytics_events`** (B-621, ADR-0012) — zdarzenia pomiaru z `docs/10` przyjęte przez `POST /v1/events` (tylko po zgodzie na analitykę) albo wygenerowane jako ruch demo (B-622).
+
+| Kolumna | Typ | Uwagi |
+|---|---|---|
+| `id` | BigInt PK | |
+| `session_id` | Text | anonimowy identyfikator sesji, CHECK `^[A-Za-z0-9_-]{8,64}$` |
+| `name` | Text | nazwa z `docs/10` §4–5 bez zmian |
+| `params` | Json | parametry bez zmian, bez danych osobowych (walidacja w `contracts`) |
+| `ts` | Ts | chwila zdarzenia u klienta (okno 48 h) |
+| `received_at` | Ts | chwila zapisu |
+| `demo` | Bool | `true` = ruch z generatora historii |
+
+Indeksy: `ts`, `(name, ts)`, `(session_id, ts)`. Bez adresu IP i User-Agent. Kolumna **`orders.demo`** (Bool, domyślnie `false`) oznacza zamówienia z generatora historii (B-622). Migracja `20261125000100_analytics_events`.
+
 ### 3.7. Idempotencja
 
 **`idempotency_keys`**: `key` PK, `request_hash` (SHA-256 ciała), `response_status`, `response_body` Json, `created_at`, `expires_at` (24 h). Czyszczone zadaniem cyklicznym.
