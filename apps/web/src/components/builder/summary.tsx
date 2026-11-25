@@ -98,11 +98,27 @@ export function FitResults({ api }: { api: BuilderApi }) {
 /** F-106: podglad biurka zasilany stanem kreatora; elementy z manifestu albo placeholdery w wymiarach z danych. */
 export function DeskView({ api }: { api: BuilderApi }) {
   const { model, state, analysis } = api;
+  // Audyt P0-2, F-105: propozycja reguly szerokosci ("Zmien na Filc XXL") takze w samym podgladzie, przy obszarze kolizji
+  const widthFix = analysis.report.results.find(
+    (r) => r.level === "uwaga" && r.suggestion && r.id.startsWith("pad-width"),
+  )?.suggestion;
   return (
     <DeskStage
       className="kreator__scena"
       baseUrl={MEDIA_BASE_URL}
       {...deskStageData(model, state.profile, analysis)}
+      action={
+        widthFix ? (
+          <Button
+            variant="secondary"
+            className="kreator__scena-akcja"
+            onClick={() => api.applySuggestion(widthFix)}
+          >
+            {/* "Zamień" w podgladzie (audyt P0-2), "Zmień" w liscie wynikow: dwa przyciski, dwie rozne nazwy */}
+            {widthFix.label.replace(/^Zmień/, "Zamień")}
+          </Button>
+        ) : null
+      }
     />
   );
 }
