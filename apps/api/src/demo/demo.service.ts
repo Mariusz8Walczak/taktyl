@@ -30,6 +30,8 @@ export class DemoService {
       now: at,
       reset: true,
       notify: { actorId: ctx.actorId, actorRole: "owner", requestId: ctx.requestId },
+      // I-016: status zdjec z plikow w wolumenie (reset nie gasi wgranych zdjec).
+      mediaDir: this.config.MEDIA_DIR,
     });
     this.log.log("reset danych demo wykonany z backpanelu");
     if (this.config.DEMO_HISTORY) {

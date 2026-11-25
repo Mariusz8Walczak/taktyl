@@ -83,6 +83,9 @@ services:
       <<: *db-env
       # B-622: przy pierwszym seedzie pustej bazy zamowien generuje ok. 90 dni zamowien i ruchu demo (DEMO_HISTORY=false wylacza).
       DEMO_HISTORY: ${DEMO_HISTORY:-true}
+    # I-016: status zdjec w seedzie wynika z plikow w wolumenie (tylko odczyt).
+    volumes:
+      - media:/data/media:ro
     depends_on:
       migrate: { condition: service_completed_successfully }
     restart: "no"
@@ -147,6 +150,11 @@ services:
     read_only: true
     ports:
       - "${PROXY_HTTP_PORT:-80}:8080"
+    # I-016: nazwy hostow z .env (lokalnie *.taktyl.localhost, na prodzie *.taktyl.donmario.pl za nginx z TLS).
+    environment:
+      SHOP_HOST: ${SHOP_HOST:-taktyl.localhost}
+      ADMIN_HOST: ${ADMIN_HOST:-admin.taktyl.localhost}
+      API_HOST: ${API_HOST:-api.taktyl.localhost}
     volumes:
       - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - media:/srv/media:ro
@@ -297,6 +305,9 @@ services:
     environment:
       <<: *db-env
       DEMO_MODE: "true"
+    # I-016: reset nie gasi wgranych zdjec (status z plikow w wolumenie).
+    volumes:
+      - media:/data/media:ro
     # B-622: scenariusze e2e startuja od czystego seeda, bez historii demo.
     command: ["node", "dist/seed.js", "--reset", "--no-demo-history"]
     depends_on:
@@ -365,6 +376,9 @@ services:
     environment:
       <<: *db-env
       DEMO_HISTORY: ${DEMO_HISTORY:-true}
+    # I-016: reset nie gasi wgranych zdjec (status z plikow w wolumenie).
+    volumes:
+      - media:/data/media:ro
     entrypoint: ["sh", "-c"]
     # obraz api ma HEALTHCHECK na porcie 4000; ta usluga nie nasluchuje, wiec zdrowie = zyje petla (sleep albo trwajacy reset)
     healthcheck:

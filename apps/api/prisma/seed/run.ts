@@ -3,6 +3,8 @@
 // Konta admina tworzy TAKTYL-45, nie seed.
 // Tresci (D-011): strony i poradniki po slug (ON CONFLICT DO NOTHING); opinie i FAQ to zestawy edytowane w calosci w backpanelu
 // (PUT), wiec seed wstawia je tylko wtedy, gdy produkt nie ma jeszcze zadnej opinii, a faq_items jest puste.
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { REVALIDATE_TAG_PATTERN } from "@taktyl/contracts";
 import { toGrosze } from "@taktyl/domain";
 import { Prisma, type PrismaClient } from "../../src/prisma/client.js";
@@ -25,6 +27,18 @@ export interface SeedOptions {
    * i wiersz outbox ze wszystkimi znacznikami sklepu (sklep odswieza sie po resecie). Bez tego pola (testy) nic nie jest dopisywane.
    */
   notify?: DemoResetNotice;
+  /**
+   * B-506 (I-016): katalog wolumenu zdjec (MEDIA_DIR). Gdy podany i istnieje, status wpisu manifestu wynika z plikow:
+   * `gotowe`, gdy na dysku sa wszystkie pliki wpisu, inaczej `brak`. Dzieki temu reset demo nie gasi wgranych zdjec.
+   * Bez tego pola (testy) status jest wprost z manifestu.
+   */
+  mediaDir?: string;
+}
+
+/** I-016: status wpisu z obecnosci plikow w wolumenie; null = brak katalogu, uzyj statusu z manifestu. */
+function mediaStatus(mediaDir: string | undefined, files: string[]): "gotowe" | "brak" | null {
+  if (!mediaDir || !existsSync(mediaDir)) return null;
+  return files.length > 0 && files.every((f) => existsSync(join(mediaDir, f))) ? "gotowe" : "brak";
 }
 
 /** Kto wykonal reset: owner z backpanelu (B-014) albo harmonogram/CLI (`system`). */
@@ -93,7 +107,7 @@ export async function runSeed(prisma: PrismaClient, opts: SeedOptions): Promise<
         const cleared = await resetDemoData(tx);
         log(`reset-demo: wyczyszczono ${cleared.length} tabel`);
       }
-      await seedAll(tx, data, now, inserted);
+      await seedAll(tx, data, now, inserted, opts.mediaDir);
       if (opts.reset && opts.notify) {
         const tags = await allShopTags(tx);
         const audit = await tx.auditLog.create({
@@ -121,7 +135,13 @@ export async function runSeed(prisma: PrismaClient, opts: SeedOptions): Promise<
   return { inserted };
 }
 
-async function seedAll(tx: Tx, d: SeedData, now: Date, ins: Record<string, number>): Promise<void> {
+async function seedAll(
+  tx: Tx,
+  d: SeedData,
+  now: Date,
+  ins: Record<string, number>,
+  mediaDir?: string,
+): Promise<void> {
   const add = (name: string, r: { count: number }): void => {
     ins[name] = r.count;
   };
@@ -226,7 +246,7 @@ async function seedAll(tx: Tx, d: SeedData, now: Date, ins: Record<string, numbe
         shot: m.shot ?? null,
         description: m.description ?? null,
         priority: m.priority,
-        status: m.status,
+        status: mediaStatus(mediaDir, m.files) ?? m.status,
         files: m.files,
         dimsMm: m.dims_mm == null ? Prisma.JsonNull : json(m.dims_mm),
         pixels: m.pixels == null ? Prisma.JsonNull : json(m.pixels),

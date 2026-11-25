@@ -1,6 +1,7 @@
 # I-004 (ADR-0009, docs/11 par. 1.1, TAKTYL-5): reverse proxy Taktyla.
 # Wewnatrz kontenera Caddy slucha na 8080 (bez uprawnien roota); host mapuje PROXY_HTTP_PORT (domyslnie 80).
-# Lokalnie tylko HTTP (*.localhost); TLS dojdzie przy hostingu pod prawdziwa domena (Caddy robi to sam).
+# Lokalnie tylko HTTP (*.localhost). Na prodzie (I-016) TLS konczy nginx hosta, a nazwy hostow przychodza
+# ze zmiennych SHOP_HOST / ADMIN_HOST / API_HOST (docker-compose.prod.yml).
 {
 	auto_https off
 	admin off
@@ -40,7 +41,7 @@
 }
 
 # Sklep + zdjecia z wolumenu media (docs/09).
-http://taktyl.localhost:8080 {
+http://{$SHOP_HOST:taktyl.localhost}:8080 {
 	import wspolne
 	import bledy
 
@@ -56,7 +57,7 @@ http://taktyl.localhost:8080 {
 }
 
 # Backpanel.
-http://admin.taktyl.localhost:8080 {
+http://{$ADMIN_HOST:admin.taktyl.localhost}:8080 {
 	import wspolne
 	import bledy
 
@@ -65,7 +66,7 @@ http://admin.taktyl.localhost:8080 {
 }
 
 # API.
-http://api.taktyl.localhost:8080 {
+http://{$API_HOST:api.taktyl.localhost}:8080 {
 	import wspolne
 	import bledy
 

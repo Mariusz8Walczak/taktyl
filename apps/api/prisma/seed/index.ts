@@ -28,6 +28,8 @@ async function main(): Promise<void> {
         ? { notify: { actorId: null, actorRole: "system" as const, requestId: `reset-${randomUUID()}` } }
         : {}),
       log: (m) => console.log(`[seed] ${m}`),
+      // I-016: status zdjec z plikow w wolumenie (reset nie gasi wgranych zdjec).
+      mediaDir: process.env.MEDIA_DIR ?? "/data/media",
     });
     console.log(reset ? "[seed] reset-demo zakonczony" : "[seed] seed zakonczony");
     // B-622: historia demo (zamowienia i ruch z ok. 90 dni) po resecie albo przy pierwszym seedzie pustej bazy zamowien.
