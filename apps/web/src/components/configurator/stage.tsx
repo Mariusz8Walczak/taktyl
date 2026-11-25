@@ -12,6 +12,9 @@
 // z pamieci podrecznej po kluczu farby (bez rekompilacji shaderow przy kazdej zmianie), transmisja z modelu GLB
 // (czesci niemalowane, np. przelaczniki) zastapiona przezroczystoscia - bez dodatkowego przebiegu transmisji co klatke,
 // gdy klient nie wybral wykonczenia polprzezroczystego; compileAsync po zaladowaniu; scena poza ekranem nie rysuje.
+// F-257, A-19 (wydajnosc sceny z cieniem): mapa cienia 1024 liczona tylko po zmianie skladu, polozenia albo obrotu
+// grupy (nie przy obrocie kamery); wskazanie czesci rysuje klatke tylko przy zmianie podswietlenia, raycast najwyzej raz
+// na klatke i nigdy w trakcie przeciagania; podswietlenie na kopii materialu (materialy z pamieci sa wspoldzielone).
 import type { ConfiguratorData } from "@taktyl/contracts";
 import type { Configuration } from "@taktyl/domain";
 import type * as T from "three";
@@ -185,6 +188,11 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFShadowMap;
+      // Cien zalezy tylko od bryly i swiatla: przeliczany na zadanie (shadowDirty), obrot kamery go nie zmienia.
+      renderer.shadowMap.autoUpdate = false;
+      const shadowDirty = () => {
+        renderer.shadowMap.needsUpdate = true;
+      };
       renderer.domElement.setAttribute("aria-hidden", "true");
       el.appendChild(renderer.domElement);
 
@@ -199,7 +207,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       // Swiatlo kluczowe z gory z lewej, od strony uzytkownika; rzuca miekki cien na blat i na podkladke.
       const sun = new THREE.DirectionalLight(undefined, 1.4);
       sun.castShadow = true;
-      sun.shadow.mapSize.set(2048, 2048);
+      sun.shadow.mapSize.set(1024, 1024);
       sun.shadow.radius = 6;
       sun.shadow.blurSamples = 16;
       sun.shadow.bias = -0.0004;
@@ -258,19 +266,23 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       const ease = easing("--e-wyjscie");
       const tick = (now: number) => {
         raf = 0;
-        let active = dragging;
+        // Przeciaganie bez ruchu nie rysuje: OrbitControls zglasza "change" przy kazdym przesunieciu (kick).
+        let active = false;
         if (tween) {
           const k = tween.dur > 0 ? Math.min(1, (now - tween.start) / tween.dur) : 1;
           const e = ease(k);
           camera.position.lerpVectors(tween.from.pos, tween.to.pos, e);
           controls.target.lerpVectors(tween.from.target, tween.to.target, e);
           group.rotation.y = tween.from.rot + (tween.to.rot - tween.from.rot) * e;
+          if (tween.to.rot !== tween.from.rot) shadowDirty(); // A-19 obraca bryle - cien sie zmienia
           if (k >= 1) tween = null;
           else active = true;
         }
         if (controls.update()) active = true;
         render();
-        if (active) raf = requestAnimationFrame(tick);
+        // controls.update() wyzej moze zglosic "change" (kick) - wtedy klatka jest juz zamowiona; druga petla
+        // podwajalaby liczbe render() w kazdej klatce przeciagania, wygaszania i przejscia A-19.
+        if (active && !raf) raf = requestAnimationFrame(tick);
       };
       const kick = () => {
         if (!raf) raf = requestAnimationFrame(tick);
@@ -392,6 +404,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         cam.far = r * 8;
         cam.updateProjectionMatrix();
         sun.shadow.needsUpdate = true;
+        shadowDirty();
       };
 
       /** Kadruje kamere na wszystkie elementy; przy zmianie skladu zachowuje kierunek patrzenia klienta. */
@@ -435,8 +448,8 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       const raycaster = new THREE.Raycaster();
       const ndc = new THREE.Vector2();
       type Hit = { key: string; partId: string };
-      let hovered: { hit: Hit; saved: { mat: T.MeshStandardMaterial; color: T.Color; intensity: number }[] } | null =
-        null;
+      // Podswietlenie: czesc dostaje na czas wskazania kopie materialu (ten sam program shadera), oryginal wraca potem.
+      let hovered: { hit: Hit; mesh: T.Mesh; base: T.Material; lit: T.Material } | null = null;
 
       const hitAt = (clientX: number, clientY: number): Hit | null => {
         const rect = renderer.domElement.getBoundingClientRect();
@@ -459,32 +472,35 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         return null;
       };
 
-      const clearHover = () => {
-        if (!hovered) return;
-        for (const s of hovered.saved) {
-          s.mat.emissive.copy(s.color);
-          s.mat.emissiveIntensity = s.intensity;
-        }
+      /** Zdejmuje podswietlenie; true, gdy cos bylo podswietlone (trzeba narysowac klatke). */
+      const clearHover = (): boolean => {
+        if (!hovered) return false;
+        const { mesh, base, lit } = hovered;
+        if (mesh.material === lit) mesh.material = base;
+        lit.dispose();
         hovered = null;
         el.classList.remove("is-wskazuje");
+        return true;
       };
 
       const setHover = (hit: Hit | null) => {
         if (hovered && hit && hovered.hit.key === hit.key && hovered.hit.partId === hit.partId) return;
-        clearHover();
+        let changed = clearHover();
         if (hit) {
           const mesh = rt.current?.loaded.get(hit.key)?.meshes.get(hit.partId);
-          const mat = mesh?.material as T.MeshStandardMaterial | undefined;
-          if (mat?.emissive) {
+          const base = mesh?.material as T.MeshStandardMaterial | undefined;
+          if (mesh && base?.emissive) {
+            const lit = base.clone();
             const accent = token("--akcent");
-            const saved = [{ mat, color: mat.emissive.clone(), intensity: mat.emissiveIntensity }];
-            if (accent) mat.emissive.set(accent);
-            mat.emissiveIntensity = 0.35;
-            hovered = { hit, saved };
+            if (accent) lit.emissive.set(accent);
+            lit.emissiveIntensity = 0.35;
+            mesh.material = lit;
+            hovered = { hit, mesh, base, lit };
             el.classList.add("is-wskazuje");
+            changed = true;
           }
         }
-        kick();
+        if (changed) kick();
       };
 
       let down: { x: number; y: number } | null = null;
@@ -499,19 +515,24 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         const hit = hitAt(e.clientX, e.clientY);
         if (hit) pick.current?.(hit.partId, hit.key);
       };
+      // Raycast najwyzej raz na klatke (ostatnia pozycja kursora), w trakcie przeciagania wcale.
       let moveRaf = 0;
+      let lastX = 0;
+      let lastY = 0;
       const onMove = (e: PointerEvent) => {
         if (e.pointerType !== "mouse" || e.buttons !== 0 || dragging) return;
-        const { clientX, clientY } = e;
-        cancelAnimationFrame(moveRaf);
-        moveRaf = requestAnimationFrame(() => setHover(hitAt(clientX, clientY)));
+        lastX = e.clientX;
+        lastY = e.clientY;
+        if (moveRaf) return;
+        moveRaf = requestAnimationFrame(() => {
+          moveRaf = 0;
+          if (!dragging) setHover(hitAt(lastX, lastY));
+        });
       };
       const onLeave = () => {
         cancelAnimationFrame(moveRaf);
-        if (hovered) {
-          clearHover();
-          kick();
-        }
+        moveRaf = 0;
+        if (clearHover()) kick();
       };
       const canvas = renderer.domElement;
       canvas.addEventListener("pointerdown", onDown);

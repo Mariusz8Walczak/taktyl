@@ -56,6 +56,15 @@
   gap: var(--s1) var(--s2);
   justify-content: center;
 }
+/* Przyciski obrotu zwarte takze poza konfiguratorem (galeria karty, glowna): na 360 px w kwadratowej ramie miescic sie
+   maja w dwoch rzedach, zeby wiersz pod plotnem nie zabieral polowy kadru. Cel dotykowy zostaje >= --cel-min. */
+.konfigurator__widok .przycisk-tekstowy {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  font-size: var(--t-s);
+}
 
 /* Wariant kwadratowy (galeria karty, glowna): ta sama proporcja co zdjecie produktu, bez przyklejenia. */
 .konfigurator__scena--kwadrat {
