@@ -76,6 +76,76 @@ export const SHIPPING_LABEL = {
   odbior: "Odbiór osobisty",
 } as const;
 
+// ---- B-610..B-620 (docs/25 par. 2): liczby pulpitu przez Intl (regula 7) ----
+const pctFmt = new Intl.NumberFormat("pl-PL", { style: "percent", maximumFractionDigits: 1 });
+const deltaFmt = new Intl.NumberFormat("pl-PL", {
+  style: "percent",
+  signDisplay: "exceptZero",
+  maximumFractionDigits: 0,
+});
+const intFmt = new Intl.NumberFormat("pl-PL");
+const compactPln = new Intl.NumberFormat("pl-PL", {
+  style: "currency",
+  currency: "PLN",
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+const dayShort = new Intl.DateTimeFormat("pl-PL", {
+  timeZone: "UTC",
+  day: "numeric",
+  month: "short",
+});
+const dayLong = new Intl.DateTimeFormat("pl-PL", {
+  timeZone: "UTC",
+  weekday: "short",
+  day: "numeric",
+  month: "long",
+});
+const minutesFmt = new Intl.NumberFormat("pl-PL", {
+  style: "unit",
+  unit: "minute",
+  unitDisplay: "short",
+});
+const hoursFmt = new Intl.NumberFormat("pl-PL", {
+  style: "unit",
+  unit: "hour",
+  unitDisplay: "short",
+  maximumFractionDigits: 1,
+});
+const daysFmt = new Intl.NumberFormat("pl-PL", {
+  style: "unit",
+  unit: "day",
+  unitDisplay: "long",
+  maximumFractionDigits: 1,
+});
+const weekdayFmt = new Intl.DateTimeFormat("pl-PL", { timeZone: "UTC", weekday: "short" });
+
+/** Punkty bazowe (10000 = 100 %) jako procent. */
+export const formatBp = (bp: number): string => pctFmt.format(bp / 10_000);
+/** Zmiana procentowa ze znakiem ("+12%", "-5%"). */
+export const formatDelta = (pct: number): string => deltaFmt.format(pct / 100);
+export const formatInt = (n: number): string => intFmt.format(n);
+/** Kwota w groszach skrotowo na osi wykresu ("12,5 tys. zl"). */
+export const formatPLNCompact = (gr: number): string => compactPln.format(gr / 100);
+/** Data RRRR-MM-DD jako "7 paz". */
+export const formatDayShort = (date: string): string =>
+  dayShort.format(new Date(`${date}T12:00:00Z`));
+/** Data RRRR-MM-DD jako "sr., 7 pazdziernika". */
+export const formatDayLong = (date: string): string =>
+  dayLong.format(new Date(`${date}T12:00:00Z`));
+/** Czas trwania z minut: minuty, godziny albo dni. */
+export function formatMinutes(min: number): string {
+  if (min < 60) return minutesFmt.format(min);
+  if (min < 48 * 60) return hoursFmt.format(Math.round(min / 6) / 10);
+  return daysFmt.format(Math.round(min / 144) / 10);
+}
+/** Skrot dnia tygodnia (1 = poniedzialek) przez Intl; 23.11.2026 to poniedzialek. */
+export const weekdayShort = (dow: number): string =>
+  weekdayFmt.format(new Date(Date.UTC(2026, 10, 22 + dow)));
+export const SESSION_COUNT: PluralForms = { one: "sesja", few: "sesje", many: "sesji" };
+export const PIECE_COUNT: PluralForms = { one: "sztuka", few: "sztuki", many: "sztuk" };
+export const DAY_COUNT: PluralForms = { one: "dzień", few: "dni", many: "dni" };
+
 /** Adres sklepu (PUBLIC_SITE_URL wbudowany przy budowie obrazu). */
 export const SITE_URL = (process.env.PUBLIC_SITE_URL ?? "http://taktyl.localhost").replace(
   /\/$/,

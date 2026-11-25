@@ -7,9 +7,11 @@ import { Button, Dialog, Field } from "@taktyl/ui";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { z } from "zod";
+import Link from "next/link";
+import { describe } from "../../lib/audit-human";
 import { ACTION_LABEL, diffAudit, ENTITY_LABEL, ENTRY_COUNT } from "../../lib/audit-labels";
 import { formatCount, formatDateTime } from "../../lib/format";
-import { useAudit, type AuditListParams } from "../../lib/queries";
+import { useAudit, useColors, useProducts, type AuditListParams } from "../../lib/queries";
 import { useUrlState } from "../../lib/use-url-state";
 import { warsawIso } from "../../lib/warsaw";
 import { DataTable } from "../ui/data-table";
@@ -114,6 +116,16 @@ export function AuditView() {
     ...(to ? { to: warsawIso(to, "23:59:59") } : {}),
   };
   const query = useAudit(params);
+  // B-619: opis po ludzku (nazwa produktu i koloru zamiast klucza) z odnosnikiem do encji.
+  const products = useProducts({ per_page: 100, page: 1 });
+  const colors = useColors();
+  const dict = useMemo(
+    () => ({
+      products: new Map((products.data?.items ?? []).map((p) => [p.id, p.name])),
+      colors: new Map((colors.data?.items ?? []).map((c) => [c.id, c.label])),
+    }),
+    [products.data, colors.data],
+  );
   const [open, setOpen] = useState<Entry | null>(null);
   const triggers = useRef(new Map<string, HTMLButtonElement>());
 
@@ -144,9 +156,26 @@ export function AuditView() {
         },
         {
           id: "entity",
-          header: "Encja",
-          cell: ({ row }: { row: { original: Entry } }) =>
-            `${ENTITY_LABEL[row.original.entity] ?? row.original.entity} ${row.original.entity_id}`,
+          header: "Opis",
+          cell: ({ row }: { row: { original: Entry } }) => {
+            const d = describe(row.original, 1, dict);
+            return (
+              <>
+                {d.href ? (
+                  <Link className="tk-link" href={d.href}>
+                    {d.text}
+                  </Link>
+                ) : (
+                  d.text
+                )}
+                <br />
+                <span className="adm-tekst-slaby adm-tekst-xs">
+                  {ENTITY_LABEL[row.original.entity] ?? row.original.entity}{" "}
+                  {row.original.entity_id}
+                </span>
+              </>
+            );
+          },
         },
         {
           id: "details",
@@ -166,7 +195,7 @@ export function AuditView() {
           ),
         },
       ] as unknown as ColumnDef<Entry, unknown>[],
-    [],
+    [dict],
   );
 
   return (

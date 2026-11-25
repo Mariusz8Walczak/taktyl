@@ -1,11 +1,10 @@
-// B-500..B-508 (media), B-600..B-607 (pulpit), B-011, B-012 (dziennik) - TAKTYL-63, TAKTYL-64.
+// B-500..B-508 (media), B-011, B-012 (dziennik) - TAKTYL-63, TAKTYL-64. Pulpit (B-610..B-627): pulpit.test.tsx.
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 import { AuditView } from "../src/components/dziennik/audit-view";
 import { MediaView } from "../src/components/media/media-view";
-import { DashboardView } from "../src/components/pulpit/dashboard-view";
 import { diffAudit } from "../src/lib/audit-labels";
 import { warsawIso } from "../src/lib/warsaw";
 import { json, mockApi, nav, problem, renderWithProviders, session } from "./helpers";
@@ -243,129 +242,6 @@ describe("B-502, B-503, B-508 wgrywanie", () => {
       "href",
       expect.stringContaining("/klawiatury/kwarc-60"),
     );
-  });
-});
-
-const dash = {
-  generated_at: NOW,
-  orders: {
-    today: 2,
-    last_7_days: 5,
-    last_30_days: 9,
-    total: 12,
-    by_status: { paid: 3, delivered: 9 },
-  },
-  revenue: { paid_7_days_gr: 250000, paid_30_days_gr: 900000 },
-  low_stock: {
-    count: 4,
-    out_of_stock_count: 2,
-    items: [
-      {
-        sku: "K-BZL75-KOB-SZP",
-        product_id: "k-bazalt-75",
-        product_slug: "bazalt-75",
-        product_name: "Bazalt 75",
-        stock: 0,
-      },
-      {
-        sku: "M-JRZ-MGL",
-        product_id: "m-jerzyk",
-        product_slug: "jerzyk",
-        product_name: "Jerzyk",
-        stock: 2,
-      },
-    ],
-  },
-  orders_to_handle: [
-    { number: "TK-261005-AB12", paid_at: "2026-10-05T10:00:00+02:00", total_gr: 74900 },
-  ],
-  images_p0: { ready: 0, total: 76 },
-  recent_changes: [
-    {
-      id: "9",
-      at: NOW,
-      actor_id: "u1",
-      actor_label: "owner",
-      action: "variant.price.set",
-      entity: "variant",
-      entity_id: "M-WRB-GRF",
-    },
-  ],
-  connection: { outbox_pending: 0, outbox_failed: 0, last_revalidated_at: NOW },
-};
-
-describe("B-600..B-607 pulpit", () => {
-  it("liczby, niski stan z odnosnikami, zdjecia P0, ostatnie zmiany, polaczenie; bez grafik; axe", async () => {
-    mockApi({
-      "GET /v1/admin/auth/me": json(session("viewer")),
-      "GET /v1/admin/dashboard": json(dash),
-    });
-    const { container } = renderWithProviders(<DashboardView />);
-    await screen.findByRole("heading", { name: "Zamówienia" });
-    const orders = screen.getByRole("region", { name: "Zamówienia" });
-    expect(within(orders).getByText("Dziś").nextSibling).toHaveTextContent("2");
-    expect(within(orders).getAllByText("Ostatnie 7 dni")[0]?.nextSibling).toHaveTextContent("5");
-    expect(within(orders).getByText("Wszystkie").nextSibling).toHaveTextContent("12");
-    expect(within(orders).getByText(/9 zamówień/)).toBeInTheDocument();
-    expect(within(orders).getByText(/2\s?500,00\szł/)).toBeInTheDocument();
-    const low = screen.getByRole("region", { name: "Niski stan" });
-    expect(within(low).getByRole("link", { name: /Bazalt 75, K-BZL75-KOB-SZP/ })).toHaveAttribute(
-      "href",
-      "/produkty/k-bazalt-75?zakladka=warianty",
-    );
-    expect(within(low).getByText(/brak \(0 szt\.\)/)).toBeInTheDocument();
-    expect(screen.getByText("Gotowe 0 z 76 (P0)")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "TK-261005-AB12" })).toHaveAttribute(
-      "href",
-      "/zamowienia/TK-261005-AB12",
-    );
-    expect(screen.getByText(/Zmiana ceny wariantu/)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cały dziennik" })).toHaveAttribute(
-      "href",
-      "/dziennik",
-    );
-    expect(screen.getByRole("link", { name: "Ustawienia sklepu" })).toBeInTheDocument();
-    expect(container.querySelector("svg, canvas, img")).toBeNull();
-    expect(await axe(container)).toHaveNoViolations();
-  });
-
-  it("puste bloki: 'Brak danych do pokazania.' i 'Nie ma jeszcze zamowien.'; blad: Sprobuj ponownie", async () => {
-    mockApi({
-      "GET /v1/admin/auth/me": json(session("editor")),
-      "GET /v1/admin/dashboard": json({
-        ...dash,
-        orders: { today: 0, last_7_days: 0, last_30_days: 0, total: 0, by_status: {} },
-        low_stock: { count: 0, out_of_stock_count: 0, items: [] },
-        orders_to_handle: [],
-        recent_changes: [],
-      }),
-    });
-    renderWithProviders(<DashboardView />);
-    expect(await screen.findByText("Nie ma jeszcze zamówień.")).toBeInTheDocument();
-    expect(screen.getAllByText("Brak danych do pokazania.").length).toBe(3);
-  });
-
-  it("blad pobierania: komunikat i ponowienie", async () => {
-    mockApi({
-      "GET /v1/admin/auth/me": json(session("editor")),
-      "GET /v1/admin/dashboard": problem(500, "internal_error"),
-    });
-    renderWithProviders(<DashboardView />);
-    expect(await screen.findByText("Nie udało się pobrać pulpitu.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Spróbuj ponownie" })).toBeInTheDocument();
-  });
-
-  it("kolejka outbox > 0: ostrzezenie o oczekujacych zmianach", async () => {
-    mockApi({
-      "GET /v1/admin/auth/me": json(session("owner")),
-      "GET /v1/admin/dashboard": json({
-        ...dash,
-        connection: { outbox_pending: 3, outbox_failed: 0, last_revalidated_at: null },
-      }),
-    });
-    renderWithProviders(<DashboardView />);
-    expect(await screen.findByText(/Część zmian czeka na odświeżenie sklepu/)).toBeInTheDocument();
-    expect(screen.getByText("jeszcze nie było")).toBeInTheDocument();
   });
 });
 

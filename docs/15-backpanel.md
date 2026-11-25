@@ -15,10 +15,10 @@ Pokazać, że sklep jest prawdziwą aplikacją: człowiek zmienia cenę, stan, o
 - Szablon nie ma panelu administracyjnego, więc to wyjątek z reguły 3: komponenty są **bezstylowymi prymitywami Radix UI** (okno, menu, zakładki, przełącznik, lista wyboru, popover, podpowiedzi) ostylowanymi wyłącznie tokenami z `docs/06`.
 - Tabele: TanStack Table. Formularze: React Hook Form + schematy Zod z `packages/contracts`. Stan serwera: TanStack Query.
 - Te same tokeny co sklep (`packages/tokens`): jeden akcent (`--akcent`) wyłącznie na przycisku głównym, odnośnikach, wybranym wierszu/kaflu i fokusie. Jeden przycisk główny na ekranie. Siedem rozmiarów czcionki, promienie `--r` i `--r-pelny`.
-- Ikony wyłącznie z fontu ikon szablonu. Brak ikony w zestawie → sam tekst, wpis w `docs/decyzje.md`.
-- **Zero grafiki:** brak wykresów rysowanych SVG/canvas, brak ilustracji w pustych stanach. Pulpit pokazuje liczby i listy. Pusty stan to tekst i jeden przycisk.
-- Układ: lewa nawigacja stała (komputer) / szuflada (telefon, 360 px), treść do `--max`, pasek stanu zapisu u góry formularza. Sekcje ciemne (`.sekcja--mod`) tylko w nagłówku nawigacji.
-- Język: polski. Skróty klawiszowe backpanelu: `/` szukaj w tabeli, `Esc` zamyka okno, `g` potem `p`/`z`/`t` (produkty/zamówienia/treści) — wyłączane przełącznikiem w profilu (WCAG 2.1.4), nie działają w polach tekstowych.
+- Ikony z zestawu Lucide (`lucide-react`, decyzja właściciela z 2026-10-09 rozszerzona na panel 2026-11-25), zawsze z tekstem obok albo w `aria-label`; kolor z `currentColor`, rozmiar z `--adm-ikona-rozm`.
+- **Zero grafiki:** brak ilustracji w pustych stanach (pusty stan to tekst i jeden przycisk). **Wyjątek (decyzja właściciela 2026-11-25, `docs/25` §5):** wykresy danych z biblioteki Recharts na pulpicie i w „Ruchu” jako wizualizacja liczb, nie ilustracja. Kolory serii wyłącznie z tokenów (`--adm-seria-*` w `pulpit.css`), bez animacji, każdy wykres ma obok tekst („co to znaczy”) i tabelę danych.
+- Układ (B-624, B-625): menu boczne w grupach Start / Sprzedaż / Katalog / Treści / System z ikonami i licznikami spraw, zwijane do ikon na komputerze, szuflada na telefonie (360 px); pasek górny z wyszukiwarką globalną, zakresem dat (pulpit, ruch), znacznikiem „Dane demonstracyjne”, przełącznikiem motywu i użytkownikiem; treść na pełną szerokość (do `--adm-tresc-max`) w siatce 12 kolumn, karty w rzędzie równej wysokości. Menu boczne jest sekcją ciemną (`.sekcja--mod`); motyw ciemny całego panelu (B-627) to drugi zestaw tych samych tokenów (`[data-motyw="ciemny"]`).
+- Język: polski. Skróty klawiszowe backpanelu: `/` i `Ctrl+K` (`Cmd+K`) otwierają paletę poleceń z wyszukiwarką globalną (B-626), `Esc` zamyka okno, `g` potem `p`/`z`/`t` (produkty/zamówienia/treści) — wyłączane przełącznikiem w profilu (WCAG 2.1.4), nie działają w polach tekstowych.
 
 ## 3. Role i macierz uprawnień
 
@@ -52,7 +52,9 @@ Domena: `admin.taktyl.localhost` (ADR-0009). Adresy bez polskich znaków, małym
 | Adres | Po co | Role | P |
 |---|---|---|---|
 | `/logowanie` | wejście do backpanelu, „Wejdź jako viewer” w trybie demo | wszyscy | P0 |
-| `/` | pulpit: liczby i ostatnie zmiany | wszystkie | P0 |
+| `/` | pulpit: KPI z porównaniem okresów, sprzedaż, sety, konfigurator, kolory, operacje, aktywność (`docs/25` §2) | wszystkie | P0 |
+| `/ruch` | ruch z kolektora zdarzeń: sesje, lejek, konwersja, porzucone koszyki, kreator, wyszukiwania (B-620) | wszystkie | P1 |
+| `/system` | „Jak to jest zrobione”: stos, kondycja usług, dane, architektura (B-623) | wszystkie | P1 |
 | `/produkty` | lista produktów z filtrami | wszystkie (zapis: owner, editor) | P0 |
 | `/produkty/{id}` | edycja produktu: dane, warianty, ceny, stany, plakietki, podgląd w sklepie | wszystkie (zapis: owner, editor) | P0 |
 | `/produkty/{id}/ceny` | historia cen wariantu i wyliczone `lowest_30d` | wszystkie | P0 |
@@ -281,7 +283,7 @@ Backpanel **nie tworzy grafiki**. Pokazuje manifest `assets/manifest.json` jako 
 
 ## 12. B-600 – B-699 · Pulpit
 
-Pulpit pokazuje **wyłącznie liczby i listy z danych**. Żadnych wykresów, żadnych wymyślonych wskaźników.
+Pulpit pokazuje **wyłącznie liczby z danych** (żadnych wymyślonych wskaźników). Od 2026-11-25 (`docs/25`, ADR-0012) wykresy z Recharts w kolorach z tokenów są dozwolone jako wizualizacja tych liczb; każdy widżet ma tytuł, jedno zdanie „co to znaczy” i liczbę z kontekstem (zmiana do poprzedniego okresu, mini-wykres). B-600…B-607 zostają jako kontrakt `GET /v1/admin/dashboard`; ekran `/` korzysta z B-610…B-619.
 
 | ID | Funkcja | P | Kryterium odbioru |
 |---|---|---|---|
@@ -293,10 +295,28 @@ Pulpit pokazuje **wyłącznie liczby i listy z danych**. Żadnych wykresów, ża
 | B-605 | Postęp zdjęć P0 jako liczba (z B-501) | P1 | „Gotowe 0 z 76” po świeżym seedzie |
 | B-606 | Stan połączenia: ostatnia udana rewalidacja sklepu i liczba zdarzeń w kolejce `outbox` | P1 | po awarii sklepu liczba w kolejce > 0, po odzyskaniu → 0 |
 | B-607 | Skróty do najczęstszych zadań (Produkty, Zamówienia, Ustawienia) jako odnośniki tekstowe | P0 | działają z klawiatury |
+| B-610 | KPI w zakresie dat z porównaniem do poprzedniego okresu: przychód opłacony (wg daty płatności), zamówienia złożone, średnia wartość koszyka, udział setów; mini-wykres i zmiana % | P0 | suma przychodu = suma `total_gr` opłaconych zamówień z zakresu (test e2e API) |
+| B-611 | Przychód dzień po dniu z linią poprzedniego okresu (Recharts) i tabelą danych | P0 | liczba punktów = liczba dni zakresu; suma = KPI |
+| B-612 | Droga zamówienia: złożone → opłacone → w realizacji → wysłane → dostarczone, anulowane, nieudane płatności; mediana czasu przejść z `order_status_history` | P1 | kolejne kroki nierosnące |
+| B-613 | Mapa cieplna zamówień dzień tygodnia × godzina (`Europe/Warsaw`) jako tabela z nagłówkami | P1 | 7 × 24 komórek, suma = liczba złożonych |
+| B-614 | Sety i rabat: zamówienia z pełnym setem, sprzedane sety, przychód z setów i pojedynczo, oddany rabat setu | P1 | rabat = suma `order_items.set_discount_gr` |
+| B-615 | Konfigurator 3D: sztuki i zamówienia konfiguracji własnych, przychód, dopłaty (liczone `configurationSurcharge` z domeny), modele i najczęstsze kolory części | P1 | po historii demo > 0 |
+| B-616 | Ranking kolorów wariantów seryjnych: sztuki, przychód, próbka z `colors.json → swatch` | P1 | malejąco po sztukach |
+| B-617 | Top produkty z miniaturą (zdjęcie `gotowe`), sztuki, przychód, przychód w poprzednim okresie | P1 | malejąco po przychodzie |
+| B-618 | Co wymaga reakcji: opłacone > 24 h, niski stan z prognozą „skończy się za ~N dni” (sprzedaż 30 dni), zgłoszenia bez odpowiedzi, outbox w kolejce i z błędem, postęp zdjęć P0/wszystkie, promocje z najniższą ceną z 30 dni (tylko odczyt, ADR-0005) | P0 | po seedzie `K-BZL75-KOB-SZP` i `P-LOD-L-MGL` na liście |
+| B-619 | Dziennik zmian po ludzku: zdanie „kto co zrobił” z nazwą produktu i koloru zamiast klucza, ikona rodzaju, grupowanie serii (np. „wgrał 38 zdjęć w 2 minuty”), odnośnik do encji; na pulpicie i jako kolumna „Opis” w `/dziennik` | P1 | seria wgrań zdjęć = jeden wpis |
+| B-620 | Strona `/ruch`: sesje, konwersja, zakupy, porzucone koszyki z porównaniem okresów, sesje dzień po dniu, lejek `view_item → add_to_cart → begin_checkout → purchase`, kreator (wejścia), najczęściej oglądane, wyszukiwane frazy | P1 | dane z `analytics_events` (B-621) |
+| B-621 | Kolektor zdarzeń `POST /v1/events` (ADR-0012): nazwy i parametry z `docs/10` bez zmian, maks. 20 w paczce, bez danych osobowych, limit 60/min/IP | P1 | `page_view` i e-mail w parametrach = 422 |
+| B-622 | Generator historii demo (ADR-0012): ok. 90 dni zamówień i ruchu przez prawdziwą wycenę i statusy, deterministyczny, oznaczony `demo`, stany wracają do seeda | P0 | po `docker compose up` pulpit pokazuje liczby > 0 |
+| B-623 | Strona `/system` „Jak to jest zrobione”: kondycja usług (API, baza, outbox, sklep), wersje stosu odczytane w runtime i przy budowie, liczby danych, migracje, architektura w punktach | P2 | sklep wyłączony → „awaria” |
+| B-624 | Pasek górny: zakres dat (dziś / 7 / 30 / 90 dni / własny) i porównanie z poprzednim okresem w adresie (`?zakres=`, `?od=&do=`, `?porownanie=nie`) | P0 | adres do udostępnienia odtwarza widok |
+| B-625 | Menu w grupach z ikonami Lucide i licznikami spraw (zamówienia > 24 h, zgłoszenia, warianty bez stanu, brakujące zdjęcia), zwijane do ikon | P1 | licznik ma tekst dla czytnika ekranu |
+| B-626 | Paleta poleceń i wyszukiwarka globalna (`/`, `Ctrl+K`): ekrany, produkty (nazwa, SKU), zamówienia (numer), akcje; `GET /v1/admin/search` | P1 | strzałki, Enter, Esc, pułapka fokusu |
+| B-627 | Motyw ciemny panelu jako drugi zestaw tokenów (`[data-motyw="ciemny"]`), przełącznik w pasku górnym, zapamiętany w przeglądarce, ustawiany przed pierwszym malowaniem | P2 | kontrasty z `docs/06` §2 w obu motywach |
 
 ### 12.1. Ekran `/`
 
-- **Układ:** H1 „Pulpit”; sekcje jako lista bloków: Zamówienia (liczby), Niski stan, Ostatnie zmiany, Zdjęcia, Połączenie ze sklepem. Każdy blok ma własny `<h2>`; bloki 2-kolumnowe na komputerze, jedna kolumna na telefonie.
+- **Układ (od 2026-11-25, `docs/25` §2):** H1 „Pulpit”; sekcje z narracyjnym `<h2>` i jednym zdaniem: „Stan interesu” (4 KPI, B-610), „Sprzedaż” (B-611…B-613), „To odróżnia Taktyla” (B-614…B-617), „Co wymaga reakcji” (B-618), „Kto co zmienił” (B-619). Karty `<h3>` w siatce 12 kolumn (komputer), 2 kolumny (tablet), 1 kolumna (telefon); wykresy mają tabelę danych pod `<details>`.
 - **Stany:** pusty blok — „Brak danych do pokazania.” (np. brak zamówień: „Nie ma jeszcze zamówień.”); ładowanie — szkielet na blok, bloki ładują się niezależnie; błąd bloku — „Nie udało się pobrać tego bloku.” + „Spróbuj ponownie”, pozostałe bloki działają.
 - **Klawiatura:** nawigacja po nagłówkach, odnośniki w listach; brak elementów tylko-na-najechanie.
 - **Znaczniki:** brak (odczyt).

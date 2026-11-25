@@ -2,6 +2,7 @@
 // TanStack Query: klucze i hooki odczytu (stan serwera). Mutacje wstawiaja odpowiedz API do cache (jeden obiekt
 // produktu po kazdym zapisie, API-011), wiec ekran odswieza sie bez dodatkowego zapytania.
 import type {
+  StatsRangeQuery,
   adminMessageListQuerySchema,
   auditListQuerySchema,
   mediaListQuerySchema,
@@ -21,6 +22,7 @@ import {
   ordersApi,
   reviewsApi,
   settingsApi,
+  statsApi,
 } from "./api/endpoints";
 
 export type ProductListParams = Partial<z.output<typeof adminProductListQuerySchema>>;
@@ -48,6 +50,12 @@ export const keys = {
   audit: (p: AuditListParams) => ["audit", p] as const,
   reviews: ["reviews"] as const,
   messages: (p: MessageListParams) => ["messages", p] as const,
+  sales: (q: StatsRangeQuery) => ["stats", "sales", q] as const,
+  traffic: (q: StatsRangeQuery) => ["stats", "traffic", q] as const,
+  operations: ["stats", "operations"] as const,
+  system: ["system"] as const,
+  search: (q: string) => ["search", q] as const,
+  colors: ["colors"] as const,
 };
 
 export const useProducts = (params: ProductListParams) =>
@@ -99,3 +107,39 @@ export const useAudit = (params: AuditListParams) =>
     queryFn: () => auditApi.list(params),
     placeholderData: keepPreviousData,
   });
+
+/** B-610..B-617: sprzedaz w zakresie (poprzednie dane zostaja na ekranie przy zmianie zakresu). */
+export const useSalesStats = (q: StatsRangeQuery) =>
+  useQuery({
+    queryKey: keys.sales(q),
+    queryFn: () => statsApi.sales(q),
+    placeholderData: keepPreviousData,
+  });
+/** B-620 */
+export const useTrafficStats = (q: StatsRangeQuery) =>
+  useQuery({
+    queryKey: keys.traffic(q),
+    queryFn: () => statsApi.traffic(q),
+    placeholderData: keepPreviousData,
+  });
+/** B-618, B-625: operacje i liczniki menu (odswiezane co minute). */
+export const useOperations = (enabled = true) =>
+  useQuery({
+    queryKey: keys.operations,
+    queryFn: () => statsApi.operations(),
+    refetchInterval: 60_000,
+    enabled,
+  });
+/** B-623 */
+export const useSystem = () =>
+  useQuery({ queryKey: keys.system, queryFn: () => statsApi.system() });
+/** B-626 */
+export const useAdminSearch = (q: string) =>
+  useQuery({
+    queryKey: keys.search(q),
+    queryFn: () => statsApi.search(q),
+    enabled: q.trim().length >= 2,
+    placeholderData: keepPreviousData,
+  });
+export const useColors = () =>
+  useQuery({ queryKey: keys.colors, queryFn: () => statsApi.colors(), staleTime: 3_600_000 });

@@ -36,6 +36,8 @@ export const LIMITS = {
   form: { limit: write(5), ttl: RATE_WINDOW_MS },
   /** Odczyt zamowien po tokenie (zgadywanie tokenow): 30/min/IP. */
   orderRead: { limit: read(30), ttl: RATE_WINDOW_MS },
+  /** B-621 (ADR-0012): POST /events - paczki do 20 zdarzen, 60/min/IP bez sufitu demo (zapis pomiaru, nie zmiana danych). */
+  events: { limit: 60, ttl: RATE_WINDOW_MS },
   /** I-009 (B-014): POST /admin/demo/reset - reset jest ciezki, wiec 2/min/IP. */
   demoReset: { limit: 2, ttl: RATE_WINDOW_MS },
 } as const;

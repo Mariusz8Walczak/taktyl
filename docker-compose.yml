@@ -79,7 +79,10 @@ services:
     image: taktyl-api:local
     command: ["node", "dist/seed.js"]
     env_file: *env-file
-    environment: *db-env
+    environment:
+      <<: *db-env
+      # B-622: przy pierwszym seedzie pustej bazy zamowien generuje ok. 90 dni zamowien i ruchu demo (DEMO_HISTORY=false wylacza).
+      DEMO_HISTORY: ${DEMO_HISTORY:-true}
     depends_on:
       migrate: { condition: service_completed_successfully }
     restart: "no"
@@ -89,7 +92,10 @@ services:
     image: taktyl-api:local
     restart: unless-stopped
     env_file: *env-file
-    environment: *db-env
+    environment:
+      <<: *db-env
+      # B-622: reset demo z backpanelu dosypuje historie zamowien i ruchu w tle.
+      DEMO_HISTORY: ${DEMO_HISTORY:-true}
     volumes:
       - media:/data/media
     depends_on:
@@ -291,7 +297,8 @@ services:
     environment:
       <<: *db-env
       DEMO_MODE: "true"
-    command: ["node", "dist/seed.js", "--reset"]
+    # B-622: scenariusze e2e startuja od czystego seeda, bez historii demo.
+    command: ["node", "dist/seed.js", "--reset", "--no-demo-history"]
     depends_on:
       api: { condition: service_healthy }
 
@@ -355,7 +362,9 @@ services:
     profiles: [demo]
     restart: unless-stopped
     env_file: *env-file
-    environment: *db-env
+    environment:
+      <<: *db-env
+      DEMO_HISTORY: ${DEMO_HISTORY:-true}
     entrypoint: ["sh", "-c"]
     # obraz api ma HEALTHCHECK na porcie 4000; ta usluga nie nasluchuje, wiec zdrowie = zyje petla (sleep albo trwajacy reset)
     healthcheck:

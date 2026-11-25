@@ -106,11 +106,17 @@ describe("powloka panelu", () => {
     expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(screen.getByRole("main")).toHaveAttribute("id", "tresc-glowna");
     expect(screen.getByRole("navigation", { name: "Główna" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Katalog" })).toHaveAttribute("href", "/produkty");
+    // B-625: grupy menu (Start, Sprzedaz, Katalog, Tresci, System) jako naglowki list
+    expect(screen.getByRole("heading", { name: "Katalog" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Produkty" })).toHaveAttribute("href", "/produkty");
     expect(screen.getByRole("link", { name: "Zamówienia" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Ustawienia" })).toBeInTheDocument();
     // przyszle ekrany: tekst z etykieta "wkrotce", nie odnosnik
-    expect(screen.getAllByRole("link", { name: /Treści/ }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "Treści" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Poradnik" })).toHaveAttribute(
+      "href",
+      "/tresci/poradnik",
+    );
     expect(screen.getAllByRole("link", { name: /Zgłoszenia/ }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /Dziennik zmian/ }).length).toBeGreaterThan(0);
     expect(screen.queryAllByText("wkrótce").length).toBe(0);

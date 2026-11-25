@@ -129,7 +129,9 @@ packages/
 | Ścieżka | Zawartość | ID |
 |---|---|---|
 | `/login` | logowanie; w `DEMO_MODE` przycisk „Wejdź jako viewer” | B-001 |
-| `/` | pulpit: zamówienia do obsługi, ostatnie zmiany, brak zdjęć | B-002 |
+| `/` | pulpit: KPI z porównaniem okresów, sprzedaż, sety, konfigurator, kolory, operacje, aktywność (`/v1/admin/stats/*`) | B-610…B-619 |
+| `/ruch` | ruch z kolektora zdarzeń `POST /v1/events` (tabela `analytics_events`, ADR-0012) | B-620, B-621 |
+| `/system` | „Jak to jest zrobione”: stos, kondycja usług | B-623 |
 | `/produkty`, `/produkty/[id]` | lista z filtrami, edycja produktu, warianty, ceny, stany, plakietki | B-010… |
 | `/produkty/[id]/ceny` | historia cen, wyliczone `lowest_30d` (tylko odczyt) | B-0xx |
 | `/zamowienia`, `/zamowienia/[numer]` | lista, szczegóły, zmiana statusu | B-0xx |

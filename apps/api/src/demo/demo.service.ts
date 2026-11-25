@@ -6,6 +6,7 @@ import { findSeedRoot } from "../../prisma/seed/root.js";
 import { runSeed } from "../../prisma/seed/run.js";
 import type { AuditContext } from "../audit/audit.service.js";
 import { notFound } from "../common/app-exception.js";
+import { generateDemoHistory } from "../demo-history/generator.js";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { APP_CONFIG } from "../config/config.module.js";
 import type { AppConfig } from "../config/env.js";
@@ -31,6 +32,12 @@ export class DemoService {
       notify: { actorId: ctx.actorId, actorRole: "owner", requestId: ctx.requestId },
     });
     this.log.log("reset danych demo wykonany z backpanelu");
+    if (this.config.DEMO_HISTORY) {
+      // B-622: historia demo w tle (ok. minuty); pulpit wypelnia sie po jej zakonczeniu, reset odpowiada od razu.
+      void generateDemoHistory(this.prisma, { now: at, config: this.config }).catch((e: unknown) =>
+        this.log.error(`historia demo po resecie: ${e instanceof Error ? e.message : String(e)}`),
+      );
+    }
     return { status: "reset", at: at.toISOString() };
   }
 }
