@@ -6,6 +6,7 @@
 import type { Metadata } from "next";
 import "../styles/home.css";
 import { CategoryTiles } from "../components/home/category-tiles";
+import { DesignKeyboard } from "../components/home/design-keyboard";
 import { Featured } from "../components/home/featured";
 import { Hero } from "../components/home/hero";
 import { HowItWorks } from "../components/home/how-it-works";
@@ -13,6 +14,8 @@ import { PresetCards } from "../components/home/preset-cards";
 import { getCategories, getShopSettings } from "../lib/api";
 import { createModel } from "../lib/builder/catalog";
 import { loadBuilderData } from "../lib/builder/data";
+import { getConfiguratorData } from "../lib/configurator/data";
+import { buildDesignSection } from "../lib/home/design";
 import {
   buildCategoryTiles,
   buildHeroDesk,
@@ -32,12 +35,15 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [settings, categories, data] = await Promise.all([
+  const [settings, categories, data, configurator] = await Promise.all([
     getShopSettings(),
     getCategories(),
     loadBuilderData(),
+    // audyt P0-3: sekcja 3D to dodatek - brak slownikow konfiguratora nie psuje glownej
+    getConfiguratorData().catch(() => null),
   ]);
   const model = createModel(data);
+  const design = configurator ? buildDesignSection(configurator, model) : null;
   const hero = buildHeroDesk(model);
   const percent = settings.set_discount.percent;
 
@@ -46,6 +52,7 @@ export default async function HomePage() {
       <Hero settings={settings} desk={hero?.data ?? null} />
       <CategoryTiles tiles={buildCategoryTiles(categories, model)} />
       <HowItWorks percent={percent} example={buildSetExample(model)} />
+      {design ? <DesignKeyboard section={design} /> : null}
       <PresetCards cards={buildPresetCards(model)} percent={percent} />
       <Featured />
       {homeJsonLd().map((ld) => (

@@ -5,41 +5,7 @@
   gap: var(--s3);
   margin-top: var(--s3);
 }
-.konfigurator__scena {
-  position: relative;
-  min-height: 18rem;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--r);
-  background-color: var(--tlo-alt);
-}
-.konfigurator__scena-plotno {
-  position: absolute;
-  inset: 0;
-  touch-action: pan-y;
-}
-.konfigurator__brak-3d,
-.konfigurator__laduje {
-  position: absolute;
-  inset: auto var(--s2) var(--s2) var(--s2);
-  margin: 0;
-  color: var(--tekst-slaby);
-  font-size: var(--t-s);
-}
-.konfigurator__brak-3d {
-  inset: var(--s3);
-  display: grid;
-  align-content: center;
-  text-align: center;
-}
-.konfigurator__widok {
-  position: absolute;
-  inset: auto var(--s2) var(--s2) var(--s2);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s1) var(--s2);
-  justify-content: center;
-}
+/* Scena 3D (.konfigurator__scena, __laduje, __widok, __brak-3d): podglad-3d.css, importowany przez SceneView. */
 .konfigurator__panel {
   display: grid;
   gap: var(--s3);
@@ -188,7 +154,8 @@
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     align-items: start;
   }
-  .konfigurator__scena {
+  /* .konfigurator przed nazwa: wygrywa z podglad-3d.css niezaleznie od kolejnosci arkuszy */
+  .konfigurator .konfigurator__scena {
     position: sticky;
     top: var(--s3);
     aspect-ratio: 1 / 1;

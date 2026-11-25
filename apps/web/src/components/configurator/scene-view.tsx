@@ -4,6 +4,7 @@
 import type { ConfiguratorData } from "@taktyl/contracts";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type Ref } from "react";
+import "../../styles/podglad-3d.css";
 import type { StageHandle, StageItem } from "./stage";
 
 const Stage = dynamic(() => import("./stage"), { ssr: false });
@@ -22,16 +23,31 @@ export function SceneView({
   data,
   items,
   handleRef,
+  className,
+  onStatus,
 }: {
   title: string;
   data: ConfiguratorData;
   items: StageItem[];
   handleRef?: Ref<StageHandle>;
+  /** Modyfikator ramy, np. "konfigurator__scena--kwadrat" (galeria karty, glowna). */
+  className?: string;
+  /** Stan sceny dla rodzica (podglad z renderem jako zastepstwem zdejmuje render po "ready"). */
+  onStatus?: (s: "loading" | "ready" | "error") => void;
 }) {
-  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  const [state, setStateRaw] = useState<"loading" | "ready" | "error">("loading");
+  const setState = (s: "loading" | "ready" | "error") => {
+    setStateRaw(s);
+    onStatus?.(s);
+  };
   const [canRender, setCanRender] = useState(true);
   const own = useRef<StageHandle>(null);
-  useEffect(() => setCanRender(webglAvailable()), []);
+  useEffect(() => {
+    const ok = webglAvailable();
+    setCanRender(ok);
+    if (!ok) onStatus?.("error");
+    // raz na zamontowanie (onStatus rodzica nie restartuje wykrycia WebGL)
+  }, []);
 
   const setRefs = (h: StageHandle | null) => {
     own.current = h;
@@ -40,7 +56,11 @@ export function SceneView({
   };
 
   return (
-    <div className="konfigurator__scena" role="group" aria-label={title}>
+    <div
+      className={className ? `konfigurator__scena ${className}` : "konfigurator__scena"}
+      role="group"
+      aria-label={title}
+    >
       {canRender && state !== "error" ? (
         <Stage data={data} items={items} handleRef={setRefs} onStatus={setState} />
       ) : (

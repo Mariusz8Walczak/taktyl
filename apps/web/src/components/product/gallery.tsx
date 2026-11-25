@@ -3,13 +3,18 @@
 // + miniatury. Na telefonie ujecia przewijane gestem (scroll-snap), na komputerze jedno ujecie wybierane miniatura.
 // Zdjecia tylko z manifestu (docs/09); brak zdjecia = placeholder o tych samych wymiarach. Miniatura to przycisk
 // z aria-label ("Pokaż ujęcie: widok z góry") i widocznym podpisem, obraz w miniaturze ma alt="".
+// F-250, audyt P0-3: pierwszy slajd to model 3D (ModelPreview) z renderem 01-34 jako zastepstwem do czasu zaladowania
+// modelu; three.js laduje sie dopiero po "Obróć w 3D" (ADR-0011 pkt 7, poza budzetem JS karty).
 import { ProductImage } from "@taktyl/ui";
 import { useRef, useState } from "react";
 import { MEDIA_BASE_URL, packshotsFor, toManifestEntry } from "../../lib/catalog/images";
+import { modelIdFor } from "../../lib/configurator/model";
+import { ModelPreview } from "../configurator/model-preview";
 import { useProduct } from "./product-context";
 
 const MAIN_SIZES = "(min-width: 992px) 58vw, 100vw";
 const THUMB_SIZES = "20vw";
+const MODEL_SLIDE = "model-3d";
 
 export function Gallery() {
   const { variant } = useProduct();
@@ -20,6 +25,10 @@ export function Gallery() {
 function GalleryShots() {
   const { product, variant, colorLabel } = useProduct();
   const shots = packshotsFor(product.images, product.id, variant.images_key);
+  const first = shots[0];
+  // Slajd 3D tylko z gotowym renderem jako zastepstwem (bez renderu galeria jak dotad)
+  const has3d = first !== undefined && first.status === "gotowe";
+  const slides = has3d ? [null, ...shots] : shots;
   const [active, setActive] = useState(0);
   const slidesRef = useRef<HTMLUListElement>(null);
 
@@ -36,7 +45,7 @@ function GalleryShots() {
     const el = slidesRef.current;
     if (!el || el.clientWidth === 0 || el.scrollWidth <= el.clientWidth) return;
     const i = Math.round(el.scrollLeft / el.clientWidth);
-    if (i !== active && i >= 0 && i < shots.length) setActive(i);
+    if (i !== active && i >= 0 && i < slides.length) setActive(i);
   }
 
   if (shots.length === 0) return <div className="galeria" />;
@@ -49,28 +58,47 @@ function GalleryShots() {
         onScroll={onScroll}
         aria-label="Zdjęcia produktu"
       >
-        {shots.map((shot, i) => (
+        {slides.map((shot, i) => (
           <li
-            key={shot.key}
+            key={shot?.key ?? MODEL_SLIDE}
             className={i === active ? "galeria__slajd is-aktywny" : "galeria__slajd"}
           >
-            <ProductImage
-              entry={toManifestEntry(shot)}
-              baseUrl={MEDIA_BASE_URL}
-              productName={product.name}
-              colorName={colorLabel}
-              sizes={MAIN_SIZES}
-              priority={i === 0}
-            />
+            {shot === null && first ? (
+              <ModelPreview
+                modelId={modelIdFor(product.id, variant.size)}
+                title={`Podgląd 3D: ${product.name}`}
+                placeholder={
+                  <ProductImage
+                    entry={toManifestEntry(first)}
+                    baseUrl={MEDIA_BASE_URL}
+                    productName={product.name}
+                    colorName={colorLabel}
+                    sizes={MAIN_SIZES}
+                    priority
+                  />
+                }
+              />
+            ) : shot ? (
+              <ProductImage
+                entry={toManifestEntry(shot)}
+                baseUrl={MEDIA_BASE_URL}
+                productName={product.name}
+                colorName={colorLabel}
+                sizes={MAIN_SIZES}
+                priority={i === 0}
+              />
+            ) : null}
           </li>
         ))}
       </ul>
-      {shots.length > 1 ? (
+      {slides.length > 1 ? (
         <ul className="lista galeria__miniatury">
-          {shots.map((shot, i) => {
-            const opis = shot.description ?? shot.shot ?? "ujęcie";
+          {slides.map((slide, i) => {
+            const shot = slide ?? first;
+            if (!shot) return null;
+            const opis = slide ? (slide.description ?? slide.shot ?? "ujęcie") : "model 3D";
             return (
-              <li key={shot.key}>
+              <li key={slide?.key ?? MODEL_SLIDE}>
                 <button
                   type="button"
                   className="galeria__miniatura"

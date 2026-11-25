@@ -260,3 +260,62 @@
 .blok--polecane .siatka {
   margin: 0;
 }
+
+/* ---- "Zaprojektuj klawiaturę" (F-250, audyt P0-3): opis i style obok modelu 3D ---- */
+.blok--projekt {
+  background-color: var(--tlo-alt);
+}
+.projekt {
+  display: grid;
+  gap: var(--s4);
+  align-items: center;
+}
+.projekt__style {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--s1);
+  margin: 0 0 var(--s3);
+  padding: 0;
+  border: 0;
+}
+.projekt__legenda {
+  margin-bottom: var(--s1);
+  padding: 0;
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+}
+.projekt__tytul-stylu {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.projekt__probki {
+  display: inline-flex;
+}
+.projekt__probka {
+  width: var(--s3);
+  height: var(--s3);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+}
+.projekt__probka + .projekt__probka {
+  margin-left: calc(var(--s1) * -1);
+}
+.projekt__akcje {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2) var(--s3);
+  margin: 0;
+}
+.projekt__akcje .tk-btn {
+  text-decoration: none;
+}
+.projekt__model {
+  background-color: var(--powierzchnia);
+}
+@media (min-width: 992px) {
+  .projekt {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
