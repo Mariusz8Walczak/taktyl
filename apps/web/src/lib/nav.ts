@@ -10,6 +10,9 @@ export const NAV_MAIN: readonly NavItem[] = [
   { label: "Myszki", href: "/myszki" },
   { label: "Podkładki", href: "/podkladki" },
   { label: "Zbuduj set", href: "/zbuduj-set" },
+  // F-255 (ADR-0011): konfigurator wlasnego setu w 3D jako osobna pozycja menu (krotka etykieta: naglowek
+  // od 992 px miesci szesc pozycji w jednej linii; pelna nazwa „Stworz wlasny set” jest na stronie i w przycisku).
+  { label: "Własny set", href: "/stworz-set" },
   { label: "Poradnik", href: "/poradnik" },
 ];
 

@@ -24,7 +24,7 @@ describe("MobileMenu (F-004)", () => {
         .getAllByRole("link")
         .filter((l) => !l.closest(".menu-mobilne__skroty"))
         .map((l) => l.textContent),
-    ).toEqual(["Klawiatury", "Myszki", "Podkładki", "Zbuduj set", "Poradnik"]);
+    ).toEqual(["Klawiatury", "Myszki", "Podkładki", "Zbuduj set", "Własny set", "Poradnik"]);
     // F-003: skroty filtrow kategorii tez w szufladzie
     expect(within(nav).getByRole("link", { name: "Ciche" })).toHaveAttribute(
       "href",

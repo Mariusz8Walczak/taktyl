@@ -26,6 +26,7 @@ describe("Header (F-002)", () => {
       ["Myszki", "/myszki"],
       ["Podkładki", "/podkladki"],
       ["Zbuduj set", "/zbuduj-set"],
+      ["Własny set", "/stworz-set"],
       ["Poradnik", "/poradnik"],
     ]);
   });
