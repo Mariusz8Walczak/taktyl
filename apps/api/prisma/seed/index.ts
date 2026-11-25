@@ -1,5 +1,7 @@
 // B-102: wejscie CLI seeda. `db:seed` (idempotentny) i `db:reset-demo` (--reset: czysci dane i seeduje od nowa).
 import { randomUUID } from "node:crypto";
+import { loadEnv } from "../../src/config/env.js";
+import { generateDemoHistory } from "../../src/demo-history/generator.js";
 import { createPrismaClient } from "../../src/prisma/create-client.js";
 import { findSeedRoot } from "./root.js";
 import { runSeed } from "./run.js";
@@ -26,8 +28,20 @@ async function main(): Promise<void> {
         ? { notify: { actorId: null, actorRole: "system" as const, requestId: `reset-${randomUUID()}` } }
         : {}),
       log: (m) => console.log(`[seed] ${m}`),
+      // I-016: status zdjec z plikow w wolumenie (reset nie gasi wgranych zdjec).
+      mediaDir: process.env.MEDIA_DIR ?? "/data/media",
     });
     console.log(reset ? "[seed] reset-demo zakonczony" : "[seed] seed zakonczony");
+    // B-622: historia demo (zamowienia i ruch z ok. 90 dni) po resecie albo przy pierwszym seedzie pustej bazy zamowien.
+    const history = process.argv.includes("--demo-history") || process.env.DEMO_HISTORY === "true";
+    if (history && !process.argv.includes("--no-demo-history")) {
+      const existing = await prisma.order.count();
+      if (reset || existing === 0) {
+        await generateDemoHistory(prisma, { now, config: loadEnv(process.env), log: (m) => console.log(`[seed] ${m}`) });
+      } else {
+        console.log(`[seed] historia demo pominieta: baza ma juz ${existing} zamowien`);
+      }
+    }
   } finally {
     await prisma.$disconnect();
   }

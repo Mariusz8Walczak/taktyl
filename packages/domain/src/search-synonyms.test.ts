@@ -1,7 +1,7 @@
 // F-006 (TAKTYL-59): synonimy wyszukiwarki na prawdziwych danych z data/products.json.
 import { describe, expect, it } from "vitest";
 import { loadCatalog } from "./test-utils.js";
-import { isQuietProduct, matchesProductSearch } from "./search.js";
+import { isQuietProduct, matchesProductSearch, searchMatchReason } from "./search.js";
 
 const { products } = loadCatalog();
 
@@ -72,5 +72,18 @@ describe("synonimy F-006", () => {
     }
     expect(got).toContain("korek");
     expect(find("   ")).toEqual([]);
+  });
+});
+
+describe("powod dopasowania (F-005, audyt UX)", () => {
+  const kreda = products.find((p) => p.slug === "kreda-98")!;
+  const parts = [{ label: "przełącznik Szept", text: "Szept" }];
+  it("nazwa: brak powodu; czesc opisu: jej etykieta; synonim: opis z danych", () => {
+    expect(searchMatchReason(kreda, parts, "kreda")).toBeNull();
+    expect(searchMatchReason(kreda, parts, "szept")).toBe("przełącznik Szept");
+    expect(searchMatchReason(kreda, parts, "cicha")).toBe("do cichej pracy");
+    expect(searchMatchReason(kreda, parts, "kreda cicha szept")).toBe(
+      "do cichej pracy · przełącznik Szept",
+    );
   });
 });

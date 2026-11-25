@@ -24,7 +24,10 @@ import {
   type CategoryId,
   type Quote,
 } from "../../lib/cart/types";
+import { useCartDetails } from "../../lib/cart/use-details";
+import type { CartSkuDetails } from "../../lib/cart/details";
 import { Kwota } from "../motion/kwota";
+import { LineThumb, LineVariant } from "./line-details";
 import type { useCartActions } from "./use-cart-actions";
 
 type Actions = ReturnType<typeof useCartActions>;
@@ -60,6 +63,10 @@ export function CartLines({
   level = 2,
 }: Props) {
   const { index } = actions;
+  // Audyt P1-4: miniatury i nazwy wariantow (bez cen) z /api/cart/details
+  const details = useCartDetails(
+    lines.flatMap((l) => (l.type === "item" ? [l.sku] : l.items.map((i) => i.sku))),
+  );
   return (
     <ul
       className={compact ? "lista koszyk-lista koszyk-lista--ciasna" : "lista koszyk-lista"}
@@ -70,6 +77,7 @@ export function CartLines({
           {line.type === "item" ? (
             <ItemRow
               line={line}
+              details={details[line.sku]}
               quoted={index.items.get(line.sku)}
               problem={index.problems.get(line.sku)}
               quote={quote}
@@ -81,6 +89,7 @@ export function CartLines({
           ) : (
             <SetGroup
               line={line}
+              details={details}
               quoted={index.sets.get(line.id)}
               problems={index.problems}
               quote={quote}
@@ -118,6 +127,7 @@ function Price({ gr, busy }: { gr: number | null; busy: boolean }) {
 
 function ItemRow({
   line,
+  details,
   quoted,
   problem,
   quote,
@@ -127,6 +137,7 @@ function ItemRow({
   level,
 }: {
   line: CartItemLine;
+  details: CartSkuDetails | undefined;
   quoted: QItem | undefined;
   problem: Quote["problems"][number] | undefined;
   quote: Quote | null;
@@ -135,7 +146,7 @@ function ItemRow({
   busy: boolean;
   level: 2 | 3;
 }) {
-  const name = quoted?.name ?? line.sku;
+  const name = quoted?.name ?? details?.productName ?? line.sku;
   const unknown = quote !== null && !quoted && problem?.code === "unknown_sku";
   const lacking = problem?.code === "out_of_stock";
   const lineTotal = quoted ? quoted.price_gr * line.qty : null;
@@ -145,10 +156,13 @@ function ItemRow({
       aria-label={name}
     >
       <div className="koszyk-poz__opis">
+        <LineThumb details={details} />
         <Heading level={level} className="koszyk-poz__nazwa">
           {unknown ? "Pozycja niedostępna" : name}
         </Heading>
-        <p className="koszyk-poz__sku">SKU: {line.sku}</p>
+        <div className="koszyk-poz__meta">
+          <LineVariant sku={line.sku} details={details} />
+        </div>
         {lacking || unknown ? (
           <ProblemNote
             text={
@@ -206,6 +220,7 @@ function ProblemNote({
 
 function SetGroup({
   line,
+  details,
   quoted,
   problems,
   quote,
@@ -215,6 +230,7 @@ function SetGroup({
   level,
 }: {
   line: CartSetLine;
+  details: Record<string, CartSkuDetails>;
   quoted: Extract<Quote["lines"][number], { type: "set" }> | undefined;
   problems: ReadonlyMap<string, Quote["problems"][number]>;
   quote: Quote | null;
@@ -255,9 +271,12 @@ function SetGroup({
               key={it.sku}
               className={lacking ? "koszyk-set__element is-problem" : "koszyk-set__element"}
             >
+              <LineThumb details={details[it.sku]} />
               <div className="koszyk-set__opis">
-                <span className="koszyk-poz__nazwa">{q?.name ?? it.sku}</span>
-                <span className="koszyk-poz__sku">SKU: {it.sku}</span>
+                <span className="koszyk-poz__nazwa">
+                  {q?.name ?? details[it.sku]?.productName ?? it.sku}
+                </span>
+                <LineVariant sku={it.sku} details={details[it.sku]} />
                 {lacking ? (
                   <ProblemNote
                     text={stockProblemText(problems.get(it.sku)?.available_qty)}

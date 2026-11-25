@@ -6,9 +6,18 @@
 // wstrzykiwanie znacznikow, ramek i przechwytywanie formularzy.
 // GTM (docs/10) jest dopuszczony tylko wtedy, gdy PUBLIC_GTM_ID jest ustawione przy budowie.
 
-/** @param {{ gtm?: boolean }} [opts] */
+/**
+ * ADR-0012: `apiUrl` (PUBLIC_API_URL) dopuszcza w connect-src wysylke zdarzen pomiaru do kolektora API (po zgodzie).
+ * @param {{ gtm?: boolean, apiUrl?: string }} [opts]
+ */
 export function buildCsp(opts = {}) {
   const gtm = opts.gtm === true;
+  let apiOrigin = [];
+  try {
+    if (opts.apiUrl) apiOrigin = [new URL(opts.apiUrl).origin];
+  } catch {
+    apiOrigin = [];
+  }
   const googleScripts = gtm ? ["https://www.googletagmanager.com"] : [];
   const googleConnect = gtm
     ? [
@@ -25,7 +34,7 @@ export function buildCsp(opts = {}) {
     "style-src": ["'self'", "'unsafe-inline'"],
     "img-src": ["'self'", "data:", "blob:", ...googleConnect],
     "font-src": ["'self'"],
-    "connect-src": ["'self'", ...googleConnect],
+    "connect-src": ["'self'", ...apiOrigin, ...googleConnect],
     "media-src": ["'self'"],
     "object-src": ["'none'"],
     "base-uri": ["'self'"],

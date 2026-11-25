@@ -72,6 +72,7 @@ Kolumny: **Role** — `—` brak wymagań; **Tagi** — znaczniki `revalidateTag
 | GET | `/v1/products/{slug}/reviews` | — | opinie demo aktywnego produktu: `label` („Opinie przykładowe — sklep demonstracyjny”, stała), `avg` (1 miejsce po przecinku, `null` bez opinii), `count`, `items` (najnowsze pierwsze, `demo: true`); **bez danych strukturalnych** `aggregateRating`/`review` (`docs/11`). Znacznik: `reviews:{slug}` | 404 (nieznany lub ukryty produkt) | F-076, B-302, B-303 | |
 | POST | `/v1/forms/contact` | — | formularz kontaktu: `{ email, subject, message }` (`strictObject`: nieznane pola, w tym zgody i pola ukryte, = 422); zapis do `contact_messages` (backpanel B-308), usuwany po 30 dniach. W demo nic nie jest wysyłane, odpowiedź `201 { status: "accepted", demo: true, message }` mówi to wprost („W sklepie demonstracyjnym nie wysyłamy e-maili.”). Limit 5/min/IP. Bez tagów, bez `audit_log`, bez danych osobowych w logach | 422, 429 | F-221, `generate_lead` (po stronie klienta, `docs/10`) | |
 | POST | `/v1/forms/newsletter` | — | zapis e-maila (jedno pole `{ email }`, `strictObject`, bez zgód w kontrakcie: pole zgody nie jest zaznaczone z góry po stronie UI); zapis do `newsletter_signups` (e-mail małymi literami, unikalny), usuwany po 30 dniach. Powtórny zapis tego samego e-maila zwraca tę samą odpowiedź `201` (bez ujawniania, kto jest zapisany). W demo nic nie jest wysyłane; komunikat jak wyżej. Limit 5/min/IP (osobny licznik niż kontakt) | 422, 429 | F-223, `generate_lead` (po stronie klienta, `docs/10`) | |
+| POST | `/v1/events` | — | kolektor zdarzeń pomiaru (ADR-0012): `{ session_id, events: [{ name, params, ts }] }`, maks. 20; nazwy i parametry z `docs/10` bez zmian, bez danych osobowych, `ts` w oknie 48 h; zapis do `analytics_events`; `202 { accepted }`. Limit 60/min/IP. Sklep wysyła tylko po zgodzie na analitykę | 422 (nazwa spoza `docs/10`, dane osobowe, `out_of_window`), 429 | B-621 | |
 | GET | `/health`, `/health/ready` (alias `/ready`) | — | liveness i readiness (poza `/v1`): baza, migracje, kolejka `outbox` poniżej progu 1000 | 503 | B-230 | |
 
 \* `POST /orders` nie zmienia stanów magazynowych (zmniejsza je dopiero płatność `paid`), więc nie rewaliduje tagów; gwiazdka oznacza brak.
@@ -156,6 +157,11 @@ Minimalna rola w kolumnie **Rola**. Wszystkie `POST`/`PUT`/`PATCH`/`DELETE` wyma
 | DELETE | `/v1/admin/media/{key}` | owner | usunięcie pliku, `status: brak` (wraca placeholder) | — | B-051 | j.w. |
 | GET | `/v1/admin/audit` | viewer | dziennik: kto, kiedy, encja, `before`/`after`; filtry `actor_id`, `entity`, `entity_id`, `from`, `to`; `page`/`per_page`; viewer: pola osobowe zamaskowane | — | B-011, B-012 | |
 | GET | `/v1/admin/dashboard` | viewer | liczby: zamówienia do obsługi, niskie stany, brakujące zdjęcia, nieudane webhooki | — | B-002 | |
+| GET | `/v1/admin/stats/sales` | viewer | sprzedaż w zakresie `?from=&to=` (RRRR-MM-DD, `Europe/Warsaw`, domyślnie 30 dni, maks. 366) z okresem poprzednim (`?compare=previous` albo `none`): KPI, przychód dziennie, lejek statusów z medianą czasów przejść, mapa cieplna 7×24, sety, konfiguracje 3D, kolory, top produkty z miniaturą; udziały w punktach bazowych, czasy w minutach (bez liczb zmiennoprzecinkowych) | 400 (`range_inverted`, `range_too_long`) | B-610…B-617 | |
+| GET | `/v1/admin/stats/traffic` | viewer | ruch z `analytics_events` w zakresie jak wyżej: sesje, zakupy, konwersja, porzucone koszyki, lejek, sesje dziennie, kreator, oglądane, wyszukiwania | 400 | B-620 | |
+| GET | `/v1/admin/stats/operations` | viewer | co wymaga reakcji teraz: opłacone > 24 h, niski stan z prognozą, zgłoszenia, outbox, zdjęcia, promocje z `lowest_30d` | — | B-618, B-625 | |
+| GET | `/v1/admin/system` | viewer | kondycja usług (baza, outbox, sklep `/api/health`), wersje stosu odczytane w runtime, liczby danych, migracje | — | B-623 | |
+| GET | `/v1/admin/search` | viewer | `?q=` (1–80 znaków): do 8 produktów (nazwa po normalizacji `ł`, id, SKU wariantu) i 8 zamówień (fragment numeru) | 400 | B-626 | |
 | POST | `/v1/admin/revalidate` | owner | ręczne wysłanie znaczników (diagnostyka); `{ "tags": ["catalog"] }`; znaczniki trafiają do `outbox` (ponawianie jak przy mutacjach), odpowiedź `202 { "revalidated": [...] }` (API-010) | 422 | B-061 | podane |
 
 ### 3.6. Wewnętrzny webhook (api → web)
@@ -308,7 +314,7 @@ Reguły:
 
 ## 7. Zgodność ze zdarzeniami pomiaru
 
-API nie wysyła zdarzeń. Odpowiedzi dają klientowi wszystko, co potrzeba do `docs/10`: ceny jednostkowe i `discount` per pozycja (`set_discount_gr`), `value` (po rabacie setu, bez dostawy), `shipping_gr`, VAT zawarty w cenie liczony przez klienta jako `value · 23 / 123`. Dane osobowe nie występują w odpowiedziach używanych przez pomiar.
+API nie wysyła zdarzeń; przyjmuje je tylko kolektor `POST /v1/events` (B-621, ADR-0012) z nazwami i parametrami z `docs/10` bez zmian. Odpowiedzi dają klientowi wszystko, co potrzeba do `docs/10`: ceny jednostkowe i `discount` per pozycja (`set_discount_gr`), `value` (po rabacie setu, bez dostawy), `shipping_gr`, VAT zawarty w cenie liczony przez klienta jako `value · 23 / 123`. Dane osobowe nie występują w odpowiedziach używanych przez pomiar.
 
 ## 8. Wersjonowanie i zmiany
 

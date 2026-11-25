@@ -340,6 +340,14 @@
   justify-content: space-between;
   gap: var(--s2);
 }
+/* Audyt P1-3: "w koszyku" / "dodamy" przy kazdej pozycji setu */
+.koszyk-dokoncz__lista .koszyk-poz__nazwa {
+  flex: 1 1 auto;
+}
+.koszyk-dokoncz__stan {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
 .koszyk-dokoncz__razem {
   margin: 0;
   font-weight: var(--w-mocna);
@@ -405,4 +413,74 @@
 /* ADR-0011: kod konfiguracji wlasnej jest dlugi (kody czesci po kropkach); zawija sie, zeby nie poszerzac strony (WCAG 1.4.10). */
 .koszyk-poz__sku {
   overflow-wrap: anywhere;
+}
+
+/* Audyt P1-4: miniatura pozycji (render 1:1 albo probki konfiguracji), wariant po ludzku, czesci konfiguracji */
+.koszyk-poz__opis {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--s2);
+  align-items: start;
+}
+.koszyk-poz__opis > :not(.koszyk-poz__miniatura) {
+  grid-column: 2;
+}
+.koszyk-poz__opis > .koszyk-poz__miniatura {
+  grid-row: span 3;
+}
+.koszyk-poz__miniatura {
+  flex: none;
+  width: var(--s5);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.koszyk-poz__miniatura .tk-obraz {
+  width: 100%;
+  height: 100%;
+}
+.koszyk-poz__miniatura--probki {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.koszyk-poz__probka {
+  display: inline-block;
+  flex: none;
+  width: var(--s2);
+  height: var(--s2);
+  margin-right: calc(var(--s1) / 2);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r-pelny);
+  vertical-align: middle;
+}
+.koszyk-poz__miniatura--probki .koszyk-poz__probka {
+  width: var(--s3);
+  height: var(--s3);
+  margin-right: calc(var(--s1) * -1);
+}
+.koszyk-poz__wariant {
+  display: block;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.koszyk-poz__konfiguracja {
+  font-size: var(--t-xs);
+}
+.koszyk-poz__konfiguracja > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  color: var(--akcent);
+  font-weight: var(--w-mocna);
+  cursor: pointer;
+}
+.koszyk-poz__czesci {
+  display: grid;
+  gap: calc(var(--s1) / 2);
+  margin-bottom: var(--s1);
+}
+.koszyk-set__element > .koszyk-poz__miniatura {
+  width: var(--s4);
 }

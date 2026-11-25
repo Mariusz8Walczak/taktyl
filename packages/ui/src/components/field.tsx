@@ -14,6 +14,11 @@ interface FieldBase {
   hint?: ReactNode;
   /** Komunikat bledu: obrys --blad, ikona + tekst pod polem, aria-invalid i aria-describedby. */
   error?: ReactNode;
+  /**
+   * Audyt P1-7: miejsce na komunikat bledu zarezerwowane zawsze (pusty wiersz, region aria-live), wiec pojawienie sie
+   * bledu nie przesuwa ukladu (przycisk pod polem nie ucieka spod kursora). aria-describedby tylko przy bledzie.
+   */
+  reserveError?: boolean;
   wrapperClassName?: string;
 }
 
@@ -31,6 +36,7 @@ export function Field(props: FieldProps) {
     label,
     hint,
     error,
+    reserveError = false,
     wrapperClassName,
     as = "input",
     id: idProp,
@@ -40,7 +46,8 @@ export function Field(props: FieldProps) {
   const auto = useId();
   const id = idProp ?? `pole-${auto}`;
   const hintId = hint ? `${id}-podpowiedz` : undefined;
-  const errorId = error ? `${id}-blad` : undefined;
+  const errorSlotId = `${id}-blad`;
+  const errorId = error ? errorSlotId : undefined;
   const common = {
     id,
     className: cx("tk-pole__kontrolka", className),
@@ -70,7 +77,16 @@ export function Field(props: FieldProps) {
           {hint}
         </p>
       ) : null}
-      {error ? (
+      {reserveError ? (
+        <p className="tk-pole__blad tk-pole__blad--miejsce" id={errorSlotId} aria-live="polite">
+          {error ? (
+            <>
+              <Icon name="error" />
+              <span>{error}</span>
+            </>
+          ) : null}
+        </p>
+      ) : error ? (
         <p className="tk-pole__blad" id={errorId}>
           <Icon name="error" />
           <span>{error}</span>

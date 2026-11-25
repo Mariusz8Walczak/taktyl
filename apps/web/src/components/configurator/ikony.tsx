@@ -59,7 +59,8 @@ export function PartIcon({ id }: { id: string }) {
   return <Icon aria-hidden="true" focusable="false" size={ICON_SIZE} strokeWidth={1.75} />;
 }
 
-export type Benefit = "kolory" | "biurko" | "rabat" | "termin" | "klawiatura" | "mysz" | "podkladka";
+export type Benefit =
+  "kolory" | "biurko" | "rabat" | "termin" | "klawiatura" | "mysz" | "podkladka";
 const BENEFIT_ICONS: Record<Benefit, LucideIcon> = {
   kolory: Palette,
   biurko: Monitor,

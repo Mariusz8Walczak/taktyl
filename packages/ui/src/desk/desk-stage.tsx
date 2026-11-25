@@ -3,7 +3,7 @@
 // dodaje wyspa apps/web (raz na sesje). A-06: zmiana elementu setu przez warstwy (use-swap.ts), ruch w css/scena.css.
 // Nic nie jest rysowane: zdjecia z manifestu albo placeholdery w wymiarach z danych.
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { ProductImage } from "../image/product-image.js";
 import { buildSrcSet } from "../image/manifest.js";
 import type { ManifestEntry } from "../image/manifest.js";
@@ -58,11 +58,21 @@ export interface DeskStageProps {
   initialScale?: number;
   /** Tekst zastepczy podkladki w ukladzie "brak podkladki". */
   padHint?: string;
+  /**
+   * Audyt P0-2: akcja w podgladzie (np. przycisk "Zmien na Filc XXL" przy wyniku uwaga). Lezy obok obrazu
+   * (role="img" ukrywa dzieci przed czytnikiem), w prawym dolnym rogu sceny; bez akcji scena jak dotad.
+   */
+  action?: ReactNode;
   className?: string;
 }
 
 /** Najmniejszy bok placeholdera po przeskalowaniu, od ktorego pokazujemy podpis (docs/03 §5.3). */
 export const MIN_CAPTION_PX = 80;
+/**
+ * Audyt P0-2 ("Ruch myszki: 22 cm..." uciety): podpis strefy w plotnie tylko, gdy strefa po przeskalowaniu ma te
+ * szerokosc; inaczej podpis idzie do plakietki pod plotnem (rozmiar z tokenow, bez skalowania).
+ */
+export const MIN_ZONE_CAPTION_PX = 150;
 const PAD_HINT = "Tu będzie podkładka (XL: 90 × 40 cm)";
 
 function rectVars(r: Rect): CSSProperties {
@@ -116,6 +126,7 @@ export function DeskStage({
   priority = false,
   initialScale = 0.5,
   padHint = PAD_HINT,
+  action = null,
   className,
 }: DeskStageProps) {
   const g = computeDeskGeometry({
@@ -129,6 +140,7 @@ export function DeskStage({
   const { ref, scale, effective } = useScale(initialScale, g.canvas.w);
   const fits = (r: Rect) => r.w * effective >= MIN_CAPTION_PX && r.d * effective >= MIN_CAPTION_PX;
   const uwaga = result?.status === "uwaga";
+  const zoneInCanvas = g.zone.w * effective >= MIN_ZONE_CAPTION_PX;
   const label = composeDeskLabel({
     keyboardName: keyboard?.name ?? null,
     mouseName: mouse?.name ?? null,
@@ -157,18 +169,18 @@ export function DeskStage({
   return (
     <div
       ref={ref}
-      role="img"
-      aria-label={label}
       className={cx(
         "tk-scena",
         `tk-scena--${g.layout}`,
         compact && "tk-scena--kompakt",
         uwaga && "tk-scena--uwaga",
+        !keyboard && !mouse && "tk-scena--pusta",
         className,
       )}
       data-layout={g.layout}
       style={style}
     >
+      <div role="img" aria-label={label} className="tk-scena__obraz">
       <div className="tk-scena__platno scena__platno" style={canvasStyle}>
         {padLayers.map((l) => {
           const padBg =
@@ -217,7 +229,9 @@ export function DeskStage({
           style={rectVars(g.zone)}
           data-testid="desk-zone"
         >
-          <span className="tk-scena__podpis">{zoneCaption(zoneMm)}</span>
+          {zoneInCanvas ? (
+            <span className="tk-scena__podpis tk-scena__podpis--strefa">{zoneCaption(zoneMm)}</span>
+          ) : null}
         </div>
         {g.zoneOutside ? (
           <div
@@ -265,11 +279,15 @@ export function DeskStage({
           </div>
         ))}
       </div>
-      {result ? (
+      {result || !zoneInCanvas ? (
         <span className={cx("tk-scena__wynik scena__wynik", uwaga && "is-uwaga")}>
-          {resultBadgeText(result)}
+          {[zoneInCanvas ? null : zoneCaption(zoneMm), result ? resultBadgeText(result) : null]
+            .filter(Boolean)
+            .join(" · ")}
         </span>
       ) : null}
+      </div>
+      {action ? <div className="tk-scena__akcja">{action}</div> : null}
     </div>
   );
 }

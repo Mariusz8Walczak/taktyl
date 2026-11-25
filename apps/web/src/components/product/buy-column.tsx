@@ -93,15 +93,6 @@ export function BuyColumn({
 
       <VariantPicker />
 
-      {/* F-250 (ADR-0011): konfigurator kolorow; Korek ma jeden wyglad (tekstura w modelu), wiec bez wyboru. */}
-      {product.id !== "p-korek" ? (
-        <p className="konfigurator-link">
-          <Link href={`/konfigurator/${modelIdFor(product.id, variant.size)}`} className="tk-link">
-            Dostosuj kolory w 3D
-          </Link>
-        </p>
-      ) : null}
-
       <div className="dostepnosc" aria-live="polite">
         <p className={`dostepnosc__stan dostepnosc__stan--${stock.level}`}>{stock.label}</p>
         {!buyable ? <p className="dostepnosc__brak">{UNAVAILABLE_MESSAGE}</p> : null}
@@ -133,9 +124,21 @@ export function BuyColumn({
         >
           {justAdded ? <span className="tk-etykieta-dodano">Dodano</span> : "Dodaj do koszyka"}
         </Button>
-        <a href={setHref} className="tk-btn tk-btn--poboczny zakup__set">
-          Dodaj do setu
-        </a>
+        <div className="zakup__drugie">
+          {/* F-250, audyt P0-3: konfigurator 3D na poziomie zakupu (wczesniej link pod wariantami).
+              Korek ma jeden wyglad (tekstura w modelu), wiec bez konfiguratora. */}
+          {product.id !== "p-korek" ? (
+            <Link
+              href={`/konfigurator/${modelIdFor(product.id, variant.size)}`}
+              className="tk-btn tk-btn--poboczny zakup__projekt"
+            >
+              Zaprojektuj własny
+            </Link>
+          ) : null}
+          <a href={setHref} className="tk-btn tk-btn--poboczny zakup__set">
+            Dodaj do setu
+          </a>
+        </div>
       </div>
       {!buyable ? (
         <p id="powod-braku" className="zakup__powod">

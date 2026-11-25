@@ -1,0 +1,581 @@
+/* Pulpit, ruch i "Jak to zrobione" (B-610..B-627, docs/25 §2): siatka 12 kolumn, karty rownej wysokosci, KPI, paski,
+   mapa cieplna, wykresy (Recharts) i paleta polecen. Kolory serii wykresow to aliasy tokenow (ten sam akcent, stany),
+   wiec tryb ciemny ([data-motyw="ciemny"]) przelacza je razem z reszta. Tylko tokeny. */
+:root {
+  --adm-seria-1: var(--akcent);
+  --adm-seria-2: var(--tekst-slaby);
+  --adm-seria-3: var(--sukces);
+  --adm-seria-4: var(--uwaga);
+  --adm-siatka: var(--linia);
+}
+
+.adm-pulpit__sekcje {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+}
+.adm-pulpit__demo {
+  margin: 0;
+  flex: 1 1 100%;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.adm-sekcja {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+.adm-sekcja__naglowek h2 {
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+.adm-sekcja__naglowek p {
+  margin: var(--s1) 0 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+
+/* ---- siatka 12 kolumn, karty rownej wysokosci w rzedzie ---- */
+.adm-siatka-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--s2);
+  align-items: stretch;
+}
+.adm-kafel {
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  padding: var(--s2);
+}
+.adm-kafel h3 {
+  margin: 0;
+  font-size: var(--t-s);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-tekst);
+}
+.adm-kafel__naglowek {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s1) var(--s2);
+}
+.adm-kafel__znaczenie {
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+  line-height: var(--lh-tekst);
+}
+.adm-kafel__podtytul {
+  margin: 0;
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  color: var(--tekst-slaby);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-naglowek);
+}
+.adm-kafel > :last-child:is(a) {
+  margin-top: auto;
+}
+@media (min-width: 640px) {
+  .adm-kafel--3,
+  .adm-kafel--4,
+  .adm-kafel--6 {
+    grid-column: span 6;
+  }
+}
+@media (min-width: 1200px) {
+  .adm-siatka-12 {
+    gap: var(--s3);
+  }
+  .adm-kafel {
+    padding: var(--s3);
+  }
+  .adm-kafel--3 {
+    grid-column: span 3;
+  }
+  .adm-kafel--4 {
+    grid-column: span 4;
+  }
+  .adm-kafel--5 {
+    grid-column: span 5;
+  }
+  .adm-kafel--6 {
+    grid-column: span 6;
+  }
+  .adm-kafel--7 {
+    grid-column: span 7;
+  }
+  .adm-kafel--8 {
+    grid-column: span 8;
+  }
+}
+
+/* ---- KPI ---- */
+.adm-kpi {
+  gap: var(--s1);
+}
+.adm-kpi__tytul {
+  color: var(--tekst-slaby);
+}
+.adm-kpi__wartosc {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  line-height: var(--lh-naglowek);
+  font-variant-numeric: tabular-nums;
+}
+.adm-kpi .adm-kafel__znaczenie {
+  margin-top: auto;
+}
+.adm-sparkline {
+  block-size: var(--adm-sparkline-wys);
+}
+.adm-zmiana {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+}
+.adm-zmiana .adm-ikona {
+  inline-size: var(--t-m);
+  block-size: var(--t-m);
+}
+.adm-zmiana--dobra {
+  color: var(--sukces);
+}
+.adm-zmiana--zla {
+  color: var(--blad);
+}
+.adm-zmiana--neutralna {
+  color: var(--tekst-slaby);
+}
+
+/* ---- wykres ---- */
+.adm-wykres {
+  flex: 1 1 auto;
+  min-block-size: var(--adm-wykres-wys);
+  min-width: 0;
+}
+.adm-wykres-podpowiedz {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  padding: var(--s1) var(--s2);
+  border: var(--tk-linia-1) solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  box-shadow: var(--cien-1);
+  font-size: var(--t-xs);
+}
+.adm-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-xs);
+  color: var(--tekst-slaby);
+}
+.adm-legenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.adm-legenda__znak {
+  display: inline-block;
+  inline-size: var(--s3);
+  block-size: 0;
+  border-top: var(--tk-fokus-grub) solid var(--adm-seria-1);
+}
+.adm-legenda__znak--przerywany {
+  border-top-style: dashed;
+  border-top-color: var(--adm-seria-2);
+}
+.adm-dane-wykresu summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  color: var(--akcent);
+  font-size: var(--t-s);
+  cursor: pointer;
+}
+.adm-tabela--kompakt {
+  min-width: 0;
+  font-size: var(--t-xs);
+}
+.adm-recharts-osie,
+.adm-wykres .recharts-text {
+  font-family: inherit;
+}
+
+/* ---- paski udzialu ---- */
+.adm-paski {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.adm-pasek {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s1) var(--s2);
+  align-items: center;
+  font-size: var(--t-xs);
+}
+.adm-pasek__etykieta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.adm-pasek__wartosc {
+  color: var(--tekst-slaby);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.adm-pasek__tor {
+  grid-column: 1 / -1;
+  display: block;
+  block-size: var(--adm-pasek-wys);
+  border-radius: var(--r-pelny);
+  background-color: var(--tlo-alt);
+  overflow: hidden;
+}
+.adm-pasek__wypelnienie {
+  display: block;
+  block-size: 100%;
+  border-radius: var(--r-pelny);
+}
+.adm-pasek__wypelnienie--seria-1 {
+  background-color: var(--adm-seria-1);
+}
+.adm-pasek__wypelnienie--seria-2 {
+  background-color: var(--adm-seria-2);
+}
+.adm-pasek__wypelnienie--seria-3 {
+  background-color: var(--adm-seria-3);
+}
+.adm-pasek__wypelnienie--seria-4 {
+  background-color: var(--adm-seria-4);
+}
+.adm-probka {
+  display: inline-block;
+  flex: 0 0 auto;
+  inline-size: var(--adm-probka);
+  block-size: var(--adm-probka);
+  border-radius: var(--r-pelny);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+}
+
+/* ---- liczby w kartach ---- */
+.adm-liczby-duze {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s2);
+  margin: 0;
+}
+.adm-liczby-duze dt {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.adm-liczby-duze dd {
+  margin: 0;
+  font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+  font-stretch: var(--szer-naglowek);
+  font-variant-numeric: tabular-nums;
+}
+.adm-dl--kompakt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  font-size: var(--t-xs);
+}
+.adm-dl__wiersz {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding-block: var(--s1);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.adm-dl--opis {
+  font-size: var(--t-s);
+}
+.adm-dl--opis .adm-dl__wiersz {
+  flex-direction: column;
+  gap: var(--s1);
+}
+.adm-dl--opis dt {
+  font-weight: var(--w-mocna);
+}
+.adm-dl--opis dd {
+  margin: 0;
+}
+.adm-dl__wiersz:last-child {
+  border-bottom: 0;
+}
+.adm-dl .adm-dl__wiersz dt {
+  color: var(--tekst-slaby);
+}
+.adm-dl .adm-dl__wiersz dd {
+  margin: 0;
+  text-align: right;
+}
+.adm-lista--podzielona {
+  font-size: var(--t-xs);
+}
+.adm-lista--podzielona li {
+  padding-block: var(--s1);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+}
+.adm-lista--podzielona li:last-child {
+  border-bottom: 0;
+}
+.adm-stan {
+  font-weight: var(--w-mocna);
+}
+.adm-stan--blad {
+  color: var(--blad);
+}
+.adm-liczba-lewo {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- top produkty ---- */
+.adm-produkt {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.adm-produkt__miniatura {
+  inline-size: var(--adm-miniatura-mala);
+  block-size: var(--adm-miniatura-mala);
+  flex: 0 0 auto;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+  object-fit: contain;
+}
+
+/* Tekst tylko dla czytnika (position: absolute) w komorkach tabel musi miec blok zawierajacy wewnatrz okna przewijania,
+   inaczej wychodzi poza nie i poszerza strone na 360 px. */
+.adm-tabela-okno {
+  position: relative;
+}
+
+/* ---- mapa cieplna (tabela) ---- */
+.adm-mapa-okno {
+  border: 0;
+  background: none;
+}
+.adm-mapa {
+  table-layout: fixed;
+  inline-size: 100%;
+  min-inline-size: var(--adm-mapa-min);
+  border-collapse: separate;
+  border-spacing: var(--tk-linia-1);
+  font-size: var(--t-xs);
+}
+.adm-mapa th {
+  font-weight: var(--w-zwykla);
+  color: var(--tekst-slaby);
+  text-align: center;
+}
+.adm-mapa thead td:first-child {
+  inline-size: var(--adm-mapa-dzien);
+}
+.adm-mapa tbody th {
+  padding-inline-end: var(--s1);
+  text-align: left;
+  white-space: nowrap;
+}
+.adm-mapa__komorka {
+  block-size: var(--adm-mapa-komorka);
+  border-radius: var(--tk-linia-1);
+  background-color: color-mix(in srgb, var(--akcent) var(--udzial, 0%), var(--tlo-alt));
+}
+.adm-skala {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.adm-skala__krok {
+  display: inline-block;
+  inline-size: var(--adm-mapa-komorka);
+  block-size: var(--adm-pasek-wys);
+  border-radius: var(--tk-linia-1);
+  background-color: color-mix(in srgb, var(--akcent) var(--udzial, 0%), var(--tlo-alt));
+}
+
+/* ---- aktywnosc ---- */
+.adm-aktywnosc {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.adm-aktywnosc__wpis {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s1) var(--s2);
+  align-items: center;
+  padding-block: var(--s1);
+  border-bottom: var(--tk-linia-1) solid var(--linia);
+  font-size: var(--t-s);
+}
+.adm-aktywnosc__ikona {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--cel-min);
+  block-size: var(--cel-min);
+  border-radius: var(--r-pelny);
+  background-color: var(--tlo-alt);
+  color: var(--tekst-slaby);
+}
+.adm-aktywnosc__ikona--zdjecie,
+.adm-aktywnosc__ikona--produkt {
+  background-color: var(--akcent-slaby);
+  color: var(--akcent);
+}
+.adm-aktywnosc__ikona--cena,
+.adm-aktywnosc__ikona--stan {
+  background-color: var(--uwaga-tlo);
+  color: var(--uwaga);
+}
+.adm-aktywnosc__ikona--zamowienie {
+  background-color: var(--sukces-tlo);
+  color: var(--sukces);
+}
+.adm-aktywnosc__czas {
+  grid-column: 2;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.adm-aktywnosc__link {
+  display: inline;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .adm-aktywnosc__wpis {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .adm-aktywnosc__czas {
+    grid-column: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ---- stan uslug ---- */
+.adm-stan-uslugi {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  margin: 0;
+  font-size: var(--t-m);
+  font-weight: var(--w-mocna);
+}
+.adm-stan-uslugi--ok {
+  color: var(--sukces);
+}
+.adm-stan-uslugi--uwaga {
+  color: var(--uwaga);
+}
+.adm-stan-uslugi--awaria {
+  color: var(--blad);
+}
+
+/* ---- paleta polecen ---- */
+.adm-paleta .tk-overlay__panel {
+  inline-size: min(100%, var(--adm-paleta-szer));
+}
+.adm-paleta__pole {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  padding: 0 var(--s2);
+  border: var(--tk-linia-1) solid var(--linia-pola);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+}
+.adm-paleta__pole input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: var(--cel-min);
+  border: 0;
+  background: none;
+  color: var(--tekst);
+  font-size: var(--t-m);
+}
+.adm-paleta__pole input:focus {
+  outline: none;
+}
+.adm-paleta__pole:focus-within {
+  outline: var(--tk-fokus-grub) solid var(--fokus);
+  outline-offset: var(--tk-linia-1);
+}
+.adm-paleta__stan {
+  margin: var(--s1) 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.adm-paleta__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-block-size: var(--adm-paleta-lista-wys);
+  overflow-y: auto;
+}
+.adm-paleta__opcja {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s1) var(--s2);
+  min-height: var(--cel-min);
+  padding: 0 var(--s2);
+  border-radius: var(--r);
+  cursor: pointer;
+}
+.adm-paleta__opcja[data-grupa] {
+  margin-top: calc(var(--s3) + var(--s1));
+}
+.adm-paleta__opcja[data-grupa]::before {
+  content: attr(data-grupa);
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: var(--s2);
+  padding-block-end: var(--s1);
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+  text-transform: uppercase;
+}
+.adm-paleta__opcja:first-child[data-grupa] {
+  margin-top: var(--s3);
+}
+.adm-paleta__opcja[aria-selected="true"] {
+  background-color: var(--akcent-slaby);
+}
+.adm-paleta__etykieta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.adm-paleta__podpowiedz {
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
+.adm-paleta__enter {
+  color: var(--tekst-slaby);
+}

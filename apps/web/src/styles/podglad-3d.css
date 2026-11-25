@@ -1,0 +1,108 @@
+/* Podglad 3D (F-250, F-255, audyt P0-3): rama sceny SceneView wspolna dla konfiguratora, "Stworz wlasny set",
+   pierwszego slajdu galerii karty produktu i sekcji "Zaprojektuj klawiature" na glownej. Tylko tokeny. */
+.konfigurator__scena {
+  position: relative;
+  /* min-height + aspect-ratio przenosilyby minimum na szerokosc (przewijanie w poziomie na 360-390 px) */
+  min-width: 0;
+  width: 100%;
+  min-height: 18rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--linia);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  /* F-257: plotno nad wierszem przyciskow obrotu - kadr 3D liczony tylko w wolnym obszarze (przyciski nie zaslaniaja bryly). */
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+.konfigurator__scena-plotno {
+  position: relative;
+  min-height: 0;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.konfigurator__scena-plotno > canvas {
+  position: absolute;
+  inset: 0;
+}
+.konfigurator__scena-plotno:active {
+  cursor: grabbing;
+}
+/* F-257: kursor nad czescia, ktora mozna kliknac (klasa ustawiana przez scene). */
+.konfigurator__scena-plotno.is-wskazuje {
+  cursor: pointer;
+}
+.konfigurator__brak-3d,
+.konfigurator__laduje {
+  position: absolute;
+  inset: auto var(--s2) var(--s2) var(--s2);
+  margin: 0;
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+}
+.konfigurator__scena > .konfigurator__laduje {
+  inset: var(--s2) var(--s2) auto var(--s2);
+}
+.konfigurator__brak-3d {
+  inset: var(--s3);
+  display: grid;
+  align-content: center;
+  text-align: center;
+}
+.konfigurator__widok {
+  padding: 0 var(--s2) var(--s1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  justify-content: center;
+}
+/* Przyciski obrotu zwarte takze poza konfiguratorem (galeria karty, glowna): na 360 px w kwadratowej ramie miescic sie
+   maja w dwoch rzedach, zeby wiersz pod plotnem nie zabieral polowy kadru. Cel dotykowy zostaje >= --cel-min. */
+.konfigurator__widok .przycisk-tekstowy {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cel-min);
+  padding-inline: var(--s1);
+  font-size: var(--t-s);
+}
+
+/* Wariant kwadratowy (galeria karty, glowna): ta sama proporcja co zdjecie produktu, bez przyklejenia. */
+.konfigurator__scena--kwadrat {
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+}
+
+/* ModelPreview (audyt P0-3): render z manifestu nad scena do czasu jej gotowosci; kolejnosc w DOM ustala warstwy
+   (bez z-index). Przycisk i stan w lewym dolnym rogu, jak akcje galerii. */
+.podglad-3d {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--tlo-alt);
+}
+.podglad-3d__scena,
+.podglad-3d__render {
+  position: absolute;
+  inset: 0;
+}
+.podglad-3d__render > .tk-obraz {
+  width: 100%;
+  height: 100%;
+}
+.podglad-3d__akcja {
+  position: absolute;
+  left: var(--s2);
+  right: var(--s2);
+  bottom: var(--s2);
+  display: flex;
+  justify-content: flex-start;
+}
+.podglad-3d__stan {
+  margin: 0;
+  padding: var(--s1) var(--s2);
+  border-radius: var(--r);
+  background-color: var(--powierzchnia);
+  color: var(--tekst);
+  font-size: var(--t-xs);
+}

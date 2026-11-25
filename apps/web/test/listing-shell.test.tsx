@@ -160,12 +160,31 @@ describe("ListingShell", () => {
   });
 
   it("kolor w filtrze ma probke i nazwe", () => {
-    render(<ListingShell {...props()} />);
+    render(<ListingShell {...props({ total: 6 })} />);
     const aside = screen.getByRole("complementary", { name: "Filtry", hidden: true });
     const opt = within(aside)
       .getByRole("checkbox", { name: /Grafit/, hidden: true })
       .closest("label");
     expect(opt?.querySelector(".tk-probka__kolo")).not.toBeNull();
+  });
+
+  it("audyt UX: facet, ktorego kazda wartosc obejmuje wszystkie wyniki, jest ukryty (np. Typ przelacznika)", () => {
+    render(<ListingShell {...props({ total: 3 })} />);
+    const aside = screen.getByRole("complementary", { name: "Filtry", hidden: true });
+    // lacznosc: jedna wartosc z count 3 przy 3 wynikach - nic nie zaweza
+    expect(within(aside).queryByRole("checkbox", { name: /Bluetooth/, hidden: true })).toBeNull();
+    // kolor: count 5 > 3 (liczniki z API moga liczyc warianty) - tez nie zaweza
+    expect(within(aside).queryByRole("checkbox", { name: /Grafit/, hidden: true })).toBeNull();
+    // rozmiar zaweza (1 z 3)
+    expect(within(aside).getByRole("checkbox", { name: /60%/, hidden: true })).toBeInTheDocument();
+  });
+
+  it("po wybraniu filtra wszystkie facety zostaja (S1: 75% + Bluetooth przy 1 wyniku)", () => {
+    render(<ListingShell {...props({ total: 1, state: { rozmiar: ["60"] } })} />);
+    const aside = screen.getByRole("complementary", { name: "Filtry", hidden: true });
+    expect(
+      within(aside).getByRole("checkbox", { name: /Bluetooth/, hidden: true }),
+    ).toBeInTheDocument();
   });
 
   it("sortowanie zmienia adres (sort=cena-rosnaco)", async () => {

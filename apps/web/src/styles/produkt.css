@@ -25,16 +25,8 @@ a.tk-btn {
     align-items: start;
   }
 }
-/* Kolumna zakupu przyklejona na czas przewijania galerii, ale tylko gdy miesci sie w oknie: wyzsza od okna
-   zostalaby przyklejona z ucietym dolem (docs/05 §4; docs/11 pulapka 26). */
-@media (min-width: 992px) and (min-height: 900px) {
-  .produkt__zakup {
-    position: sticky;
-    top: calc(var(--naglowek-wys) + var(--s2));
-    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
-    overflow-y: auto;
-  }
-}
+/* Audyt P1-5: kolumna zakupu NIE jest przyklejona (z 10+ kolorami i przelacznikami jest wyzsza od okna, a wlasny pasek
+   przewijania w panelu byl bledem). Przycisk zakupu na telefonie: pasek F-068. */
 
 /* ---- galeria (F-060) ---- */
 .galeria__slajdy {
@@ -64,7 +56,9 @@ a.tk-btn {
 }
 .galeria__miniatury {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* audyt P0-3: 4 ujecia + model 3D w jednym rzedzie */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: var(--s1);
   margin-top: var(--s1);
 }
@@ -226,8 +220,15 @@ a.tk-btn {
   gap: var(--s2);
   align-items: center;
 }
-.zakup__set {
+/* Audyt P0-3: "Zaprojektuj własny" i "Dodaj do setu" w drugim rzedzie akcji, pod "Dodaj do koszyka" */
+.zakup__drugie {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--s2);
+}
+.zakup__set,
+.zakup__projekt {
   text-decoration: none;
 }
 .is-nieaktywna {
@@ -392,7 +393,3 @@ a.tk-btn {
 }
 
 /* F-250: odnosnik do konfiguratora kolorow pod wyborem wariantu. */
-.konfigurator-link {
-  margin: var(--s2) 0 0;
-  font-size: var(--t-s);
-}

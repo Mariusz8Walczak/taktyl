@@ -1,6 +1,7 @@
 "use client";
 // F-005 (wyszukiwarka z podpowiedziami), F-006 (synonimy po stronie API), F-242 (zdarzenie `search`).
-// Wzorzec: okno wyszukiwania szablonu (formularz w nakladce, docs/08 §6), modul nakladek @taktyl/ui (pulapka
+// Wzorzec: okno wyszukiwania szablonu (formularz w nakladce, docs/08 §6); uwagi z pokazu (D-2026-11-25): okno jest
+// panelem u gory strony (klasa szukaj-panel, szukaj.css), reszta strony rozmyta, modul nakladek @taktyl/ui (pulapka
 // fokusu, Esc, powrot fokusu na odnosnik "Szukaj"). Podpowiedzi: ARIA combobox + listbox z grupami,
 // aria-activedescendant, strzalki + Enter. TAKTYL-77: ten modul laduje sie dopiero przy pierwszym uzyciu
 // wyszukiwarki (React.lazy w search-box.tsx), wiec nie wchodzi do bazy JS strony (docs/12 §4).
@@ -63,9 +64,16 @@ export interface SearchDialogProps {
   open: boolean;
   onClose: () => void;
   returnFocusRef: RefObject<HTMLElement | null>;
+  /** Znaki wpisane, zanim okno sie zaladowalo (search-box.tsx); wolane raz, po zamontowaniu. */
+  takeBuffered?: () => string;
 }
 
-export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDialogProps) {
+export default function SearchDialog({
+  open,
+  onClose,
+  returnFocusRef,
+  takeBuffered,
+}: SearchDialogProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [options, setOptions] = useState<SuggestOption[]>([]);
@@ -81,6 +89,11 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
     },
   } as RefObject<HTMLElement | null>;
   const listId = `${uid}-lista`;
+  useEffect(() => {
+    const typed = takeBuffered?.() ?? "";
+    if (typed) setQuery((q) => q + typed);
+    // raz po zamontowaniu okna
+  }, []);
   const trimmed = query.trim();
 
   // Debounce + anulowanie poprzedniego zadania (AbortController); wyjatki sieci nie wywracaja pola.
@@ -168,6 +181,7 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
         open={open}
         onClose={close}
         title="Wyszukiwarka"
+        className="szukaj-panel"
         initialFocusRef={inputRef}
         returnFocusRef={returnFocusRef}
       >
@@ -237,6 +251,9 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
                                 <Highlighted text={o.label} query={trimmed} />
                               </span>
                               {o.kind ? <span className="szukaj__rodzaj">{o.kind}</span> : null}
+                              {o.match ? (
+                                <span className="szukaj__powod">Pasuje: {o.match}</span>
+                              ) : null}
                             </span>
                             {o.hint ? <span className="szukaj__cena">{o.hint}</span> : null}
                           </li>

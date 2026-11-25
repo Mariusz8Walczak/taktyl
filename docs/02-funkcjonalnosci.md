@@ -229,4 +229,5 @@ Pełna specyfikacja: `docs/03`. Tu lista do odhaczania.
 | F-254 | Podsumowanie konfiguracji: cena bazowa, dopłata, razem, SKU, informacja „na zamówienie, wysyłka w 7 dni roboczych” | P1 | kwoty zgodne z odpowiedzią API |
 | F-255 | „Stwórz własny set”: scena z klawiaturą, myszką i podkładką, dowolny wygląd każdej części, rabat setu jak w kreatorze | P1 | rabat liczy API wg `shop.json`; gotowe sety i „Zbuduj set” bez zmian |
 | F-256 | Konfiguracja w koszyku i zamówieniu (pozycja na zamówienie, bez stanu magazynowego) | P1 | wycena serwerowa, widoczna w backpanelu |
+| F-257 | Scena 3D konfiguratora: kadr dopasowany do bryły, światło kierunkowe z cieniem na blacie, kamera bez widoku z poziomu blatu; wskazanie części myszą podświetla ją kolorem `--akcent`, kliknięcie części otwiera jej grupę w panelu i przenosi tam fokus | P2 | bryła wypełnia kadr w poziomie; kliknięcie klawiszy otwiera „Dobierz kolory części” z fokusem na zaznaczonej próbce; wybór z klawiatury działa bez sceny |
 

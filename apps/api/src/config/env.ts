@@ -62,6 +62,8 @@ export const envSchema = z.object({
   ),
   DEMO_MODE: bool,
   DEMO_RESET_CRON: z.string().default("0 4 * * *"),
+  // B-622 (docs/25 par. 5): po seedzie i resecie demo generuj ok. 90 dni zamowien i ruchu (dane oznaczone jako demo).
+  DEMO_HISTORY: bool,
   // I-009 (TAKTYL-65): sufity limitow zadan/min/IP w DEMO_MODE (min z limitem bazowym endpointu): odczyt i zapisy.
   DEMO_THROTTLE_READ_LIMIT: z.coerce.number().int().min(1).max(10_000).default(60),
   DEMO_THROTTLE_WRITE_LIMIT: z.coerce.number().int().min(1).max(10_000).default(5),

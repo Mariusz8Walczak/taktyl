@@ -207,7 +207,13 @@ export function ListingShell(props: ListingShellProps) {
   }
 
   const panel = (
-    <FilterPanel facets={facets} state={optState} swatches={swatches} onChange={onFilterChange} />
+    <FilterPanel
+      facets={facets}
+      state={optState}
+      swatches={swatches}
+      total={total}
+      onChange={onFilterChange}
+    />
   );
 
   return (

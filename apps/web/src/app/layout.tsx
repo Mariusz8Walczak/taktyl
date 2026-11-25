@@ -14,6 +14,7 @@ import { MAIN_ID, SkipLink } from "../components/layout/skip-link";
 import { Providers } from "../components/providers";
 import { getShopSettings } from "../lib/api";
 import { CONSENT_BOOTSTRAP_SCRIPT } from "../lib/consent/bootstrap";
+import { siteUrl } from "../lib/site";
 import { archivo } from "./fonts";
 
 // Dane z API sa pobierane przy zadaniu (cache danych Next z tagami i revalidate 300 s, docs/14 §5), wiec build
@@ -21,6 +22,8 @@ import { archivo } from "./fonts";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  // P1-14: wzgledne adresy OG (og.jpg) skladane z tej samej zmiennej co canonical i JSON-LD (lib/site.ts)
+  metadataBase: new URL(siteUrl()),
   title: { default: "Taktyl", template: "%s | Taktyl" },
   description:
     "Taktyl: klawiatury, myszki i podkładki. Złóż set, który pasuje do biurka i dłoni. Sklep demonstracyjny.",
@@ -46,11 +49,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const settings = await getShopSettings();
   // GTM tylko gdy ustawiono (PUBLIC_GTM_ID z compose, zapas NEXT_PUBLIC_GTM_ID); i tak laduje sie dopiero po zgodzie
   const gtmId = process.env.PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GTM_ID || undefined;
+  const apiUrl = (process.env.PUBLIC_API_URL ?? "").replace(/\/+$/, "") || undefined;
   return (
     <html lang="pl" className={archivo.variable} suppressHydrationWarning>
       <head>
         {/* F-240/F-242 (docs/10 §2): tryb zgody (default denied) jako pierwszy tag w <head>, przed paczkami Next */}
         <script id="tryb-zgody" dangerouslySetInnerHTML={{ __html: CONSENT_BOOTSTRAP_SCRIPT }} />
+        {/* ADR-0012: adres kolektora zdarzen dla przegladarki (lib/track-collector.ts); bez PUBLIC_API_URL brak wysylki */}
+        {apiUrl ? <meta name="taktyl:api" content={apiUrl} /> : null}
       </head>
       <body>
         <DemoBarScript />

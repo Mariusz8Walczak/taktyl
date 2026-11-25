@@ -2,7 +2,9 @@
 // `track(event, params)`). Zadnych bezposrednich wywolan gtag() ani pikseli w komponentach (regula 9).
 // Zdarzenia trafiaja do window.dataLayer w obu trybach zgody; narzedzia zewnetrzne (GTM) laduje dopiero
 // lib/consent/consent.ts po zgodzie analitycznej, wiec bez zgody nic nie wychodzi poza przegladarke.
+// ADR-0012 (B-621): po zgodzie na analityke te same zdarzenia ida tez do wlasnego kolektora (track-collector.ts).
 import { readItem, writeItem } from "./storage/safe-storage";
+import { collectEvent } from "./track-collector";
 import type { TrackEventMap, TrackEventName } from "./track-events";
 
 export type TrackParams = Record<string, unknown>;
@@ -57,6 +59,7 @@ export function track(event: string, params: TrackParams = {}): void {
     const payload = hasItems ? { event, ecommerce: clean } : { event, ...clean };
     dl.push(payload);
     if (debugEnabled()) window.dispatchEvent(new CustomEvent(TRACK_DOM_EVENT, { detail: payload }));
+    collectEvent(event, clean);
   } catch {
     /* pomiar nigdy nie zrywa strony */
   }

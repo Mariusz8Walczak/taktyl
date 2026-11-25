@@ -12,20 +12,31 @@
 }
 
 /* ---- akcje karty listingu: za odnosnikiem karty w kolejnosci DOM, wiec klikalne ---- */
+/* Audyt UX: akcje drugorzedne w jednym rzedzie pod glownym przyciskiem (mniejsza waga niz "Szybko dodaj") */
 .karta__akcje {
   position: relative;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--s1);
-  margin-top: auto;
-  padding-top: var(--s1);
-  /* miejsce na dwa przyciski (kod doladowywany po hydratacji): bez skoku ukladu */
-  min-height: calc(var(--cel-min) * 2 + var(--s1) * 2);
+  /* miejsce na przyciski (kod doladowywany po hydratacji): bez skoku ukladu */
+  min-height: calc(var(--cel-min) + var(--s1));
 }
 .ulubione-przycisk,
 .porownaj-przycisk {
   width: 100%;
   min-height: var(--cel-min);
   font-size: var(--t-s);
+}
+.karta__akcje .ulubione-przycisk,
+.karta__akcje .porownaj-przycisk {
+  padding-inline: var(--s1);
+  font-size: var(--t-xs);
+}
+@media (max-width: 575.98px) {
+  .karta__akcje {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: calc(var(--cel-min) * 2 + var(--s1) * 2);
+  }
 }
 .zakup__narzedzia {
   display: flex;

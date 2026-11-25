@@ -15,7 +15,14 @@ export interface CardColor {
   id: string;
   label: string;
   swatch: string;
+  /** F-040 (uwagi z pokazu): wariant tego koloru - klikniecie probki przelacza adres karty i "Szybko dodaj". */
+  sku: string;
+  /** Audyt UX: ujecie 01-34 tego koloru (gotowe w manifescie) - pokazywane po najechaniu na probke. */
+  image?: ImageRef | null;
 }
+
+/** Ile probek kolorow pokazuje karta; reszta jako "+N" (audyt UX: 22 probki z podpisami to sciana tekstu). */
+export const CARD_SWATCHES = 5;
 
 export interface CardView {
   id: string;
@@ -77,11 +84,22 @@ export function buildCardView(card: ProductCard, product: Product, ctx: CardCont
   const seen = new Set<string>();
   const colors: CardColor[] = [];
   for (const c of ctx.colors) {
-    if (product.variants.some((v) => v.color === c.id) && !seen.has(c.id)) {
+    const v = product.variants.find((x) => x.color === c.id);
+    if (v && !seen.has(c.id)) {
       seen.add(c.id);
-      colors.push({ id: c.id, label: c.label, swatch: c.swatch });
+      const img = packshotsFor(product.images, product.id, v.images_key)[0];
+      colors.push({
+        id: c.id,
+        label: c.label,
+        swatch: c.swatch,
+        sku: v.sku,
+        image: img && img.status === "gotowe" ? img : null,
+      });
     }
   }
+  // Kolor pokazany na zdjeciu jako pierwsza probka (najechanie na nia wraca do zdjecia glownego)
+  const shownAt = colors.findIndex((c) => c.id === shown.color);
+  if (shownAt > 0) colors.unshift(...colors.splice(shownAt, 1));
 
   const base = `/${product.category}/${product.slug}`;
   return {

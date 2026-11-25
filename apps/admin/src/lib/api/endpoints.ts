@@ -1,6 +1,13 @@
 // B-001, B-100..B-115, B-200..B-205, B-400..B-408: typowane wywolania API admina (docs/16 §3). Kazde wywolanie
 // ma schemat odpowiedzi z @taktyl/contracts; mutacje niosa X-CSRF-Token (client.ts) i If-Match tam, gdzie wymaga tego API.
 import {
+  adminSearchSchema,
+  colorsResponseSchema,
+  operationsStatsSchema,
+  salesStatsSchema,
+  systemStatusSchema,
+  trafficStatsSchema,
+  type StatsRangeQuery,
   auditListSchema,
   dashboardSchema,
   mediaListSchema,
@@ -285,4 +292,28 @@ export const dashboardApi = {
 export const auditApi = {
   list: (query: Partial<z.output<typeof auditListQuerySchema>>) =>
     apiRequest({ path: `${A}/audit`, query, schema: auditListSchema }).then((r) => r.data),
+};
+
+/** B-610..B-626 (docs/25 par. 2): statystyki pulpitu, ruch, operacje, system i wyszukiwarka globalna. */
+export const statsApi = {
+  sales: (q: StatsRangeQuery) =>
+    apiRequest({ path: `${A}/stats/sales`, query: q, schema: salesStatsSchema }).then(
+      (r) => r.data,
+    ),
+  traffic: (q: StatsRangeQuery) =>
+    apiRequest({ path: `${A}/stats/traffic`, query: q, schema: trafficStatsSchema }).then(
+      (r) => r.data,
+    ),
+  operations: () =>
+    apiRequest({ path: `${A}/stats/operations`, schema: operationsStatsSchema }).then(
+      (r) => r.data,
+    ),
+  system: () => apiRequest({ path: `${A}/system`, schema: systemStatusSchema }).then((r) => r.data),
+  search: (q: string) =>
+    apiRequest({ path: `${A}/search`, query: { q }, schema: adminSearchSchema }).then(
+      (r) => r.data,
+    ),
+  /** Publiczny slownik kolorow (etykiety w dzienniku zmian). */
+  colors: () =>
+    apiRequest({ path: "/v1/colors", schema: colorsResponseSchema }).then((r) => r.data),
 };

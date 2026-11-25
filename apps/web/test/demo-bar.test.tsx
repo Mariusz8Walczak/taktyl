@@ -1,10 +1,12 @@
-// F-001: pasek demo (zamykany na sesje, storage w try/catch, bez migania).
+// F-001: pasek demo (zamkniecie pamietane w localStorage przez DEMO_BAR_DAYS dni, storage w try/catch, bez migania).
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
   DEMO_BAR_ATTR,
+  DEMO_BAR_DAYS,
   DEMO_BAR_KEY,
+  demoBarClosed,
   DEMO_BAR_SCRIPT,
   DemoBar,
 } from "../src/components/layout/demo-bar";
@@ -19,25 +21,26 @@ describe("DemoBar (F-001)", () => {
     expect(screen.getByRole("button", { name: "Zamknij" })).toBeInTheDocument();
   });
 
-  it("zamkniecie usuwa pasek, zapisuje sesje i ustawia atrybut na <html>", async () => {
+  it("zamkniecie usuwa pasek, zapisuje date w localStorage i ustawia atrybut na <html>", async () => {
     render(<DemoBar label={label} />);
     await userEvent.click(screen.getByRole("button", { name: "Zamknij" }));
     expect(screen.queryByText(label)).not.toBeInTheDocument();
-    expect(window.sessionStorage.getItem(DEMO_BAR_KEY)).toBe("closed");
+    expect(window.localStorage.getItem(DEMO_BAR_KEY)).toMatch(/^closed:\d+$/);
     expect(document.documentElement.getAttribute(DEMO_BAR_ATTR)).toBe("closed");
   });
 
-  it("zamkniety w tej sesji nie wraca po ponownym wejsciu na strone", () => {
-    window.sessionStorage.setItem(DEMO_BAR_KEY, "closed");
-    render(<DemoBar label={label} />);
-    expect(screen.queryByText(label)).not.toBeInTheDocument();
-  });
-
-  it("w nowej sesji (pusty sessionStorage) pasek wraca", () => {
-    window.sessionStorage.setItem(DEMO_BAR_KEY, "closed");
+  it("zamkniety nie wraca w nowej sesji (localStorage), ale wraca po DEMO_BAR_DAYS dniach", () => {
+    window.localStorage.setItem(DEMO_BAR_KEY, `closed:${Date.now()}`);
     window.sessionStorage.clear();
+    const { unmount } = render(<DemoBar label={label} />);
+    expect(screen.queryByText(label)).not.toBeInTheDocument();
+    unmount();
+    const old = Date.now() - (DEMO_BAR_DAYS + 1) * 24 * 60 * 60 * 1000;
+    expect(demoBarClosed(`closed:${old}`)).toBe(false);
+    window.localStorage.setItem(DEMO_BAR_KEY, `closed:${old}`);
     render(<DemoBar label={label} />);
     expect(screen.getByText(label)).toBeVisible();
+    window.localStorage.removeItem(DEMO_BAR_KEY);
   });
 
   it("wyjatek storage przy zapisie nie psuje zamykania (zapas w pamieci)", async () => {
@@ -57,9 +60,10 @@ describe("DemoBar (F-001)", () => {
     expect(screen.getByText(label)).toBeVisible();
   });
 
-  it("skrypt przed malowaniem ustawia atrybut dla zamknietej sesji i nie rzuca przy wyjatku storage", () => {
-    window.sessionStorage.setItem(DEMO_BAR_KEY, "closed");
+  it("skrypt przed malowaniem ustawia atrybut dla zamknietego paska i nie rzuca przy wyjatku storage", () => {
+    window.localStorage.setItem(DEMO_BAR_KEY, `closed:${Date.now()}`);
     new Function(DEMO_BAR_SCRIPT)();
+    window.localStorage.removeItem(DEMO_BAR_KEY);
     expect(document.documentElement.getAttribute(DEMO_BAR_ATTR)).toBe("closed");
 
     document.documentElement.removeAttribute(DEMO_BAR_ATTR);

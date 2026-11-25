@@ -320,6 +320,8 @@ model Order {
   paidAt           DateTime?            @map("paid_at") @db.Timestamptz(6)
   updatedAt        DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   internalNote     String?              @map("internal_note")
+  /// B-622: zamowienie z generatora historii demonstracyjnej (nie od klienta).
+  demo             Boolean              @default(false)
   shippingMethod   ShippingMethod       @relation(fields: [shippingMethodId], references: [id])
   items            OrderItem[]
   statusHistory    OrderStatusHistory[]
@@ -570,4 +572,21 @@ model IdempotencyKey {
 
   @@index([expiresAt])
   @@map("idempotency_keys")
+}
+
+// B-621 (ADR-0012): zdarzenia pomiaru z docs/10 zbierane przez POST /v1/events (tylko po zgodzie na analityke).
+// Anonimowy session_id, bez danych osobowych i adresu IP. `demo` = ruch z generatora (B-622).
+model AnalyticsEvent {
+  id         BigInt   @id @default(autoincrement())
+  sessionId  String   @map("session_id")
+  name       String
+  params     Json
+  ts         DateTime @db.Timestamptz(6)
+  receivedAt DateTime @default(now()) @map("received_at") @db.Timestamptz(6)
+  demo       Boolean  @default(false)
+
+  @@index([ts])
+  @@index([name, ts])
+  @@index([sessionId, ts])
+  @@map("analytics_events")
 }

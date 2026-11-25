@@ -1,0 +1,18 @@
+# I-016 (docs/26-wdrozenie.md): nakladka produkcyjna. Uzycie:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file <env prod> build
+# Obrazy sklepu i backpanelu dostaja adresy PUBLIC_* w czasie budowania, wiec prod ma osobne tagi `:prod`
+# i nie nadpisuje lokalnych `:local`. Porty, profil demo i nazwy hostow przychodza z .env serwera
+# (PROXY_HTTP_PORT=127.0.0.1:4100, COMPOSE_PROFILES=demo, SHOP_HOST/ADMIN_HOST/API_HOST).
+services:
+  migrate:
+    image: taktyl-migrate:prod
+  seed:
+    image: taktyl-api:prod
+  api:
+    image: taktyl-api:prod
+  reset-demo:
+    image: taktyl-api:prod
+  web:
+    image: taktyl-web:prod
+  admin:
+    image: taktyl-admin:prod

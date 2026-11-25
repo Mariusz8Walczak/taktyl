@@ -9,6 +9,62 @@
   }
 }
 
+/* F-005, uwagi z pokazu (D-2026-11-25): wyszukiwarka to panel u gory strony na cala szerokosc, tresc w kolumnie
+   kontenera; strona pod spodem rozmyta (backdrop-filter z tokenu --rozmycie-tla). Ruch A-12 w wariancie menu:
+   opacity + translateY, czasy z tokenow, wylaczony przy prefers-reduced-motion (nakladki.css). */
+.tk-overlay--okno.szukaj-panel {
+  align-items: flex-start;
+  padding: 0;
+}
+.szukaj-panel .tk-overlay__tlo {
+  background-color: var(--nakladka-lekka);
+  -webkit-backdrop-filter: blur(var(--rozmycie-tla));
+  backdrop-filter: blur(var(--rozmycie-tla));
+}
+.tk-overlay--okno.szukaj-panel .tk-overlay__panel {
+  width: 100%;
+  max-height: 85dvh;
+  border-radius: 0 0 var(--r) var(--r);
+  animation-name: szukaj-panel-we;
+}
+.tk-overlay--okno.szukaj-panel[data-stan="zamykanie"] .tk-overlay__panel {
+  animation-name: szukaj-panel-wy;
+}
+.szukaj-panel .tk-overlay__naglowek,
+.szukaj-panel .tk-overlay__tresc {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+}
+.szukaj-panel .tk-overlay__naglowek {
+  border-bottom: 0;
+  padding-inline: var(--s2);
+}
+.szukaj-panel .tk-overlay__tresc {
+  padding: 0 var(--s2) var(--s3);
+}
+.szukaj-panel .tk-pole__kontrolka {
+  font-size: var(--t-l);
+}
+@keyframes szukaj-panel-we {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--s2) * -1));
+  }
+}
+@keyframes szukaj-panel-wy {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--s2) * -1));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk-overlay--okno.szukaj-panel .tk-overlay__panel {
+    animation: none;
+  }
+}
+
 .szukaj {
   display: grid;
   gap: var(--s2);
@@ -70,6 +126,12 @@
 .szukaj__rodzaj {
   font-size: var(--t-xs);
   color: var(--tekst-slaby);
+}
+/* Audyt UX: powod dopasowania pod nazwa ("Pasuje: przełącznik Szept") */
+.szukaj__powod {
+  display: block;
+  font-size: var(--t-xs);
+  color: var(--tekst);
 }
 .szukaj__cena {
   flex: none;

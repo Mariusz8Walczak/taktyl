@@ -42,10 +42,13 @@
 
   --fokus:          var(--akcent);
   --nakladka:       rgb(26 33 43 / .48);
+  --nakladka-lekka: rgb(26 33 43 / .24); /* tlo pod panelem wyszukiwarki: rozmycie robi reszte */
+  --rozmycie-tla:   8px;                 /* backdrop-filter pod panelem wyszukiwarki (F-005, D-2026-11-25) */
 
   /* TYPOGRAFIA — jedna rodzina, dwie szerokości, dwie grubości */
   --font: "Archivo Taktyl", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --szer-tekst: 100%;   /* font-stretch tekstu */
+  --szer-tekst: 112.5%; /* font-stretch tekstu (D-2026-11-25: 100% czytalo sie jak generyczny grotesk) */
+  --szer-interfejs: 100%; /* font-stretch nawigacji naglowka: gesty rzad linkow mieści sie bez sciskania logo */
   --szer-naglowek: 125%;/* font-stretch nagłówków, cen, logotypu, klawiszy */
   --w-zwykla: 400;
   --w-mocna: 700;
@@ -118,6 +121,7 @@
   --blad:           #FF7A6E;  --blad-tlo:   #3A1D1B;
   --uwaga:          #E5B547;  --uwaga-tlo:  #3A2E12;
   --nakladka:       rgb(0 0 0 / .6);
+  --nakladka-lekka: rgb(0 0 0 / .36);
   --cien-1: 0 1px 3px rgb(0 0 0 / .4);
   --cien-2: 0 12px 32px rgb(0 0 0 / .5);
   background-color:var(--tlo);

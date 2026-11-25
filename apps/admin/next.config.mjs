@@ -4,9 +4,19 @@
 import process from "node:process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { buildCsp } from "./csp.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
+// B-623: wersje stosu panelu odczytane z zainstalowanych paczek przy budowie (strona "Jak to jest zrobione").
+const require = createRequire(import.meta.url);
+const version = (name) => {
+  try {
+    return require(`${name}/package.json`).version;
+  } catch {
+    return "?";
+  }
+};
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,7 +25,13 @@ const nextConfig = {
   outputFileTracingRoot: join(here, "../.."),
   transpilePackages: ["@taktyl/ui", "@taktyl/contracts", "@taktyl/domain", "@taktyl/tokens"],
   // Adres sklepu do odnosnikow "Zobacz w sklepie" (wartosc publiczna, nie sekret) trafia do bundla klienta.
-  env: { PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL ?? "http://taktyl.localhost" },
+  env: {
+    PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL ?? "http://taktyl.localhost",
+    STACK_NEXT: version("next"),
+    STACK_REACT: version("react"),
+    STACK_RECHARTS: version("recharts"),
+    STACK_TANSTACK_QUERY: version("@tanstack/react-query"),
+  },
   async headers() {
     return [
       {

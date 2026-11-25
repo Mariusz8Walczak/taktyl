@@ -8,6 +8,7 @@
   z-index: var(--z-naglowek);
   background-color: var(--powierzchnia);
   border-bottom: var(--tk-linia-1) solid var(--linia);
+  font-stretch: var(--szer-interfejs); /* D-2026-11-25: tekst strony 112,5%, nawigacja zostaje w 100% */
 }
 .naglowek__wnetrze {
   display: flex;
@@ -150,5 +151,14 @@
   .lista--rzad {
     display: flex;
     gap: var(--s1);
+  }
+}
+
+/* F-255: od 1400 px szesc pozycji menu i akcje mieszcza sie w jednej linii (ok. 1215 px przy kontenerze --max),
+   wiec etykiety nie lamia sie na dwie („Zbuduj set”, „Własny set”). Ponizej zostaje zawijanie jak dotad. */
+@media (min-width: 1400px) {
+  .naglowek__nawigacja .naglowek__link,
+  .naglowek__nawigacja .naglowek__menu {
+    white-space: nowrap;
   }
 }

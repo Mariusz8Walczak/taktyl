@@ -3,7 +3,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": ["PUBLIC_SITE_URL", "PUBLIC_API_URL", "PUBLIC_ADMIN_URL", "PUBLIC_GTM_ID"]
     },
     "lint": {
       "dependsOn": ["^build"]

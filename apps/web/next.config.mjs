@@ -28,7 +28,10 @@ const nextConfig = {
         ? [
             {
               key: "Content-Security-Policy",
-              value: buildCsp({ gtm: Boolean(process.env.PUBLIC_GTM_ID) }),
+              value: buildCsp({
+                gtm: Boolean(process.env.PUBLIC_GTM_ID),
+                apiUrl: process.env.PUBLIC_API_URL,
+              }),
             },
           ]
         : [];
