@@ -2,7 +2,7 @@
 // klawiatury, stan URL <-> wybor, taktyl.set.v1, nieznany SKU, kopiowanie linku z zapasem, dodanie setu do koszyka,
 // dostepnosc (fieldset/legend, aria-current, fokus, axe). Dane z data/*.json (builder-fixtures).
 import { ToastProvider } from "@taktyl/ui";
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
@@ -95,6 +95,17 @@ describe("S11: Marmur 100 + Jerzyk + Szron XL, FPS", () => {
     expect(plain(aside().textContent)).toMatch(/potrzebuje 91 cm/);
     expect(within(aside()).getByRole("button", { name: /Zmień na Tafla XXL/ })).toBeInTheDocument();
     expect(events("set_fit_warning")).toHaveLength(0); // wczytanie adresu nie jest zmiana wyniku
+  });
+
+  it("audyt P0-2: obszar kolizji i przycisk Zamien w podgladzie podmienia podkladke", () => {
+    const { container } = renderBuilder(
+      "profil=fps&k=K-MRM100-GRF-SLZ&m=M-JRZ-GRF&p=P-SZR-XL-GRF&krok=podsumowanie",
+    );
+    expect(container.querySelector("[data-testid=desk-zone-outside]")).not.toBeNull();
+    fireEvent.click(within(aside()).getByRole("button", { name: /^Zamień na Tafla XXL/ }));
+    expect(container.querySelector("[data-testid=desk-zone-outside]")).toBeNull();
+    expect(within(aside()).queryByRole("button", { name: /^Zamień na/ })).toBeNull();
+    expect(events("set_suggestion_apply")).toHaveLength(1);
   });
 });
 

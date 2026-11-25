@@ -7,6 +7,11 @@
 // F-257: kadr dopasowany do bryly, swiatlo kierunkowe z cieniem na blacie, wskazanie i klikniecie czesci na modelu.
 // A-19 (docs/07): obrot przyciskami i zmiana widoku jako przejscie kamery `--d-l` · `--e-wyjscie`; przy
 // `prefers-reduced-motion: reduce` czas spada do zera, a wygaszanie obrotu jest wylaczone.
+// F-257 (wydajnosc na slabym sprzecie): DPR maks. 1,5 (1 w trakcie przeciagania), antialias tylko przy DPR < 2,
+// MeshStandardMaterial zamiast Physical, gdy wykonczenie nie potrzebuje clearcoat/sheen/transmisji/iryzacji; materialy
+// z pamieci podrecznej po kluczu farby (bez rekompilacji shaderow przy kazdej zmianie), transmisja z modelu GLB
+// (czesci niemalowane, np. przelaczniki) zastapiona przezroczystoscia - bez dodatkowego przebiegu transmisji co klatke,
+// gdy klient nie wybral wykonczenia polprzezroczystego; compileAsync po zaladowaniu; scena poza ekranem nie rysuje.
 import type { ConfiguratorData } from "@taktyl/contracts";
 import type { Configuration } from "@taktyl/domain";
 import type * as T from "three";
@@ -36,8 +41,8 @@ interface Props {
   items: StageItem[];
   handleRef?: Ref<StageHandle>;
   onStatus?: (s: "loading" | "ready" | "error") => void;
-  /** Klikniecie czesci na modelu (klucz elementu, id czesci). */
-  onPick?: (itemKey: string, partId: string) => void;
+  /** F-257: klikniecie (nie przeciagniecie) czesci modelu - id czesci (nazwa siatki) i klucz elementu. */
+  onPick?: (partId: string, itemKey: string) => void;
 }
 
 interface Loaded {
@@ -77,6 +82,8 @@ interface Runtime {
   aimRot: () => number;
   poseFor: (dir: T.Vector3, rot: number) => Pose;
   clearHover: () => void;
+  /** Materialy wedlug klucza farby (jeden program shadera na rodzaj wykonczenia). */
+  materials: Map<string, T.Material>;
 }
 
 /** Kierunek kamery (od celu) z kata obrotu wokol osi pionowej i wzniesienia, w stopniach. */
@@ -85,6 +92,10 @@ const VIEWS = { front: { az: 0, el: 14 }, top: { az: 0, el: 80 } } as const;
 /** Czesc kadru zajeta przez bryle (reszta to margines; przyciski obrotu stoja w osobnym wierszu pod plotnem). */
 const FILL_H = 0.94;
 const FILL_V = 0.86;
+/** Parametry wymagajace MeshPhysicalMaterial (reszta wykonczen to MeshStandardMaterial - tanszy shader). */
+const PHYSICAL_KEYS = ["clearcoat", "sheen", "transmission", "iridescence", "ior", "thickness"];
+/** Maks. gestosc pikseli: powyzej 1,5 koszt rosnie z kwadratem, a roznica jest ledwo widoczna. */
+const MAX_DPR = 1.5;
 
 /** Wartosc tokenu z `:root` (regula 2: czasy, krzywe i kolory tylko z tokenow). */
 function token(name: string): string {
@@ -162,8 +173,14 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         ]);
       if (cancelled) return;
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      const deviceDpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(deviceDpr, MAX_DPR);
+      const renderer = new THREE.WebGLRenderer({
+        antialias: deviceDpr < 2,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+      renderer.setPixelRatio(dpr);
       renderer.toneMapping = THREE.NeutralToneMapping;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.shadowMap.enabled = true;
@@ -214,7 +231,25 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       const draco = new DRACOLoader().setDecoderPath("/3d/draco/");
       const loader = new GLTFLoader().setDRACOLoader(draco);
 
-      const render = () => renderer.render(scene, camera);
+      // Scena poza ekranem nie rysuje (kilka podgladow na jednej stronie); po powrocie jedna klatka.
+      let visible = true;
+      let dirty = false;
+      const render = () => {
+        if (!visible) {
+          dirty = true;
+          return;
+        }
+        dirty = false;
+        renderer.render(scene, camera);
+      };
+      const io =
+        typeof IntersectionObserver === "undefined"
+          ? null
+          : new IntersectionObserver((entries) => {
+              visible = entries.some((e) => e.isIntersecting);
+              if (visible && dirty) render();
+            });
+      io?.observe(el);
 
       // Petla klatek tylko w trakcie ruchu (przeciaganie, wygaszanie, przejscie A-19).
       let tween: Tween | null = null;
@@ -241,13 +276,16 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         if (!raf) raf = requestAnimationFrame(tick);
       };
       controls.addEventListener("change", kick);
+      // W trakcie przeciagania DPR 1 (plynny obrot), po puszczeniu pelna jakosc.
       controls.addEventListener("start", () => {
         dragging = true;
         tween = null;
+        if (dpr > 1) renderer.setPixelRatio(1);
         kick();
       });
       controls.addEventListener("end", () => {
         dragging = false;
+        if (dpr > 1) renderer.setPixelRatio(dpr);
         kick();
       });
 
@@ -459,7 +497,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         down = null;
         if (moved > 5) return;
         const hit = hitAt(e.clientX, e.clientY);
-        if (hit) pick.current?.(hit.key, hit.partId);
+        if (hit) pick.current?.(hit.partId, hit.key);
       };
       let moveRaf = 0;
       const onMove = (e: PointerEvent) => {
@@ -481,7 +519,10 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerleave", onLeave);
 
+      const materials = new Map<string, T.Material>();
       cleanup = () => {
+        io?.disconnect();
+        materials.forEach((m) => m.dispose());
         cancelAnimationFrame(raf);
         cancelAnimationFrame(moveRaf);
         canvas.removeEventListener("pointerdown", onDown);
@@ -500,6 +541,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         });
         sun.shadow.map?.dispose();
         renderer.dispose();
+        renderer.forceContextLoss(); // zwolnienie kontekstu WebGL od razu (limit kontekstow na strone)
         canvas.remove();
       };
       rt.current = {
@@ -517,6 +559,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         poseFor: (dir, rot) => poseFor(dir, rot),
         aimRot: () => tween?.to.rot ?? group.rotation.y,
         clearHover,
+        materials,
       };
       // Kierunki widokow z katow (uzywane przez uchwyt).
       viewDirs.current = {
@@ -574,14 +617,29 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
           }
           const gltf = await r.loader.loadAsync(`/3d/${item.model.file}`);
           if (cancelled || !rt.current) return;
+          const { THREE } = r;
           const obj = gltf.scene;
           obj.position.set(...item.offset);
           const meshes = new Map<string, T.Mesh>();
           obj.traverse((o) => {
-            if ((o as T.Mesh).isMesh) {
-              o.castShadow = true;
-              o.receiveShadow = true;
-              meshes.set(o.name, o as T.Mesh);
+            if (!(o as T.Mesh).isMesh) return;
+            const mesh = o as T.Mesh;
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            meshes.set(o.name, mesh);
+            // F-257: transmisja z pliku (np. przelaczniki pod klawiszami) = dodatkowy przebieg co klatke; zamiast niej
+            // przezroczystosc o tym samym kolorze (czesci malowane i tak dostaja material z farby ponizej).
+            const m = mesh.material as T.MeshPhysicalMaterial;
+            if (m && (m.transmission ?? 0) > 0) {
+              const std = new THREE.MeshStandardMaterial({
+                color: m.color,
+                roughness: m.roughness,
+                metalness: m.metalness,
+                transparent: true,
+                opacity: Math.max(0.35, 1 - m.transmission * 0.6),
+              });
+              m.dispose();
+              mesh.material = std;
             }
           });
           r.group.add(obj);
@@ -615,19 +673,32 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
       for (const [partId, mesh] of loaded.meshes) {
         const paint = partPaint(data, item.config, partId);
         if (!paint) continue;
-        const old = mesh.material as T.Material;
-        const mat = new THREE.MeshPhysicalMaterial(
-          paint.pbr as unknown as T.MeshPhysicalMaterialParameters,
-        );
-        if (paint.emissive) {
-          mat.color.copy(new THREE.Color(0, 0, 0));
-          mat.emissive.set(paint.color);
-          mat.emissiveIntensity = 1;
-        } else {
-          mat.color.set(paint.color);
+        // Nadruk podkladki ustawia wlasna mape na materiale - ten material nie jest wspoldzielony.
+        const own = partId === "wierzch" && Boolean(item.config.print);
+        const key = `${paint.color}|${paint.emissive ? 1 : 0}|${JSON.stringify(paint.pbr)}`;
+        if (!own && mesh.userData.paintKey === key) continue;
+        let mat = own ? undefined : r.materials.get(key);
+        if (!mat) {
+          const pbr = paint.pbr as Record<string, unknown>;
+          const physical = PHYSICAL_KEYS.some((k) => k in pbr);
+          const m = physical
+            ? new THREE.MeshPhysicalMaterial(pbr as unknown as T.MeshPhysicalMaterialParameters)
+            : new THREE.MeshStandardMaterial(pbr as unknown as T.MeshStandardMaterialParameters);
+          if (paint.emissive) {
+            m.color.copy(new THREE.Color(0, 0, 0));
+            m.emissive.set(paint.color);
+            m.emissiveIntensity = 1;
+          } else {
+            m.color.set(paint.color);
+          }
+          mat = m;
+          if (!own) r.materials.set(key, m);
         }
+        const old = mesh.material as T.Material;
         mesh.material = mat;
-        old.dispose();
+        mesh.userData.paintKey = own ? null : key;
+        // material z pamieci podrecznej moze byc uzywany przez inne czesci - zwalniamy tylko wlasne
+        if (old !== mat && ![...r.materials.values()].includes(old)) old.dispose();
       }
 
       const top = loaded.meshes.get("wierzch");
@@ -643,7 +714,7 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
           const map = printMapping(print, item.model.dims_mm);
           tex.repeat.set(...map.repeat);
           tex.offset.set(...map.offset);
-          const mat = top.material as T.MeshPhysicalMaterial;
+          const mat = top.material as T.MeshStandardMaterial;
           mat.map = tex;
           mat.color.copy(new THREE.Color(1, 1, 1));
           mat.needsUpdate = true;
@@ -651,7 +722,21 @@ export default function Stage({ data, items, handleRef, onStatus, onPick }: Prop
         });
       }
     }
-    r.render();
+    // F-257: nowe programy shaderow kompilowane w tle (KHR_parallel_shader_compile), dopiero potem klatka -
+    // bez przyciecia przy pierwszym obrocie; gdy kompilacja asynchroniczna niedostepna, zwykly render.
+    const compile = (
+      r.renderer as T.WebGLRenderer & {
+        compileAsync?: (s: T.Object3D, c: T.Camera) => Promise<unknown>;
+      }
+    ).compileAsync;
+    if (compile) {
+      compile
+        .call(r.renderer, r.scene, r.camera)
+        .catch(() => undefined)
+        .then(() => {
+          if (!cancelled && rt.current) r.render();
+        });
+    } else r.render();
     return () => {
       cancelled = true;
     };

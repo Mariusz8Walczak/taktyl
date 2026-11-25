@@ -14,7 +14,7 @@ import {
   toDomainData,
 } from "../../lib/configurator/model";
 import { BenefitIcon } from "./ikony";
-import { PartsPanel } from "./parts-panel";
+import { PartsPanel, revealPart } from "./parts-panel";
 import { SceneView } from "./scene-view";
 import type { StageItem } from "./stage";
 
@@ -163,7 +163,12 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
 
   return (
     <div className="konfigurator konfigurator--set">
-      <SceneView title="Podgląd 3D: twój własny set na biurku" data={data} items={items} />
+      <SceneView
+        title="Podgląd 3D: twój własny set na biurku"
+        data={data}
+        items={items}
+        onPick={(partId, key) => revealPart(`${key}-`, partId)}
+      />
 
       <div className="konfigurator__panel">
         {SLOTS.map(({ slot, title }) => {
@@ -171,7 +176,9 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
           return (
             <section key={slot} className="konfigurator__sekcja" aria-labelledby={`${uid}-${slot}`}>
               <h2 id={`${uid}-${slot}`} className="konfigurator__sekcja-tytul">
-                <BenefitIcon name={slot === "k" ? "klawiatura" : slot === "m" ? "mysz" : "podkladka"} />{" "}
+                <BenefitIcon
+                  name={slot === "k" ? "klawiatura" : slot === "m" ? "mysz" : "podkladka"}
+                />{" "}
                 {title}: <span>{modelLabel(model)}</span>
               </h2>
               <fieldset className="konfigurator__grupa">
@@ -197,8 +204,8 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
               <details className="konfigurator__czesci">
                 <summary>Dobierz kolory części</summary>
                 <PartsPanel
+                  idPrefix={`${slot}-`}
                   data={data}
-                  scope={slot}
                   model={model}
                   choices={state[slot].choices}
                   resolved={result.config}
@@ -283,8 +290,8 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
             </p>
           )}
           <p className="konfigurator__info">
-            <BenefitIcon name="termin" /> Każdy element wykonujemy na zamówienie, wysyłka w ok. 7 dni roboczych. Rabat za komplet
-            obejmuje trzy elementy w jednym secie.
+            <BenefitIcon name="termin" /> Każdy element wykonujemy na zamówienie, wysyłka w ok. 7
+            dni roboczych. Rabat za komplet obejmuje trzy elementy w jednym secie.
           </p>
           <Button
             className="konfigurator__koszyk"

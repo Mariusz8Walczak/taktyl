@@ -98,8 +98,9 @@ describe("Configurator (F-250..F-254)", () => {
     expect(turkus).toHaveAttribute("aria-checked", "false");
     await user.click(turkus);
     expect(turkus).toHaveAttribute("aria-checked", "true");
-    await waitFor(() => expect(screen.getByText(/329,00/)).toBeInTheDocument());
-    expect(screen.getByText(/30,00/)).toBeInTheDocument();
+    // kwota jest w podsumowaniu i w pasku zakupu pod modelem (audyt UX)
+    await waitFor(() => expect(screen.getAllByText(/329,00/).length).toBeGreaterThan(0));
+    expect(screen.getAllByText(/30,00/).length).toBeGreaterThan(0);
     expect(calls.at(-1)?.parts).toMatchObject({ obudowa: { color: "turkus" } });
   });
 

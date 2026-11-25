@@ -96,7 +96,12 @@ export function computeDeskGeometry(input: DeskGeometryInput): DeskGeometry {
     const m: Rect | null = mouse
       ? { x: centerX - mouse.w / 2, y: centerY - mouse.d / 2, w: mouse.w, d: mouse.d }
       : null;
-    const outsideW = realPad ? zone.x + zone.w - (realPad.x + realPad.w) : 0;
+    // Audyt P0-2: obszar kolizji = cala brakujaca szerokosc za krawedzia podkladki (strefa i margines krawedzi),
+    // nie tylko czesc strefy; przy braku 1 cm (Szron XL, 91 cm) pasek 10 mm jest widoczny za mata.
+    const outsideW =
+      realPad && required !== null
+        ? Math.max(zone.x + zone.w - (realPad.x + realPad.w), required - realPad.w)
+        : 0;
     const zoneOutside: Rect | null =
       realPad && outsideW > 0
         ? { x: realPad.x + realPad.w, y: zone.y, w: outsideW, d: zone.d }

@@ -98,11 +98,27 @@ export function FitResults({ api }: { api: BuilderApi }) {
 /** F-106: podglad biurka zasilany stanem kreatora; elementy z manifestu albo placeholdery w wymiarach z danych. */
 export function DeskView({ api }: { api: BuilderApi }) {
   const { model, state, analysis } = api;
+  // Audyt P0-2, F-105: propozycja reguly szerokosci ("Zmien na Filc XXL") takze w samym podgladzie, przy obszarze kolizji
+  const widthFix = analysis.report.results.find(
+    (r) => r.level === "uwaga" && r.suggestion && r.id.startsWith("pad-width"),
+  )?.suggestion;
   return (
     <DeskStage
       className="kreator__scena"
       baseUrl={MEDIA_BASE_URL}
       {...deskStageData(model, state.profile, analysis)}
+      action={
+        widthFix ? (
+          <Button
+            variant="secondary"
+            className="kreator__scena-akcja"
+            onClick={() => api.applySuggestion(widthFix)}
+          >
+            {/* "Zamień" w podgladzie (audyt P0-2), "Zmień" w liscie wynikow: dwa przyciski, dwie rozne nazwy */}
+            {widthFix.label.replace(/^Zmień/, "Zamień")}
+          </Button>
+        ) : null
+      }
     />
   );
 }
@@ -238,23 +254,31 @@ export function Summary({ api }: { api: BuilderApi }) {
         <FitResults api={api} />
       </div>
       <div className="kreator__lista">
-        <h3 className="kreator__lista-tytul">Twój set</h3>
-        <Rows api={api} />
-        <PriceBlock api={api} />
-        <Button
-          className="kreator__dodaj"
-          loading={api.busy}
-          disabled={blocker !== null}
-          aria-describedby={blocker ? "powod-dodania" : undefined}
-          onClick={() => void api.addToCart()}
-        >
-          Dodaj set do koszyka
-        </Button>
-        {blocker ? (
-          <p id="powod-dodania" className="kreator__powod">
-            {blocker}
-          </p>
-        ) : null}
+        {/* Audyt P1-5: pozycje zwijane przez klienta (domyslnie rozwiniete - "Zmień" zawsze pod reka), cena i przycisk
+            w przyklejonej stopce panelu, wiec panel nie potrzebuje wlasnego paska przewijania */}
+        <details className="kreator__pozycje" open>
+          <summary className="kreator__lista-tytul">
+            Twój set <span className="kreator__lista-licznik">({api.analysis.count} z 3)</span>
+          </summary>
+          <Rows api={api} />
+        </details>
+        <div className="kreator__stopka">
+          <PriceBlock api={api} />
+          <Button
+            className="kreator__dodaj"
+            loading={api.busy}
+            disabled={blocker !== null}
+            aria-describedby={blocker ? "powod-dodania" : undefined}
+            onClick={() => void api.addToCart()}
+          >
+            Dodaj set do koszyka
+          </Button>
+          {blocker ? (
+            <p id="powod-dodania" className="kreator__powod">
+              {blocker}
+            </p>
+          ) : null}
+        </div>
       </div>
     </aside>
   );

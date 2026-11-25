@@ -247,6 +247,8 @@ export const searchQuerySchema = z.object({
 export const searchProductSchema = productCardSchema.extend({
   thumb: z.string().nullable(),
   category_name: z.string(),
+  /** Audyt UX (F-005): powod dopasowania, gdy nie po nazwie ("przełącznik Szept"); pole addytywne. */
+  match: z.string().nullable().optional(),
 });
 export const searchResponseSchema = z.object({
   products: z.array(searchProductSchema),

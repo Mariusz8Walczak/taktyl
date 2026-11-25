@@ -81,3 +81,50 @@ export function matchesProductSearch(product: Product, haystack: string, query: 
   const text = normalizeSearchText(haystack);
   return tokens.every((t) => text.includes(t) || matchesSynonym(t, product));
 }
+
+/** Opis dopasowania przez synonim (F-006) - z danych produktu, bez wymyslania cech. */
+const SYNONYM_REASON: Readonly<Record<string, (p: Product) => string>> = {
+  bezprzewodowa: () => "łączność bezprzewodowa",
+  bezprzewodowy: () => "łączność bezprzewodowa",
+  bezprzewodowe: () => "łączność bezprzewodowa",
+  cicha: () => "do cichej pracy",
+  cichy: () => "do cichej pracy",
+  ciche: () => "do cichej pracy",
+  lekka: (p) => `waga ${String(p.attributes.weight_g ?? "")} g`,
+  lekki: (p) => `waga ${String(p.attributes.weight_g ?? "")} g`,
+  lekkie: (p) => `waga ${String(p.attributes.weight_g ?? "")} g`,
+  mata: () => "podkładka",
+  maty: () => "podkładka",
+  pionowa: (p) => `kształt ${String(p.attributes.shape ?? "")}`,
+};
+
+/** Fragment opisu produktu z etykieta, np. { label: "przełącznik Szept", text: "Szept" }. */
+export interface SearchPart {
+  label: string;
+  text: string;
+}
+
+/**
+ * F-005 (audyt UX wyszukiwarki): dlaczego produkt pasuje do zapytania, gdy NIE po nazwie - pierwsza czesc opisu
+ * zawierajaca slowo zapytania albo synonim (np. "przełącznik Szept", "do cichej pracy"). Null, gdy pasuje nazwa.
+ * Najwyzej dwa powody, bez powtorzen.
+ */
+export function searchMatchReason(
+  product: Product,
+  parts: readonly SearchPart[],
+  query: string,
+): string | null {
+  const name = normalizeSearchText(product.name);
+  const reasons: string[] = [];
+  for (const t of searchTokens(query)) {
+    if (name.includes(t)) continue;
+    const part = parts.find((p) => normalizeSearchText(p.text).includes(t));
+    const reason = part
+      ? part.label
+      : matchesSynonym(t, product)
+        ? (SYNONYM_REASON[t]?.(product) ?? null)
+        : null;
+    if (reason && !reasons.includes(reason)) reasons.push(reason);
+  }
+  return reasons.length > 0 ? reasons.slice(0, 2).join(" · ") : null;
+}

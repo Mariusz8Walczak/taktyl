@@ -21,7 +21,8 @@
     transform var(--d-s) var(--e-wyjscie),
     visibility var(--d-s) var(--e-wyjscie);
 }
-.menu-kat__pozycja:focus-within > .menu-kat__panel {
+/* Audyt P1-10: z klawiatury (fokus widoczny), nie po kliknieciu mysza - klikniety odnosnik nie trzyma panelu otwartego */
+.menu-kat__pozycja:has(:focus-visible) > .menu-kat__panel {
   visibility: visible;
   opacity: 1;
   transform: none;

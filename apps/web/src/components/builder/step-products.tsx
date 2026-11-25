@@ -142,22 +142,39 @@ function tileLines(api: BuilderApi, slot: SlotKey, p: BuilderProduct): string[] 
   return [attrs(p).surface ?? "", ...(hint ? [hint] : []), price];
 }
 
+/**
+ * Audyt P1-8: powod, dla ktorego kafel jest pierwszy - ocena dopasowania z danych (`fit[profil]`, 0-3) i profil.
+ * Sortowanie zostaje jak w docs/03 §2 (fit malejaco, potem cena), tylko teraz widac, skad kolejnosc.
+ */
+export function bestMatchReason(api: BuilderApi, product: BuilderProduct): string | null {
+  const profile = api.state.profile;
+  if (!profile) return null;
+  const score = (product.fit as Record<string, number>)[profile] ?? 0;
+  const label = api.model.rules.profiles[profile]?.label;
+  if (score <= 0 || !label) return null;
+  return `Ocena dopasowania ${score} z 3 dla profilu „${label}”, najwyższa w tym kroku.`;
+}
+
 function Tile({
   api,
   slot,
   product,
   checked,
+  best = false,
 }: {
   api: BuilderApi;
   slot: SlotKey;
   product: BuilderProduct;
   checked: boolean;
+  /** Pierwszy kafel listy z profilem: etykieta "Polecany do profilu" i powod (bez stopnia najwyzszego w copy, docs/11). */
+  best?: boolean;
 }) {
   const { model } = api;
   const base =
     product.variants.find((v) => v.sku === product.default_variant_sku) ?? product.variants[0];
   const soldOut = !hasStock(product);
   const lines = tileLines(api, slot, product);
+  const reason = best ? bestMatchReason(api, product) : null;
   return (
     <label className={cx("tk-kafel", "kafel-produktu", soldOut && "kafel-produktu--brak")}>
       <input
@@ -181,7 +198,9 @@ function Tile({
             />
           </span>
         ) : null}
+        {reason ? <span className="kafel-produktu__polecany">Polecany do profilu</span> : null}
         <span className="tk-kafel__tytul">{product.name}</span>
+        {reason ? <span className="tk-kafel__opis kafel-produktu__powod">{reason}</span> : null}
         {lines.map((l) => (
           <span key={l} className="tk-kafel__opis">
             {l}
@@ -385,9 +404,18 @@ export function StepProducts({ api, slot }: { api: BuilderApi; slot: SlotKey }) 
           ))}
         </div>
       ) : null}
+      {/* Audyt UX ("1800" to zargon): szerokosc kazdego rozmiaru z danych (dims_mm), w kolejnosci zetonow */}
+      {slot === "k" ? <p className="krok__podpowiedz">{sizeWidths(model)}</p> : null}
       <div className="kafle kafle--produkty">
-        {list.map((p) => (
-          <Tile key={p.id} api={api} slot={slot} product={p} checked={p.id === currentId} />
+        {list.map((p, i) => (
+          <Tile
+            key={p.id}
+            api={api}
+            slot={slot}
+            product={p}
+            checked={p.id === currentId}
+            best={i === 0 && active.size === 0}
+          />
         ))}
       </div>
       {list.length === 0 ? (
@@ -398,6 +426,17 @@ export function StepProducts({ api, slot }: { api: BuilderApi; slot: SlotKey }) 
       <VariantPanel api={api} slot={slot} />
     </fieldset>
   );
+}
+
+/** "Szerokość: 60%: 29,3 cm · … · 1800 (98 klawiszy): 38,5 cm." - z atrybutow klawiatur. */
+function sizeWidths(model: BuilderApi["model"]): string {
+  const seen = new Map<string, string>();
+  for (const p of productsOf(model, "klawiatury")) {
+    const size = attrs(p).size ?? "";
+    const w = widthCm(p);
+    if (!seen.has(size) && w) seen.set(size, `${attrs(p).size_label ?? size}: ${w}`);
+  }
+  return `Szerokość: ${[...seen.values()].join(" · ")}.`;
 }
 
 function matchesKind(p: BuilderProduct, sizeKey: string, kind: PadKind): boolean {

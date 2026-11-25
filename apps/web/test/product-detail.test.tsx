@@ -230,6 +230,35 @@ describe("galeria (F-060)", () => {
       /Bazalt 75 w kolorze Kobalt/,
     );
   });
+
+  it("audyt P0-3: z gotowym renderem pierwszy slajd to model 3D (render do aktywacji), obok zakupu Zaprojektuj własny", () => {
+    const base = productFixture("bazalt-75");
+    const ready = { ...base, images: base.images.map((i) => ({ ...i, status: "gotowe" as const })) };
+    render(
+      <ToastProvider>
+        <ProductProvider
+          product={toClientProduct(ready)}
+          colors={COLORS}
+          switches={SWITCHES}
+          initialSku={null}
+          categoryName="Klawiatury"
+        >
+          <Gallery />
+          <BuyColumn conditions={null} dispatch={DISPATCH} />
+        </ProductProvider>
+      </ToastProvider>,
+    );
+    const thumbs = screen.getAllByRole("button", { name: /^Pokaż ujęcie:/ });
+    expect(thumbs[0]).toHaveAccessibleName("Pokaż ujęcie: model 3D");
+    expect(thumbs[0]).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Obróć w 3D" })).toBeInTheDocument();
+    const slides = screen.getByRole("list", { name: "Zdjęcia produktu" });
+    expect(within(slides).getAllByRole("img")[0]).toHaveAccessibleName(/Bazalt 75 w kolorze/);
+    expect(screen.getByRole("link", { name: "Zaprojektuj własny" })).toHaveAttribute(
+      "href",
+      "/konfigurator/k-bazalt-75",
+    );
+  });
 });
 
 describe("pasek warunkow (F-067)", () => {

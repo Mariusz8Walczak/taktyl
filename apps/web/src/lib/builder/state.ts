@@ -3,6 +3,7 @@
 import type { EntryPoint } from "../track-events";
 import { readItem, writeItem } from "../storage/safe-storage";
 import type { BuilderModel } from "./catalog";
+import { writeProfileCookie } from "./profile";
 import {
   EMPTY_STATE,
   HAND_MAX_CM,
@@ -201,6 +202,8 @@ export function writeStored(s: SetState, now: Date = new Date()): void {
         updated_at: now.toISOString(),
       }),
     );
+    // Audyt P1-2: profil czytany takze przez serwer (karta produktu, koszyk)
+    writeProfileCookie(s.profile);
   } catch {
     /* zapis jest dodatkiem */
   }

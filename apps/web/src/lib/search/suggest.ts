@@ -19,6 +19,8 @@ export interface SuggestResponse {
     from_price_gr: number;
     /** Plik miniatury wzgledem /media/ albo null (brak gotowego zdjecia). */
     thumb: string | null;
+    /** Powod dopasowania (gdy nie po nazwie), z API. */
+    match?: string | null;
   }[];
   categories: { id: string; slug: string; name: string }[];
   guides: { slug: string; title: string; lead: string | null }[];
@@ -36,6 +38,8 @@ export interface SuggestOption {
   /** Miniatura (adres pod /media/) i podpis rodzaju produktu (np. "Myszki"); tylko produkty. */
   thumb?: string | null;
   kind?: string;
+  /** Audyt UX: dlaczego produkt pasuje, gdy nie po nazwie ("przełącznik Szept", "do cichej pracy"). */
+  match?: string | null;
   href: string;
 }
 
@@ -92,6 +96,7 @@ export function buildOptions(res: SuggestResponse): SuggestOption[] {
       hint: `od ${formatPLN(p.from_price_gr)}`,
       thumb: p.thumb,
       kind: p.category_name,
+      match: p.match ?? null,
       href: `/${p.category}/${p.slug}`,
     })),
     ...res.categories.map((c): SuggestOption => ({

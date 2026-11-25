@@ -51,27 +51,57 @@
 }
 .tk-scena__mata--brak {
   display: grid;
-  place-content: center;
+  /* podpis w lewym gornym rogu: srodek zajmuja klawiatura i strefa myszki */
+  place-content: start;
+  padding: calc(var(--s1) / var(--s));
   background-color: var(--powierzchnia);
   border: var(--tk-linia-2) dashed var(--linia-pola);
   color: var(--tekst-slaby);
   text-align: center;
 }
 
-/* Strefa myszki: obrys przerywany --linia-pola, przy uwadze --uwaga */
+/* Obraz (role=img) wypelnia scene; akcja lezy obok niego (audyt P0-2). */
+.tk-scena__obraz {
+  position: absolute;
+  inset: 0;
+}
+
+/* Strefa myszki (audyt P0-2): polprzezroczysty obszar w kolorze akcentu zamiast samej ramki; obrys przerywany
+   zostaje jako drugi nosnik (kolor nie jest jedynym). Przy uwadze obszar i obrys w --uwaga. */
 .tk-scena__strefa {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
   border: var(--tk-linia-2) dashed var(--linia-pola);
+  border-radius: calc(var(--r) / var(--s));
+  background-color: color-mix(in srgb, var(--akcent) 18%, transparent);
   color: var(--tekst);
   padding: calc(var(--s1) / var(--s));
 }
 .tk-scena__strefa.is-uwaga {
   border-color: var(--uwaga);
+  background-color: color-mix(in srgb, var(--uwaga) 22%, transparent);
   color: var(--uwaga);
 }
+/* Puste biurko: sama ramka strefy, bez wypelnienia (nie ma jeszcze czego pokazac) */
+.tk-scena--pusta .tk-scena__strefa {
+  background-color: transparent;
+}
+/* Obszar kolizji: czesc strefy poza mata, pelne tlo uwagi i ciagly obrys, zeby byl widoczny takze przy 1 cm */
 .tk-scena__strefa-poza {
-  background-color: var(--uwaga-tlo);
-  border: var(--tk-linia-2) dashed var(--uwaga);
-  opacity: 0.7;
+  background-color: var(--uwaga);
+  border: var(--tk-linia-2) solid var(--uwaga);
+  opacity: 0.85;
+}
+.tk-scena__podpis--strefa {
+  white-space: nowrap;
+}
+/* Akcja w podgladzie: lewy gorny rog (prawy gorny ma podpis strefy, prawy dolny plakietke wyniku) */
+.tk-scena__akcja {
+  position: absolute;
+  top: var(--s1);
+  left: var(--s1);
+  max-width: calc(100% - var(--s1) * 2);
 }
 /* TAKTYL-68 (WCAG 1.4.3): podpis lezy na macie w dowolnym kolorze probki (ciemny Grafit), wiec ma wlasne tlo
    --powierzchnia i kolor --tekst, niezalezne od koloru maty i stanu uwagi strefy. */

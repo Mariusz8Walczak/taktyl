@@ -83,9 +83,10 @@ describe("computeDeskGeometry (docs/03 §5.1)", () => {
     expect(pad.w).toBe(900);
     expect(g.spareMm).toBe(-10);
     expect(g.canvas.w).toBe(910);
-    // strefa konczy sie przed krawedzia maty; brakuje tylko prawego marginesu (10 mm), wiec nic nie wystaje
+    // strefa konczy sie przed krawedzia maty, ale brakuje prawego marginesu (10 mm): audyt P0-2 - obszar kolizji
+    // to brakujace 10 mm za krawedzia maty, na wysokosc strefy
     expect(g.zone.x + g.zone.w).toBeLessThan(pad.w);
-    expect(g.zoneOutside).toBeNull();
+    expect(g.zoneOutside).toMatchObject({ x: pad.w, w: 10, y: g.zone.y, d: g.zone.d });
   });
 
   it("podkladka pod myszke: Kwarc 60 + Jerzyk + Len M (fps): strefa 400 wobec 360, uwaga", () => {

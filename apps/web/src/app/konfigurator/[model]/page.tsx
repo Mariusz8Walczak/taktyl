@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getConfiguratorData();
   const m = findModelById(data, model);
   return {
-    title: m ? `Dostosuj kolory: ${m.name}` : "Konfigurator",
+    title: m ? `Zaprojektuj własny: ${m.name}` : "Konfigurator",
     description: "Dobierz kolory i wykończenia części, obejrzyj produkt w 3D i sprawdź cenę.",
     robots: { index: false, follow: false },
   };
@@ -60,10 +60,11 @@ export default async function ConfiguratorPage({ params, searchParams }: Props) 
           { label: "Strona główna", href: "/" },
           { label: CATEGORY_LABEL[category] ?? category, href: `/${category}` },
           { label: model.name, href: `/${category}/${slug}` },
-          { label: "Dostosuj kolory" },
+          { label: "Zaprojektuj własny" },
         ]}
       />
-      <h1>Dostosuj kolory: {name}</h1>
+      {/* Audyt P1-12: ta sama klasa naglowka strony co w reszcie sklepu (Archivo 125%) */}
+      <h1 className="naglowek-strony">Zaprojektuj własny: {name}</h1>
       <p className="wstep">
         Wybierz kolor i wykończenie każdej części. Podgląd obracasz myszą, palcem albo przyciskami
         pod modelem. Cenę i kod zestawienia liczy sklep.

@@ -6,7 +6,9 @@ import {
   matchesProductSearch,
   matchesSearch,
   normalizeSearchText,
+  searchMatchReason,
   type Product,
+  type SearchPart,
 } from "@taktyl/domain";
 import { toCard } from "../catalog/card.js";
 import { CatalogLoader, type CatalogSnapshot } from "../catalog/catalog.loader.js";
@@ -28,6 +30,30 @@ function haystack(p: Product, snap: CatalogSnapshot): string {
     ...switchNames,
     ...colorLabels,
   ].join(" ");
+}
+
+/** Audyt UX (F-005): czesci opisu z etykietami do zdania "Pasuje: przełącznik Szept" w podpowiedziach. */
+function searchParts(p: Product, snap: CatalogSnapshot): SearchPart[] {
+  const switches = [
+    ...new Set(p.variants.flatMap((v) => (v.switch === undefined ? [] : [v.switch]))),
+  ]
+    .map((id) => snap.switches.find((s) => s.id === id))
+    .flatMap((s) => (s ? [{ label: `przełącznik ${s.name}`, text: s.name }] : []));
+  const colors = [...new Set(p.variants.map((v) => v.color))].flatMap((id) => {
+    const label = snap.colors[id]?.label;
+    return label ? [{ label: `kolor ${label}`, text: label }] : [];
+  });
+  const size = String(p.attributes.size_label ?? "");
+  const category = snap.categories.find((c) => c.id === p.category)?.name ?? "";
+  return [
+    ...switches,
+    ...colors,
+    ...(size
+      ? [{ label: `rozmiar ${size}`, text: `${String(p.attributes.size ?? "")} ${size}` }]
+      : []),
+    ...(category ? [{ label: category.toLowerCase(), text: category }] : []),
+    { label: "w opisie", text: p.short },
+  ];
 }
 
 @Injectable()
@@ -71,6 +97,7 @@ export class SearchService {
       ...toCard({ product: p, variants: p.variants, displayVariant: undefined }, false),
       thumb: thumbFor(p),
       category_name: snap.categories.find((c) => c.id === p.category)?.name ?? "",
+      match: searchMatchReason(p, searchParts(p, snap), q),
     }));
 
     const categories = snap.categories

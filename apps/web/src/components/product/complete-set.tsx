@@ -3,12 +3,23 @@
 // shop-settings) i renderuje statyczny widok; interaktywna wersja laduje sie leniwie (`complete-set-lazy.tsx`).
 // Gdy API nie zwroci kompletu, blok jest ukryty.
 import type { Product, PublicShopSettings } from "@taktyl/contracts";
+import { cookies } from "next/headers";
 import "../../styles/dokoncz-set.css";
 import type { ColorInfo, SwitchInfo } from "../../lib/builder/catalog";
 import type { CompleteSetProps } from "../../lib/builder/complete-view";
 import { loadCompleteSet } from "../../lib/builder/complete";
+import { parseProfile, PROFILE_COOKIE } from "../../lib/builder/profile";
 import { CompleteSetLazy } from "./complete-set-lazy";
 import { CompleteSetStatic } from "./complete-set-static";
+
+/** Profil z ciasteczka kreatora; poza zadaniem (testy, prerender) albo bez ciasteczka - null (profil produktu). */
+async function profileFromCookie(): Promise<string | null> {
+  try {
+    return parseProfile((await cookies()).get(PROFILE_COOKIE)?.value);
+  } catch {
+    return null;
+  }
+}
 
 export async function CompleteSet({
   product,
@@ -24,7 +35,9 @@ export async function CompleteSet({
   switches: SwitchInfo[];
   settings: Pick<PublicShopSettings, "set_discount">;
 }) {
-  const data = await loadCompleteSet(product, sku);
+  // Audyt P1-2: profil wybrany w kreatorze (jedno zrodlo prawdy), inaczej profil produktu wg API
+  const profile = await profileFromCookie();
+  const data = await loadCompleteSet(product, sku, profile);
   if (!data) return null;
   const props: CompleteSetProps = {
     profile: data.profile,

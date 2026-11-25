@@ -12,7 +12,6 @@ import {
   STEP_LABEL,
   type StepId,
 } from "../../lib/builder/types";
-import { stepCounter } from "./parts";
 import { headingId, type BuilderApi } from "./use-builder";
 
 const STEP: StepId = "do-czego";
@@ -44,6 +43,7 @@ function HandField({ api }: { api: BuilderApi }) {
       step={HAND_STEP_CM}
       value={text}
       error={error}
+      reserveError
       wrapperClassName="kreator__dlon"
       onChange={(e) => {
         const raw = e.target.value;
@@ -122,7 +122,8 @@ export function StepProfile({ api }: { api: BuilderApi }) {
       <fieldset className="krok">
         <legend className="krok__legenda">
           <h2 id={headingId(STEP)} tabIndex={-1} className="krok__naglowek">
-            {stepCounter(STEP)}: {STEP_LABEL[STEP]}
+            {/* Audyt P1-1: krok 0 jest opcjonalny i nie ma numeru, wiec naglowek to sama nazwa (bez "Do czego?: Do czego?") */}
+            {STEP_LABEL[STEP]}
           </h2>
         </legend>
         <p className="krok__wstep">

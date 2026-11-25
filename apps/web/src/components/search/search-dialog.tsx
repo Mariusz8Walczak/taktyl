@@ -63,9 +63,16 @@ export interface SearchDialogProps {
   open: boolean;
   onClose: () => void;
   returnFocusRef: RefObject<HTMLElement | null>;
+  /** Znaki wpisane, zanim okno sie zaladowalo (search-box.tsx); wolane raz, po zamontowaniu. */
+  takeBuffered?: () => string;
 }
 
-export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDialogProps) {
+export default function SearchDialog({
+  open,
+  onClose,
+  returnFocusRef,
+  takeBuffered,
+}: SearchDialogProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [options, setOptions] = useState<SuggestOption[]>([]);
@@ -81,6 +88,11 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
     },
   } as RefObject<HTMLElement | null>;
   const listId = `${uid}-lista`;
+  useEffect(() => {
+    const typed = takeBuffered?.() ?? "";
+    if (typed) setQuery((q) => q + typed);
+    // raz po zamontowaniu okna
+  }, []);
   const trimmed = query.trim();
 
   // Debounce + anulowanie poprzedniego zadania (AbortController); wyjatki sieci nie wywracaja pola.
@@ -237,6 +249,9 @@ export default function SearchDialog({ open, onClose, returnFocusRef }: SearchDi
                                 <Highlighted text={o.label} query={trimmed} />
                               </span>
                               {o.kind ? <span className="szukaj__rodzaj">{o.kind}</span> : null}
+                              {o.match ? (
+                                <span className="szukaj__powod">Pasuje: {o.match}</span>
+                              ) : null}
                             </span>
                             {o.hint ? <span className="szukaj__cena">{o.hint}</span> : null}
                           </li>
