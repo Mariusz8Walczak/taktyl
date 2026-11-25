@@ -87,11 +87,14 @@
   cursor: pointer;
   font-size: var(--t-s);
 }
+/* Audyt UX: pole wyboru 24 px jak w filtrach (bylo 44 px, wielki natywny kwadrat); cel klikniecia >= 44 px daje
+   cala etykieta (min-height), obrys pola z tokenu jak w innych polach. */
 .zam__zgoda input {
   flex: none;
-  width: var(--cel-min);
-  height: var(--cel-min);
-  margin: 0;
+  align-self: center;
+  width: var(--s3);
+  height: var(--s3);
+  margin: calc((var(--cel-min) - var(--s3)) / 2) 0;
   accent-color: var(--akcent);
 }
 .zam__zgoda span {
@@ -179,6 +182,24 @@
 }
 .zam-podsumowanie__pozycje li {
   display: grid;
+}
+/* Audyt UX: pozycja z miniatura (komponent koszyka) i wariantem */
+.zam-podsumowanie__pozycje .zam-podsumowanie__pozycja {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s2);
+  align-items: center;
+}
+.zam-podsumowanie__pozycja .koszyk-poz__miniatura {
+  width: var(--s5);
+}
+.zam-podsumowanie__opis {
+  display: grid;
+  min-width: 0;
+}
+.zam-podsumowanie__sklad-lista {
+  display: grid;
+  gap: var(--s1);
+  margin-top: var(--s1);
 }
 .zam-podsumowanie__sklad,
 .zam-podsumowanie__ladowanie {

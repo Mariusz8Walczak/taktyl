@@ -2,12 +2,15 @@
 // F-170, F-155 (docs/05 §7; wzorzec: kolumna zamowienia `checkout.html`, docs/08 §6): podsumowanie kasy. Pozycje zwiniete do
 // liczby i rozwijane (details), kwoty z wyceny API; VAT zawarty w cenie liczony tylko tu (wartosc * 23 / 123, grosze).
 // Na telefonie: zwiniete nad formularzem ("Pokaż podsumowanie · 1203,30 zł"), na komputerze: kolumna z prawej.
+// Audyt UX: lista pozycji z miniaturami i wariantem (opis z /api/cart/details, bez cen), w kolumnie rozwinieta.
 import { formatPLN } from "@taktyl/domain";
 import { formatDiscount, unitsText } from "../../lib/cart/messages";
 import { countUnits } from "../../lib/cart/state";
 import { quoteValueGr } from "../../lib/cart/tracking";
 import type { CartState, Quote } from "../../lib/cart/types";
 import { vatIncludedGr } from "../../lib/track-items";
+import { useCartDetails } from "../../lib/cart/use-details";
+import { LineThumb } from "../cart/line-details";
 
 export interface SummaryProps {
   cart: CartState;
@@ -22,25 +25,46 @@ function Lines({ cart, quote }: Pick<SummaryProps, "cart" | "quote">) {
     quote?.lines.flatMap((l) => (l.type === "item" ? [[l.sku, l] as const] : [])),
   );
   const sets = new Map(quote?.lines.flatMap((l) => (l.type === "set" ? [[l.id, l] as const] : [])));
+  const details = useCartDetails(
+    cart.lines.flatMap((l) => (l.type === "item" ? [l.sku] : l.items.map((i) => i.sku))),
+  );
   return (
     <ul className="lista zam-podsumowanie__pozycje">
       {cart.lines.map((l) =>
         l.type === "item" ? (
-          <li key={l.sku}>
-            <span>
-              {items.get(l.sku)?.name ?? l.sku} × {l.qty}
+          <li key={l.sku} className="zam-podsumowanie__pozycja">
+            <LineThumb details={details[l.sku]} />
+            <span className="zam-podsumowanie__opis">
+              <span>
+                {items.get(l.sku)?.name ?? details[l.sku]?.productName ?? l.sku} × {l.qty}
+              </span>
+              {details[l.sku] ? (
+                <span className="zam-podsumowanie__sklad">{details[l.sku]?.variant}</span>
+              ) : null}
             </span>
           </li>
         ) : (
-          <li key={l.id}>
+          <li key={l.id} className="zam-podsumowanie__set">
             <span>
               {l.name} × {l.qty}
             </span>
-            <span className="zam-podsumowanie__sklad">
-              {l.items
-                .map((i) => sets.get(l.id)?.items.find((x) => x.sku === i.sku)?.name ?? i.sku)
-                .join(", ")}
-            </span>
+            <ul className="lista zam-podsumowanie__sklad-lista">
+              {l.items.map((i) => (
+                <li key={i.sku} className="zam-podsumowanie__pozycja">
+                  <LineThumb details={details[i.sku]} />
+                  <span className="zam-podsumowanie__opis">
+                    <span>
+                      {sets.get(l.id)?.items.find((x) => x.sku === i.sku)?.name ??
+                        details[i.sku]?.productName ??
+                        i.sku}
+                    </span>
+                    {details[i.sku] ? (
+                      <span className="zam-podsumowanie__sklad">{details[i.sku]?.variant}</span>
+                    ) : null}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </li>
         ),
       )}
@@ -66,7 +90,7 @@ export function SummaryBody({
       className={busy ? "zam-podsumowanie__tresc is-odswiezanie" : "zam-podsumowanie__tresc"}
       aria-busy={busy || undefined}
     >
-      <details className="zam-podsumowanie__pozycje-szczegoly">
+      <details className="zam-podsumowanie__pozycje-szczegoly" open={primary}>
         <summary>{unitsText(units)}</summary>
         <Lines cart={cart} quote={quote} />
       </details>

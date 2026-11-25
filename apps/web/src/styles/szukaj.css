@@ -71,6 +71,12 @@
   font-size: var(--t-xs);
   color: var(--tekst-slaby);
 }
+/* Audyt UX: powod dopasowania pod nazwa ("Pasuje: przełącznik Szept") */
+.szukaj__powod {
+  display: block;
+  font-size: var(--t-xs);
+  color: var(--tekst);
+}
 .szukaj__cena {
   flex: none;
   font-size: var(--t-xs);
