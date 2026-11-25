@@ -53,6 +53,9 @@ function targetOf(e: Prisma.PrismaClientKnownRequestError): string {
 
 @Injectable()
 export class OrdersService {
+  /** B-622: generator historii demo podstawia losowosc z ziarnem (numery deterministyczne); domyslnie crypto. */
+  orderNumberRandom: (() => number) | undefined = undefined;
+
   constructor(
     @Inject(PrismaService) private readonly prisma: PrismaService,
     @Inject(CartQuoteService) private readonly quotes: CartQuoteService,
@@ -99,7 +102,7 @@ export class OrdersService {
     const shippingGr = q.quote.shipping ?? 0;
 
     for (let attempt = 0; attempt < NUMBER_RETRIES; attempt++) {
-      const number = generateOrderNumber(q.now);
+      const number = generateOrderNumber(q.now, this.orderNumberRandom);
       const items = this.orderItemRows(q, number);
       const token = deriveOrderToken(this.config.SESSION_SECRET, number, idempotencyKey);
       const stored: StoredBody = {
