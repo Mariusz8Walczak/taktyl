@@ -24,7 +24,13 @@ Te dane są potrzebne, aby sklep działał, i zapisujemy je bez pytania o zgod
 
 ## Analityczne i marketingowe
 
-Obecnie sklep nie używa takich narzędzi. Gdy się pojawią, zapiszemy je dopiero po Twojej zgodzie i wymienimy w tabeli.
+Zapisujemy je dopiero po Twojej zgodzie na analitykę:
+
+| Nazwa | Do czego służy | Czas |
+|---|---|---|
+| Identyfikator sesji pomiaru (pamięć sesji) | losowy, anonimowy numer, który łączy zdarzenia z jednej wizyty (np. „dodano do koszyka”) wysyłane do statystyk sklepu; bez danych osobowych | do zamknięcia karty |
+
+Narzędzi marketingowych sklep nie używa.
 
 ## Twój wybór
 
