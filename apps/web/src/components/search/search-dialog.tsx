@@ -1,6 +1,7 @@
 "use client";
 // F-005 (wyszukiwarka z podpowiedziami), F-006 (synonimy po stronie API), F-242 (zdarzenie `search`).
-// Wzorzec: okno wyszukiwania szablonu (formularz w nakladce, docs/08 §6), modul nakladek @taktyl/ui (pulapka
+// Wzorzec: okno wyszukiwania szablonu (formularz w nakladce, docs/08 §6); uwagi z pokazu (D-2026-11-25): okno jest
+// panelem u gory strony (klasa szukaj-panel, szukaj.css), reszta strony rozmyta, modul nakladek @taktyl/ui (pulapka
 // fokusu, Esc, powrot fokusu na odnosnik "Szukaj"). Podpowiedzi: ARIA combobox + listbox z grupami,
 // aria-activedescendant, strzalki + Enter. TAKTYL-77: ten modul laduje sie dopiero przy pierwszym uzyciu
 // wyszukiwarki (React.lazy w search-box.tsx), wiec nie wchodzi do bazy JS strony (docs/12 §4).
@@ -180,6 +181,7 @@ export default function SearchDialog({
         open={open}
         onClose={close}
         title="Wyszukiwarka"
+        className="szukaj-panel"
         initialFocusRef={inputRef}
         returnFocusRef={returnFocusRef}
       >

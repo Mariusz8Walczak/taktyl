@@ -42,7 +42,7 @@ Pełne wartości w `assets/tokens.css`. Kontrasty policzone skryptem (WCAG 2.1, 
 
 ## 3. Typografia
 
-**Archivo** (SIL OFL 1.1) — jedna rodzina ze zmienną osią szerokości. Nagłówki rozciągnięte do 125% przypominają nadruki na klawiszach i tabliczki znamionowe sprzętu; tekst w szerokości normalnej jest zwyczajnie czytelny. Jedna rodzina, jeden plik, dwie wyraźnie różne role.
+**Archivo** (SIL OFL 1.1) — jedna rodzina ze zmienną osią szerokości. Nagłówki rozciągnięte do 125% przypominają nadruki na klawiszach i tabliczki znamionowe sprzętu; tekst w szerokości 112,5% (`--szer-tekst`) jest czytelny i zostaje w tym samym charakterze; nawigacja nagłówka w 100% (`--szer-interfejs`), żeby rząd linków się mieścił (decyzja 2026-11-25). Jedna rodzina, jeden plik, dwie wyraźnie różne role.
 
 Plik `assets/fonts/archivo-pl-400-700-w100-125.woff2` (64 KB): przycięty do łaciny z polskimi znakami, grubości 400–700, szerokości 100–125%, z cyframi tabelarycznymi (`tnum`). Hostowany lokalnie, wczytywany z `<link rel="preload" as="font" type="font/woff2" crossorigin>`. Żadnych fontów z Google Fonts ani CDN w produkcji.
 
@@ -51,11 +51,11 @@ Plik `assets/fonts/archivo-pl-400-700-w100-125.woff2` (64 KB): przycięty do ła
 | H1 pierwszego ekranu | `--t-3xl` | 700 | 125% | 1,05 | `--tracking-naglowek`, `text-wrap: balance` |
 | H1 podstrony | `--t-2xl` | 700 | 125% | 1,1 | jw. |
 | H2 | `--t-xl` | 700 | 125% | 1,15 | jw. |
-| H3, nazwa w kaflu | `--t-l` | 700 | 100% | 1,25 | — |
-| Wprowadzenie | `--t-l` | 400 | 100% | 1,5 | maks. 60 znaków w wierszu |
-| Tekst | `--t-m` | 400 | 100% | 1,55 | kolumna maks. `--max-tekst` |
-| Interfejs, przyciski, etykiety pól | `--t-s` | 700 / 400 | 100% | 1,3 | — |
-| Metadane, plakietki | `--t-xs` | 700 / 400 | 100% | 1,3 | — |
+| H3, nazwa w kaflu | `--t-l` | 700 | 112,5% | 1,25 | — |
+| Wprowadzenie | `--t-l` | 400 | 112,5% | 1,5 | maks. 60 znaków w wierszu |
+| Tekst | `--t-m` | 400 | 112,5% | 1,55 | kolumna maks. `--max-tekst` |
+| Interfejs, przyciski, etykiety pól | `--t-s` | 700 / 400 | 112,5% | 1,3 | — |
+| Metadane, plakietki | `--t-xs` | 700 / 400 | 112,5% | 1,3 | — |
 | Cena | `--t-l` (karta), `--t-xl` (strona produktu) | 700 | 125% | 1 | `font-variant-numeric: tabular-nums` |
 | Logotyp `taktyl` | `--t-l` | 700 | 125% | 1 | `letter-spacing: -0.02em`, małe litery |
 | Klawisz (`<kbd>`) | `--t-xs` | 700 | 125% | 1 | — |

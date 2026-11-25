@@ -118,16 +118,27 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
           ) : null}
         </p>
         {view.omnibusText ? <p className="karta__omnibus">{view.omnibusText}</p> : null}
-        {/* Audyt UX: 5 probek bez podpisow (nazwa w title i dla czytnika) + "+N" */}
+        {/* Audyt UX: 5 probek bez podpisow (nazwa w title i dla czytnika) + "+N".
+            F-040 (uwagi z pokazu, D-2026-11-25): probka to przycisk - klikniecie (mysz, dotyk, klawiatura) pokazuje
+            zdjecie tego koloru i przelacza wariant karty; obsluga w CardSwatchHost (delegacja, karta bez JS). */}
         <ul className="karta__probki lista" aria-label="Dostępne kolory">
-          {view.colors.slice(0, CARD_SWATCHES).map((c) => (
-            <li key={c.id} className="karta__probka" title={c.label}>
-              <span
-                className="tk-probka__kolo"
-                style={{ "--tk-swatch": c.swatch } as CSSProperties}
-                aria-hidden="true"
-              />
-              <VisuallyHidden>{c.label}</VisuallyHidden>
+          {view.colors.slice(0, CARD_SWATCHES).map((c, i) => (
+            <li key={c.id} className="karta__probka">
+              <button
+                type="button"
+                className="karta__probka-przycisk"
+                title={c.label}
+                aria-pressed={i === 0}
+                data-probka-karty={i}
+                data-sku={c.sku}
+              >
+                <span
+                  className="tk-probka__kolo"
+                  style={{ "--tk-swatch": c.swatch } as CSSProperties}
+                  aria-hidden="true"
+                />
+                <VisuallyHidden>{`Kolor: ${c.label}`}</VisuallyHidden>
+              </button>
             </li>
           ))}
           {view.colors.length > CARD_SWATCHES ? (

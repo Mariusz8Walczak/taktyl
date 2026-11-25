@@ -261,36 +261,60 @@ a.tk-btn {
   color: var(--tekst-slaby);
 }
 .karta__probki {
-  position: relative; /* nad pseudoelementem odnosnika karty: najechanie na probke dziala */
+  position: relative; /* nad pseudoelementem odnosnika karty: najechanie i klik na probce dzialaja */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--s1);
+  gap: 0;
   font-size: var(--t-xs);
 }
 .karta__probki-wiecej {
   color: var(--tekst-slaby);
   font-weight: var(--w-mocna);
 }
-/* Audyt UX: ujecia kolorow (probki 2-5) - tylko mysz; renderowane dopiero po najechaniu na karte */
+/* Audyt UX: ujecia kolorow (probki 2-5) renderowane dopiero przy najechaniu na karte albo po wyborze probki
+   (display: none = obrazy leniwe sie nie pobieraja). F-040 (uwagi z pokazu, D-2026-11-25): wybor klikiem dziala
+   na kazdym urzadzeniu (data-kolor ustawia CardSwatchHost); najechanie mysza to tylko podglad. A-09: opacity. */
 .karta__kolory {
   display: none;
+}
+.karta[data-kolor] .karta__kolory {
+  display: block;
+}
+.karta__obraz--kolor {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--d-m) var(--e-wyjscie);
+}
+.karta[data-kolor="1"] .karta__kolory > :nth-child(1),
+.karta[data-kolor="2"] .karta__kolory > :nth-child(2),
+.karta[data-kolor="3"] .karta__kolory > :nth-child(3),
+.karta[data-kolor="4"] .karta__kolory > :nth-child(4) {
+  opacity: 1;
+}
+.karta[data-kolor] .karta__obraz--drugie {
+  opacity: 0;
 }
 @media (hover: hover) and (pointer: fine) {
   .karta:hover .karta__kolory {
     display: block;
   }
-  .karta__obraz--kolor {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--d-m) var(--e-wyjscie);
-  }
   .karta:has(.karta__probka:nth-child(2):hover) .karta__kolory > :nth-child(1),
   .karta:has(.karta__probka:nth-child(3):hover) .karta__kolory > :nth-child(2),
   .karta:has(.karta__probka:nth-child(4):hover) .karta__kolory > :nth-child(3),
   .karta:has(.karta__probka:nth-child(5):hover) .karta__kolory > :nth-child(4) {
+    opacity: 1;
+  }
+  /* podglad innej probki przykrywa wybrana (nizsza warstwa wraca po zjechaniu) */
+  .karta[data-kolor]:has(.karta__probka:hover) .karta__kolory > * {
+    opacity: 0;
+  }
+  .karta[data-kolor]:has(.karta__probka:nth-child(2):hover) .karta__kolory > :nth-child(1),
+  .karta[data-kolor]:has(.karta__probka:nth-child(3):hover) .karta__kolory > :nth-child(2),
+  .karta[data-kolor]:has(.karta__probka:nth-child(4):hover) .karta__kolory > :nth-child(3),
+  .karta[data-kolor]:has(.karta__probka:nth-child(5):hover) .karta__kolory > :nth-child(4) {
     opacity: 1;
   }
   /* najechanie na probke: drugie ujecie (A-09) ustepuje zdjeciu koloru */
@@ -305,12 +329,28 @@ a.tk-btn {
 }
 .karta__probka {
   display: inline-flex;
-  align-items: center;
-  gap: calc(var(--s1) / 2);
 }
-.karta__probka .tk-probka__kolo {
+/* F-040: probka jako przycisk - cel 44 px (docs/12 par. 3), kolo 24 px w srodku; wybrana z obwodka jak tk-probka */
+.karta__probka-przycisk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--cel-min);
+  min-height: var(--cel-min);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pelny);
+  background: none;
+  cursor: pointer;
+}
+.karta__probka-przycisk .tk-probka__kolo {
   width: var(--s3);
   height: var(--s3);
+}
+.karta__probka-przycisk[aria-pressed="true"] .tk-probka__kolo {
+  box-shadow:
+    0 0 0 var(--tk-linia-2) var(--powierzchnia),
+    0 0 0 calc(var(--tk-linia-2) * 2) var(--akcent);
 }
 
 /* ---- filtry (F-021) ---- */

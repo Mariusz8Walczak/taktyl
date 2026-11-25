@@ -8,6 +8,7 @@
   z-index: var(--z-naglowek);
   background-color: var(--powierzchnia);
   border-bottom: var(--tk-linia-1) solid var(--linia);
+  font-stretch: var(--szer-interfejs); /* D-2026-11-25: tekst strony 112,5%, nawigacja zostaje w 100% */
 }
 .naglowek__wnetrze {
   display: flex;

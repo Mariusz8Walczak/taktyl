@@ -15,6 +15,8 @@ export interface CardColor {
   id: string;
   label: string;
   swatch: string;
+  /** F-040 (uwagi z pokazu): wariant tego koloru - klikniecie probki przelacza adres karty i "Szybko dodaj". */
+  sku: string;
   /** Audyt UX: ujecie 01-34 tego koloru (gotowe w manifescie) - pokazywane po najechaniu na probke. */
   image?: ImageRef | null;
 }
@@ -90,6 +92,7 @@ export function buildCardView(card: ProductCard, product: Product, ctx: CardCont
         id: c.id,
         label: c.label,
         swatch: c.swatch,
+        sku: v.sku,
         image: img && img.status === "gotowe" ? img : null,
       });
     }
