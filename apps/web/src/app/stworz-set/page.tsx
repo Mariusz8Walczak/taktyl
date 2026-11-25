@@ -44,7 +44,7 @@ export default async function CreateSetPage({ searchParams }: Props) {
     <div className="kontener strona strona--konfigurator">
       <header className="konfigurator__naglowek">
         <p className="konfigurator__nadtytul">Tylko u nas</p>
-        <h1>Stwórz własny set</h1>
+        <h1 className="naglowek-strony">Stwórz własny set</h1>
         <p className="wstep">
           Ty decydujesz o każdym szczególe: kolor obudowy, klawiszy i nadruków, wykończenie, wzór
           podkładki. Zobacz całość na biurku w 3D, zanim cokolwiek zamówisz.

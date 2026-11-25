@@ -89,7 +89,8 @@ describe("ProductCard", () => {
 
   it("zdjecie gotowe: img z width, height i srcset; drugie ujecie tylko gdy gotowe (A-09)", () => {
     const { container } = renderCard("bazalt-75", null, "gotowe");
-    const imgs = container.querySelectorAll("img");
+    // ujecia kolorow (.karta__kolory, audyt UX) sa osobna warstwa: tu tylko zdjecie glowne i drugie ujecie
+    const imgs = container.querySelectorAll(".karta__zdjecie > .karta__obraz img, .karta__zdjecie > img.karta__obraz");
     expect(imgs.length).toBe(2);
     for (const img of imgs) {
       expect(img.getAttribute("width")).toBeTruthy();

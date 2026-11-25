@@ -261,10 +261,47 @@ a.tk-btn {
   color: var(--tekst-slaby);
 }
 .karta__probki {
+  position: relative; /* nad pseudoelementem odnosnika karty: najechanie na probke dziala */
   display: flex;
   flex-wrap: wrap;
-  gap: calc(var(--s1) / 2) var(--s2);
+  align-items: center;
+  gap: var(--s1);
   font-size: var(--t-xs);
+}
+.karta__probki-wiecej {
+  color: var(--tekst-slaby);
+  font-weight: var(--w-mocna);
+}
+/* Audyt UX: ujecia kolorow (probki 2-5) - tylko mysz; renderowane dopiero po najechaniu na karte */
+.karta__kolory {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .karta:hover .karta__kolory {
+    display: block;
+  }
+  .karta__obraz--kolor {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--d-m) var(--e-wyjscie);
+  }
+  .karta:has(.karta__probka:nth-child(2):hover) .karta__kolory > :nth-child(1),
+  .karta:has(.karta__probka:nth-child(3):hover) .karta__kolory > :nth-child(2),
+  .karta:has(.karta__probka:nth-child(4):hover) .karta__kolory > :nth-child(3),
+  .karta:has(.karta__probka:nth-child(5):hover) .karta__kolory > :nth-child(4) {
+    opacity: 1;
+  }
+  /* najechanie na probke: drugie ujecie (A-09) ustepuje zdjeciu koloru */
+  .karta:has(.karta__probka:hover) .karta__obraz--drugie {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .karta__obraz--kolor {
+    transition: none;
+  }
 }
 .karta__probka {
   display: inline-flex;
@@ -272,8 +309,8 @@ a.tk-btn {
   gap: calc(var(--s1) / 2);
 }
 .karta__probka .tk-probka__kolo {
-  width: var(--s2);
-  height: var(--s2);
+  width: var(--s3);
+  height: var(--s3);
 }
 
 /* ---- filtry (F-021) ---- */
@@ -478,38 +515,11 @@ a.tk-btn {
   padding-bottom: var(--s2);
 }
 
-/* ---- "Szybko dodaj" (F-042, F-043, A-09, TAKTYL-59) ----
-   Warstwa nad zdjeciem, WYZEJ niz pseudoelement odnosnika karty (jest pozniej w DOM, bez z-index). Pasek zajmuje obszar
-   zdjecia 1:1; kliknieciom przepuszcza wszystko poza samym przyciskiem. Dotyk i klawiatura: ZAWSZE widoczny. */
-.karta__szybko {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  align-items: flex-end;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  pointer-events: none;
-}
+/* ---- "Szybko dodaj" (F-042, F-043, TAKTYL-59) ----
+   Audyt UX (hierarchia akcji): glowny przycisk karty pod cena, widoczny zawsze (takze mysza - wczesniej pasek A-09
+   wsuwal sie dopiero po najechaniu i nie bylo go widac). Lezy nad pseudoelementem odnosnika karty (pozniej w DOM). */
 .karta__szybko-przycisk {
+  position: relative;
   width: 100%;
-  border-radius: 0;
-  pointer-events: auto;
 }
-/* A-09: pasek wsuwa sie od dolu tylko przy najechaniu myszka; fokus (karta, odnosnik, przycisk) tez go pokazuje */
-@media (hover: hover) and (pointer: fine) {
-  .karta__szybko-przycisk {
-    transform: translateY(100%);
-    transition: transform var(--d-s) var(--e-wyjscie);
-  }
-  .karta:hover .karta__szybko-przycisk,
-  .karta:focus-within .karta__szybko-przycisk {
-    transform: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .karta__szybko-przycisk {
-    transition: none;
-  }
-}
+

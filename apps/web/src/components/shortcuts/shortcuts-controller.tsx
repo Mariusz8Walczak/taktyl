@@ -6,6 +6,7 @@
 // Skrot nie dziala z modyfikatorem, w polu tekstowym ani gdy uzytkownik go wylaczyl (WCAG 2.1.4, `taktyl.prefs.v1`).
 // Przycisk "Skróty klawiszowe" w stopce to zwykly <button data-otworz-skroty> (delegacja, bez wyspy w stopce).
 // Ten sam efekt uruchamia leniwy panel podgladu zdarzen pod `?pomiar` (F-243).
+import { usePathname } from "next/navigation";
 import { Suspense, lazy, useEffect, useState } from "react";
 import {
   OPEN_SEARCH_EVENT,
@@ -20,10 +21,12 @@ import { maybeLoadTrackingPanel } from "../tracking-panel/loader";
 const loadDialog = () => import("./shortcuts-dialog");
 const ShortcutsDialog = lazy(loadDialog);
 
-/** F-003: menu kategorii (CSS :hover/:focus-within) zamykane klawiszem Esc bez przenoszenia fokusu (WCAG 1.4.13). */
-function closeCategoryMenu(): void {
-  const item = document.activeElement?.closest(".menu-kat__pozycja");
-  if (!item) return;
+/**
+ * F-003, audyt P1-10: menu kategorii (CSS :hover i fokus z klawiatury) zamkniete do czasu wyjscia kursora albo fokusu
+ * z pozycji: po Esc (WCAG 1.4.13), po kliknieciu odnosnika i po zmianie trasy.
+ */
+function suspendCategoryMenu(item: Element): void {
+  if (item.hasAttribute("data-zamkniete")) return;
   const reopen = (e: Event) => {
     if (!(e instanceof FocusEvent) || !item.contains(e.relatedTarget as Node | null)) {
       item.removeAttribute("data-zamkniete");
@@ -34,6 +37,13 @@ function closeCategoryMenu(): void {
   item.setAttribute("data-zamkniete", "");
   item.addEventListener("focusout", reopen);
   item.addEventListener("pointerleave", reopen);
+}
+
+/** Esc: zamyka panel, fokus wraca na odnosnik kategorii. */
+function closeCategoryMenu(): void {
+  const item = document.activeElement?.closest(".menu-kat__pozycja");
+  if (!item) return;
+  suspendCategoryMenu(item);
   item.querySelector<HTMLElement>(".menu-kat__link")?.focus();
 }
 
@@ -64,7 +74,11 @@ export default function ShortcutsController() {
       }
     };
     const onClick = (e: MouseEvent) => {
-      if ((e.target as Element | null)?.closest?.("[data-otworz-skroty]")) show();
+      const target = e.target as Element | null;
+      if (target?.closest?.("[data-otworz-skroty]")) show();
+      // Audyt P1-10: klikniecie odnosnika w menu kategorii zamyka panel (nie wisi nad trescia przy przewijaniu)
+      const menuItem = target?.closest?.("a") ? target.closest(".menu-kat__pozycja") : null;
+      if (menuItem) suspendCategoryMenu(menuItem);
     };
     void maybeLoadTrackingPanel();
     document.addEventListener("keydown", onKey, true);
@@ -76,6 +90,15 @@ export default function ShortcutsController() {
       window.removeEventListener(OPEN_SHORTCUTS_EVENT, show);
     };
   }, []);
+
+  // Audyt P1-10: zmiana trasy zamyka otwarte menu kategorii (fokus i kursor moga zostac na odnosniku w naglowku)
+  const pathname = usePathname();
+  useEffect(() => {
+    document.querySelectorAll(".menu-kat__pozycja").forEach((item) => {
+      if (item.matches(":hover") || item.contains(document.activeElement))
+        suspendCategoryMenu(item);
+    });
+  }, [pathname]);
 
   if (!used) return null;
   return (

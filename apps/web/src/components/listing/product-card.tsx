@@ -5,13 +5,13 @@
 // F-042, F-043 (TAKTYL-59): pasek "Szybko dodaj" u dolu zdjecia (A-09: translateY tylko przy hover: hover + pointer: fine;
 // na dotyku i z klawiatury ZAWSZE widoczny, docs/11 pulapka 13). To zwykly <button> z danymi; panel wariantu otwiera
 // globalny QuickAddHost (delegacja klikniec, kod panelu laduje sie dopiero po kliknieciu), wiec karta nie niesie JS.
-import { formatPLN } from "@taktyl/domain";
-import { Badge, ProductImage } from "@taktyl/ui";
+import { formatCount, formatPLN, type PluralForms } from "@taktyl/domain";
+import { Badge, ProductImage, VisuallyHidden } from "@taktyl/ui";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { CardActions } from "../compare/card-actions";
 import { toManifestEntry, MEDIA_BASE_URL } from "../../lib/catalog/images";
-import type { CardView } from "../../lib/catalog/card-view";
+import { CARD_SWATCHES, type CardView } from "../../lib/catalog/card-view";
 import { buildItem, type TrackLineSource } from "../../lib/track-items";
 
 export interface ProductCardProps {
@@ -23,6 +23,7 @@ export interface ProductCardProps {
 }
 
 const SIZES = "(min-width: 992px) 25vw, 50vw";
+const COLOR_FORMS: PluralForms = { one: "kolor", few: "kolory", many: "kolorów" };
 
 export function ProductCard({ view, track, priority = false }: ProductCardProps) {
   const promo = view.omnibusGr !== null;
@@ -55,6 +56,30 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
             sizes={SIZES}
             className="karta__obraz karta__obraz--drugie"
           />
+        ) : null}
+        {/* Audyt UX (A-09, wariant): ujecia kolorow z probek 2-5, renderowane dopiero przy najechaniu na karte
+            (display: none = obrazy leniwe sie nie pobieraja), widoczne przy najechaniu na probke. Tylko mysz. */}
+        {view.colors.slice(1, CARD_SWATCHES).some((c) => c.image) ? (
+          <div className="karta__kolory" aria-hidden="true">
+            {view.colors
+              .slice(1, CARD_SWATCHES)
+              .map((c) =>
+                c.image ? (
+                  <ProductImage
+                    key={c.id}
+                    entry={toManifestEntry(c.image)}
+                    baseUrl={MEDIA_BASE_URL}
+                    productName={view.name}
+                    colorName={c.label}
+                    sizes={SIZES}
+                    decorative
+                    className="karta__obraz karta__obraz--kolor"
+                  />
+                ) : (
+                  <span key={c.id} />
+                ),
+              )}
+          </div>
         ) : null}
         {view.badges.length > 0 ? (
           <ul className="karta__plakietki lista" aria-label="Oznaczenia">
@@ -93,18 +118,37 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
           ) : null}
         </p>
         {view.omnibusText ? <p className="karta__omnibus">{view.omnibusText}</p> : null}
+        {/* Audyt UX: 5 probek bez podpisow (nazwa w title i dla czytnika) + "+N" */}
         <ul className="karta__probki lista" aria-label="Dostępne kolory">
-          {view.colors.map((c) => (
-            <li key={c.id} className="karta__probka">
+          {view.colors.slice(0, CARD_SWATCHES).map((c) => (
+            <li key={c.id} className="karta__probka" title={c.label}>
               <span
                 className="tk-probka__kolo"
                 style={{ "--tk-swatch": c.swatch } as CSSProperties}
                 aria-hidden="true"
               />
-              <span>{c.label}</span>
+              <VisuallyHidden>{c.label}</VisuallyHidden>
             </li>
           ))}
+          {view.colors.length > CARD_SWATCHES ? (
+            <li className="karta__probki-wiecej">
+              <span aria-hidden="true">+{view.colors.length - CARD_SWATCHES}</span>
+              <VisuallyHidden>{`i jeszcze ${formatCount(view.colors.length - CARD_SWATCHES, COLOR_FORMS)}`}</VisuallyHidden>
+            </li>
+          ) : null}
         </ul>
+        {/* F-042, audyt UX (hierarchia akcji): glowna akcja karty widoczna zawsze, pod cena; ulubione i porownanie nizej */}
+        <button
+          type="button"
+          className="tk-btn tk-btn--glowny karta__szybko-przycisk"
+          data-szybko-dodaj=""
+          data-slug={view.slug}
+          data-category={view.category}
+          data-sku={view.sku}
+          aria-label={`Szybko dodaj: ${view.name}`}
+        >
+          Szybko dodaj
+        </button>
         {/* F-045, F-130, F-132: ulubione i porownaj (wyspa, za odnosnikiem karty w kolejnosci DOM) */}
         <CardActions
           id={view.id}
@@ -115,19 +159,6 @@ export function ProductCard({ view, track, priority = false }: ProductCardProps)
           priceGr={view.priceGr}
           variantLabel={view.variantLabel}
         />
-      </div>
-      <div className="karta__szybko">
-        <button
-          type="button"
-          className="tk-btn tk-btn--poboczny karta__szybko-przycisk"
-          data-szybko-dodaj=""
-          data-slug={view.slug}
-          data-category={view.category}
-          data-sku={view.sku}
-          aria-label={`Szybko dodaj: ${view.name}`}
-        >
-          Szybko dodaj
-        </button>
       </div>
     </li>
   );

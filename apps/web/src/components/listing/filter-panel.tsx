@@ -28,7 +28,21 @@ export interface FilterPanelProps {
   state: FilterState;
   /** Kolor probki dla facetu koloru: id koloru -> swatch z colors.json. */
   swatches: Readonly<Record<string, string>>;
+  /** Liczba wynikow przy biezacych filtrach (do ukrycia facetow, ktore niczego nie zawezaja). */
+  total?: number;
   onChange: (change: FilterChange) => void;
+}
+
+/**
+ * Audyt UX ("Typ przełącznika": kazda opcja ma (6), bo kazda klawiatura ma wszystkie 4 przelaczniki): facet wyboru,
+ * w ktorym nic nie jest zaznaczone, a KAZDA wartosc obejmuje wszystkie wyniki, niczego nie zawezi - nie pokazujemy go.
+ * Regula z danych (liczniki z API), wiec facet wroci sam, gdy pojawi sie model bez ktoregos przelacznika.
+ */
+export function facetNarrows(facet: Facet, state: FilterState, total: number | undefined): boolean {
+  if (total === undefined || (facet.type !== "multi" && facet.type !== "buckets")) return true;
+  const selected = state[facet.id];
+  if (Array.isArray(selected) && selected.length > 0) return true;
+  return !facet.values.every((v) => v.count >= total);
 }
 
 function NumberMatch({
@@ -62,118 +76,120 @@ function NumberMatch({
   );
 }
 
-export function FilterPanel({ facets, state, swatches, onChange }: FilterPanelProps) {
+export function FilterPanel({ facets, state, swatches, total, onChange }: FilterPanelProps) {
   const uid = useId();
   return (
     <div className="filtry">
-      {facets.map((facet) => {
-        const legend = <legend className="filtr__nazwa">{facet.label}</legend>;
-        switch (facet.type) {
-          case "multi":
-          case "buckets": {
-            const selected = Array.isArray(state[facet.id]) ? (state[facet.id] as string[]) : [];
-            return (
-              <fieldset key={facet.id} className="filtr">
-                {legend}
-                <ul className="lista filtr__lista">
-                  {facet.values.map((v) => {
-                    const checked = selected.includes(v.v);
-                    const inactive = v.disabled && !checked;
-                    const swatch = facet.id === "kolor" ? swatches[v.v] : undefined;
-                    return (
-                      <li key={v.v}>
-                        <label className={inactive ? "filtr__opcja is-brak" : "filtr__opcja"}>
-                          <input
-                            type="checkbox"
-                            className="filtr__pole"
-                            id={`${uid}-${facet.id}-${v.v}`}
-                            checked={checked}
-                            disabled={inactive}
-                            onChange={() =>
-                              onChange({ kind: "toggle", facetId: facet.id, value: v.v })
-                            }
-                          />
-                          {swatch ? (
-                            <span
-                              className="tk-probka__kolo"
-                              style={{ "--tk-swatch": swatch } as CSSProperties}
-                              aria-hidden="true"
+      {facets
+        .filter((facet) => facetNarrows(facet, state, total))
+        .map((facet) => {
+          const legend = <legend className="filtr__nazwa">{facet.label}</legend>;
+          switch (facet.type) {
+            case "multi":
+            case "buckets": {
+              const selected = Array.isArray(state[facet.id]) ? (state[facet.id] as string[]) : [];
+              return (
+                <fieldset key={facet.id} className="filtr">
+                  {legend}
+                  <ul className="lista filtr__lista">
+                    {facet.values.map((v) => {
+                      const checked = selected.includes(v.v);
+                      const inactive = v.disabled && !checked;
+                      const swatch = facet.id === "kolor" ? swatches[v.v] : undefined;
+                      return (
+                        <li key={v.v}>
+                          <label className={inactive ? "filtr__opcja is-brak" : "filtr__opcja"}>
+                            <input
+                              type="checkbox"
+                              className="filtr__pole"
+                              id={`${uid}-${facet.id}-${v.v}`}
+                              checked={checked}
+                              disabled={inactive}
+                              onChange={() =>
+                                onChange({ kind: "toggle", facetId: facet.id, value: v.v })
+                              }
                             />
-                          ) : null}
-                          <span className="filtr__etykieta">{v.label}</span>
-                          <span className="filtr__licznik">({v.count})</span>
-                        </label>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </fieldset>
-            );
-          }
-          case "bool": {
-            const on = state[facet.id] === true;
-            const inactive = facet.disabled && !on;
-            return (
-              <fieldset key={facet.id} className="filtr">
-                <legend className="tk-sr-only">{facet.label}</legend>
-                <label className={inactive ? "filtr__opcja is-brak" : "filtr__opcja"}>
-                  <input
-                    type="checkbox"
-                    role="switch"
-                    className="filtr__pole"
-                    checked={on}
-                    disabled={inactive}
-                    onChange={(e) =>
-                      onChange({ kind: "bool", facetId: facet.id, on: e.target.checked })
+                            {swatch ? (
+                              <span
+                                className="tk-probka__kolo"
+                                style={{ "--tk-swatch": swatch } as CSSProperties}
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <span className="filtr__etykieta">{v.label}</span>
+                            <span className="filtr__licznik">({v.count})</span>
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </fieldset>
+              );
+            }
+            case "bool": {
+              const on = state[facet.id] === true;
+              const inactive = facet.disabled && !on;
+              return (
+                <fieldset key={facet.id} className="filtr">
+                  <legend className="tk-sr-only">{facet.label}</legend>
+                  <label className={inactive ? "filtr__opcja is-brak" : "filtr__opcja"}>
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      className="filtr__pole"
+                      checked={on}
+                      disabled={inactive}
+                      onChange={(e) =>
+                        onChange({ kind: "bool", facetId: facet.id, on: e.target.checked })
+                      }
+                    />
+                    <span className="filtr__etykieta">{facet.label}</span>
+                    <span className="filtr__licznik">({facet.count})</span>
+                  </label>
+                </fieldset>
+              );
+            }
+            case "range": {
+              const v = state[facet.id];
+              const range = v && typeof v === "object" && !Array.isArray(v) ? v : undefined;
+              return (
+                <fieldset key={facet.id} className="filtr">
+                  {legend}
+                  <PriceRange
+                    label={facet.label}
+                    minGr={facet.min_gr}
+                    maxGr={facet.max_gr}
+                    value={range}
+                    onCommit={(minGr, maxGr) =>
+                      onChange({
+                        kind: "range",
+                        facetId: facet.id,
+                        minGr,
+                        maxGr,
+                        bounds: { min: facet.min_gr, max: facet.max_gr },
+                      })
                     }
                   />
-                  <span className="filtr__etykieta">{facet.label}</span>
-                  <span className="filtr__licznik">({facet.count})</span>
-                </label>
-              </fieldset>
-            );
+                </fieldset>
+              );
+            }
+            case "number-match": {
+              const v = state[facet.id];
+              const num = typeof v === "number" ? v : undefined;
+              return (
+                <fieldset key={facet.id} className="filtr">
+                  <legend className="tk-sr-only">{facet.label}</legend>
+                  <NumberMatch
+                    key={String(num ?? "")}
+                    facet={facet}
+                    value={num}
+                    onChange={(n) => onChange({ kind: "number", facetId: facet.id, value: n })}
+                  />
+                </fieldset>
+              );
+            }
           }
-          case "range": {
-            const v = state[facet.id];
-            const range = v && typeof v === "object" && !Array.isArray(v) ? v : undefined;
-            return (
-              <fieldset key={facet.id} className="filtr">
-                {legend}
-                <PriceRange
-                  label={facet.label}
-                  minGr={facet.min_gr}
-                  maxGr={facet.max_gr}
-                  value={range}
-                  onCommit={(minGr, maxGr) =>
-                    onChange({
-                      kind: "range",
-                      facetId: facet.id,
-                      minGr,
-                      maxGr,
-                      bounds: { min: facet.min_gr, max: facet.max_gr },
-                    })
-                  }
-                />
-              </fieldset>
-            );
-          }
-          case "number-match": {
-            const v = state[facet.id];
-            const num = typeof v === "number" ? v : undefined;
-            return (
-              <fieldset key={facet.id} className="filtr">
-                <legend className="tk-sr-only">{facet.label}</legend>
-                <NumberMatch
-                  key={String(num ?? "")}
-                  facet={facet}
-                  value={num}
-                  onChange={(n) => onChange({ kind: "number", facetId: facet.id, value: n })}
-                />
-              </fieldset>
-            );
-          }
-        }
-      })}
+        })}
     </div>
   );
 }

@@ -364,6 +364,26 @@
 .kafel-produktu--brak {
   color: var(--tekst-slaby);
 }
+/* Audyt P1-8: plakietka "Najlepsze dopasowanie" (styl plakietki Nowosc/Bestseller z docs/06 §5) i powod */
+.kafel-produktu__najlepsze {
+  justify-self: start;
+  padding: calc(var(--s1) / 4) var(--s1);
+  border-radius: var(--r-pelny);
+  background-color: var(--tekst);
+  color: var(--tlo);
+  font-size: var(--t-xs);
+  font-weight: var(--w-mocna);
+}
+.kafel-produktu__powod {
+  color: var(--tekst);
+}
+/* Audyt UX: szerokosci rozmiarow pod zetonami (zamiast samego "1800") */
+.krok__podpowiedz {
+  max-width: var(--max-tekst);
+  margin: 0 0 var(--s2);
+  color: var(--tekst-slaby);
+  font-size: var(--t-xs);
+}
 .zetony {
   display: flex;
   flex-wrap: wrap;
