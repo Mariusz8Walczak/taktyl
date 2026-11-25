@@ -166,7 +166,7 @@ function Tile({
   slot: SlotKey;
   product: BuilderProduct;
   checked: boolean;
-  /** Pierwszy kafel listy z profilem: etykieta "Najlepsze dopasowanie" i powod. */
+  /** Pierwszy kafel listy z profilem: etykieta "Polecany do profilu" i powod (bez stopnia najwyzszego w copy, docs/11). */
   best?: boolean;
 }) {
   const { model } = api;
@@ -198,7 +198,7 @@ function Tile({
             />
           </span>
         ) : null}
-        {reason ? <span className="kafel-produktu__najlepsze">Najlepsze dopasowanie</span> : null}
+        {reason ? <span className="kafel-produktu__polecany">Polecany do profilu</span> : null}
         <span className="tk-kafel__tytul">{product.name}</span>
         {reason ? <span className="tk-kafel__opis kafel-produktu__powod">{reason}</span> : null}
         {lines.map((l) => (

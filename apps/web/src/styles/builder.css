@@ -364,8 +364,8 @@
 .kafel-produktu--brak {
   color: var(--tekst-slaby);
 }
-/* Audyt P1-8: plakietka "Najlepsze dopasowanie" (styl plakietki Nowosc/Bestseller z docs/06 §5) i powod */
-.kafel-produktu__najlepsze {
+/* Audyt P1-8: plakietka "Polecany do profilu" (styl plakietki Nowosc/Bestseller z docs/06 §5) i powod */
+.kafel-produktu__polecany {
   justify-self: start;
   padding: calc(var(--s1) / 4) var(--s1);
   border-radius: var(--r-pelny);
