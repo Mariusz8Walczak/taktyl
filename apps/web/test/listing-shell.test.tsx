@@ -179,6 +179,14 @@ describe("ListingShell", () => {
     expect(within(aside).getByRole("checkbox", { name: /60%/, hidden: true })).toBeInTheDocument();
   });
 
+  it("po wybraniu filtra wszystkie facety zostaja (S1: 75% + Bluetooth przy 1 wyniku)", () => {
+    render(<ListingShell {...props({ total: 1, state: { rozmiar: ["60"] } })} />);
+    const aside = screen.getByRole("complementary", { name: "Filtry", hidden: true });
+    expect(
+      within(aside).getByRole("checkbox", { name: /Bluetooth/, hidden: true }),
+    ).toBeInTheDocument();
+  });
+
   it("sortowanie zmienia adres (sort=cena-rosnaco)", async () => {
     const user = userEvent.setup();
     render(<ListingShell {...props()} />);

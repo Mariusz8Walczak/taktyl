@@ -40,8 +40,12 @@ export interface FilterPanelProps {
  */
 export function facetNarrows(facet: Facet, state: FilterState, total: number | undefined): boolean {
   if (total === undefined || (facet.type !== "multi" && facet.type !== "buckets")) return true;
-  const selected = state[facet.id];
-  if (Array.isArray(selected) && selected.length > 0) return true;
+  // Tylko widok kategorii bez filtrow: po zawezeniu (np. 1 wynik) kazdy facet "obejmuje wszystko", a mimo to musi
+  // zostac widoczny (zmiana wyboru, S1).
+  const anyActive = Object.values(state).some((v) =>
+    Array.isArray(v) ? v.length > 0 : v !== undefined && v !== null && v !== false,
+  );
+  if (anyActive) return true;
   return !facet.values.every((v) => v.count >= total);
 }
 

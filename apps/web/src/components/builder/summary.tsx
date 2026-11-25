@@ -254,15 +254,11 @@ export function Summary({ api }: { api: BuilderApi }) {
         <FitResults api={api} />
       </div>
       <div className="kreator__lista">
-        {/* Audyt P1-5: pozycje zwijane (rozwiniete w kroku "Podsumowanie"), cena i przycisk w przyklejonej stopce */}
-        <details
-          key={api.state.step === "podsumowanie" ? "otwarte" : "zwiniete"}
-          className="kreator__pozycje"
-          open={api.state.step === "podsumowanie"}
-        >
+        {/* Audyt P1-5: pozycje zwijane przez klienta (domyslnie rozwiniete - "Zmień" zawsze pod reka), cena i przycisk
+            w przyklejonej stopce panelu, wiec panel nie potrzebuje wlasnego paska przewijania */}
+        <details className="kreator__pozycje" open>
           <summary className="kreator__lista-tytul">
-            Twój set{" "}
-            <span className="kreator__lista-licznik">({api.analysis.count} z 3)</span>
+            Twój set <span className="kreator__lista-licznik">({api.analysis.count} z 3)</span>
           </summary>
           <Rows api={api} />
         </details>
