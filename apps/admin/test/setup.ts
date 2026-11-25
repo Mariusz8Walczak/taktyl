@@ -37,6 +37,13 @@ vi.mock("next/link", () => ({
     createElement("a", { href, ...rest }, children),
 }));
 
+// Recharts (ResponsiveContainer, B-610) obserwuje rozmiar kontenera; jsdom nie ma ResizeObserver.
+(globalThis as { ResizeObserver?: unknown }).ResizeObserver ??= class {
+  observe(): void {}
+  unobserve(): void {}
+  disconnect(): void {}
+};
+
 // axe-core wywoluje canvas.getContext; jsdom go nie implementuje.
 HTMLCanvasElement.prototype.getContext = () => null;
 

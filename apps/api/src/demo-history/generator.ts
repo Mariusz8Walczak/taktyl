@@ -79,7 +79,12 @@ export interface DemoHistoryReport {
   ms: number;
 }
 
-const SYSTEM: AuditContext = { actorId: null, actorRole: "system", requestId: "demo-history", ipHash: null };
+const SYSTEM: AuditContext = {
+  actorId: null,
+  actorRole: "system",
+  requestId: "demo-history",
+  ipHash: null,
+};
 
 type Step =
   | { at: Date; kind: "create"; o: PlannedOrder }
@@ -90,7 +95,10 @@ type Step =
 
 const zl = (gr: number): number => Math.round(gr) / 100;
 
-export async function generateDemoHistory(client: PrismaClient, opts: DemoHistoryOptions): Promise<DemoHistoryReport> {
+export async function generateDemoHistory(
+  client: PrismaClient,
+  opts: DemoHistoryOptions,
+): Promise<DemoHistoryReport> {
   const t0 = Date.now();
   const log = opts.log ?? (() => undefined);
   const prisma = client as unknown as PrismaService;
@@ -115,23 +123,43 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
   const [presetRows, points, payTypes, conf] = await Promise.all([
     client.preset.findMany({
       orderBy: { position: "asc" },
-      include: { items: { include: { variant: { select: { product: { select: { categoryId: true } } } } } } },
+      include: {
+        items: { include: { variant: { select: { product: { select: { categoryId: true } } } } } },
+      },
     }),
-    client.pickupPoint.findMany({ where: { active: true }, select: { id: true }, orderBy: { id: "asc" } }),
-    client.paymentMethod.findMany({ where: { active: true }, select: { id: true }, orderBy: { position: "asc" } }),
+    client.pickupPoint.findMany({
+      where: { active: true },
+      select: { id: true },
+      orderBy: { id: "asc" },
+    }),
+    client.paymentMethod.findMany({
+      where: { active: true },
+      select: { id: true },
+      orderBy: { position: "asc" },
+    }),
     configurator.confData(snap),
   ]);
-  const label = (p: CatalogSnapshot["products"][number], v: CatalogSnapshot["products"][number]["variants"][number]) => {
+  const label = (
+    p: CatalogSnapshot["products"][number],
+    v: CatalogSnapshot["products"][number]["variants"][number],
+  ) => {
     const parts = [snap.colors[v.color]?.label ?? v.color];
-    if (v.switch !== undefined) parts.push(snap.switches.find((s) => s.id === v.switch)?.name ?? v.switch);
-    if (v.size !== undefined) parts.push(p.attributes.sizes?.[v.size]?.label ?? v.size.toUpperCase());
+    if (v.switch !== undefined)
+      parts.push(snap.switches.find((s) => s.id === v.switch)?.name ?? v.switch);
+    if (v.size !== undefined)
+      parts.push(p.attributes.sizes?.[v.size]?.label ?? v.size.toUpperCase());
     return parts.join(" / ");
   };
   const products: PlanProduct[] = snap.products.map((p) => ({
     id: p.id,
     name: p.name,
     category: p.category,
-    variants: p.variants.map((v) => ({ sku: v.sku, color: v.color, priceGr: v.price, label: label(p, v) })),
+    variants: p.variants.map((v) => ({
+      sku: v.sku,
+      color: v.color,
+      priceGr: v.price,
+      label: label(p, v),
+    })),
   }));
   const order = ["klawiatury", "myszki", "podkladki"];
   const presets: PlanPreset[] = presetRows
@@ -141,7 +169,11 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
       name: p.name,
       profile: p.profile as PlanPreset["profile"],
       skus: [...p.items]
-        .sort((a, b) => order.indexOf(a.variant.product.categoryId) - order.indexOf(b.variant.product.categoryId))
+        .sort(
+          (a, b) =>
+            order.indexOf(a.variant.product.categoryId) -
+            order.indexOf(b.variant.product.categoryId),
+        )
         .map((i) => i.sku) as [string, string, string],
     }));
   const plan = planDemoHistory({
@@ -156,11 +188,16 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
     coupons: shopConfig.codes.filter((c) => c.type !== "free_shipping").map((c) => c.code),
     conf,
   });
-  log(`historia demo: plan ${plan.orders.length} zamowien, ${plan.sessions.length} sesji bez zakupu`);
+  log(
+    `historia demo: plan ${plan.orders.length} zamowien, ${plan.sessions.length} sesji bez zakupu`,
+  );
 
   // --- stany sprzed generatora (wracaja na koniec)
   const initial = new Map(
-    (await client.variant.findMany({ select: { sku: true, stock: true } })).map((v) => [v.sku, v.stock]),
+    (await client.variant.findMany({ select: { sku: true, stock: true } })).map((v) => [
+      v.sku,
+      v.stock,
+    ]),
   );
   let restocks = 0;
   const ensureStock = async (lines: PlannedOrder["lines"]) => {
@@ -170,13 +207,19 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
       for (const s of skus) if (!s.includes("-CFG-")) need.set(s, (need.get(s) ?? 0) + l.qty);
     }
     if (need.size === 0) return;
-    const rows = await client.variant.findMany({ where: { sku: { in: [...need.keys()] } }, select: { sku: true, stock: true } });
+    const rows = await client.variant.findMany({
+      where: { sku: { in: [...need.keys()] } },
+      select: { sku: true, stock: true },
+    });
     for (const r of rows) {
       const want = need.get(r.sku) as number;
       if (r.stock >= want) continue;
       const add = RESTOCK_QTY + want;
       await client.$transaction([
-        client.variant.update({ where: { sku: r.sku }, data: { stock: { increment: add }, version: { increment: 1 } } }),
+        client.variant.update({
+          where: { sku: r.sku },
+          data: { stock: { increment: add }, version: { increment: 1 } },
+        }),
         client.stockMovement.create({
           data: {
             sku: r.sku,
@@ -218,7 +261,9 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
         q = await quotes.compute({ items: o.lines, coupon: o.coupon, shippingMethod: o.shipping });
       } catch (e) {
         skipped += 1;
-        log(`historia demo: pominieta wycena (${e instanceof Error ? e.message.slice(0, 120) : String(e)})`);
+        log(
+          `historia demo: pominieta wycena (${e instanceof Error ? e.message.slice(0, 120) : String(e)})`,
+        );
         continue;
       }
       if (q.unknown.length > 0) {
@@ -236,7 +281,13 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
           o.shipping === "automat"
             ? { method: "automat", point: o.point }
             : o.shipping === "kurier"
-              ? { method: "kurier", name: "Klient Demonstracyjny", street: "ul. Przykładowa 1", postcode: "00-000", city: o.city }
+              ? {
+                  method: "kurier",
+                  name: "Klient Demonstracyjny",
+                  street: "ul. Przykładowa 1",
+                  postcode: "00-000",
+                  city: o.city,
+                }
               : { method: "odbior", name: "Klient Demonstracyjny" },
         invoice: null,
         payment_type: o.payment as OrderRequest["payment_type"],
@@ -260,7 +311,11 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
         await ensureStock(o.lines);
         await payments.simulate(c.number, c.token, "paid");
       } else if (step.kind === "cancel") {
-        await admin.transition(c.number, { to: "cancelled", note: o.cancelReason ?? "Anulowane" }, SYSTEM);
+        await admin.transition(
+          c.number,
+          { to: "cancelled", note: o.cancelReason ?? "Anulowane" },
+          SYSTEM,
+        );
       } else {
         await admin.transition(c.number, { to: step.kind }, SYSTEM);
       }
@@ -278,7 +333,10 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
     const want = initial.get(v.sku);
     if (want === undefined || want === v.stock) continue;
     await client.$transaction([
-      client.variant.update({ where: { sku: v.sku }, data: { stock: want, version: { increment: 1 } } }),
+      client.variant.update({
+        where: { sku: v.sku },
+        data: { stock: want, version: { increment: 1 } },
+      }),
       client.stockMovement.create({
         data: {
           sku: v.sku,
@@ -297,13 +355,28 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
   const rows: Prisma.AnalyticsEventCreateManyInput[] = [];
   let sessions = plan.sessions.length;
   for (const s of plan.sessions) {
-    for (const e of s.events) rows.push({ sessionId: s.sessionId, name: e.name, params: e.params as Prisma.InputJsonValue, ts: e.ts, receivedAt: e.ts, demo: true });
+    for (const e of s.events)
+      rows.push({
+        sessionId: s.sessionId,
+        name: e.name,
+        params: e.params as Prisma.InputJsonValue,
+        ts: e.ts,
+        receivedAt: e.ts,
+        demo: true,
+      });
   }
   for (const [o, c] of created) {
     if (!o.sessionId) continue;
     sessions += 1;
     for (const e of orderJourney(o, c.number, c.q, snap, opts.now)) {
-      rows.push({ sessionId: o.sessionId, name: e.name, params: e.params as Prisma.InputJsonValue, ts: e.ts, receivedAt: e.ts, demo: true });
+      rows.push({
+        sessionId: o.sessionId,
+        name: e.name,
+        params: e.params as Prisma.InputJsonValue,
+        ts: e.ts,
+        receivedAt: e.ts,
+        demo: true,
+      });
     }
   }
   for (let i = 0; i < rows.length; i += EVENTS_CHUNK) {
@@ -326,7 +399,12 @@ export async function generateDemoHistory(client: PrismaClient, opts: DemoHistor
       action: "demo.history",
       entity: "demo",
       entityId: "history",
-      after: { orders: report.orders, sessions: report.sessions, events: report.events, days: opts.days ?? 90 },
+      after: {
+        orders: report.orders,
+        sessions: report.sessions,
+        events: report.events,
+        days: opts.days ?? 90,
+      },
       requestId: `demo-history-${opts.now.getTime()}`,
     },
   });
@@ -351,10 +429,17 @@ export function orderJourney(
     if (!found) return { item_id: sku };
     const v = found.variant;
     const parts = [snap.colors[v.color]?.label ?? v.color];
-    if (v.switch !== undefined) parts.push(snap.switches.find((s) => s.id === v.switch)?.name ?? v.switch);
-    if (v.size !== undefined) parts.push(found.product.attributes.sizes?.[v.size]?.label ?? v.size.toUpperCase());
+    if (v.switch !== undefined)
+      parts.push(snap.switches.find((s) => s.id === v.switch)?.name ?? v.switch);
+    if (v.size !== undefined)
+      parts.push(found.product.attributes.sizes?.[v.size]?.label ?? v.size.toUpperCase());
     return itemParam(
-      { id: found.product.id, name: found.product.name, category: found.product.category, variants: [] },
+      {
+        id: found.product.id,
+        name: found.product.name,
+        category: found.product.category,
+        variants: [],
+      },
       { sku, color: v.color, priceGr: v.price, label: parts.join(" / ") },
       extra,
     );
@@ -378,31 +463,55 @@ export function orderJourney(
 
   if (o.builder) {
     before.push({ name: "set_builder_start", params: { entry_point: o.builder.entryPoint } });
-    before.push({ name: "set_profile_select", params: { profile: o.builder.profile, hand_cm: null } });
+    before.push({
+      name: "set_profile_select",
+      params: { profile: o.builder.profile, hand_cm: null },
+    });
     const set = q.quote.lines.find((l) => l.type === "set");
     const steps = ["klawiatura", "myszka", "podkladka"];
     set?.items.forEach((it, i) => {
       const found = q.index.get(it.sku);
       before.push({
         name: "set_step_complete",
-        params: { step: steps[i] ?? "klawiatura", item_id: it.sku, item_name: found?.product.name ?? it.sku },
+        params: {
+          step: steps[i] ?? "klawiatura",
+          item_id: it.sku,
+          item_name: found?.product.name ?? it.sku,
+        },
       });
     });
     if (set) {
       before.push({
         name: "set_complete",
-        params: { value: zl(set.value - set.setDiscount), discount: zl(set.setDiscount), profile: o.builder.profile, warnings: 0 },
+        params: {
+          value: zl(set.value - set.setDiscount),
+          discount: zl(set.setDiscount),
+          profile: o.builder.profile,
+          warnings: 0,
+        },
       });
     }
   } else if (o.listId !== "wyszukiwarka") {
-    before.push({ name: "view_item_list", params: { item_list_id: o.listId, item_list_name: String(allItems[0]?.item_list_name ?? o.listId) } });
+    before.push({
+      name: "view_item_list",
+      params: {
+        item_list_id: o.listId,
+        item_list_name: String(allItems[0]?.item_list_name ?? o.listId),
+      },
+    });
   } else {
-    before.push({ name: "search", params: { search_term: String(allItems[0]?.item_name ?? "").toLowerCase() } });
+    before.push({
+      name: "search",
+      params: { search_term: String(allItems[0]?.item_name ?? "").toLowerCase() },
+    });
   }
   q.quote.lines.forEach((line, i) => {
     const items = lineItems(i);
     if (line.type === "item") {
-      before.push({ name: "view_item", params: { currency: "PLN", value: zl(line.value / line.qty), items } });
+      before.push({
+        name: "view_item",
+        params: { currency: "PLN", value: zl(line.value / line.qty), items },
+      });
     }
     before.push({ name: "add_to_cart", params: { currency: "PLN", value: zl(line.total), items } });
     if (line.type === "set" && o.builder) {
@@ -420,17 +529,33 @@ export function orderJourney(
   });
   const coupon = q.quote.codeStatus === "applied" ? (o.coupon ?? "") : "";
   before.push({ name: "view_cart", params: { currency: "PLN", value, items: allItems } });
-  before.push({ name: "begin_checkout", params: { currency: "PLN", value, coupon, items: allItems } });
-  before.push({ name: "add_shipping_info", params: { currency: "PLN", value, shipping_tier: o.shipping, items: allItems } });
-  before.push({ name: "add_payment_info", params: { currency: "PLN", value, payment_type: o.payment, items: allItems } });
+  before.push({
+    name: "begin_checkout",
+    params: { currency: "PLN", value, coupon, items: allItems },
+  });
+  before.push({
+    name: "add_shipping_info",
+    params: { currency: "PLN", value, shipping_tier: o.shipping, items: allItems },
+  });
+  before.push({
+    name: "add_payment_info",
+    params: { currency: "PLN", value, payment_type: o.payment, items: allItems },
+  });
 
   // Rozlozenie zdarzen przed zlozeniem zamowienia: od poczatku sesji do chwili utworzenia.
   const span = Math.max(1, o.createdAt.getTime() - o.sessionStart.getTime());
   before.forEach((e, i) => {
-    out.push({ ...e, ts: new Date(o.sessionStart.getTime() + Math.floor((span * i) / before.length)) });
+    out.push({
+      ...e,
+      ts: new Date(o.sessionStart.getTime() + Math.floor((span * i) / before.length)),
+    });
   });
   if (o.failedAt && o.failedAt <= now) {
-    out.push({ name: "payment_failed", params: { transaction_id: number, payment_type: o.payment, value }, ts: o.failedAt });
+    out.push({
+      name: "payment_failed",
+      params: { transaction_id: number, payment_type: o.payment, value },
+      ts: o.failedAt,
+    });
     if (o.paidAt) {
       out.push({
         name: "add_payment_info",

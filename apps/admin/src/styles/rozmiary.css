@@ -1,8 +1,9 @@
-/* Rozmiary ukladu backpanelu (TAKTYL-50). Jedyne miejsce w apps/admin, gdzie wolno wpisac wartosc w px/rem/ms,
+/* Rozmiary ukladu backpanelu (TAKTYL-50, B-624..B-627). Jedyne miejsce w apps/admin, gdzie wolno wpisac wartosc w px/rem/ms,
    bo tokens.css ich nie definiuje (docs/06 §4, ADM-002). Reszta stylow uzywa wylacznie zmiennych. */
 :root {
-  --naglowek-wys: calc(var(--cel-min) + var(--s2) * 2);
+  --naglowek-wys: calc(var(--cel-min) + var(--s2));
   --adm-nawigacja-szer: 15rem;
+  --adm-nawigacja-zwinieta: calc(var(--cel-min) + var(--s2) * 2);
   --adm-logowanie-szer: 420px; /* docs/15 §6.1: jedna kolumna do 420 px */
   --adm-pole-min: 14rem; /* minimalna szerokosc pola w siatce formularza */
   --adm-kolumna-nazwy: 12rem; /* przyklejona kolumna nazwy w tabelach na telefonie */
@@ -12,4 +13,19 @@
   --adm-zakladka-min: 7rem;
   --adm-miniatura: 4rem; /* miniatura wgranego zdjecia (B-508) */
   --adm-diff-kolumna: 16rem; /* kolumna wartosci w roznicy wpisu dziennika (B-012) */
+  /* B-610..B-627: pulpit, wykresy, paleta polecen */
+  --adm-tresc-max: 1680px; /* tresc na pelna szerokosc, ale bez rozlewania na ekranach 4K */
+  --adm-ikona-rozm: 1.25rem;
+  --adm-logo-znak: 2rem;
+  --adm-wykres-wys: 16rem;
+  --adm-sparkline-wys: 2.75rem;
+  --adm-pasek-wys: 0.5rem;
+  --adm-probka: 0.875rem;
+  --adm-miniatura-mala: 2.5rem;
+  --adm-mapa-komorka: 1.5rem;
+  --adm-mapa-min: 40rem;
+  --adm-mapa-dzien: 3.5rem;
+  --adm-paleta-szer: 40rem;
+  --adm-paleta-lista-wys: 55dvh;
+  --adm-szukaj-szer: 9rem;
 }

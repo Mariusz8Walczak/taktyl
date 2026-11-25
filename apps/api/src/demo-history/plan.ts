@@ -2,7 +2,12 @@
 // deterministyczna (stale ziarno): ta sama chwila `now` i ten sam katalog daja ten sam plan. Wylacznie istniejace produkty,
 // warianty, sety i slowniki konfiguratora z bazy (nic nie jest dopisywane do katalogu). Ceny i rabaty liczy potem prawdziwa
 // wycena koszyka i zamowien (wykonawca w generator.ts), plan wybiera tylko CO i KIEDY.
-import { CONFIG_SKU_PATTERN, type CartLine, type CategoryId, type ProfileId } from "@taktyl/contracts";
+import {
+  CONFIG_SKU_PATTERN,
+  type CartLine,
+  type CategoryId,
+  type ProfileId,
+} from "@taktyl/contracts";
 import {
   configurationSku,
   defaultConfiguration,
@@ -36,7 +41,8 @@ export function mulberry32(seed: number): Rng {
   };
 }
 
-export const pick = <T>(rng: Rng, list: readonly T[]): T => list[Math.floor(rng() * list.length)] as T;
+export const pick = <T>(rng: Rng, list: readonly T[]): T =>
+  list[Math.floor(rng() * list.length)] as T;
 
 export function weighted<T>(rng: Rng, items: readonly (readonly [T, number])[]): T {
   const total = items.reduce((s, [, w]) => s + w, 0);
@@ -154,13 +160,30 @@ export interface DemoPlan {
 
 /** Waga godziny w Europe/Warsaw: poludnie i wieczor, malo w nocy. */
 const HOUR_WEIGHTS = [
-  0.4, 0.2, 0.1, 0.1, 0.1, 0.2, 0.5, 1.0, 1.6, 2.0, 2.3, 2.4, 2.6, 2.5, 2.3, 2.2, 2.3, 2.5, 2.8, 3.2, 3.4, 3.0, 2.0, 1.0,
+  0.4, 0.2, 0.1, 0.1, 0.1, 0.2, 0.5, 1.0, 1.6, 2.0, 2.3, 2.4, 2.6, 2.5, 2.3, 2.2, 2.3, 2.5, 2.8,
+  3.2, 3.4, 3.0, 2.0, 1.0,
 ] as const;
 /** Mnoznik dnia tygodnia (1 = poniedzialek); niedziela wieczorem kupuje sie najwiecej. */
-const DOW_FACTOR: Record<number, number> = { 1: 1.0, 2: 1.05, 3: 1.0, 4: 1.08, 5: 0.95, 6: 0.8, 7: 1.12 };
+const DOW_FACTOR: Record<number, number> = {
+  1: 1.0,
+  2: 1.05,
+  3: 1.0,
+  4: 1.08,
+  5: 0.95,
+  6: 0.8,
+  7: 1.12,
+};
 const COLOR_WEIGHT: Record<string, number> = { grafit: 40, mgla: 25, kobalt: 20, naturalny: 15 };
 const CITIES = ["Warszawa", "Kraków", "Gdańsk", "Poznań", "Wrocław", "Łódź", "Lublin", "Szczecin"];
-const ENTRY_POINTS = ["hero", "nav", "pdp", "pdp_complete", "preset", "share_link", "guide"] as const;
+const ENTRY_POINTS = [
+  "hero",
+  "nav",
+  "pdp",
+  "pdp_complete",
+  "preset",
+  "share_link",
+  "guide",
+] as const;
 const PROFILES: ProfileId[] = ["fps", "gry", "programowanie", "biuro", "cisza"];
 const SEARCH_TERMS = [
   "cicha klawiatura",
@@ -181,7 +204,12 @@ function momentIn(rng: Rng, date: string): Date {
     rng,
     HOUR_WEIGHTS.map((w, h) => [h, w] as const),
   );
-  return new Date(warsawDayStart(date).getTime() + hour * HOUR + Math.floor(rng() * 60) * MIN + Math.floor(rng() * 60) * 1000);
+  return new Date(
+    warsawDayStart(date).getTime() +
+      hour * HOUR +
+      Math.floor(rng() * 60) * MIN +
+      Math.floor(rng() * 60) * 1000,
+  );
 }
 
 // ---------------------------------------------------------------- konfiguracje wlasne (ADR-0011)
@@ -234,7 +262,9 @@ interface Catalog {
 
 function catalogOf(rng: Rng, products: PlanProduct[]): Catalog {
   // Popularnosc produktow: rozklad Zipfa po kolejnosci wylosowanej raz na plan (deterministycznie).
-  const shuffled = [...products].sort((a, b) => a.id.localeCompare(b.id)).map((p) => ({ p, r: rng() }));
+  const shuffled = [...products]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .map((p) => ({ p, r: rng() }));
   shuffled.sort((a, b) => a.r - b.r);
   const all = shuffled.map(({ p }, i) => ({ product: p, weight: 1 / (1 + i * 0.35) }));
   const byCategory = { klawiatury: [], myszki: [], podkladki: [] } as Catalog["byCategory"];
@@ -265,9 +295,14 @@ export function planDemoHistory(input: PlanInput): DemoPlan {
   const days = input.days ?? DEMO_HISTORY_DAYS;
   const now = input.now;
   const today = warsawDateOf(now);
-  const cat = catalogOf(rng, input.products.filter((p) => p.variants.length > 0));
+  const cat = catalogOf(
+    rng,
+    input.products.filter((p) => p.variants.length > 0),
+  );
   // Modele bez czesci konfigurowalnych (np. Korek) nie maja konfiguratora w sklepie.
-  const models = (input.conf?.models ?? []).filter((m) => m.parts.some((p) => p.konfigurowalna && p.paleta));
+  const models = (input.conf?.models ?? []).filter((m) =>
+    m.parts.some((p) => p.konfigurowalna && p.paleta),
+  );
   const orders: PlannedOrder[] = [];
   const sessions: PlannedSession[] = [];
   let contactNo = 0;
@@ -297,7 +332,13 @@ export function planDemoHistory(input: PlanInput): DemoPlan {
         const profile = pick(rng, PROFILES);
         if (fromPreset) {
           const preset = pick(rng, input.presets);
-          lines.push({ type: "set", id: `set-demo-${setNo}`, qty: 1, profile: preset.profile, skus: [...preset.skus] });
+          lines.push({
+            type: "set",
+            id: `set-demo-${setNo}`,
+            qty: 1,
+            profile: preset.profile,
+            skus: [...preset.skus],
+          });
           builder = rng() < 0.5 ? { entryPoint: "preset", profile: preset.profile } : null;
         } else {
           const skus = (["klawiatury", "myszki", "podkladki"] as const).map(
@@ -310,7 +351,9 @@ export function planDemoHistory(input: PlanInput): DemoPlan {
       } else if (kind === "config" && input.conf && models.length > 0) {
         const model = weighted(
           rng,
-          models.map((m) => [m, m.id.startsWith("k-") ? 4 : m.id.startsWith("m-") ? 3 : 2] as const),
+          models.map(
+            (m) => [m, m.id.startsWith("k-") ? 4 : m.id.startsWith("m-") ? 3 : 2] as const,
+          ),
         );
         const cfg = randomConfiguration(rng, input.conf, model);
         const sku = cfg ? configurationSku(input.conf, cfg) : "";
@@ -340,7 +383,8 @@ export function planDemoHistory(input: PlanInput): DemoPlan {
         ["odbior", 10],
       ] as const);
       const hasItems = lines.some((l) => l.type === "item");
-      const coupon = hasItems && input.coupons.length > 0 && rng() < 0.09 ? pick(rng, input.coupons) : null;
+      const coupon =
+        hasItems && input.coupons.length > 0 && rng() < 0.09 ? pick(rng, input.coupons) : null;
       const consent = rng() < 0.7;
       const sessionStart = new Date(createdAt.getTime() - between(rng, 6, 45) * MIN);
 
@@ -436,7 +480,13 @@ const LIST_NAME: Record<string, string> = {
 export function itemParam(
   p: PlanProduct,
   v: PlanVariant,
-  extra: { listId?: string; index?: number; quantity?: number; discountGr?: number; promotion?: string } = {},
+  extra: {
+    listId?: string;
+    index?: number;
+    quantity?: number;
+    discountGr?: number;
+    promotion?: string;
+  } = {},
 ): Record<string, unknown> {
   return {
     item_id: v.sku,
@@ -448,7 +498,9 @@ export function itemParam(
     quantity: extra.quantity ?? 1,
     discount: zl(extra.discountGr ?? 0),
     ...(extra.promotion ? { promotion_name: extra.promotion } : {}),
-    ...(extra.listId ? { item_list_id: extra.listId, item_list_name: LIST_NAME[extra.listId] ?? extra.listId } : {}),
+    ...(extra.listId
+      ? { item_list_id: extra.listId, item_list_name: LIST_NAME[extra.listId] ?? extra.listId }
+      : {}),
     ...(extra.index !== undefined ? { index: extra.index } : {}),
   };
 }
@@ -462,13 +514,19 @@ function browsingSession(rng: Rng, cat: Catalog, start: Date, now: Date): Planne
     if (t <= now.getTime()) events.push({ name, params, ts: new Date(t) });
   };
   const category = pick(rng, ["klawiatury", "myszki", "podkladki"] as const);
-  const listView = () => push("view_item_list", { item_list_id: category, item_list_name: LIST_NAME[category] });
+  const listView = () =>
+    push("view_item_list", { item_list_id: category, item_list_name: LIST_NAME[category] });
   const viewSome = (k: number) => {
     let last: { p: PlanProduct; v: PlanVariant } | null = null;
     for (let i = 0; i < k; i++) {
       const p = pickProduct(rng, cat.byCategory[category]);
       const v = chooseVariant(rng, p);
-      if (i === 0) push("select_item", { item_list_id: category, item_list_name: LIST_NAME[category], items: [itemParam(p, v, { listId: category, index: Math.floor(rng() * 8) })] });
+      if (i === 0)
+        push("select_item", {
+          item_list_id: category,
+          item_list_name: LIST_NAME[category],
+          items: [itemParam(p, v, { listId: category, index: Math.floor(rng() * 8) })],
+        });
       push("view_item", { currency: "PLN", value: zl(v.priceGr), items: [itemParam(p, v)] });
       last = { p, v };
     }
@@ -488,7 +546,12 @@ function browsingSession(rng: Rng, cat: Catalog, start: Date, now: Date): Planne
     else viewSome(1);
   } else if (kind === "browse") {
     listView();
-    if (rng() < 0.35) push("filter_apply", { item_list_id: category, filter_name: "kolor", filter_value: pick(rng, ["grafit", "mgla", "kobalt", "naturalny"]) });
+    if (rng() < 0.35)
+      push("filter_apply", {
+        item_list_id: category,
+        filter_name: "kolor",
+        filter_value: pick(rng, ["grafit", "mgla", "kobalt", "naturalny"]),
+      });
     viewSome(1 + Math.floor(rng() * 3));
   } else if (kind === "search") {
     push("search", { search_term: pick(rng, SEARCH_TERMS) });
@@ -497,30 +560,64 @@ function browsingSession(rng: Rng, cat: Catalog, start: Date, now: Date): Planne
     listView();
     const last = viewSome(1 + Math.floor(rng() * 2));
     if (last) {
-      push("add_to_cart", { currency: "PLN", value: zl(last.v.priceGr), items: [itemParam(last.p, last.v)] });
-      push("view_cart", { currency: "PLN", value: zl(last.v.priceGr), items: [itemParam(last.p, last.v)] });
+      push("add_to_cart", {
+        currency: "PLN",
+        value: zl(last.v.priceGr),
+        items: [itemParam(last.p, last.v)],
+      });
+      push("view_cart", {
+        currency: "PLN",
+        value: zl(last.v.priceGr),
+        items: [itemParam(last.p, last.v)],
+      });
       if (kind === "checkout") {
-        push("begin_checkout", { currency: "PLN", value: zl(last.v.priceGr), coupon: "", items: [itemParam(last.p, last.v)] });
-        push("add_shipping_info", { currency: "PLN", value: zl(last.v.priceGr), shipping_tier: pick(rng, ["automat", "kurier", "odbior"]), items: [itemParam(last.p, last.v)] });
+        push("begin_checkout", {
+          currency: "PLN",
+          value: zl(last.v.priceGr),
+          coupon: "",
+          items: [itemParam(last.p, last.v)],
+        });
+        push("add_shipping_info", {
+          currency: "PLN",
+          value: zl(last.v.priceGr),
+          shipping_tier: pick(rng, ["automat", "kurier", "odbior"]),
+          items: [itemParam(last.p, last.v)],
+        });
       } else if (rng() < 0.2) {
-        push("remove_from_cart", { currency: "PLN", value: zl(last.v.priceGr), items: [itemParam(last.p, last.v)] });
+        push("remove_from_cart", {
+          currency: "PLN",
+          value: zl(last.v.priceGr),
+          items: [itemParam(last.p, last.v)],
+        });
       }
     }
   } else if (kind === "builder") {
     const profile = pick(rng, PROFILES);
     push("set_builder_start", { entry_point: pick(rng, ENTRY_POINTS) });
-    push("set_profile_select", { profile, hand_cm: rng() < 0.4 ? Math.round(between(rng, 17, 21) * 2) / 2 : null });
+    push("set_profile_select", {
+      profile,
+      hand_cm: rng() < 0.4 ? Math.round(between(rng, 17, 21) * 2) / 2 : null,
+    });
     const steps = 1 + Math.floor(rng() * 3);
     const chosen: { p: PlanProduct; v: PlanVariant }[] = [];
     (["klawiatury", "myszki", "podkladki"] as const).slice(0, steps).forEach((c) => {
       const p = pickProduct(rng, cat.byCategory[c]);
       const v = chooseVariant(rng, p);
       chosen.push({ p, v });
-      push("set_step_complete", { step: c === "klawiatury" ? "klawiatura" : c === "myszki" ? "myszka" : "podkladka", item_id: v.sku, item_name: p.name });
+      push("set_step_complete", {
+        step: c === "klawiatury" ? "klawiatura" : c === "myszki" ? "myszka" : "podkladka",
+        item_id: v.sku,
+        item_name: p.name,
+      });
     });
     if (steps === 3) {
       const value = chosen.reduce((s, c) => s + c.v.priceGr, 0);
-      push("set_complete", { value: zl(value), discount: zl(Math.round(value * 0.1)), profile, warnings: rng() < 0.2 ? 1 : 0 });
+      push("set_complete", {
+        value: zl(value),
+        discount: zl(Math.round(value * 0.1)),
+        profile,
+        warnings: rng() < 0.2 ? 1 : 0,
+      });
       if (rng() < 0.3) push("set_share", { method: rng() < 0.9 ? "clipboard" : "fallback" });
       if (rng() < 0.2) push("set_save", { value: zl(value) });
     }
@@ -528,7 +625,8 @@ function browsingSession(rng: Rng, cat: Catalog, start: Date, now: Date): Planne
     const p = pickProduct(rng, cat.all);
     const v = chooseVariant(rng, p);
     push("view_item", { currency: "PLN", value: zl(v.priceGr), items: [itemParam(p, v)] });
-    if (rng() < 0.5) push("add_to_wishlist", { currency: "PLN", value: zl(v.priceGr), items: [itemParam(p, v)] });
+    if (rng() < 0.5)
+      push("add_to_wishlist", { currency: "PLN", value: zl(v.priceGr), items: [itemParam(p, v)] });
     else push("compare_add", { item_id: v.sku, compare_count: 1 + Math.floor(rng() * 3) });
     if (rng() < 0.3) push("shortcut_use", { key: pick(rng, ["/", "esc", "?"]) });
   }

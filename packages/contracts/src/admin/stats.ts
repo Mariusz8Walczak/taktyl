@@ -7,8 +7,6 @@ import { dateSchema, dateTimeSchema } from "../shared/primitives";
 
 const count = z.int().min(0);
 const gr = z.int().min(0);
-/** Punkty bazowe 0..10000 (10000 = 100 %). */
-const bp = z.int().min(0).max(10000);
 
 /** Liczba z wartoscia poprzedniego okresu (null = porownanie wylaczone). */
 export const statValueSchema = z.object({ value: z.int(), previous: z.int().nullable() });
@@ -81,7 +79,9 @@ export const salesStatsSchema = z.object({
   }),
   /** B-613: zamowienia zlozone wg dnia tygodnia (1 = poniedzialek) i godziny w Europe/Warsaw */
   heatmap: z.object({
-    cells: z.array(z.object({ dow: z.int().min(1).max(7), hour: z.int().min(0).max(23), orders: count })),
+    cells: z.array(
+      z.object({ dow: z.int().min(1).max(7), hour: z.int().min(0).max(23), orders: count }),
+    ),
     max: count,
   }),
   /** B-614: sety (pozycje z group_id) w oplaconych zamowieniach */
@@ -104,7 +104,9 @@ export const salesStatsSchema = z.object({
     surcharge_total_gr: gr,
     prev_items: count.nullable(),
     by_model: z.array(z.object({ model: z.string(), name: z.string(), items: count })),
-    top_colors: z.array(z.object({ color: z.string(), label: z.string(), swatch: z.string(), parts: count })),
+    top_colors: z.array(
+      z.object({ color: z.string(), label: z.string(), swatch: z.string(), parts: count }),
+    ),
   }),
   /** B-616: kolorystyki wariantow seryjnych (bez konfiguracji) w oplaconych zamowieniach */
   colors: z.array(
@@ -138,7 +140,9 @@ export const operationsStatsSchema = z.object({
   generated_at: dateTimeSchema,
   waiting_orders: z.object({
     count,
-    items: z.array(z.object({ number: z.string(), paid_at: dateTimeSchema, total_gr: gr, hours: count })),
+    items: z.array(
+      z.object({ number: z.string(), paid_at: dateTimeSchema, total_gr: gr, hours: count }),
+    ),
   }),
   low_stock: z.object({
     count,
@@ -156,8 +160,19 @@ export const operationsStatsSchema = z.object({
     ),
   }),
   messages_unhandled: count,
-  outbox: z.object({ pending: count, failed: count, last_revalidated_at: dateTimeSchema.nullable() }),
-  images: z.object({ p0_ready: count, p0_total: count, p1_ready: count, p1_total: count, ready: count, total: count }),
+  outbox: z.object({
+    pending: count,
+    failed: count,
+    last_revalidated_at: dateTimeSchema.nullable(),
+  }),
+  images: z.object({
+    p0_ready: count,
+    p0_total: count,
+    p1_ready: count,
+    p1_total: count,
+    ready: count,
+    total: count,
+  }),
   /** warianty w promocji: cena, cena regularna i najnizsza cena z 30 dni wyliczona z price_history (ADR-0005) */
   omnibus: z.array(
     z.object({
@@ -187,7 +202,12 @@ export const trafficStatsSchema = z.object({
   /** sesje, ktore wykonaly krok (view_item -> add_to_cart -> begin_checkout -> purchase) */
   funnel: z.array(z.object({ step: z.string(), sessions: count, previous: count.nullable() })),
   daily: z.array(
-    z.object({ date: dateSchema, sessions: count, purchases: count, prev_sessions: count.nullable() }),
+    z.object({
+      date: dateSchema,
+      sessions: count,
+      purchases: count,
+      prev_sessions: count.nullable(),
+    }),
   ),
   builder: z.object({
     starts: count,
@@ -195,7 +215,9 @@ export const trafficStatsSchema = z.object({
     add_to_cart: count,
     entry_points: z.array(z.object({ entry_point: z.string(), count })),
   }),
-  top_items: z.array(z.object({ item_id: z.string(), item_name: z.string(), views: count, add_to_cart: count })),
+  top_items: z.array(
+    z.object({ item_id: z.string(), item_name: z.string(), views: count, add_to_cart: count }),
+  ),
   searches: z.array(z.object({ term: z.string(), count })),
   lists: z.array(z.object({ list: z.string(), views: count })),
 });
@@ -224,8 +246,21 @@ export type SystemStatus = z.infer<typeof systemStatusSchema>;
 export const adminSearchQuerySchema = z.object({ q: z.string().trim().min(1).max(80) });
 export const adminSearchSchema = z.object({
   products: z.array(
-    z.object({ id: z.string(), name: z.string(), category: categoryIdSchema, sku: z.string().nullable(), status: z.string() }),
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      category: categoryIdSchema,
+      sku: z.string().nullable(),
+      status: z.string(),
+    }),
   ),
-  orders: z.array(z.object({ number: z.string(), status: orderStatusSchema, total_gr: gr, created_at: dateTimeSchema })),
+  orders: z.array(
+    z.object({
+      number: z.string(),
+      status: orderStatusSchema,
+      total_gr: gr,
+      created_at: dateTimeSchema,
+    }),
+  ),
 });
 export type AdminSearch = z.infer<typeof adminSearchSchema>;

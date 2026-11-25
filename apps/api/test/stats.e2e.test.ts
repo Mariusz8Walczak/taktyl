@@ -29,7 +29,12 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
     const password = pw();
     await addUser(t.prisma, "podglad-stat@taktyl.example", "viewer", password);
     viewer = await login(t, "podglad-stat@taktyl.example", password, "10.9.0.1");
-    seedStock = new Map((await t.prisma.variant.findMany({ select: { sku: true, stock: true } })).map((v) => [v.sku, v.stock]));
+    seedStock = new Map(
+      (await t.prisma.variant.findMany({ select: { sku: true, stock: true } })).map((v) => [
+        v.sku,
+        v.stock,
+      ]),
+    );
   });
   afterAll(async () => {
     await resetAuth(t.prisma);
@@ -51,23 +56,42 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
         .send({
           session_id: "test_sesja_0001",
           events: [
-            { name: "view_item", params: { currency: "PLN", value: 749, items: [{ item_id: "K-BZL75-GRF-PRG" }] }, ts },
+            {
+              name: "view_item",
+              params: { currency: "PLN", value: 749, items: [{ item_id: "K-BZL75-GRF-PRG" }] },
+              ts,
+            },
             { name: "set_builder_start", params: { entry_point: "hero" }, ts },
           ],
         });
       expect(res.status, JSON.stringify(res.body)).toBe(202);
       expect(res.body).toEqual({ accepted: 2 });
-      const rows = await t.prisma.analyticsEvent.findMany({ where: { sessionId: "test_sesja_0001" }, orderBy: { id: "asc" } });
+      const rows = await t.prisma.analyticsEvent.findMany({
+        where: { sessionId: "test_sesja_0001" },
+        orderBy: { id: "asc" },
+      });
       expect(rows.map((r) => r.name)).toEqual(["view_item", "set_builder_start"]);
-      expect(rows[0]?.params).toEqual({ currency: "PLN", value: 749, items: [{ item_id: "K-BZL75-GRF-PRG" }] });
+      expect(rows[0]?.params).toEqual({
+        currency: "PLN",
+        value: 749,
+        items: [{ item_id: "K-BZL75-GRF-PRG" }],
+      });
       expect(rows.every((r) => r.demo === false)).toBe(true);
     });
 
     it("422: nazwa spoza docs/10, dane osobowe, czas poza oknem 48 h, wiecej niz 20 zdarzen", async () => {
       const bad = async (body: object) => (await t.http().post("/v1/events").send(body)).status;
-      expect(await bad({ session_id: "test_sesja_0002", events: [{ name: "page_view", params: {}, ts }] })).toBe(422);
       expect(
-        await bad({ session_id: "test_sesja_0002", events: [{ name: "search", params: { search_term: "a@taktyl.example" }, ts }] }),
+        await bad({
+          session_id: "test_sesja_0002",
+          events: [{ name: "page_view", params: {}, ts }],
+        }),
+      ).toBe(422);
+      expect(
+        await bad({
+          session_id: "test_sesja_0002",
+          events: [{ name: "search", params: { search_term: "a@taktyl.example" }, ts }],
+        }),
       ).toBe(422);
       expect(
         await bad({
@@ -81,19 +105,28 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
           events: Array.from({ length: 21 }, () => ({ name: "view_cart", params: {}, ts })),
         }),
       ).toBe(422);
-      expect(await t.prisma.analyticsEvent.count({ where: { sessionId: "test_sesja_0002" } })).toBe(0);
+      expect(await t.prisma.analyticsEvent.count({ where: { sessionId: "test_sesja_0002" } })).toBe(
+        0,
+      );
     });
   });
 
   describe("B-622 generator historii demo", () => {
     it("tworzy zamowienia przez wycene i platnosc, oznacza demo, przywraca stany, zapisuje ruch i jeden wpis dziennika", async () => {
       await reseed(t.prisma);
-      const report = await generateDemoHistory(t.prisma, { now: NOW, config: loadEnv(process.env), days: DAYS });
+      const report = await generateDemoHistory(t.prisma, {
+        now: NOW,
+        config: loadEnv(process.env),
+        days: DAYS,
+      });
       expect(report.orders).toBeGreaterThan(60);
       expect(report.skipped).toBe(0);
       expect(report.events).toBeGreaterThan(report.orders);
 
-      const orders = await t.prisma.order.findMany({ include: { items: true, statusHistory: true }, orderBy: { number: "asc" } });
+      const orders = await t.prisma.order.findMany({
+        include: { items: true, statusHistory: true },
+        orderBy: { number: "asc" },
+      });
       firstNumbers = orders.map((o) => o.number);
       expect(orders).toHaveLength(report.orders);
       expect(orders.every((o) => o.demo)).toBe(true);
@@ -116,7 +149,11 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
       expect(await t.prisma.stockMovement.count({ where: { kind: "sale" } })).toBeGreaterThan(0);
       // ruch demo i jeden wpis dziennika
       expect(await t.prisma.analyticsEvent.count({ where: { demo: true } })).toBe(report.events);
-      expect(await t.prisma.analyticsEvent.count({ where: { demo: true, name: { notIn: [...ANALYTICS_EVENT_NAMES] } } })).toBe(0);
+      expect(
+        await t.prisma.analyticsEvent.count({
+          where: { demo: true, name: { notIn: [...ANALYTICS_EVENT_NAMES] } },
+        }),
+      ).toBe(0);
       const audit = await t.prisma.auditLog.findMany({ where: { action: "demo.history" } });
       expect(audit).toHaveLength(1);
       expect(await t.prisma.auditLog.count({ where: { action: "order.transition" } })).toBe(0);
@@ -125,7 +162,9 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
     it("jest deterministyczny: ta sama chwila i katalog daja te same numery zamowien", async () => {
       await reseed(t.prisma);
       await generateDemoHistory(t.prisma, { now: NOW, config: loadEnv(process.env), days: DAYS });
-      const again = (await t.prisma.order.findMany({ select: { number: true }, orderBy: { number: "asc" } })).map((o) => o.number);
+      const again = (
+        await t.prisma.order.findMany({ select: { number: true }, orderBy: { number: "asc" } })
+      ).map((o) => o.number);
       expect(again).toEqual(firstNumbers);
     }, 240_000);
   });
@@ -135,7 +174,12 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
       const res = await get("/v1/admin/stats/sales?from=2026-09-27&to=2026-10-07");
       expect(res.status, JSON.stringify(res.body)).toBe(200);
       const s = salesStatsSchema.parse(res.body);
-      expect(s.range).toMatchObject({ from: "2026-09-27", to: "2026-10-07", days: 11, previous: { from: "2026-09-16", to: "2026-09-26" } });
+      expect(s.range).toMatchObject({
+        from: "2026-09-27",
+        to: "2026-10-07",
+        days: 11,
+        previous: { from: "2026-09-16", to: "2026-09-26" },
+      });
       expect(s.daily).toHaveLength(11);
       expect(s.demo_data).toBe(true);
       const paid = await t.prisma.order.findMany({
@@ -156,12 +200,16 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
     });
 
     it("B-612..B-617: lejek, mapa cieplna 7x24, sety, konfiguracje, kolory, top produkty", async () => {
-      const s = salesStatsSchema.parse((await get("/v1/admin/stats/sales?from=2026-09-17&to=2026-10-07&compare=none")).body);
+      const s = salesStatsSchema.parse(
+        (await get("/v1/admin/stats/sales?from=2026-09-17&to=2026-10-07&compare=none")).body,
+      );
       expect(s.range.previous).toBeNull();
       expect(s.kpi.revenue_gr.previous).toBeNull();
       expect(s.funnel.reached.paid).toBeGreaterThanOrEqual(s.funnel.reached.processing);
       expect(s.funnel.reached.processing).toBeGreaterThanOrEqual(s.funnel.reached.shipped);
-      expect(s.funnel.transitions.find((x) => x.from === "pending_payment")?.count).toBeGreaterThan(0);
+      expect(s.funnel.transitions.find((x) => x.from === "pending_payment")?.count).toBeGreaterThan(
+        0,
+      );
       expect(s.heatmap.cells).toHaveLength(168);
       expect(s.heatmap.cells.reduce((sum, c) => sum + c.orders, 0)).toBe(s.funnel.created);
       expect(s.sets.orders_with_set).toBeGreaterThan(0);
@@ -187,7 +235,12 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
       expect(tr.kpi.purchases.value).toBeGreaterThan(0);
       expect(tr.kpi.conversion_bp.value).toBeGreaterThan(0);
       expect(tr.kpi.abandoned_carts.value).toBeGreaterThan(0);
-      expect(tr.funnel.map((f) => f.step)).toEqual(["view_item", "add_to_cart", "begin_checkout", "purchase"]);
+      expect(tr.funnel.map((f) => f.step)).toEqual([
+        "view_item",
+        "add_to_cart",
+        "begin_checkout",
+        "purchase",
+      ]);
       expect(tr.daily).toHaveLength(21);
       expect(tr.builder.starts).toBeGreaterThan(0);
       expect(tr.top_items.length).toBeGreaterThan(0);
@@ -206,19 +259,29 @@ describe.skipIf(!hasDb)("B-610..B-626 statystyki, kolektor i historia demo (Post
     it("B-623, B-626: kondycja systemu i wyszukiwarka globalna", async () => {
       const sys = systemStatusSchema.parse((await get("/v1/admin/system")).body);
       expect(sys.services.find((x) => x.id === "db")?.status).toBe("ok");
-      expect(sys.stack.map((x) => x.name)).toEqual(expect.arrayContaining(["Node.js", "NestJS", "PostgreSQL"]));
+      expect(sys.stack.map((x) => x.name)).toEqual(
+        expect.arrayContaining(["Node.js", "NestJS", "PostgreSQL"]),
+      );
       expect(sys.migrations.applied).toBeGreaterThan(0);
       const byName = adminSearchSchema.parse((await get("/v1/admin/search?q=lupek")).body);
       expect(byName.products.map((p) => p.name)).toContain("Łupek 65");
       const bySku = adminSearchSchema.parse((await get("/v1/admin/search?q=M-WRB")).body);
       expect(bySku.products.some((p) => p.sku?.startsWith("M-WRB"))).toBe(true);
       const number = firstNumbers[0] as string;
-      const byOrder = adminSearchSchema.parse((await get(`/v1/admin/search?q=${number.slice(-4)}`)).body);
+      const byOrder = adminSearchSchema.parse(
+        (await get(`/v1/admin/search?q=${number.slice(-4)}`)).body,
+      );
       expect(byOrder.orders.map((x) => x.number)).toContain(number);
     });
 
     it("kazda trasa wymaga sesji (401 bez niej)", async () => {
-      for (const p of ["/v1/admin/stats/sales", "/v1/admin/stats/traffic", "/v1/admin/stats/operations", "/v1/admin/system", "/v1/admin/search?q=x"]) {
+      for (const p of [
+        "/v1/admin/stats/sales",
+        "/v1/admin/stats/traffic",
+        "/v1/admin/stats/operations",
+        "/v1/admin/system",
+        "/v1/admin/search?q=x",
+      ]) {
         expect((await get(p, null)).status, p).toBe(401);
       }
     });

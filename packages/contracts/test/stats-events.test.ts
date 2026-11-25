@@ -31,9 +31,15 @@ describe("B-621 POST /v1/events", () => {
   });
 
   it("odrzuca nazwe spoza docs/10 (np. page_view) i nieznane pola", () => {
-    expect(eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: [ev("page_view")] }).success).toBe(false);
     expect(
-      eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: [ev("search", {})], user_id: "x" }).success,
+      eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: [ev("page_view")] }).success,
+    ).toBe(false);
+    expect(
+      eventsBatchSchema.safeParse({
+        session_id: "abcdefgh",
+        events: [ev("search", {})],
+        user_id: "x",
+      }).success,
     ).toBe(false);
   });
 
@@ -42,11 +48,15 @@ describe("B-621 POST /v1/events", () => {
     expect(findPersonalData({ search_term: "jan@taktyl.example" })).toBe("params.search_term");
     expect(findPersonalData({ items: [{ item_name: "Bazalt 75" }] })).toBeNull();
     expect(
-      eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: [ev("search", { phone: "500000000" })] })
-        .success,
+      eventsBatchSchema.safeParse({
+        session_id: "abcdefgh",
+        events: [ev("search", { phone: "500000000" })],
+      }).success,
     ).toBe(false);
     const many = Array.from({ length: 21 }, () => ev("view_cart"));
-    expect(eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: many }).success).toBe(false);
+    expect(eventsBatchSchema.safeParse({ session_id: "abcdefgh", events: many }).success).toBe(
+      false,
+    );
   });
 
   it("lista nazw ma 27 zdarzen (docs/10 par. 4 i 5)", () => {
@@ -58,7 +68,9 @@ describe("B-621 POST /v1/events", () => {
 describe("B-610 zakres statystyk", () => {
   it("domyslnie porownanie z poprzednim okresem, daty RRRR-MM-DD", () => {
     expect(statsRangeQuerySchema.parse({})).toEqual({ compare: "previous" });
-    expect(statsRangeQuerySchema.safeParse({ from: "2026-11-01", to: "2026-11-25" }).success).toBe(true);
+    expect(statsRangeQuerySchema.safeParse({ from: "2026-11-01", to: "2026-11-25" }).success).toBe(
+      true,
+    );
     expect(statsRangeQuerySchema.safeParse({ from: "01.11.2026" }).success).toBe(false);
   });
 });

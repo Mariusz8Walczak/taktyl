@@ -72,7 +72,10 @@ export const analyticsParamsSchema = z
   .record(z.string().min(1).max(40), z.unknown())
   .superRefine((params, ctx) => {
     if (JSON.stringify(params).length > EVENT_PARAMS_MAX_CHARS) {
-      ctx.addIssue({ code: "custom", message: `parametry: maks. ${EVENT_PARAMS_MAX_CHARS} znakow` });
+      ctx.addIssue({
+        code: "custom",
+        message: `parametry: maks. ${EVENT_PARAMS_MAX_CHARS} znakow`,
+      });
     }
     const hit = findPersonalData(params);
     if (hit) ctx.addIssue({ code: "custom", message: `dane osobowe w pomiarze: ${hit}` });
@@ -87,7 +90,9 @@ export const analyticsEventSchema = z.strictObject({
 export type AnalyticsEvent = z.infer<typeof analyticsEventSchema>;
 
 /** Anonimowy identyfikator sesji (losowy, bez powiazania z osoba); nie jest to identyfikator klienta ani urzadzenia. */
-export const analyticsSessionIdSchema = z.string().regex(/^[A-Za-z0-9_-]{8,64}$/, "session_id: 8-64 znaki [A-Za-z0-9_-]");
+export const analyticsSessionIdSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9_-]{8,64}$/, "session_id: 8-64 znaki [A-Za-z0-9_-]");
 
 /** POST /v1/events (body). */
 export const eventsBatchSchema = z.strictObject({

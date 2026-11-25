@@ -684,7 +684,8 @@ export const ROUTES: RouteDoc[] = [
   {
     method: "get",
     path: "/v1/admin/stats/traffic",
-    summary: "Ruch z kolektora zdarzen: sesje, lejek, konwersja, porzucone koszyki, kreator, wyszukiwania",
+    summary:
+      "Ruch z kolektora zdarzen: sesje, lejek, konwersja, porzucone koszyki, kreator, wyszukiwania",
     tag: "admin: pulpit",
     ids: ["B-620"],
     query: statsRangeQuerySchema,
@@ -709,7 +710,8 @@ export const ROUTES: RouteDoc[] = [
   {
     method: "get",
     path: "/v1/admin/system",
-    summary: "Jak to jest zrobione: stos (wersje z runtime), kondycja uslug, liczby danych, migracje",
+    summary:
+      "Jak to jest zrobione: stos (wersje z runtime), kondycja uslug, liczby danych, migracje",
     tag: "admin: pulpit",
     ids: ["B-623"],
     success: { status: 200, schema: systemStatusSchema, description: "Stan systemu." },

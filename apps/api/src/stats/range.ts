@@ -40,7 +40,9 @@ export function addDays(date: string, days: number): string {
 
 /** Liczba dni od `from` do `to` wlacznie. */
 export function daysBetween(from: string, to: string): number {
-  return Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000) + 1;
+  return (
+    Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000) + 1
+  );
 }
 
 export interface StatsWindow {
@@ -86,7 +88,8 @@ export function resolveRange(
         {
           path: days < 1 ? "from" : "to",
           code: days < 1 ? "range_inverted" : "range_too_long",
-          message: days < 1 ? "Poczatek zakresu jest po koncu." : `Zakres do ${STATS_MAX_DAYS} dni.`,
+          message:
+            days < 1 ? "Poczatek zakresu jest po koncu." : `Zakres do ${STATS_MAX_DAYS} dni.`,
         },
       ],
       400,
@@ -112,7 +115,9 @@ export function median(values: number[]): number {
   if (values.length === 0) return 0;
   const s = [...values].sort((a, b) => a - b);
   const mid = Math.floor(s.length / 2);
-  return Math.floor(s.length % 2 === 1 ? (s[mid] as number) : ((s[mid - 1] as number) + (s[mid] as number)) / 2);
+  return Math.floor(
+    s.length % 2 === 1 ? (s[mid] as number) : ((s[mid - 1] as number) + (s[mid] as number)) / 2,
+  );
 }
 
 /** Udzial w punktach bazowych (0..10000), bez dzielenia przez zero. */

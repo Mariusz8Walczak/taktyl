@@ -23,7 +23,13 @@ export class EventsService {
     const errors = batch.events.flatMap((e, i) => {
       const at = new Date(e.ts).getTime();
       return at < now.getTime() - EVENT_MAX_AGE_MS || at > now.getTime() + EVENT_MAX_SKEW_MS
-        ? [{ path: `events[${i}].ts`, code: "out_of_window", message: "Czas zdarzenia poza oknem 48 h." }]
+        ? [
+            {
+              path: `events[${i}].ts`,
+              code: "out_of_window",
+              message: "Czas zdarzenia poza oknem 48 h.",
+            },
+          ]
         : [];
     });
     if (errors.length > 0) throw validationFailed(errors);

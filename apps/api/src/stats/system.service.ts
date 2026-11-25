@@ -54,7 +54,13 @@ export class SystemService {
   private async web(): Promise<Service> {
     const base = this.config.REVALIDATE_URL;
     if (!base) {
-      return { id: "web", label: "Sklep (Next.js)", status: "uwaga", detail: "Brak REVALIDATE_URL w konfiguracji API.", latency_ms: null };
+      return {
+        id: "web",
+        label: "Sklep (Next.js)",
+        status: "uwaga",
+        detail: "Brak REVALIDATE_URL w konfiguracji API.",
+        latency_ms: null,
+      };
     }
     const url = `${new URL(base).origin}/api/health`;
     const r = await this.timed(async () => {
@@ -62,15 +68,29 @@ export class SystemService {
       return res.ok;
     });
     return r.value
-      ? { id: "web", label: "Sklep (Next.js)", status: "ok", detail: "Odpowiada na /api/health.", latency_ms: r.ms }
-      : { id: "web", label: "Sklep (Next.js)", status: "awaria", detail: "Brak odpowiedzi z /api/health.", latency_ms: null };
+      ? {
+          id: "web",
+          label: "Sklep (Next.js)",
+          status: "ok",
+          detail: "Odpowiada na /api/health.",
+          latency_ms: r.ms,
+        }
+      : {
+          id: "web",
+          label: "Sklep (Next.js)",
+          status: "awaria",
+          detail: "Brak odpowiedzi z /api/health.",
+          latency_ms: null,
+        };
   }
 
   async status(): Promise<SystemStatus> {
     const now = this.clock();
     const [db, pgVersion, migrations, pending, failed, lastSent, web, counts] = await Promise.all([
       this.timed(() => this.prisma.$queryRaw`SELECT 1`),
-      this.prisma.$queryRaw<{ v: string }[]>`SHOW server_version`.catch(() => [] as { v: string }[]),
+      this.prisma.$queryRaw<{ v: string }[]>`SHOW server_version`.catch(
+        () => [] as { v: string }[],
+      ),
       this.prisma.$queryRaw<{ n: number; last: string | null }[]>`
         SELECT count(*)::int AS n, max(migration_name) AS last FROM _prisma_migrations WHERE finished_at IS NOT NULL`.catch(
         () => [] as { n: number; last: string | null }[],
@@ -106,8 +126,20 @@ export class SystemService {
         latency_ms: null,
       },
       db.value !== null
-        ? { id: "db", label: "Baza PostgreSQL", status: "ok", detail: "SELECT 1 bez bledu.", latency_ms: db.ms }
-        : { id: "db", label: "Baza PostgreSQL", status: "awaria", detail: "Brak polaczenia z baza.", latency_ms: null },
+        ? {
+            id: "db",
+            label: "Baza PostgreSQL",
+            status: "ok",
+            detail: "SELECT 1 bez bledu.",
+            latency_ms: db.ms,
+          }
+        : {
+            id: "db",
+            label: "Baza PostgreSQL",
+            status: "awaria",
+            detail: "Brak polaczenia z baza.",
+            latency_ms: null,
+          },
       {
         id: "outbox",
         label: "Kolejka rewalidacji (outbox)",
@@ -124,14 +156,26 @@ export class SystemService {
       services,
       stack: [
         { name: "Node.js", version: process.versions.node, role: "srodowisko uruchomieniowe API" },
-        { name: "NestJS", version: packageVersion("@nestjs/core"), role: "API REST i logika backpanelu" },
-        { name: "Prisma", version: packageVersion("@prisma/client"), role: "dostep do bazy i migracje" },
+        {
+          name: "NestJS",
+          version: packageVersion("@nestjs/core"),
+          role: "API REST i logika backpanelu",
+        },
+        {
+          name: "Prisma",
+          version: packageVersion("@prisma/client"),
+          role: "dostep do bazy i migracje",
+        },
         {
           name: "PostgreSQL",
           version: String(pg.server_version ?? pg.v ?? "?"),
           role: "baza danych (zrodlo prawdy w runtime)",
         },
-        { name: "Zod", version: packageVersion("zod"), role: "kontrakty API wspolne dla sklepu i panelu" },
+        {
+          name: "Zod",
+          version: packageVersion("zod"),
+          role: "kontrakty API wspolne dla sklepu i panelu",
+        },
       ],
       data: [
         { id: "products", label: "Produkty", count: products },
@@ -159,7 +203,10 @@ export class SystemService {
       }),
       this.prisma.variant.findMany({
         where: { sku: { contains: upper } },
-        select: { sku: true, product: { select: { id: true, name: true, categoryId: true, status: true } } },
+        select: {
+          sku: true,
+          product: { select: { id: true, name: true, categoryId: true, status: true } },
+        },
         orderBy: { sku: "asc" },
         take: SEARCH_LIMIT,
       }),
@@ -172,7 +219,13 @@ export class SystemService {
     ]);
     const byName = products
       .filter((p) => normalizeSearch(p.name).includes(norm) || p.id.includes(norm))
-      .map((p) => ({ id: p.id, name: p.name, category: p.categoryId as CategoryId, sku: null, status: p.status }));
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        category: p.categoryId as CategoryId,
+        sku: null,
+        status: p.status,
+      }));
     const bySku = variants.map((v) => ({
       id: v.product.id,
       name: v.product.name,
@@ -191,4 +244,3 @@ export class SystemService {
     });
   }
 }
-

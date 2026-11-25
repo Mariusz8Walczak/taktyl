@@ -10,7 +10,12 @@ import {
   type OrderStatus,
   type SalesStats,
 } from "@taktyl/contracts";
-import { configurationSurcharge, findModel, type ConfData, type Configuration } from "@taktyl/domain";
+import {
+  configurationSurcharge,
+  findModel,
+  type ConfData,
+  type Configuration,
+} from "@taktyl/domain";
 import { CLOCK, type Clock } from "../common/clock.js";
 import { respond } from "../common/zod.pipe.js";
 import { APP_CONFIG } from "../config/config.module.js";
@@ -57,7 +62,8 @@ interface PaidItem {
   colorId: string;
 }
 
-const lineValue = (i: PaidItem): number => i.unitPriceGr * i.qty - i.setDiscountGr - i.couponDiscountGr;
+const lineValue = (i: PaidItem): number =>
+  i.unitPriceGr * i.qty - i.setDiscountGr - i.couponDiscountGr;
 
 @Injectable()
 export class SalesStatsService {
@@ -123,7 +129,11 @@ export class SalesStatsService {
   }
 
   /** B-610..B-617: sprzedaz w zakresie z porownaniem do okresu poprzedniego. */
-  async sales(query: { from?: string; to?: string; compare: "previous" | "none" }): Promise<SalesStats> {
+  async sales(query: {
+    from?: string;
+    to?: string;
+    compare: "previous" | "none";
+  }): Promise<SalesStats> {
     const now = this.clock();
     const { current, previous, range } = resolveRange(query, now);
     const [paid, items, created, prevPaid, prevItems, prevCreatedCount, conf] = await Promise.all([
@@ -133,7 +143,9 @@ export class SalesStatsService {
       previous ? this.paidOrders(previous) : Promise.resolve(null),
       previous ? this.paidItems(previous) : Promise.resolve(null),
       previous
-        ? this.prisma.order.count({ where: { createdAt: { gte: previous.start, lt: previous.end } } })
+        ? this.prisma.order.count({
+            where: { createdAt: { gte: previous.start, lt: previous.end } },
+          })
         : Promise.resolve(null),
       this.configurator.confData(),
     ]);
@@ -143,7 +155,11 @@ export class SalesStatsService {
     const prevRevenue = prevPaid ? prevPaid.reduce((s, o) => s + o.totalGr, 0) : null;
     const aov = paid.length > 0 ? Math.round(revenue / paid.length) : 0;
     const prevAov =
-      prevPaid && prevRevenue !== null ? (prevPaid.length > 0 ? Math.round(prevRevenue / prevPaid.length) : 0) : null;
+      prevPaid && prevRevenue !== null
+        ? prevPaid.length > 0
+          ? Math.round(prevRevenue / prevPaid.length)
+          : 0
+        : null;
     const setShare = (list: PaidItem[]): number =>
       shareBp(
         list.filter((i) => i.groupId !== null).reduce((s, i) => s + lineValue(i), 0),
@@ -151,7 +167,10 @@ export class SalesStatsService {
       );
 
     // --- B-611 dzien po dniu
-    const byDay = new Map<string, { revenue: number; orders: number; paid: number; set: number; items: number }>();
+    const byDay = new Map<
+      string,
+      { revenue: number; orders: number; paid: number; set: number; items: number }
+    >();
     const day = (d: string) => {
       let v = byDay.get(d);
       if (!v) {
@@ -216,7 +235,8 @@ export class SalesStatsService {
     for (const o of created) {
       const first = new Map<string, Date>();
       for (const h of o.statusHistory) if (!first.has(h.toStatus)) first.set(h.toStatus, h.at);
-      for (const k of ["paid", "processing", "shipped", "delivered"] as const) if (first.has(k)) reached[k] += 1;
+      for (const k of ["paid", "processing", "shipped", "delivered"] as const)
+        if (first.has(k)) reached[k] += 1;
       if (o.status === "cancelled") cancelled += 1;
       if (o.status === "pending_payment" || o.status === "payment_failed") waiting += 1;
       if (first.has("payment_failed")) failedOnce += 1;
@@ -277,7 +297,10 @@ export class SalesStatsService {
     const cfg = this.configStats(conf, items, prevItems);
 
     // --- B-616 kolory i B-617 top produkty
-    const [colors, top] = await Promise.all([this.colorRanking(items, prevItems), this.topProducts(items, prevItems)]);
+    const [colors, top] = await Promise.all([
+      this.colorRanking(items, prevItems),
+      this.topProducts(items, prevItems),
+    ]);
 
     return respond(salesStatsSchema, {
       generated_at: now.toISOString(),
@@ -316,7 +339,11 @@ export class SalesStatsService {
     });
   }
 
-  private configStats(d: ConfData, items: PaidItem[], prev: PaidItem[] | null): SalesStats["configurator"] {
+  private configStats(
+    d: ConfData,
+    items: PaidItem[],
+    prev: PaidItem[] | null,
+  ): SalesStats["configurator"] {
     const cfgItems = items.filter((i) => i.configSku !== null);
     const byModel = new Map<string, number>();
     const colorCount = new Map<string, number>();
@@ -343,12 +370,18 @@ export class SalesStatsService {
       revenue_gr: cfgItems.reduce((s, i) => s + lineValue(i), 0),
       surcharge_total_gr: surchargeTotal,
       surcharge_avg_gr: units > 0 ? Math.round(surchargeTotal / units) : 0,
-      prev_items: prev ? prev.filter((i) => i.configSku !== null).reduce((s, i) => s + i.qty, 0) : null,
+      prev_items: prev
+        ? prev.filter((i) => i.configSku !== null).reduce((s, i) => s + i.qty, 0)
+        : null,
       by_model: [...byModel.entries()]
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
         .map(([model, n]) => {
           const m = findModel(d, model);
-          return { model, name: m ? `${m.name}${m.size ? ` ${m.size.toUpperCase()}` : ""}` : model, items: n };
+          return {
+            model,
+            name: m ? `${m.name}${m.size ? ` ${m.size.toUpperCase()}` : ""}` : model,
+            items: n,
+          };
         }),
       top_colors: [...colorCount.entries()]
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
@@ -362,7 +395,10 @@ export class SalesStatsService {
     };
   }
 
-  private async colorRanking(items: PaidItem[], prev: PaidItem[] | null): Promise<SalesStats["colors"]> {
+  private async colorRanking(
+    items: PaidItem[],
+    prev: PaidItem[] | null,
+  ): Promise<SalesStats["colors"]> {
     const agg = new Map<string, { units: number; revenue: number }>();
     for (const i of items) {
       if (i.configSku !== null) continue;
@@ -381,7 +417,10 @@ export class SalesStatsService {
     });
     const meta = new Map(colors.map((c) => [c.id, c]));
     return [...agg.entries()]
-      .sort((a, b) => b[1].units - a[1].units || b[1].revenue - a[1].revenue || a[0].localeCompare(b[0]))
+      .sort(
+        (a, b) =>
+          b[1].units - a[1].units || b[1].revenue - a[1].revenue || a[0].localeCompare(b[0]),
+      )
       .slice(0, LIST_MAX)
       .map(([id, v]) => ({
         color: id,
@@ -393,7 +432,10 @@ export class SalesStatsService {
       }));
   }
 
-  private async topProducts(items: PaidItem[], prev: PaidItem[] | null): Promise<SalesStats["top_products"]> {
+  private async topProducts(
+    items: PaidItem[],
+    prev: PaidItem[] | null,
+  ): Promise<SalesStats["top_products"]> {
     const agg = new Map<string, { units: number; revenue: number }>();
     for (const i of items) {
       const v = agg.get(i.productId) ?? { units: 0, revenue: 0 };
@@ -402,7 +444,8 @@ export class SalesStatsService {
       agg.set(i.productId, v);
     }
     const prevRev = new Map<string, number>();
-    for (const i of prev ?? []) prevRev.set(i.productId, (prevRev.get(i.productId) ?? 0) + lineValue(i));
+    for (const i of prev ?? [])
+      prevRev.set(i.productId, (prevRev.get(i.productId) ?? 0) + lineValue(i));
     const ids = [...agg.entries()]
       .sort((a, b) => b[1].revenue - a[1].revenue || a[0].localeCompare(b[0]))
       .slice(0, TOP_PRODUCTS)
@@ -410,11 +453,24 @@ export class SalesStatsService {
     const [products, images] = await Promise.all([
       this.prisma.product.findMany({
         where: { id: { in: ids } },
-        select: { id: true, slug: true, name: true, categoryId: true, defaultVariant: { select: { colorId: true } } },
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+          categoryId: true,
+          defaultVariant: { select: { colorId: true } },
+        },
       }),
       this.prisma.productImage.findMany({
         where: { productId: { in: ids }, kind: "packshot", status: "gotowe" },
-        select: { productId: true, colorId: true, kind: true, files: true, pixels: true, key: true },
+        select: {
+          productId: true,
+          colorId: true,
+          kind: true,
+          files: true,
+          pixels: true,
+          key: true,
+        },
         orderBy: { key: "asc" },
       }),
     ]);
@@ -448,39 +504,57 @@ export class SalesStatsService {
     const now = this.clock();
     const h24 = new Date(now.getTime() - DAY_MS);
     const d30 = new Date(now.getTime() - 30 * DAY_MS);
-    const [waitingCount, waitingRows, variants, sold, messages, pending, failed, lastSent, images, promo] =
-      await Promise.all([
-        this.prisma.order.count({ where: { status: "paid", paidAt: { lt: h24 } } }),
-        this.prisma.order.findMany({
-          where: { status: "paid", paidAt: { lt: h24 } },
-          orderBy: { paidAt: "asc" },
-          take: LIST_MAX,
-          select: { number: true, paidAt: true, totalGr: true },
-        }),
-        this.prisma.variant.findMany({
-          where: { status: "active", product: { status: "active" } },
-          select: { sku: true, stock: true, product: { select: { id: true, name: true } } },
-        }),
-        this.prisma.orderItem.groupBy({
-          by: ["sku"],
-          where: { configSku: null, order: { status: { in: [...PAID_STATUSES] }, paidAt: { gte: d30 } } },
-          _sum: { qty: true },
-        }),
-        this.prisma.contactMessage.count({ where: { handled: false } }),
-        this.prisma.outbox.count({ where: { status: "pending" } }),
-        this.prisma.outbox.count({ where: { status: "failed" } }),
-        this.prisma.outbox.findFirst({
-          where: { status: "sent", sentAt: { not: null } },
-          orderBy: { sentAt: "desc" },
-          select: { sentAt: true },
-        }),
-        this.prisma.productImage.groupBy({ by: ["priority", "status"], _count: { _all: true } }),
-        this.prisma.variant.findMany({
-          where: { status: "active", regularPriceGr: { not: null }, product: { status: "active" } },
-          select: { sku: true, priceGr: true, regularPriceGr: true, product: { select: { id: true, name: true } } },
-          orderBy: { sku: "asc" },
-        }),
-      ]);
+    const [
+      waitingCount,
+      waitingRows,
+      variants,
+      sold,
+      messages,
+      pending,
+      failed,
+      lastSent,
+      images,
+      promo,
+    ] = await Promise.all([
+      this.prisma.order.count({ where: { status: "paid", paidAt: { lt: h24 } } }),
+      this.prisma.order.findMany({
+        where: { status: "paid", paidAt: { lt: h24 } },
+        orderBy: { paidAt: "asc" },
+        take: LIST_MAX,
+        select: { number: true, paidAt: true, totalGr: true },
+      }),
+      this.prisma.variant.findMany({
+        where: { status: "active", product: { status: "active" } },
+        select: { sku: true, stock: true, product: { select: { id: true, name: true } } },
+      }),
+      this.prisma.orderItem.groupBy({
+        by: ["sku"],
+        where: {
+          configSku: null,
+          order: { status: { in: [...PAID_STATUSES] }, paidAt: { gte: d30 } },
+        },
+        _sum: { qty: true },
+      }),
+      this.prisma.contactMessage.count({ where: { handled: false } }),
+      this.prisma.outbox.count({ where: { status: "pending" } }),
+      this.prisma.outbox.count({ where: { status: "failed" } }),
+      this.prisma.outbox.findFirst({
+        where: { status: "sent", sentAt: { not: null } },
+        orderBy: { sentAt: "desc" },
+        select: { sentAt: true },
+      }),
+      this.prisma.productImage.groupBy({ by: ["priority", "status"], _count: { _all: true } }),
+      this.prisma.variant.findMany({
+        where: { status: "active", regularPriceGr: { not: null }, product: { status: "active" } },
+        select: {
+          sku: true,
+          priceGr: true,
+          regularPriceGr: true,
+          product: { select: { id: true, name: true } },
+        },
+        orderBy: { sku: "asc" },
+      }),
+    ]);
 
     const soldBySku = new Map(sold.map((r) => [r.sku, r._sum.qty ?? 0]));
     const forecast = variants
@@ -496,7 +570,10 @@ export class SalesStatsService {
           days_left: daysLeft,
         };
       })
-      .filter((v) => v.stock <= LOW_STOCK_MAX || (v.days_left !== null && v.days_left <= FORECAST_DAYS_ALERT))
+      .filter(
+        (v) =>
+          v.stock <= LOW_STOCK_MAX || (v.days_left !== null && v.days_left <= FORECAST_DAYS_ALERT),
+      )
       .sort(
         (a, b) =>
           (a.days_left ?? Number.MAX_SAFE_INTEGER) - (b.days_left ?? Number.MAX_SAFE_INTEGER) ||

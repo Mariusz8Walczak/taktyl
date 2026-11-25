@@ -65,7 +65,9 @@ export class TrafficStatsService {
     );
   }
 
-  private async daily(w: StatsWindow): Promise<Map<string, { sessions: number; purchases: number }>> {
+  private async daily(
+    w: StatsWindow,
+  ): Promise<Map<string, { sessions: number; purchases: number }>> {
     const rows = await this.prisma.$queryRaw<{ d: string; sessions: number; purchases: number }[]>`
       SELECT to_char(ts AT TIME ZONE 'Europe/Warsaw', 'YYYY-MM-DD') AS d,
              count(DISTINCT session_id)::int AS sessions,
@@ -76,47 +78,52 @@ export class TrafficStatsService {
     return new Map(rows.map((r) => [r.d, { sessions: r.sessions, purchases: r.purchases }]));
   }
 
-  async traffic(query: { from?: string; to?: string; compare: "previous" | "none" }): Promise<TrafficStats> {
+  async traffic(query: {
+    from?: string;
+    to?: string;
+    compare: "previous" | "none";
+  }): Promise<TrafficStats> {
     const now = this.clock();
     const { current: w, previous: p, range } = resolveRange(query, now);
-    const [cur, prev, days, prevDays, builder, entries, items, carts, searches, lists, demo] = await Promise.all([
-      this.totals(w),
-      p ? this.totals(p) : Promise.resolve(null),
-      this.daily(w),
-      p ? this.daily(p) : Promise.resolve(null),
-      this.prisma.$queryRaw<{ name: string; n: number }[]>`
+    const [cur, prev, days, prevDays, builder, entries, items, carts, searches, lists, demo] =
+      await Promise.all([
+        this.totals(w),
+        p ? this.totals(p) : Promise.resolve(null),
+        this.daily(w),
+        p ? this.daily(p) : Promise.resolve(null),
+        this.prisma.$queryRaw<{ name: string; n: number }[]>`
         SELECT name, count(*)::int AS n FROM analytics_events
          WHERE ts >= ${w.start} AND ts < ${w.end}
            AND name IN ('set_builder_start', 'set_complete', 'set_add_to_cart')
          GROUP BY name`,
-      this.prisma.$queryRaw<{ entry_point: string; n: number }[]>`
+        this.prisma.$queryRaw<{ entry_point: string; n: number }[]>`
         SELECT coalesce(params->>'entry_point', 'brak') AS entry_point, count(*)::int AS n FROM analytics_events
          WHERE ts >= ${w.start} AND ts < ${w.end} AND name = 'set_builder_start'
          GROUP BY 1 ORDER BY 2 DESC, 1 LIMIT ${LIST_MAX}`,
-      this.prisma.$queryRaw<{ item_id: string; item_name: string; n: number }[]>`
+        this.prisma.$queryRaw<{ item_id: string; item_name: string; n: number }[]>`
         SELECT it->>'item_id' AS item_id, max(it->>'item_name') AS item_name, count(*)::int AS n
           FROM analytics_events e, jsonb_array_elements(coalesce(e.params->'items', '[]'::jsonb)) it
          WHERE e.ts >= ${w.start} AND e.ts < ${w.end} AND e.name = 'view_item' AND it->>'item_id' IS NOT NULL
          GROUP BY 1 ORDER BY 3 DESC, 1 LIMIT ${LIST_MAX}`,
-      this.prisma.$queryRaw<{ item_id: string; n: number }[]>`
+        this.prisma.$queryRaw<{ item_id: string; n: number }[]>`
         SELECT it->>'item_id' AS item_id, count(*)::int AS n
           FROM analytics_events e, jsonb_array_elements(coalesce(e.params->'items', '[]'::jsonb)) it
          WHERE e.ts >= ${w.start} AND e.ts < ${w.end} AND e.name = 'add_to_cart' AND it->>'item_id' IS NOT NULL
          GROUP BY 1`,
-      this.prisma.$queryRaw<{ term: string; n: number }[]>`
+        this.prisma.$queryRaw<{ term: string; n: number }[]>`
         SELECT lower(trim(params->>'search_term')) AS term, count(*)::int AS n FROM analytics_events
          WHERE ts >= ${w.start} AND ts < ${w.end} AND name = 'search' AND coalesce(params->>'search_term', '') <> ''
          GROUP BY 1 ORDER BY 2 DESC, 1 LIMIT ${LIST_MAX}`,
-      this.prisma.$queryRaw<{ list: string; n: number }[]>`
+        this.prisma.$queryRaw<{ list: string; n: number }[]>`
         SELECT coalesce(params->>'item_list_name', params->>'item_list_id', 'brak') AS list, count(*)::int AS n
           FROM analytics_events
          WHERE ts >= ${w.start} AND ts < ${w.end} AND name = 'view_item_list'
          GROUP BY 1 ORDER BY 2 DESC, 1 LIMIT ${LIST_MAX}`,
-      this.prisma.analyticsEvent.findFirst({
-        where: { ts: { gte: w.start, lt: w.end }, demo: true },
-        select: { id: true },
-      }),
-    ]);
+        this.prisma.analyticsEvent.findFirst({
+          where: { ts: { gte: w.start, lt: w.end }, demo: true },
+          select: { id: true },
+        }),
+      ]);
     const builderCount = (n: string): number => builder.find((b) => b.name === n)?.n ?? 0;
     const atc = new Map(carts.map((c) => [c.item_id, c.n]));
     return respond(trafficStatsSchema, {
