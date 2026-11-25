@@ -105,6 +105,11 @@ export class ConfiguratorService {
     };
   }
 
+  /** B-615, B-622: slowniki konfiguratora z kolorami z bazy (statystyki doplat i generator danych demo). */
+  async confData(snap?: CatalogSnapshot): Promise<ConfData> {
+    return this.withColors(snap ?? (await this.loader.load()));
+  }
+
   async dictionaries() {
     const d = this.withColors(await this.loader.load());
     return respond(configuratorDataSchema, {

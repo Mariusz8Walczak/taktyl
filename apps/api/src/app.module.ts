@@ -7,6 +7,8 @@ import { AdminSettingsModule } from "./admin-settings/admin-settings.module.js";
 import { AdminContentModule } from "./admin-content/admin-content.module.js";
 import { AdminMediaModule } from "./admin-media/admin-media.module.js";
 import { DashboardModule } from "./dashboard/dashboard.module.js";
+import { EventsModule } from "./events/events.module.js";
+import { StatsModule } from "./stats/stats.module.js";
 import { AdminOrdersModule } from "./admin-orders/admin-orders.module.js";
 import { AuditModule } from "./audit/audit.module.js";
 import { AuthModule } from "./auth/auth.module.js";
@@ -55,6 +57,8 @@ import { UsersModule } from "./users/users.module.js";
     AdminContentModule,
     AdminMediaModule,
     DashboardModule,
+    StatsModule,
+    EventsModule,
     PublicContentModule,
     DemoModule,
     OpenApiModule,
