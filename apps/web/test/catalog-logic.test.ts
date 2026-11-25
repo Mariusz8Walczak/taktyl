@@ -235,6 +235,35 @@ describe("dane strukturalne Product (F-078)", () => {
     expect(json).not.toMatch(/aggregateRating|review/i);
   });
 
+  it("P0-1, P1-14: image z gotowych ujec wariantu, adresy z PUBLIC_SITE_URL (z portem)", () => {
+    const prev = process.env.PUBLIC_SITE_URL;
+    process.env.PUBLIC_SITE_URL = "http://taktyl.localhost:8188/";
+    try {
+      const base = productFixture("granit-tkl");
+      const v = base.variants.find((x) => x.sku === base.default_variant_sku)!;
+      const shot = (s: string, status: "gotowe" | "brak") => ({
+        key: `${base.id}_${v.images_key}_${s}`,
+        kind: "packshot" as const,
+        shot: s,
+        description: null,
+        status,
+        files: [400, 800, 1600].map((w) => `img/produkty/${base.id}_${v.images_key}_${s}-${w}.webp`),
+      });
+      const p = { ...base, images: [shot("02-gora", "gotowe"), shot("01-34", "gotowe"), shot("03-bok", "brak")] };
+      const ld = productJsonLd(p, v) as { url: string; image: string[]; offers: { url: string } };
+      expect(ld.url).toBe(`http://taktyl.localhost:8188/klawiatury/${p.slug}`);
+      expect(ld.offers.url).toBe(ld.url);
+      expect(ld.image).toEqual([
+        `http://taktyl.localhost:8188/media/img/produkty/${p.id}_${v.images_key}_01-34-1600.webp`,
+        `http://taktyl.localhost:8188/media/img/produkty/${p.id}_${v.images_key}_02-gora-1600.webp`,
+      ]);
+      expect("image" in (productJsonLd({ ...base, images: [] }, v) as object)).toBe(false);
+    } finally {
+      if (prev === undefined) delete process.env.PUBLIC_SITE_URL;
+      else process.env.PUBLIC_SITE_URL = prev;
+    }
+  });
+
   it("wariant bez stanu to OutOfStock", () => {
     const p = productFixture("bazalt-75");
     const v = p.variants.find((x) => x.sku === "K-BZL75-KOB-SZP")!;

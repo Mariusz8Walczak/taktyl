@@ -24,7 +24,11 @@ import {
   getSwitches,
 } from "../../../lib/api";
 import { dispatchTexts, type DispatchTexts } from "../../../lib/catalog/dispatch";
-import { productJsonLd, toClientProduct } from "../../../lib/catalog/product-view";
+import {
+  productImageUrls,
+  productJsonLd,
+  toClientProduct,
+} from "../../../lib/catalog/product-view";
 import { jsonLdString } from "../../../lib/json-ld";
 import { absoluteUrl } from "../../../lib/site";
 
@@ -40,11 +44,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!category || !product || product.category !== category.id) {
     return { title: "Nie ma takiej strony", robots: { index: false, follow: false } };
   }
+  const canonical = absoluteUrl(`/${category.slug}/${product.slug}`);
+  const variant =
+    product.variants.find((v) => v.sku === product.default_variant_sku) ?? product.variants[0];
+  // Audyt P0-1: og:image = gotowe ujecie 01-34 domyslnego wariantu (800 px, 1:1); bez zdjecia zostaje og.jpg z layoutu
+  const [ogImage] = variant ? productImageUrls(product, variant, "800") : [];
   return {
     title: product.name,
     description: product.short,
-    alternates: { canonical: absoluteUrl(`/${category.slug}/${product.slug}`) },
+    alternates: { canonical },
     robots: { index: false, follow: false },
+    ...(ogImage
+      ? {
+          openGraph: {
+            type: "website",
+            url: canonical,
+            title: product.name,
+            description: product.short,
+            images: [{ url: ogImage, width: 800, height: 800, alt: product.name }],
+          },
+        }
+      : {}),
   };
 }
 

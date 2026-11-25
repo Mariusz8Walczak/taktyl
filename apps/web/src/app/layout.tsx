@@ -14,6 +14,7 @@ import { MAIN_ID, SkipLink } from "../components/layout/skip-link";
 import { Providers } from "../components/providers";
 import { getShopSettings } from "../lib/api";
 import { CONSENT_BOOTSTRAP_SCRIPT } from "../lib/consent/bootstrap";
+import { siteUrl } from "../lib/site";
 import { archivo } from "./fonts";
 
 // Dane z API sa pobierane przy zadaniu (cache danych Next z tagami i revalidate 300 s, docs/14 §5), wiec build
@@ -21,6 +22,8 @@ import { archivo } from "./fonts";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  // P1-14: wzgledne adresy OG (og.jpg) skladane z tej samej zmiennej co canonical i JSON-LD (lib/site.ts)
+  metadataBase: new URL(siteUrl()),
   title: { default: "Taktyl", template: "%s | Taktyl" },
   description:
     "Taktyl: klawiatury, myszki i podkładki. Złóż set, który pasuje do biurka i dłoni. Sklep demonstracyjny.",
