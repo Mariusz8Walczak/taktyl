@@ -50,7 +50,7 @@ function inline(text: string, keyBase: string): ReactNode[] {
   return out;
 }
 
-function Block({ b, k }: { b: MdBlock; k: string }) {
+function Block({ b, k, label }: { b: MdBlock; k: string; label?: string }) {
   switch (b.kind) {
     case "h": {
       const H = `h${b.level}` as "h2" | "h3" | "h4";
@@ -75,7 +75,7 @@ function Block({ b, k }: { b: MdBlock; k: string }) {
     }
     case "table":
       return (
-        <div className="tresc-tabela" role="region" aria-label="Tabela" tabIndex={0}>
+        <div className="tresc-tabela" role="region" aria-label={label ?? "Tabela"} tabIndex={0}>
           <table>
             <thead>
               <tr>
@@ -103,10 +103,19 @@ function Block({ b, k }: { b: MdBlock; k: string }) {
 
 export function Markdown({ markdown, blocks }: { markdown?: string; blocks?: readonly MdBlock[] }) {
   const list = blocks ?? parseMarkdown(markdown ?? "");
+  // WCAG (axe landmark-unique): kazda tabela-region ma wlasna nazwe - z poprzedzajacego naglowka sekcji
+  let heading = "";
+  let tables = 0;
+  const labels = list.map((b) => {
+    if (b.kind === "h") heading = b.text.replace(/[*_`]/g, "");
+    if (b.kind !== "table") return undefined;
+    tables += 1;
+    return heading ? `Tabela: ${heading}` : `Tabela ${tables}`;
+  });
   return (
     <div className="tresc-tekst">
       {list.map((b, i) => (
-        <Block key={`b${i}`} b={b} k={`b${i}`} />
+        <Block key={`b${i}`} b={b} k={`b${i}`} {...(labels[i] ? { label: labels[i] } : {})} />
       ))}
     </div>
   );
