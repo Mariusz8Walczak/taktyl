@@ -25,16 +25,8 @@ a.tk-btn {
     align-items: start;
   }
 }
-/* Kolumna zakupu przyklejona na czas przewijania galerii, ale tylko gdy miesci sie w oknie: wyzsza od okna
-   zostalaby przyklejona z ucietym dolem (docs/05 §4; docs/11 pulapka 26). */
-@media (min-width: 992px) and (min-height: 900px) {
-  .produkt__zakup {
-    position: sticky;
-    top: calc(var(--naglowek-wys) + var(--s2));
-    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
-    overflow-y: auto;
-  }
-}
+/* Audyt P1-5: kolumna zakupu NIE jest przyklejona (z 10+ kolorami i przelacznikami jest wyzsza od okna, a wlasny pasek
+   przewijania w panelu byl bledem). Przycisk zakupu na telefonie: pasek F-068. */
 
 /* ---- galeria (F-060) ---- */
 .galeria__slajdy {

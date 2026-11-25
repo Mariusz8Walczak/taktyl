@@ -51,7 +51,9 @@
 }
 .tk-scena__mata--brak {
   display: grid;
-  place-content: center;
+  /* podpis w lewym gornym rogu: srodek zajmuja klawiatura i strefa myszki */
+  place-content: start;
+  padding: calc(var(--s1) / var(--s));
   background-color: var(--powierzchnia);
   border: var(--tk-linia-2) dashed var(--linia-pola);
   color: var(--tekst-slaby);
@@ -80,6 +82,10 @@
   border-color: var(--uwaga);
   background-color: color-mix(in srgb, var(--uwaga) 22%, transparent);
   color: var(--uwaga);
+}
+/* Puste biurko: sama ramka strefy, bez wypelnienia (nie ma jeszcze czego pokazac) */
+.tk-scena--pusta .tk-scena__strefa {
+  background-color: transparent;
 }
 /* Obszar kolizji: czesc strefy poza mata, pelne tlo uwagi i ciagly obrys, zeby byl widoczny takze przy 1 cm */
 .tk-scena__strefa-poza {

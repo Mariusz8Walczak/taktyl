@@ -272,13 +272,13 @@
     gap: var(--s4);
     align-items: start;
   }
+  /* Audyt P1-5: panel przyklejony BEZ wlasnego paska przewijania; gdy jest wyzszy od okna, stopka z cena i przyciskiem
+     przykleja sie do dolu okna (sticky w sticky), wiec "Dodaj set do koszyka" jest zawsze widoczny. */
   .kreator__podsumowanie {
     position: sticky;
     top: calc(var(--naglowek-wys) + var(--s2));
     display: grid;
     gap: var(--s2);
-    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
-    overflow-y: auto;
     padding: var(--s2);
     border: var(--tk-linia-1) solid var(--linia);
     border-radius: var(--r);
@@ -516,6 +516,38 @@
 .kreator__lista-tytul {
   margin: 0;
   font-size: var(--t-l);
+  font-weight: var(--w-mocna);
+}
+/* Audyt P1-5: pozycje setu jako <details> (summary = cel >= 44 px), stopka z cena i przyciskiem */
+.kreator__pozycje > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: var(--cel-min);
+  cursor: pointer;
+}
+.kreator__pozycje[open] > summary {
+  margin-bottom: var(--s1);
+}
+.kreator__lista-licznik {
+  color: var(--tekst-slaby);
+  font-size: var(--t-s);
+  font-weight: var(--w-zwykla);
+}
+.kreator__stopka {
+  display: grid;
+  gap: var(--s2);
+}
+@media (min-width: 992px) {
+  .kreator__stopka {
+    position: sticky;
+    bottom: 0;
+    margin: 0 calc(var(--s2) * -1) calc(var(--s2) * -1);
+    padding: var(--s2);
+    border-top: var(--tk-linia-1) solid var(--linia);
+    border-radius: 0 0 var(--r) var(--r);
+    background-color: var(--powierzchnia);
+  }
 }
 .pozycje {
   display: grid;

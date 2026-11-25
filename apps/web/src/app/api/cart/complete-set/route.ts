@@ -2,6 +2,7 @@
 // wiec serwer znajduje slug po nazwie (`/v1/search`, dokladne dopasowanie nazwy) i pyta `complete-set?sku=`.
 import { completeSetResponseSchema, searchResponseSchema } from "@taktyl/contracts";
 import { ApiError, TAG, apiGet } from "../../../../lib/api";
+import { parseProfile, PROFILE_COOKIE } from "../../../../lib/builder/profile";
 
 export const dynamic = "force-dynamic";
 const SKU = /^[A-Z0-9-]{5,32}$/;
@@ -13,6 +14,13 @@ export async function GET(request: Request): Promise<Response> {
   if (!SKU.test(sku) || name.length < 1 || name.length > 80) {
     return Response.json({ error: "invalid_query" }, { status: 400 });
   }
+  const cookie = request.headers.get("cookie") ?? "";
+  const profile = parseProfile(
+    cookie
+      .split(";")
+      .map((c) => c.trim().split("="))
+      .find(([k]) => k === PROFILE_COOKIE)?.[1],
+  );
   try {
     const found = await apiGet("/v1/search", searchResponseSchema, {
       tags: [TAG.catalog],
@@ -24,7 +32,8 @@ export async function GET(request: Request): Promise<Response> {
     const set = await apiGet(`/v1/products/${card.slug}/complete-set`, completeSetResponseSchema, {
       tags: [TAG.catalog],
       revalidate: false,
-      query: { sku },
+      // Audyt P1-2: profil z kreatora (ciasteczko) - jedno zrodlo prawdy z karta produktu
+      query: profile ? { sku, profile } : { sku },
     });
     return Response.json(set, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {

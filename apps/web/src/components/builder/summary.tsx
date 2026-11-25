@@ -254,23 +254,35 @@ export function Summary({ api }: { api: BuilderApi }) {
         <FitResults api={api} />
       </div>
       <div className="kreator__lista">
-        <h3 className="kreator__lista-tytul">Twój set</h3>
-        <Rows api={api} />
-        <PriceBlock api={api} />
-        <Button
-          className="kreator__dodaj"
-          loading={api.busy}
-          disabled={blocker !== null}
-          aria-describedby={blocker ? "powod-dodania" : undefined}
-          onClick={() => void api.addToCart()}
+        {/* Audyt P1-5: pozycje zwijane (rozwiniete w kroku "Podsumowanie"), cena i przycisk w przyklejonej stopce */}
+        <details
+          key={api.state.step === "podsumowanie" ? "otwarte" : "zwiniete"}
+          className="kreator__pozycje"
+          open={api.state.step === "podsumowanie"}
         >
-          Dodaj set do koszyka
-        </Button>
-        {blocker ? (
-          <p id="powod-dodania" className="kreator__powod">
-            {blocker}
-          </p>
-        ) : null}
+          <summary className="kreator__lista-tytul">
+            Twój set{" "}
+            <span className="kreator__lista-licznik">({api.analysis.count} z 3)</span>
+          </summary>
+          <Rows api={api} />
+        </details>
+        <div className="kreator__stopka">
+          <PriceBlock api={api} />
+          <Button
+            className="kreator__dodaj"
+            loading={api.busy}
+            disabled={blocker !== null}
+            aria-describedby={blocker ? "powod-dodania" : undefined}
+            onClick={() => void api.addToCart()}
+          >
+            Dodaj set do koszyka
+          </Button>
+          {blocker ? (
+            <p id="powod-dodania" className="kreator__powod">
+              {blocker}
+            </p>
+          ) : null}
+        </div>
       </div>
     </aside>
   );

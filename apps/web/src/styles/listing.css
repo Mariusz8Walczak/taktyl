@@ -45,10 +45,7 @@ a.tk-btn {
   }
   .listing__filtry {
     display: block;
-    position: sticky;
-    top: calc(var(--naglowek-wys) + var(--s2));
-    max-height: calc(100dvh - var(--naglowek-wys) - var(--s3));
-    overflow-y: auto;
+    /* Audyt P1-5: bez przyklejenia i bez wlasnego paska przewijania - filtry przewijaja sie ze strona */
     padding-right: var(--s1);
   }
 }

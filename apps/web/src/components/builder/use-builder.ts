@@ -35,6 +35,8 @@ import {
 } from "../../lib/builder/types";
 
 export const headingId = (step: StepId): string => `kreator-naglowek-${step}`;
+/** Kontener paska krokow (cel przewiniecia po zmianie kroku). */
+export const STEPPER_ID = "kreator-kroki";
 
 export interface PendingSet {
   state: SetState;
@@ -190,7 +192,13 @@ export function useBuilder(model: BuilderModel, initialSearch: string): BuilderA
   useEffect(() => {
     if (!focusRequested.current) return;
     focusRequested.current = false;
-    document.getElementById(headingId(state.step))?.focus();
+    // Audyt P1-6: najpierw pasek krokow na gore okna (scroll-margin-top uwzglednia przyklejony naglowek), potem fokus
+    // bez przewijania - tresc kroku zaczyna sie pod paskiem, a nie pod zdjeciem naglowka strony.
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    document
+      .getElementById(STEPPER_ID)
+      ?.scrollIntoView?.({ block: "start", behavior: reduced ? "auto" : "smooth" });
+    document.getElementById(headingId(state.step))?.focus({ preventScroll: true });
   }, [state.step]);
 
   const goStep = useCallback(

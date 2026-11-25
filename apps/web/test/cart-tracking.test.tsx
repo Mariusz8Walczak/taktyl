@@ -101,6 +101,39 @@ describe("Dokończ set (F-069)", () => {
     expect(ev.ecommerce.items.reduce((s, i) => s + Math.round(i.discount * 100), 0)).toBe(13370);
   });
 
+  it("audyt P1-3: z klawiatura i myszka w koszyku proponuje tylko podkladke i liczy rabat za caly set", async () => {
+    window.dataLayer = [];
+    stubQuoteFetch({
+      extra: (url) =>
+        url.includes("/api/cart/complete-set") ? Response.json(response) : undefined,
+    });
+    cartStore.addItem("K-BZL75-GRF-PRG", 1);
+    cartStore.addItem("M-PST-GRF", 2);
+    const cart = getCart();
+    const quote = fakeQuote({
+      items: [
+        { type: "item", sku: "K-BZL75-GRF-PRG", qty: 1 },
+        { type: "item", sku: "M-PST-GRF", qty: 2 },
+      ],
+    });
+    const user = userEvent.setup();
+    render(
+      <ToastProvider>
+        <CompleteSet cart={cart} quote={quote} percent={10} />
+      </ToastProvider>,
+    );
+    const lead = await screen.findByText(/^Dodaj podkładkę Szron za/);
+    expect(lead.textContent?.replace(/\s/g, " ")).toBe(
+      "Dodaj podkładkę Szron za 189,00 zł, a rabat 10% obejmie cały set: −133,70 zł.",
+    );
+    expect(screen.getAllByText("w koszyku")).toHaveLength(2);
+    expect(screen.getAllByText("dodamy")).toHaveLength(1);
+    await user.click(screen.getByRole("button", { name: "Dodaj podkładkę i utwórz set" }));
+    const lines = getCart().lines;
+    expect(lines.map((l) => l.type).sort()).toEqual(["item", "set"]);
+    expect(lines.find((l) => l.type === "item")).toMatchObject({ sku: "M-PST-GRF", qty: 1 });
+  });
+
   it("nie pokazuje sie, gdy w koszyku jest juz set albo pusty koszyk", async () => {
     stubQuoteFetch();
     const { container } = render(

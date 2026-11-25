@@ -174,6 +174,7 @@ export function DeskStage({
         `tk-scena--${g.layout}`,
         compact && "tk-scena--kompakt",
         uwaga && "tk-scena--uwaga",
+        !keyboard && !mouse && "tk-scena--pusta",
         className,
       )}
       data-layout={g.layout}

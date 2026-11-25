@@ -18,6 +18,7 @@ Te dane są potrzebne, aby sklep działał, i zapisujemy je bez pytania o zgod
 | Koszyk (pamięć lokalna) | pamięta produkty w koszyku | do wyczyszczenia danych witryny |
 | Ulubione i porównanie (pamięć lokalna) | pamięta wybrane produkty | do wyczyszczenia danych witryny |
 | Zapisane sety (pamięć lokalna) | pamięta sety z kreatora | do wyczyszczenia danych witryny |
+| `taktyl_profil` (ciasteczko) | pamięta profil wybrany w kreatorze („Do czego?”), żeby „Dokończ set” na karcie produktu i w koszyku dobierał elementy do tego samego profilu | 30 dni |
 | Zamknięcie paska demo (pamięć sesji) | ukrywa pasek do końca sesji | do zamknięcia karty |
 | Wybór zgód | pamięta Twój wybór „Akceptuję” albo „Tylko niezbędne” | do wyczyszczenia danych witryny |
 

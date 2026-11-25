@@ -11,7 +11,7 @@ import { BuilderNotices, Kwota, StepsBar, stepCounter } from "./parts";
 import { StepProducts } from "./step-products";
 import { StepProfile } from "./step-profile";
 import { Summary, addBlocker } from "./summary";
-import { headingId, useBuilder, type BuilderApi } from "./use-builder";
+import { headingId, STEPPER_ID, useBuilder, type BuilderApi } from "./use-builder";
 
 function FallbackLink({ link }: { link: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -121,7 +121,7 @@ export function Builder({ data, initialSearch }: { data: BuilderData; initialSea
   const { state } = api;
   return (
     <div className="kreator" data-krok={state.step}>
-      <div className="kreator__naglowek">
+      <div className="kreator__naglowek" id={STEPPER_ID}>
         <StepsBar api={api} />
         <p className="kreator__licznik" aria-hidden="true">
           {stepCounter(state.step)}

@@ -25,12 +25,17 @@ export interface CompleteSetData {
 export async function loadCompleteSet(
   product: Product,
   sku: string,
+  /** Audyt P1-2: profil z kreatora (ciasteczko taktyl_profil); null = profil produktu wg API. */
+  profile: string | null = null,
 ): Promise<CompleteSetData | null> {
   try {
     const set = await apiGet(
       `/v1/products/${encodeURIComponent(product.slug)}/complete-set`,
       completeSetResponseSchema,
-      { tags: [TAG.product(product.slug), TAG.catalog, TAG.shopSettings], query: { sku } },
+      {
+        tags: [TAG.product(product.slug), TAG.catalog, TAG.shopSettings],
+        query: profile ? { sku, profile } : { sku },
+      },
     );
     const skus: Partial<Record<SlotKey, string>> = {};
     const products: BuilderProduct[] = [toBuilderProduct(product)];
