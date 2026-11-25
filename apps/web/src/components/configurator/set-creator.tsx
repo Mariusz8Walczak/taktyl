@@ -171,7 +171,9 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
           return (
             <section key={slot} className="konfigurator__sekcja" aria-labelledby={`${uid}-${slot}`}>
               <h2 id={`${uid}-${slot}`} className="konfigurator__sekcja-tytul">
-                <BenefitIcon name={slot === "k" ? "klawiatura" : slot === "m" ? "mysz" : "podkladka"} />{" "}
+                <BenefitIcon
+                  name={slot === "k" ? "klawiatura" : slot === "m" ? "mysz" : "podkladka"}
+                />{" "}
                 {title}: <span>{modelLabel(model)}</span>
               </h2>
               <fieldset className="konfigurator__grupa">
@@ -197,6 +199,7 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
               <details className="konfigurator__czesci">
                 <summary>Dobierz kolory części</summary>
                 <PartsPanel
+                  idPrefix={`${slot}-`}
                   data={data}
                   model={model}
                   choices={state[slot].choices}
@@ -282,8 +285,8 @@ export function SetCreator({ data, initial }: SetCreatorProps) {
             </p>
           )}
           <p className="konfigurator__info">
-            <BenefitIcon name="termin" /> Każdy element wykonujemy na zamówienie, wysyłka w ok. 7 dni roboczych. Rabat za komplet
-            obejmuje trzy elementy w jednym secie.
+            <BenefitIcon name="termin" /> Każdy element wykonujemy na zamówienie, wysyłka w ok. 7
+            dni roboczych. Rabat za komplet obejmuje trzy elementy w jednym secie.
           </p>
           <Button
             className="konfigurator__koszyk"

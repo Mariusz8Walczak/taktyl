@@ -2,14 +2,21 @@
 // F-250..F-254 (ADR-0011): konfigurator kolorow. Wybory klienta -> reguly z @taktyl/domain (natychmiast, ta sama logika
 // co w API) -> scena 3D. Cena i SKU zawsze z `POST /v1/configurator/quote` (serwer); widok nie liczy kwot.
 // Dostepnosc: kazdy wybor to przycisk radio z nazwa koloru, scena jest dekoracja (aria-hidden), stan oglasza region live.
+// Audyt UX: cena, doplata i "Dodaj do koszyka" przyklejone pod modelem (wczesniej na dole po 10 sekcjach), sekcje
+// czesci jako akordeon (klikniecie czesci na modelu otwiera jej sekcje), "Kopiuj link do projektu" (stan jest w ?sku=).
 import type { ConfiguratorData, ConfiguratorQuote } from "@taktyl/contracts";
 import { formatPLN, resolveConfiguration, type Configuration } from "@taktyl/domain";
 import { Button } from "@taktyl/ui";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { addToCart } from "../../lib/cart-adapter";
-import { applyChoice, explicitChoices, toDomainData } from "../../lib/configurator/model";
+import {
+  applyChoice,
+  configurableParts,
+  explicitChoices,
+  toDomainData,
+} from "../../lib/configurator/model";
 import { BenefitIcon } from "./ikony";
-import { PartsPanel } from "./parts-panel";
+import { PartsPanel, sectionId } from "./parts-panel";
 import { SceneView } from "./scene-view";
 import type { StageHandle, StageItem } from "./stage";
 
@@ -35,6 +42,32 @@ export function Configurator({ data, model, productName, productHref, initial }:
   const [quote, setQuote] = useState<ConfiguratorQuote | null>(null);
   const [quoteError, setQuoteError] = useState(false);
   const stage = useRef<StageHandle>(null);
+  const [openPart, setOpenPart] = useState<string | null>(
+    () => configurableParts(model)[0]?.id ?? null,
+  );
+  const [linkStatus, setLinkStatus] = useState<string | null>(null);
+
+  // Klikniecie czesci na modelu: otworz jej sekcje i pokaz ja (bez przewijania strony, gdy jest juz widoczna)
+  const onPick = useCallback(
+    (partId: string) => {
+      const target = model.parts.find((p) => p.id === partId && p.konfigurowalna && p.paleta);
+      if (!target) return;
+      setOpenPart(target.id);
+      requestAnimationFrame(() =>
+        document.getElementById(sectionId("", target.id))?.scrollIntoView?.({ block: "nearest" }),
+      );
+    },
+    [model],
+  );
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkStatus("Link do projektu skopiowany.");
+    } catch {
+      setLinkStatus(`Skopiuj link z paska adresu: ${window.location.href}`);
+    }
+  };
 
   const resolved = useMemo(
     () =>
@@ -88,7 +121,51 @@ export function Configurator({ data, model, productName, productHref, initial }:
 
   return (
     <div className="konfigurator">
-      <SceneView title={`Podgląd 3D: ${productName}`} data={data} items={items} handleRef={stage} />
+      <div className="konfigurator__lewa">
+        <SceneView
+          title={`Podgląd 3D: ${productName}`}
+          data={data}
+          items={items}
+          handleRef={stage}
+          onPick={onPick}
+        />
+        <div className="konfigurator__pasek-zakupu">
+          <p className="konfigurator__pasek-cena">
+            <span className="konfigurator__pasek-etykieta">Razem</span>
+            <strong>{total === null ? "—" : formatPLN(total)}</strong>
+            {quote && quote.surcharge_gr > 0 ? (
+              <span className="konfigurator__pasek-doplata">
+                w tym dopłata {formatPLN(quote.surcharge_gr)}
+              </span>
+            ) : null}
+          </p>
+          <Button
+            className="konfigurator__koszyk"
+            disabled={!quote?.ok || !quote.sku}
+            onClick={async () => {
+              if (!quote?.sku) return;
+              const res = await addToCart({ sku: quote.sku, qty: 1 });
+              if (res.ok) setAdded(true);
+            }}
+          >
+            {added ? (
+              <span className="tk-etykieta-dodano">Dodano do koszyka</span>
+            ) : (
+              "Dodaj do koszyka"
+            )}
+          </Button>
+          <Button
+            variant="secondary"
+            className="konfigurator__kopiuj"
+            onClick={() => void copyLink()}
+          >
+            Kopiuj link do projektu
+          </Button>
+          <p className="konfigurator__link-stan" role="status">
+            {linkStatus}
+          </p>
+        </div>
+      </div>
 
       <div className="konfigurator__panel">
         <PartsPanel
@@ -103,6 +180,8 @@ export function Configurator({ data, model, productName, productHref, initial }:
             setChoices((c) => applyChoice(data, model, resolved.config, c, partId, patch))
           }
           onPrint={setPrint}
+          openPart={openPart}
+          onOpenPart={setOpenPart}
         />
 
         <div className="konfigurator__podsumowanie" aria-live="polite">
@@ -144,21 +223,6 @@ export function Configurator({ data, model, productName, productHref, initial }:
           <p className="konfigurator__info">
             <BenefitIcon name="termin" /> Wykonanie na zamówienie, wysyłka w ok. 7 dni roboczych.
           </p>
-          <Button
-            className="konfigurator__koszyk"
-            disabled={!quote?.ok || !quote.sku}
-            onClick={async () => {
-              if (!quote?.sku) return;
-              const res = await addToCart({ sku: quote.sku, qty: 1 });
-              if (res.ok) setAdded(true);
-            }}
-          >
-            {added ? (
-              <span className="tk-etykieta-dodano">Dodano do koszyka</span>
-            ) : (
-              "Dodaj do koszyka"
-            )}
-          </Button>
           <p>
             <a className="przycisk-tekstowy" href={productHref}>
               Wróć do produktu

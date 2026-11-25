@@ -30,7 +30,12 @@ export interface ModelPreviewSceneProps {
   onStatus: (s: "loading" | "ready" | "error") => void;
 }
 
-export default function ModelPreviewScene({ modelId, title, parts, onStatus }: ModelPreviewSceneProps) {
+export default function ModelPreviewScene({
+  modelId,
+  title,
+  parts,
+  onStatus,
+}: ModelPreviewSceneProps) {
   const [data, setData] = useState<ConfiguratorData | null>(null);
   useEffect(() => {
     let live = true;

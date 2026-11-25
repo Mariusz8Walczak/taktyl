@@ -33,6 +33,8 @@ interface Props {
   items: StageItem[];
   handleRef?: Ref<StageHandle>;
   onStatus?: (s: "loading" | "ready" | "error") => void;
+  /** Audyt UX: klikniecie (nie przeciagniecie) czesci modelu - id czesci (nazwa siatki) i klucz elementu. */
+  onPick?: (partId: string, itemKey: string) => void;
 }
 
 interface Loaded {
@@ -56,7 +58,7 @@ interface Runtime {
   frame: () => void;
 }
 
-export default function Stage({ data, items, handleRef, onStatus }: Props) {
+export default function Stage({ data, items, handleRef, onStatus, onPick }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const rt = useRef<Runtime | null>(null);
   const [sceneReady, setSceneReady] = useState(false);
@@ -65,6 +67,8 @@ export default function Stage({ data, items, handleRef, onStatus }: Props) {
   status.current = onStatus;
   const itemsRef = useRef(items);
   itemsRef.current = items;
+  const pickRef = useRef(onPick);
+  pickRef.current = onPick;
 
   // Scena, kamera, sterowanie i oswietlenie: raz na zamontowanie.
   useEffect(() => {
@@ -144,7 +148,42 @@ export default function Stage({ data, items, handleRef, onStatus }: Props) {
       ro.observe(el);
       resize();
 
+      // Audyt UX: klikniecie czesci otwiera jej sekcje (raycast; przeciagniecie obracajace model nie jest kliknieciem)
+      const ray = new THREE.Raycaster();
+      let down: { x: number; y: number } | null = null;
+      const onDown = (e: PointerEvent) => {
+        down = { x: e.clientX, y: e.clientY };
+      };
+      const onUp = (e: PointerEvent) => {
+        const start = down;
+        down = null;
+        if (!start || !pickRef.current) return;
+        if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 6) return;
+        const rect = renderer.domElement.getBoundingClientRect();
+        const ndc = new THREE.Vector2(
+          ((e.clientX - rect.left) / rect.width) * 2 - 1,
+          -((e.clientY - rect.top) / rect.height) * 2 + 1,
+        );
+        ray.setFromCamera(ndc, camera);
+        const hit = ray.intersectObject(group, true)[0];
+        if (!hit) return;
+        const r = rt.current;
+        if (!r) return;
+        for (const [key, l] of r.loaded) {
+          for (const [partId, mesh] of l.meshes) {
+            if (mesh === hit.object) {
+              pickRef.current(partId, key);
+              return;
+            }
+          }
+        }
+      };
+      renderer.domElement.addEventListener("pointerdown", onDown);
+      renderer.domElement.addEventListener("pointerup", onUp);
+
       cleanup = () => {
+        renderer.domElement.removeEventListener("pointerdown", onDown);
+        renderer.domElement.removeEventListener("pointerup", onUp);
         ro.disconnect();
         controls.dispose();
         draco.dispose();

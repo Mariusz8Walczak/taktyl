@@ -25,6 +25,7 @@ export function SceneView({
   handleRef,
   className,
   onStatus,
+  onPick,
 }: {
   title: string;
   data: ConfiguratorData;
@@ -34,6 +35,8 @@ export function SceneView({
   className?: string;
   /** Stan sceny dla rodzica (podglad z renderem jako zastepstwem zdejmuje render po "ready"). */
   onStatus?: (s: "loading" | "ready" | "error") => void;
+  /** Klikniecie czesci modelu (konfigurator otwiera jej sekcje). */
+  onPick?: (partId: string, itemKey: string) => void;
 }) {
   const [state, setStateRaw] = useState<"loading" | "ready" | "error">("loading");
   const setState = (s: "loading" | "ready" | "error") => {
@@ -62,7 +65,13 @@ export function SceneView({
       aria-label={title}
     >
       {canRender && state !== "error" ? (
-        <Stage data={data} items={items} handleRef={setRefs} onStatus={setState} />
+        <Stage
+          data={data}
+          items={items}
+          handleRef={setRefs}
+          onStatus={setState}
+          {...(onPick ? { onPick } : {})}
+        />
       ) : (
         <p className="konfigurator__brak-3d" role="status">
           Podgląd 3D jest niedostępny w tej przeglądarce. Wybór kolorów obok działa, a cena i kod

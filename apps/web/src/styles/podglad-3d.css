@@ -2,6 +2,9 @@
    pierwszego slajdu galerii karty produktu i sekcji "Zaprojektuj klawiature" na glownej. Tylko tokeny. */
 .konfigurator__scena {
   position: relative;
+  /* min-height + aspect-ratio przenosilyby minimum na szerokosc (+10 px przewijania w poziomie przy 390 px) */
+  min-width: 0;
+  width: 100%;
   min-height: 18rem;
   aspect-ratio: 4 / 3;
   overflow: hidden;
